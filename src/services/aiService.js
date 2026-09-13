@@ -1,3 +1,13 @@
+export const AVAILABLE_MODELS = [
+  { id: "gemini-2.5-flash", name: "Gemini 3.0 Flash", provider: "Google", badge: "Fastest", icon: "⚡" },
+  { id: "gemini-2.0-flash", name: "Gemini 2.0 Flash", provider: "Google", badge: "Balanced", icon: "✨" },
+  { id: "gemini-1.5-pro", name: "Gemini 1.5 Pro", provider: "Google", badge: "Deep Reasoning", icon: "🧠" },
+  { id: "groq-llama-3.3-70b-versatile", name: "Groq Llama 3.3 70B", provider: "Groq", badge: "Ultra Low Latency", icon: "🚀" },
+  { id: "groq-mixtral-8x7b-32768", name: "Groq Mixtral 8x7B", provider: "Groq", badge: "32k Context", icon: "⚡" },
+  { id: "openrouter-anthropic/claude-3.7-sonnet", name: "Claude 3.7 Sonnet", provider: "OpenRouter", badge: "Top Tier", icon: "💎" },
+  { id: "openrouter-deepseek/deepseek-r1", name: "DeepSeek R1", provider: "OpenRouter", badge: "Math / Logic", icon: "🔬" }
+];
+
 // Multi-Provider AI Engine (Gemini 3.x, Groq, OpenRouter) with Auto-Failover
 
 export async function generateAiResponse({ prompt, systemInstruction, keys = {}, preferredModel = 'gemini-3.7-flash' }) {
