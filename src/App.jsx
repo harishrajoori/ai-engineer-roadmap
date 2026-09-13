@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { LESSONS_DATA, COURSES_REF_DATA } from './data/lessonsData';
 import Header from './components/Header';
@@ -48,6 +48,7 @@ export default function App() {
   const [typeFilter, setTypeFilter] = useState('all');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isRegenOpen, setIsRegenOpen] = useState(false);
+  const stageRef = useRef(null);
 
   // Sync to localStorage
   useEffect(() => {
@@ -115,6 +116,16 @@ export default function App() {
     const targetCourse = courses.find(c => c.course === cNum);
     if (targetCourse && targetCourse.lessons.length > 0) {
       setActiveLessonOrder(targetCourse.lessons[0].order);
+    }
+    if (stageRef.current) {
+      stageRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const handleSelectLesson = (order) => {
+    setActiveLessonOrder(order);
+    if (stageRef.current) {
+      stageRef.current.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -196,7 +207,7 @@ export default function App() {
         />
 
         {/* Center Stage */}
-        <main className="stage">
+        <main className="stage" ref={stageRef}>
           <SmartStage
             lesson={activeLesson}
             isCompleted={!!progressMap[activeLesson?.order]}
@@ -211,7 +222,7 @@ export default function App() {
             courseTitle={activeCourse?.title || `Course ${activeCourseNum}`}
             lessons={courseLessons}
             activeLessonOrder={activeLessonOrder}
-            onSelectLesson={setActiveLessonOrder}
+            onSelectLesson={handleSelectLesson}
             onToggleComplete={handleToggleComplete}
             progressMap={progressMap}
             typeFilter={typeFilter}

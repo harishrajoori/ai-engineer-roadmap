@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   PlayCircle, 
   BookOpen, 
@@ -28,6 +28,11 @@ export default function SmartStage({
   const [isEditingVideo, setIsEditingVideo] = useState(false);
   const [customVideoUrl, setCustomVideoUrl] = useState('');
   const [copiedCode, setCopiedCode] = useState(false);
+
+  useEffect(() => {
+    setViewMode("auto");
+    setIsEditingVideo(false);
+  }, [lesson?.order]);
 
   if (!lesson) {
     return (
@@ -133,7 +138,7 @@ export default function SmartStage({
         <div>
           <div className="video-viewport">
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${activeYtId}?autoplay=1`}
+              src={`https://www.youtube-nocookie.com/embed/${activeYtId}?rel=0`}
               title={lesson.lesson}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
