@@ -47,7 +47,7 @@ Edit `docs/AI_System_Engineer_Learning_Track_2027.md`, then:
 ```bash
 npm run curriculum
 ```
-This updates `data/lessons.json` and `src/data/lessonsData.js` (preserving enriched fields like `resources`, `digest`, and `content` when lesson `order` ids match).
+This updates `data/lessons.json` and `public/data/lessons.json` (served at runtime; preserves enriched fields like `resources`, `digest`, and `content` when lesson `order` ids match).
 
 ### 3. Validate (docs links + app data)
 ```bash

@@ -3,6 +3,8 @@ import { CheckCircle2, Circle, PlayCircle, BookOpen, PenTool, ShieldCheck, Filte
 
 export default function LessonFeed({
   courseTitle,
+  courseMonth,
+  courseProgressPct = 0,
   lessons,
   activeLessonOrder,
   onSelectLesson,
@@ -23,20 +25,22 @@ export default function LessonFeed({
     return lessons.filter((l) => l.type === typeFilter);
   }, [lessons, typeFilter]);
 
+  const completedInView = filteredLessons.filter((l) => progressMap[l.order]).length;
+
   const getIcon = (type) => {
     if (type === "Video") {
-      return <PlayCircle size={14} className="topic-icon text-blue-400" />;
+      return <PlayCircle size={14} className="topic-icon topic-icon-video" />;
     }
     if (type === "Read") {
-      return <BookOpen size={14} className="topic-icon text-purple-400" />;
+      return <BookOpen size={14} className="topic-icon topic-icon-read" />;
     }
     if (type === "Build") {
-      return <PenTool size={14} className="topic-icon text-amber-400" />;
+      return <PenTool size={14} className="topic-icon topic-icon-build" />;
     }
     if (type === "Prove") {
-      return <ShieldCheck size={14} className="topic-icon text-emerald-400" />;
+      return <ShieldCheck size={14} className="topic-icon topic-icon-prove" />;
     }
-    return <Circle size={14} className="topic-icon text-slate-400" />;
+    return <Circle size={14} className="topic-icon" />;
   };
 
   const handleToggleComplete = (e, order) => {
@@ -45,20 +49,31 @@ export default function LessonFeed({
   };
 
   return (
-    <div className="coursera-sidebar lesson-feed-pane">
-      <div className="lesson-feed-header" style={{ padding: "0.75rem 1rem", borderBottom: "1px solid var(--border, rgba(255,255,255,0.08))" }}>
-        <h3 className="text-sm font-bold text-slate-200 leading-snug">{courseTitle}</h3>
-        <p className="text-xs text-slate-500 mt-1">{filteredLessons.length} topics</p>
+    <div className="syllabus-pane">
+      <div className="syllabus-pane-header">
+        <div className="syllabus-pane-title-row">
+          <h2 className="syllabus-course-title">{courseTitle}</h2>
+          {courseMonth && <span className="syllabus-course-month">{courseMonth}</span>}
+        </div>
+        <div className="syllabus-progress-block">
+          <div className="syllabus-progress-track">
+            <div className="syllabus-progress-fill" style={{ width: `${courseProgressPct}%` }} />
+          </div>
+          <div className="syllabus-progress-meta">
+            <span>{courseProgressPct}% complete</span>
+            <span>{completedInView}/{filteredLessons.length} topics</span>
+          </div>
+        </div>
       </div>
 
       {typeOptions.length > 2 && onSetTypeFilter && (
-        <div className="lesson-feed-filters" style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", padding: "0.5rem 0.75rem" }}>
-          <Filter size={12} className="text-slate-500" style={{ alignSelf: "center" }} />
+        <div className="syllabus-filters">
+          <Filter size={12} className="syllabus-filter-icon" />
           {typeOptions.map((t) => (
             <button
               key={t}
               type="button"
-              className={`filter-btn text-xs ${typeFilter === t ? "active" : ""}`}
+              className={`filter-btn syllabus-filter-btn ${typeFilter === t ? "active" : ""}`}
               onClick={() => onSetTypeFilter(t)}
             >
               {t === "all" ? "All" : t}
@@ -67,17 +82,17 @@ export default function LessonFeed({
         </div>
       )}
 
-      <div className="course-topics-list">
-        {filteredLessons.map((lesson) => {
+      <div className="syllabus-topic-list" role="list">
+        {filteredLessons.map((lesson, index) => {
           const isCompleted = !!progressMap[lesson.order];
           const isActive = activeLessonOrder === lesson.order;
 
           return (
             <div
               key={lesson.order}
+              role="listitem"
               onClick={() => onSelectLesson(lesson.order)}
-              className={`topic-item ${isActive ? "active" : ""}`}
-              role="button"
+              className={`syllabus-topic ${isActive ? "active" : ""} ${isCompleted ? "done" : ""}`}
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
@@ -85,24 +100,27 @@ export default function LessonFeed({
                 }
               }}
             >
+              <span className="syllabus-topic-index">{index + 1}</span>
               <button
                 type="button"
-                className="topic-status topic-status-btn"
+                className="syllabus-topic-check"
                 onClick={(e) => handleToggleComplete(e, lesson.order)}
                 aria-label={isCompleted ? "Mark incomplete" : "Mark complete"}
               >
                 {isCompleted ? (
-                  <CheckCircle2 size={16} className="text-emerald-500" />
+                  <CheckCircle2 size={18} className="syllabus-check-done" />
                 ) : (
-                  <Circle size={16} className="text-slate-500" />
+                  <Circle size={18} className="syllabus-check-open" />
                 )}
               </button>
-              <div className="topic-info">
-                <div className="topic-name">{lesson.lesson}</div>
-                <div className="topic-meta">
+              <div className="syllabus-topic-body">
+                <div className="syllabus-topic-name">{lesson.lesson}</div>
+                <div className="syllabus-topic-meta">
                   {getIcon(lesson.type)}
-                  <span className="topic-type">{lesson.type}</span>
-                  <span className="topic-duration">• {lesson.duration || "15m"}</span>
+                  <span>{lesson.type}</span>
+                  <span className="syllabus-topic-dot">·</span>
+                  <span>{lesson.duration || "~15m"}</span>
+                  {lesson.required === "Yes" && <span className="syllabus-required">Required</span>}
                 </div>
               </div>
             </div>

@@ -10,6 +10,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRACK = REPO_ROOT / "docs" / "AI_System_Engineer_Learning_Track_2027.md"
 OUT_DIR = REPO_ROOT / "data"
+PUBLIC_DATA_DIR = REPO_ROOT / "public" / "data"
 LESSONS_JS_PATH = REPO_ROOT / "src" / "data" / "lessonsData.js"
 
 URL_FIXES: dict[str, str] = {
@@ -88,8 +89,20 @@ def youtube_id_only(url: str) -> str:
     return m.group(1) if m else ""
 
 
-def parse_existing_lessons_js(path: Path) -> dict[int, dict]:
+def parse_existing_lessons_json(path: Path) -> dict[int, dict]:
     """Load prior enriched lesson rows keyed by order (for merge on regenerate)."""
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        lessons = data.get("lessons", [])
+        return {int(row["order"]): row for row in lessons if "order" in row}
+    except (json.JSONDecodeError, KeyError, TypeError):
+        return {}
+
+
+def parse_existing_lessons_js(path: Path) -> dict[int, dict]:
+    """Legacy: load enrichment from old bundled lessonsData.js if present."""
     if not path.exists():
         return {}
     text = path.read_text(encoding="utf-8")
@@ -167,24 +180,23 @@ def build_courses_ref(lessons: list[dict]) -> dict:
     return ref
 
 
-def write_lessons_js(lessons: list[dict], path: Path) -> None:
-    courses_ref = build_courses_ref(lessons)
-    body = (
-        f"// Auto-generated — run `npm run curriculum` after editing docs/AI_System_Engineer_Learning_Track_2027.md\n"
-        f"export const LESSONS_DATA = {json.dumps(lessons, indent=2, ensure_ascii=False)};\n\n"
-        f"export const COURSES_REF_DATA = {json.dumps(courses_ref, indent=2, ensure_ascii=False)};\n"
-    )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(body, encoding="utf-8")
+def write_curriculum_payload(lessons: list[dict], track_rel: str) -> dict:
+    return {
+        "generated_from": track_rel,
+        "lessons": lessons,
+        "courses_ref": build_courses_ref(lessons),
+    }
 
 
 def open_mode(url: str, lesson_type: str) -> str:
-    if lesson_type == "Video" or "youtube.com" in url:
-        return "Embed / YouTube"
     if embed := youtube_embed(url):
-        return "Embed"
-    if "youtube.com" in url or "youtu.be" in url:
-        return "YouTube"
+        return "Embed / YouTube"
+    if "youtu.be/" in url or "youtube.com/watch" in url or "youtube.com/embed/" in url:
+        return "Embed / YouTube"
+    if "youtube.com" in url:
+        return "YouTube hub"
+    if lesson_type == "Video" and not url:
+        return "Local"
     if "deeplearning.ai" in url:
         return "DL.AI browser"
     if lesson_type in ("Build", "Prove", "Do", "Capstone") and not url.startswith("http"):
@@ -361,16 +373,27 @@ def main() -> None:
         row["order"] += base
     lessons.extend(parsed)
 
-    existing = parse_existing_lessons_js(LESSONS_JS_PATH)
+    json_path = OUT_DIR / "lessons.json"
+    existing = parse_existing_lessons_json(json_path)
+    if not existing:
+        existing = parse_existing_lessons_js(LESSONS_JS_PATH)
     lessons = merge_enrichment(lessons, existing)
     lessons = apply_url_fixes(lessons)
 
-    (OUT_DIR / "lessons.json").write_text(
-        json.dumps({"generated_from": str(TRACK.relative_to(REPO_ROOT)), "lessons": lessons}, indent=2),
-        encoding="utf-8",
-    )
-    write_lessons_js(lessons, LESSONS_JS_PATH)
-    print(f"Wrote {len(lessons)} lessons → data/lessons.json, src/data/lessonsData.js")
+    track_rel = str(TRACK.relative_to(REPO_ROOT))
+    payload = write_curriculum_payload(lessons, track_rel)
+    encoded = json.dumps(payload, indent=2, ensure_ascii=False)
+
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    json_path.write_text(encoded, encoding="utf-8")
+
+    PUBLIC_DATA_DIR.mkdir(parents=True, exist_ok=True)
+    (PUBLIC_DATA_DIR / "lessons.json").write_text(encoded, encoding="utf-8")
+
+    if LESSONS_JS_PATH.exists():
+        LESSONS_JS_PATH.unlink()
+
+    print(f"Wrote {len(lessons)} lessons → data/lessons.json, public/data/lessons.json")
 
 
 if __name__ == "__main__":

@@ -16,7 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DOCS = REPO_ROOT / "docs"
 TRACK = DOCS / "AI_System_Engineer_Learning_Track_2027.md"
 LESSONS_JSON = REPO_ROOT / "data" / "lessons.json"
-LESSONS_JS = REPO_ROOT / "src" / "data" / "lessonsData.js"
+PUBLIC_LESSONS_JSON = REPO_ROOT / "public" / "data" / "lessons.json"
 
 LINK_RE = re.compile(r"\[([^\]]*)\]\(([^)]+)\)")
 URL_RE = re.compile(r"https?://[^\s\]|)>\"']+")
@@ -149,14 +149,15 @@ def validate_app_data(lessons: list[dict]) -> list[str]:
             if not has_vid and not external_ok:
                 errors.append(f"Video lesson missing play target: order={les.get('order')} {les.get('lesson')}")
 
-    if not LESSONS_JS.exists():
-        errors.append(f"Missing {LESSONS_JS}")
+    if not PUBLIC_LESSONS_JSON.exists():
+        errors.append(f"Missing {PUBLIC_LESSONS_JSON} — run npm run curriculum")
     else:
-        js = LESSONS_JS.read_text(encoding="utf-8")
-        if "export const LESSONS_DATA" not in js:
-            errors.append("lessonsData.js missing LESSONS_DATA export")
-        if "export const COURSES_REF_DATA" not in js:
-            errors.append("lessonsData.js missing COURSES_REF_DATA export")
+        try:
+            pub = json.loads(PUBLIC_LESSONS_JSON.read_text(encoding="utf-8"))
+            if not pub.get("courses_ref"):
+                errors.append("public/data/lessons.json missing courses_ref")
+        except json.JSONDecodeError:
+            errors.append("public/data/lessons.json is invalid JSON")
 
     return errors
 

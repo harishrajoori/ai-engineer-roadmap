@@ -198,8 +198,8 @@ export default function Inspector({
   courseRef = { concepts: [], prompts: [] },
   notes = {},
   onSaveNotes,
-  proveUrl: _proveUrl = "",
-  onSaveProveUrl: _onSaveProveUrl,
+  proveUrl = "",
+  onSaveProveUrl,
   isCompleted: _isCompleted,
   onToggleComplete: _onToggleComplete,
   preferredModel = "gemini-2.5-flash",
@@ -297,6 +297,19 @@ export default function Inspector({
               </div>
             </div>
           </div>
+
+          {(lesson.type === "Prove" || lesson.type === "Build") && onSaveProveUrl && (
+            <div className="inspector-section">
+              <div className="section-title">Prove artifact</div>
+              <input
+                type="url"
+                className="chat-input"
+                placeholder="Link to repo, notebook, or demo"
+                value={proveUrl}
+                onChange={(e) => onSaveProveUrl(lesson.order, e.target.value.trim())}
+              />
+            </div>
+          )}
 
           <div className="inspector-section">
             <div className="section-title">Granular Learning Stack (All Levels)</div>

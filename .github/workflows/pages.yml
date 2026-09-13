@@ -39,6 +39,9 @@ jobs:
       - name: Validate curriculum and app wiring
         run: npm run validate:ci
 
+      - name: Sync curriculum to public bundle
+        run: npm run curriculum
+
       - name: Build React Studio
         run: npm run build
 

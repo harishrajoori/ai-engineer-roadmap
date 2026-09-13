@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, X, Loader2 } from 'lucide-react';
-import { generateAiResponse } from '../services/aiService';
+import { generateAiResponse, AVAILABLE_MODELS } from '../services/aiService';
 
 export default function RegenerateModal({
   isOpen,
@@ -79,10 +79,11 @@ Format output in clean, beautiful Markdown with clear section headers, bullet li
               onChange={(e) => setSelectedModel(e.target.value)}
               style={{ padding: '0.5rem' }}
             >
-              <option value="gemini-3.7-flash">Google Gemini 3.7 Flash (Ultra-Fast)</option>
-              <option value="gemini-3.8-flash">Google Gemini 3.8 Flash (Latest Preview)</option>
-              <option value="gemini-1.5-pro">Google Gemini 1.5 Pro (Deep Reasoning)</option>
-              <option value="groq-llama-3.3-70b-versatile">Groq: Llama 3.3 70B (Fast & Free)</option>
+              {AVAILABLE_MODELS.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.icon} {m.name} ({m.badge})
+                </option>
+              ))}
             </select>
           </div>
 

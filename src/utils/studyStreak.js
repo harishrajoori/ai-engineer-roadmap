@@ -1,5 +1,13 @@
 const STUDY_DAYS_KEY = "ai_hub_react_study_days";
 
+/** Local calendar date YYYY-MM-DD (not UTC). */
+export function localDateKey(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 /**
  * @returns {string[]} ISO date strings (YYYY-MM-DD) when the user completed at least one lesson.
  */
@@ -21,7 +29,7 @@ export function saveStudyDays(days) {
  * Record today as a study day (deduped).
  */
 export function recordStudyDay(existingDays) {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = localDateKey();
   if (existingDays.includes(today)) {
     return existingDays;
   }
@@ -39,10 +47,10 @@ export function computeStreakDays(studyDays) {
   const cursor = new Date();
   cursor.setHours(0, 0, 0, 0);
 
-  const today = cursor.toISOString().slice(0, 10);
+  const today = localDateKey(cursor);
   const yesterday = new Date(cursor);
   yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().slice(0, 10);
+  const yesterdayStr = localDateKey(yesterday);
 
   if (!set.has(today) && !set.has(yesterdayStr)) {
     return 0;
@@ -54,7 +62,7 @@ export function computeStreakDays(studyDays) {
 
   let streak = 0;
   while (true) {
-    const key = cursor.toISOString().slice(0, 10);
+    const key = localDateKey(cursor);
     if (!set.has(key)) {
       break;
     }

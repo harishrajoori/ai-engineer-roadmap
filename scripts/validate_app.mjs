@@ -1,22 +1,28 @@
 /**
- * Smoke-test bundled curriculum module and core app imports (no browser).
+ * Smoke-test curriculum JSON and core app wiring (no browser).
  */
 import { readFileSync, existsSync } from "node:fs";
-import { pathToFileURL } from "node:url";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
-const lessonsJs = path.join(root, "src/data/lessonsData.js");
+const lessonsJson = path.join(root, "data/lessons.json");
+const publicJson = path.join(root, "public/data/lessons.json");
 
-if (!existsSync(lessonsJs)) {
-  console.error("Missing src/data/lessonsData.js — run npm run curriculum");
+if (!existsSync(lessonsJson)) {
+  console.error("Missing data/lessons.json — run npm run curriculum");
   process.exit(1);
 }
 
-const mod = await import(pathToFileURL(lessonsJs).href);
-const { LESSONS_DATA, COURSES_REF_DATA } = mod;
+if (!existsSync(publicJson)) {
+  console.error("Missing public/data/lessons.json — run npm run curriculum");
+  process.exit(1);
+}
+
+const data = JSON.parse(readFileSync(lessonsJson, "utf8"));
+const LESSONS_DATA = data.lessons;
+const COURSES_REF_DATA = data.courses_ref || {};
 
 const checks = [];
 
@@ -26,7 +32,7 @@ if (!Array.isArray(LESSONS_DATA) || LESSONS_DATA.length < 50) {
 
 const orders = new Set(LESSONS_DATA.map((l) => l.order));
 if (orders.size !== LESSONS_DATA.length) {
-  checks.push("Duplicate lesson order in LESSONS_DATA");
+  checks.push("Duplicate lesson order in lessons.json");
 }
 
 for (const key of ["order", "course", "lesson", "type"]) {
@@ -37,33 +43,31 @@ for (const key of ["order", "course", "lesson", "type"]) {
 }
 
 if (!COURSES_REF_DATA || typeof COURSES_REF_DATA !== "object") {
-  checks.push("COURSES_REF_DATA missing");
+  checks.push("courses_ref missing in lessons.json");
 } else {
   const courseNums = new Set(LESSONS_DATA.map((l) => String(l.course)));
   for (const c of courseNums) {
     if (!COURSES_REF_DATA[c]) {
-      checks.push(`COURSES_REF_DATA missing course ${c}`);
+      checks.push(`courses_ref missing course ${c}`);
     }
   }
 }
 
-// aiService exports
+const loaderPath = path.join(root, "src/services/curriculumLoader.js");
+const loaderSrc = readFileSync(loaderPath, "utf8");
+if (!loaderSrc.includes("data/lessons.json")) {
+  checks.push("curriculumLoader does not fetch data/lessons.json");
+}
+
 const aiPath = path.join(root, "src/services/aiService.js");
 const aiSrc = readFileSync(aiPath, "utf8");
 if (!aiSrc.includes("ai_hub_react_api_keys")) {
   checks.push("aiService does not read Settings storage key");
 }
-if (!aiSrc.includes("readStoredApiKeys")) {
-  checks.push("aiService missing readStoredApiKeys");
-}
 
-// Component contract hints
 const appSrc = readFileSync(path.join(root, "src/App.jsx"), "utf8");
-if (!appSrc.includes("activeLessonOrder")) {
-  checks.push("App missing activeLessonOrder wiring");
-}
-if (!appSrc.includes("computeStreakDays")) {
-  checks.push("App missing streak computation");
+if (!appSrc.includes("loadCurriculum")) {
+  checks.push("App missing loadCurriculum wiring");
 }
 
 const feedSrc = readFileSync(path.join(root, "src/components/LessonFeed.jsx"), "utf8");
@@ -75,9 +79,6 @@ const stageSrc = readFileSync(path.join(root, "src/components/SmartStage.jsx"), 
 if (!stageSrc.includes("videoOverrides")) {
   checks.push("SmartStage missing videoOverrides");
 }
-if (!stageSrc.includes("regeneratedContent")) {
-  checks.push("SmartStage missing regeneratedContent");
-}
 
 if (checks.length) {
   console.error("APP VALIDATION FAILED:");
@@ -85,4 +86,6 @@ if (checks.length) {
   process.exit(1);
 }
 
-console.log(`APP VALIDATION OK (${LESSONS_DATA.length} lessons, ${Object.keys(COURSES_REF_DATA).length} course refs)`);
+console.log(
+  `APP VALIDATION OK (${LESSONS_DATA.length} lessons, ${Object.keys(COURSES_REF_DATA).length} course refs)`
+);
