@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, Key, Shield, Download, Upload, Check, ExternalLink } from "lucide-react";
-import { AVAILABLE_MODELS } from "../services/aiService";
+import { AVAILABLE_MODELS, normalizePreferredModel } from "../services/aiService";
 import GoogleSignInButton from "./GoogleSignInButton";
 import { resolveGoogleClientId } from "../utils/googleAuth";
 
@@ -23,7 +23,7 @@ export default function SettingsModal({
   const [groqKey, setGroqKey] = useState(keys.groq || "");
   const [openRouterKey, setOpenRouterKey] = useState(keys.openrouter || "");
   const [googleClientId, setGoogleClientId] = useState(keys.googleClientId || "");
-  const [model, setModel] = useState(preferredModel || "gemini-2.5-flash");
+  const [model, setModel] = useState(() => normalizePreferredModel(preferredModel));
   const [customModel, setCustomModel] = useState("");
   const [savedSuccess, setSavedSuccess] = useState(false);
 
@@ -125,6 +125,11 @@ export default function SettingsModal({
                   onAuthError={onGoogleAuthError}
                   hint="Save or Apply the Web Client ID below, then sign in."
                 />
+              )}
+              {googleAuthError && (
+                <p style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "0.5rem", border: "1px solid #ef4444", padding: "0.5rem", borderRadius: "4px", backgroundColor: "rgba(239,68,68,0.1)" }}>
+                  {googleAuthError}
+                </p>
               )}
             </div>
             <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0, lineHeight: 1.45 }}>

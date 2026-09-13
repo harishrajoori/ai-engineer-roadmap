@@ -202,7 +202,7 @@ export default function Inspector({
   onSaveProveUrl: _onSaveProveUrl,
   isCompleted: _isCompleted,
   onToggleComplete: _onToggleComplete,
-  preferredModel = "gemini-2.5-flash",
+  preferredModel = "gemini-3.6-flash",
   onSelectModel,
   onOpenSettings,
   apiKeys = {},

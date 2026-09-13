@@ -25,6 +25,7 @@ import {
   regenerationMarkdown,
   saveTheoryRegeneration,
 } from "./utils/theoryRegenerationStore";
+import { normalizePreferredModel } from "./services/aiService";
 import {
   applyStudioCloudPayload,
   buildStudioCloudPayload,
@@ -52,7 +53,9 @@ export default function App() {
     loadTheoryRegenerations(readJsonStorage(USER_KEY, null))
   );
   const [apiKeys, setApiKeys] = useState(() => readJsonStorage(KEYS_KEY, {}));
-  const [preferredModel, setPreferredModel] = useState(() => localStorage.getItem(MODEL_KEY) || "gemini-2.5-flash");
+  const [preferredModel, setPreferredModel] = useState(() =>
+    normalizePreferredModel(localStorage.getItem(MODEL_KEY))
+  );
   const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || "dark");
   const [userProfile, setUserProfile] = useState(() => readJsonStorage(USER_KEY, null));
   const [studyDays, setStudyDays] = useState(() => loadStudyDays());

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Sparkles, X, Loader2 } from 'lucide-react';
-import { generateAiResponse, AVAILABLE_MODELS } from '../services/aiService';
+import { generateAiResponse, AVAILABLE_MODELS, normalizePreferredModel } from '../services/aiService';
 
 export default function RegenerateModal({
   isOpen,
@@ -11,7 +11,7 @@ export default function RegenerateModal({
   apiKeys = {}
 }) {
   const [lens, setLens] = useState('staff'); // 'staff' | 'eli5' | 'interview' | 'code'
-  const [selectedModel, setSelectedModel] = useState(preferredModel || 'gemini-2.5-flash');
+  const [selectedModel, setSelectedModel] = useState(() => normalizePreferredModel(preferredModel));
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 

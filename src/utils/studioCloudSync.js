@@ -49,7 +49,7 @@ export function buildStudioCloudPayload(slice) {
     proveUrls: slice.proveMap || {},
     videoOverrides: slice.videoOverrides || {},
     studyDays: slice.studyDays || [],
-    preferredModel: slice.preferredModel || "gemini-2.5-flash",
+    preferredModel: slice.preferredModel || "gemini-3.6-flash",
     regenerations: slice.regenerations || {},
     apiKeys: {
       googleClientId: (slice.apiKeys?.googleClientId || "").trim(),
