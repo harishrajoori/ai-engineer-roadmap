@@ -22,6 +22,7 @@ if str(_SCRIPTS) not in sys.path:
 from enrichment_utils import digest_matches_lesson  # noqa: E402
 from topic_hints import get_topic_hint  # noqa: E402
 from topic_handbook.entries import HANDBOOK_BY_ORDER  # noqa: E402
+from link_quality import validate_lesson_links  # noqa: E402
 DOCS = REPO_ROOT / "docs"
 TRACK = DOCS / "AI_System_Engineer_Learning_Track_2027.md"
 LESSONS_JSON = REPO_ROOT / "data" / "lessons.json"
@@ -257,6 +258,15 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
         warnings.append(
             f"{advanced_shorter_than_beginner} lessons where advanced is shorter than beginner (inverted depth)"
         )
+
+    link_issues: list[str] = []
+    for les in lessons:
+        link_issues.extend(validate_lesson_links(les))
+    if link_issues:
+        warnings.append(f"{len(link_issues)} link-quality issues (paid/shallow/read-repo):")
+        warnings.extend(link_issues[:25])
+        if len(link_issues) > 25:
+            warnings.append(f"… and {len(link_issues) - 25} more link-quality issues")
 
     return warnings
 

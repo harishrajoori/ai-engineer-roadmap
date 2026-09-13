@@ -41,8 +41,10 @@ const DEFAULT_RESOURCES = [
 ];
 
 function resourceToBlock(res, fallbackVideoId) {
-  const videoId =
-    res.videoId || youtubeIdFromUrl(res.url) || (res.type === "video" ? fallbackVideoId : "");
+  const repo = isRepoResource(res);
+  const videoId = repo
+    ? ""
+    : res.videoId || youtubeIdFromUrl(res.url) || (res.type === "video" ? fallbackVideoId : "");
   return {
     level: res.level || "Resource",
     label: res.title || res.label || "Resource",
@@ -61,6 +63,21 @@ function defaultTabForLesson(lesson) {
     return "overview";
   }
   return "overview";
+}
+
+function sourceTabMeta(lesson) {
+  if (lesson?.type === "Read") {
+    return { id: "lecture", label: "Reading", Icon: BookOpen };
+  }
+  if (lesson?.type === "Video") {
+    return { id: "lecture", label: "Lecture", Icon: PlayCircle };
+  }
+  return { id: "lecture", label: "Source", Icon: ExternalLink };
+}
+
+function isRepoResource(res) {
+  const url = (res?.url || "").toLowerCase();
+  return res?.type === "repo" || url.includes("github.com");
 }
 
 export default function SmartStage({
@@ -156,6 +173,9 @@ export default function SmartStage({
       lesson.open_how?.includes("Browser") ||
       (!showPrimaryEmbed && lesson.type === "Video"));
 
+  const sourceTab = sourceTabMeta(lesson);
+  const supplementsLabel = lesson.type === "Read" ? "More resources" : "More resources";
+
   return (
     <div className="learning-stage">
       <div className="learning-stage-breadcrumb">
@@ -211,8 +231,8 @@ export default function SmartStage({
           className={`learning-tab ${activeTab === "lecture" ? "active" : ""}`}
           onClick={() => setActiveTab("lecture")}
         >
-          <PlayCircle size={17} />
-          Lecture
+          <sourceTab.Icon size={17} />
+          {sourceTab.label}
         </button>
         <button
           type="button"
@@ -220,8 +240,8 @@ export default function SmartStage({
           className={`learning-tab ${activeTab === "supplements" ? "active" : ""}`}
           onClick={() => setActiveTab("supplements")}
         >
-          <PlayCircle size={17} />
-          More resources
+          <BookOpen size={17} />
+          {supplementsLabel}
         </button>
         <button
           type="button"
@@ -240,7 +260,7 @@ export default function SmartStage({
             <span>
               <strong>New to AI?</strong> Use <strong>Foundations</strong> below → read this page → then{" "}
               <button type="button" className="theory-path-link" onClick={() => setActiveTab("lecture")}>
-                Lecture
+                {sourceTab.label}
               </button>
               . Open <strong>Study guide</strong> when Foundations feels easy on this topic.
             </span>
@@ -262,6 +282,11 @@ export default function SmartStage({
           )}
           {lesson.coverage_note && (
             <div className="learning-coverage-callout">{lesson.coverage_note}</div>
+          )}
+          {lesson.access_note && (
+            <div className="learning-access-callout" role="note">
+              {lesson.access_note}
+            </div>
           )}
           <div className="theory-prose-wrap">
             {regeneratedContent && (
@@ -303,14 +328,22 @@ export default function SmartStage({
             </a>
           ) : lesson.url ? (
             <a href={lesson.url} target="_blank" rel="noopener noreferrer" className="learning-external-card">
-              <ExternalLink size={28} />
+              {lesson.type === "Read" ? <BookOpen size={28} /> : <ExternalLink size={28} />}
               <div>
-                <div className="learning-external-title">Primary resource</div>
-                <div className="learning-external-sub">Open the syllabus link for this topic.</div>
+                <div className="learning-external-title">
+                  {lesson.type === "Read" ? "Primary reading" : "Primary resource"}
+                </div>
+                <div className="learning-external-sub">
+                  {lesson.type === "Read"
+                    ? "Official docs or article for this topic. Repositories and extras are under More resources."
+                    : "Open the syllabus link for this topic."}
+                </div>
               </div>
             </a>
           ) : (
-            <p className="learning-empty-tab">No primary lecture URL for this item — use More resources or the Resources panel.</p>
+            <p className="learning-empty-tab">
+              No primary URL for this item — use More resources or the inspector panel.
+            </p>
           )}
         </div>
       )}
@@ -338,8 +371,8 @@ export default function SmartStage({
                 </div>
               ) : res.url ? (
                 <a href={res.url} target="_blank" rel="noopener noreferrer" className="learning-resource-link">
-                  <ExternalLink size={14} />
-                  Open {res.label}
+                  {isRepoResource(res) ? <Code2 size={14} /> : <ExternalLink size={14} />}
+                  {isRepoResource(res) ? `Open repository — ${res.label}` : `Open ${res.label}`}
                 </a>
               ) : null}
               <p className="learning-video-summary">{res.add || "Supplementary material for this topic."}</p>

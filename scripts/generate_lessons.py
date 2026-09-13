@@ -17,6 +17,13 @@ from curriculum_enrichment import (
 )
 from walkthrough_content import PROGRAM_WALKTHROUGH, walkthrough_for_course
 from enrichment_utils import index_lessons_by_key, lesson_stable_key, sanitize_lesson_enrichment
+from link_quality import (
+    READ_COMPANION_REPO,
+    access_note_for_url,
+    canonical_read_url,
+    is_github_url,
+    is_paid_host,
+)
 from theory_builder import build_theory_summary, section_label
 from topic_theory_levels import attach_theory_levels
 
@@ -32,6 +39,12 @@ PUBLIC_DATA_DIR = REPO_ROOT / "public" / "data"
 LESSONS_JS_PATH = REPO_ROOT / "src" / "data" / "lessonsData.js"
 
 URL_FIXES: dict[str, str] = {
+    "https://graphacademy.neo4j.com/": "https://graphacademy.neo4j.com/courses/neo4j-fundamentals/",
+    "https://github.com/DS4SD/docling#documentation": "https://docling-project.github.io/docling/",
+    "https://github.com/DS4SD/docling": "https://docling-project.github.io/docling/",
+    "https://github.com/microsoft/graphrag": "https://microsoft.github.io/graphrag/",
+    "https://github.com/jlowin/fastmcp": "https://gofastmcp.com/getting-started/welcome",
+    "https://github.com/dottxt-ai/outlines": "https://dottxt-ai.github.io/outlines/latest/",
     "https://docs.vllm.ai/en/latest/features/prefix_caching.html": "https://docs.vllm.ai/en/latest/design/automatic_prefix_caching/",
     "https://python.useinstructor.com/concepts/retries/": "https://python.useinstructor.com/",
     "https://spec.modelcontextprotocol.io/": "https://modelcontextprotocol.io/specification/2025-11-25",
@@ -73,9 +86,9 @@ SECTION_TO_TYPE = {
 }
 
 CHECKBOX_LINK = re.compile(
-    r"^- \[ \] (\(optional\) )?\[([^\]]+)\]\(([^)]+)\)(.*)$"
+    r"^- \[ \] (\(optional[^)]*\)\s*)?\[([^\]]+)\]\(([^)]+)\)(.*)$"
 )
-CHECKBOX_PLAIN = re.compile(r"^- \[ \] (\(optional\) )?(.*)$")
+CHECKBOX_PLAIN = re.compile(r"^- \[ \] (\(optional[^)]*\)\s*)?(.*)$")
 TIME_RE = re.compile(r"·\s*(.+)$")
 
 
@@ -424,11 +437,84 @@ def annotate_shared_urls(lessons: list[dict]) -> None:
 
 
 def resource_type_for(lesson_type: str, url: str) -> str:
+    if is_github_url(url):
+        return "repo"
     if "arxiv.org" in url:
         return "paper"
     if lesson_type == "Video" or "youtube.com" in url or "youtu.be" in url:
         return "video"
     return "guide"
+
+
+def annotate_access_and_read_urls(row: dict) -> None:
+    """Canonicalize Read URLs (docs before repos) and surface paid-platform notes."""
+    url = fix_url((row.get("url") or "").strip())
+    ltype = row.get("type") or ""
+    title = row.get("lesson") or ""
+    optional = "(optional)" in title.lower() or row.get("required") == "No"
+
+    if ltype == "Read" and url:
+        canonical = canonical_read_url(url)
+        if canonical != url:
+            repo_url = url.split("#")[0]
+            row["url"] = fix_url(canonical)
+            resources = list(row.get("resources") or [])
+            if repo_url.startswith("http") and not any(
+                (r.get("url") or "").strip().startswith(repo_url) for r in resources
+            ):
+                resources.append(
+                    {
+                        "title": f"{title} — source repository",
+                        "url": fix_url(repo_url),
+                        "type": "repo",
+                        "level": "intermediate",
+                        "description": "Official code and issues; read docs first, then skim README for install.",
+                    }
+                )
+            row["resources"] = resources
+        elif url in READ_COMPANION_REPO.values() or canonical in READ_COMPANION_REPO:
+            pass
+        elif canonical in READ_COMPANION_REPO:
+            repo = READ_COMPANION_REPO[canonical]
+            resources = list(row.get("resources") or [])
+            if not any((r.get("url") or "").strip() == repo for r in resources):
+                resources.append(
+                    {
+                        "title": "Source repository",
+                        "url": repo,
+                        "type": "repo",
+                        "level": "intermediate",
+                        "description": "Implementation reference after reading the docs.",
+                    }
+                )
+            row["resources"] = resources
+
+    primary = (row.get("url") or "").strip()
+    if primary in READ_COMPANION_REPO:
+        repo = READ_COMPANION_REPO[primary]
+        resources = list(row.get("resources") or [])
+        if not any((r.get("url") or "").strip() == repo for r in resources):
+            resources.append(
+                {
+                    "title": "Source repository",
+                    "url": repo,
+                    "type": "repo",
+                    "level": "intermediate",
+                    "description": "Implementation reference after reading the docs.",
+                }
+            )
+        row["resources"] = resources
+
+    if primary.startswith("http"):
+        note = access_note_for_url(primary, row.get("required") or "Yes", optional)
+        if note and note != "PAID_HOST_MARKED_REQUIRED":
+            row["access_note"] = note
+        if is_paid_host(primary):
+            row["access_tier"] = "paid_optional"
+        elif is_github_url(primary) and ltype == "Read":
+            row["access_tier"] = "repo_read"
+        else:
+            row["access_tier"] = row.get("access_tier") or "free"
 
 
 _PRIMARY_RESOURCE_DESC = "Main link for this topic from the learning track."
@@ -489,6 +575,7 @@ def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]])
     attach_related_topics(lessons)
     _mark_start_here(lessons)
     for row in lessons:
+        annotate_access_and_read_urls(row)
         ensure_primary_resource(row)
         merge_related_into_resources(row)
         row["section_label"] = section_label(row.get("section") or "")
@@ -592,8 +679,8 @@ def parse_track(text: str) -> list[dict]:
 
         sec_key = section.lower()
         lesson_type = SECTION_TO_TYPE.get(sec_key, "Read")
-        if "optional" in line.lower() and not optional:
-            optional = "(optional)" in line
+        if not optional and re.search(r"\(optional", line, re.IGNORECASE):
+            optional = True
 
         order += 1
         open_how = open_mode(url, lesson_type) if url else "Checkbox"

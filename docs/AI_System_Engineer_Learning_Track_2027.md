@@ -245,7 +245,7 @@
 - [ ] [MCP introduction](https://modelcontextprotocol.io/introduction)
 - [ ] [MCP specification / docs](https://modelcontextprotocol.io/docs)
 - [ ] [MCP Illustrated Guidebook](https://mcp.dailydoseofds.com)
-- [ ] [FastMCP (Python)](https://github.com/jlowin/fastmcp)
+- [ ] [FastMCP (Python)](https://gofastmcp.com/getting-started/welcome)
 - [ ] [Hub roadmap — MCP section](https://github.com/patchy631/ai-engineering-hub/blob/main/ai-engineering-roadmap/README.md)
 - [ ] [JSON Schema](https://json-schema.org/)
 
@@ -280,7 +280,7 @@
 **Watch**
 
 - [ ] [Document Chat RAG walkthrough](https://www.youtube.com/watch?v=ZgNJMWipirk) · ~45 m
-- [ ] *(optional)* [CampusX Advanced RAG outline](https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265) · hybrid modules
+- [ ] *(optional, paid)* [CampusX Advanced RAG outline](https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265) · hybrid modules
 
 **Read**
 
@@ -316,10 +316,10 @@
 
 ### Syllabus
 
-**Watch / read**
+**Read**
 
-- [ ] [Docling (IBM)](https://github.com/DS4SD/docling) · README / release demos
-- [ ] [Docling documentation](https://github.com/DS4SD/docling#documentation)
+- [ ] [Docling documentation](https://docling-project.github.io/docling/)
+- [ ] *(optional)* [Docling repository](https://github.com/docling-project/docling) · README / release demos
 - [ ] [LlamaParse getting started](https://docs.cloud.llamaindex.ai/llamaparse/getting_started)
 - [ ] [Chip Huyen — data for LLM systems](https://chiphuyen.com/)
 
@@ -354,12 +354,12 @@
 
 **Watch**
 
-- [ ] [Neo4j GraphAcademy](https://graphacademy.neo4j.com/) · 4–8 h
-- [ ] *(optional)* [CampusX Graph RAG modules](https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265)
+- [ ] [Neo4j Fundamentals (GraphAcademy)](https://graphacademy.neo4j.com/courses/neo4j-fundamentals/) · 4–8 h
+- [ ] *(optional, paid)* [CampusX Graph RAG modules](https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265)
 
 **Read**
 
-- [ ] [Microsoft GraphRAG](https://github.com/microsoft/graphrag)
+- [ ] [Microsoft GraphRAG documentation](https://microsoft.github.io/graphrag/) *(repo linked in studio resources)*
 - [ ] [Neo4j Cypher manual](https://neo4j.com/docs/cypher-manual/current/)
 
 **Build**
@@ -391,7 +391,7 @@
 **Watch**
 
 - [ ] [RAG Evaluation (Ragas context)](https://www.youtube.com/watch?v=bB56BaQIBm4) · ~1 h
-- [ ] *(optional)* CampusX RAGAS module — [Advanced RAG outline](https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265)
+- [ ] *(optional, paid)* CampusX RAGAS module — [Advanced RAG outline](https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265)
 
 **Read**
 

@@ -43,6 +43,10 @@ jobs:
         run: npm run curriculum
 
       - name: Build React Studio
+        env:
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+          VITE_STUDIO_SYNC_URL: ${{ secrets.VITE_STUDIO_SYNC_URL }}
+          VITE_THEORY_SYNC_URL: ${{ secrets.VITE_THEORY_SYNC_URL }}
         run: npm run build
 
       - name: Setup Pages

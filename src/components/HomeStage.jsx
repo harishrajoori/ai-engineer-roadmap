@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import HomeAuthPanel from "./HomeAuthPanel";
 import MarkdownProse from "./MarkdownProse";
 import {
   ArrowRight,
@@ -25,6 +26,13 @@ export default function HomeStage({
   onOpenCourse,
   onContinueLesson,
   resumeLabel = "",
+  userProfile = null,
+  googleOAuthEnabled = false,
+  cloudSyncConfigured = false,
+  cloudSyncStatus = "idle",
+  onGoogleLogin,
+  onGoogleLogout,
+  onOpenSettings,
 }) {
   const hasProgress = completedCount > 0;
   const phases = programWalkthrough.phases || [];
@@ -87,6 +95,16 @@ export default function HomeStage({
             </p>
           )}
         </div>
+
+        <HomeAuthPanel
+          userProfile={userProfile}
+          googleOAuthEnabled={googleOAuthEnabled}
+          cloudSyncConfigured={cloudSyncConfigured}
+          cloudSyncStatus={cloudSyncStatus}
+          onGoogleLogin={onGoogleLogin}
+          onGoogleLogout={onGoogleLogout}
+          onOpenSettings={onOpenSettings}
+        />
 
         <section className="home-how" aria-labelledby="home-first-clicks">
           <h2 id="home-first-clicks">Your first three clicks</h2>

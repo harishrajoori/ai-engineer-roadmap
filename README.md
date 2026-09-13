@@ -40,7 +40,13 @@ npm run build
 # Publish dist/ to any static host (GitHub Pages, S3, etc.)
 ```
 
-Set `VITE_GOOGLE_CLIENT_ID` for Sign in with Google (see `.env.example`).
+### Sign in with Google + cloud sync
+
+1. Create a **Google OAuth Web Client ID** (authorized origins: localhost + your GitHub Pages URL).
+2. Set `VITE_GOOGLE_CLIENT_ID` in `.env` or as a GitHub Actions secret (see `.github/workflows/pages.yml`).
+3. Optional: deploy `sync-worker/` to Cloudflare KV and set `VITE_STUDIO_SYNC_URL` so progress, notes, prove links, API keys, and AI regenerations sync across devices after sign-in.
+
+The **home page** has a **Sign in with Google** card; the header also supports sign-in when OAuth is configured.
 
 ## Architecture (capstone spine)
 

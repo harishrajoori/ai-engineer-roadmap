@@ -75,6 +75,27 @@ def advanced_narrative(lesson: dict, hint: dict) -> str:
             "task success on golden set, and cost/latency envelopes. Advanced teams block release on "
             "**composite** gates, not a single accuracy number."
         )
+    if "graphacademy" in b or "neo4j fundamentals" in b:
+        return (
+            "GraphAcademy here is **skills for validation**, not a mandate to run Neo4j in production. "
+            "Complete the Fundamentals path so you can read Cypher in CI and explain why a relationship "
+            "rule failed. Cap your scope: one small graph schema tied to Month 5 chunks, one MATCH that "
+            "blocks bad agent actions, export test fixtures as JSON—not a managed cluster on day one."
+        )
+    if "graphrag" in b and "microsoft" in b:
+        return (
+            "GraphRAG docs describe a **heavy indexing pipeline** (communities, summaries, global search). "
+            "Your Month 6 prove gate is a **validator**, not a full GraphRAG deployment. Read for "
+            "terminology and cost awareness; explicitly list subsystems you are **not** building. "
+            "If you experiment, benchmark against flat RAG on the same labeled questions before expanding scope."
+        )
+    if "docling" in b:
+        return (
+            "Docling is a **document ETL library**: layout, tables, and export to structured chunks. "
+            "Treat parsing like bronze ingestion—schema for `chunks.jsonl`, idempotent re-runs, and "
+            "golden files for regression when the parser version bumps. LlamaParse is the paid alternative "
+            "when Docling loses on your PDF corpus; document the tradeoff with a side-by-side sample."
+        )
     if "retriev" in b or "rag" in b or "hybrid" in b:
         return (
             "Retrieval is a **data pipeline**: chunk quality dominates model choice. Measure recall@k on "

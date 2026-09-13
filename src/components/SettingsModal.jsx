@@ -107,8 +107,9 @@ export default function SettingsModal({
               )}
             </div>
             <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0, lineHeight: 1.45 }}>
-              Regenerated theory pages are saved per Google account on this browser. Optional cloud sync: set{" "}
-              <code style={{ fontSize: "0.7rem" }}>VITE_THEORY_SYNC_URL</code> when building the app.
+              After sign-in, progress and settings can sync to the cloud when{" "}
+              <code style={{ fontSize: "0.7rem" }}>VITE_STUDIO_SYNC_URL</code> is set at build time (see{" "}
+              <code style={{ fontSize: "0.7rem" }}>sync-worker/</code>).
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.5rem" }}>

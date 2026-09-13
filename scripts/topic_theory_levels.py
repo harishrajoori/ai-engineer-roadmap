@@ -31,8 +31,9 @@ def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
 
     lines.append(f"# {title}")
     lines.append("")
+    read_tab = "Reading" if ltype == "Read" else "Lecture"
     lines.append(
-        "> **Foundations** — plain language first. When this makes sense, open **Lecture**. "
+        f"> **Foundations** — plain language first. When this makes sense, open **{read_tab}**. "
         "Switch to **Study guide** for the full checklist and prove rubric."
     )
     lines.append("")
@@ -91,10 +92,18 @@ def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
             lines.append(f"- {o}")
         lines.append("")
 
-    lines.append("## Ready for the lecture when")
+    ready_label = "Ready after reading when" if ltype == "Read" else "Ready for the lecture when"
+    lines.append(f"## {ready_label}")
     lines.append("")
     lines.append(hint.get("done_when") or "You can explain the main idea in one or two sentences without jargon.")
     lines.append("")
+
+    if ltype == "Read" and "github.com" in (lesson.get("url") or ""):
+        lines.append(
+            "> **Why a GitHub link?** Official docs are the primary reading target when we list them; "
+            "the repo is for source, issues, and README install notes—not a video lecture."
+        )
+        lines.append("")
 
     return "\n".join(lines)
 
@@ -195,6 +204,21 @@ def build_advanced_markdown(lesson: dict, course_outcomes: list[str]) -> str:
     for q in interview_depth(lesson, hint):
         lines.append(f"- {q}")
     lines.append("")
+
+    if len("\n".join(lines)) < 1900:
+        extras: list[str] = []
+        if hint.get("capstone_action"):
+            extras.append(f"**Capstone:** {hint['capstone_action']}")
+        if hint.get("done_when"):
+            extras.append(f"**Done when:** {hint['done_when']}")
+        for ip in hint.get("interview_prompts") or []:
+            extras.append(f"**Interview angle:** {ip}")
+        if extras:
+            lines.append("## Extended platform notes")
+            lines.append("")
+            for e in extras:
+                lines.append(f"- {e}")
+            lines.append("")
 
     if hint.get("capstone_action"):
         lines.append("## Capstone implementation")

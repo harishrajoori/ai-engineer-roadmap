@@ -1255,11 +1255,11 @@
     "done_when": "Course 5 acceptance met."
   },
   "63": {
-    "one_liner": "Neo4j GraphAcademy—graph fundamentals for relationship validation slice in Month 6.",
+    "one_liner": "Neo4j Fundamentals on GraphAcademy—nodes, relationships, and Cypher for validation rules.",
     "why_now": "Lightweight graph rules—not building Neo4j as primary store.",
     "mental_model": "Graph = constraint checker on entities extracted from corpus.",
-    "beginner_extra": "Complete intro modules; learn nodes, relationships, Cypher basics.",
-    "intermediate_deep_dive": "Model tiny graph matching your domain (doc, chunk, entity).",
+    "beginner_extra": "Open the **Neo4j Fundamentals** course path (not the catalog homepage). Finish graph + Cypher intro modules before build week.",
+    "intermediate_deep_dive": "Model a tiny graph (document → chunk → entity). Add one MATCH that fails on a bad fixture and wire it into pytest like a dbt test.",
     "advanced_extra": "When graph validation fails, surface human-readable explanation to agent.",
     "watch_for": [
       "Cypher MATCH patterns",
@@ -1278,7 +1278,7 @@
     "one_liner": "Optional CampusX Graph RAG modules—only if pursuing GraphRAG beyond validator scope.",
     "why_now": "Optional; syllabus allows skip if validator prove passes.",
     "mental_model": "GraphRAG = advanced retrieval—not required for course prove.",
-    "beginner_extra": "Skip unless interested; do not block Month 6 build.",
+    "beginner_extra": "Paid CampusX course—skip unless you want extra video depth; do not block Month 6 build.",
     "intermediate_deep_dive": "If taken, note one idea borrowed for validator messages.",
     "advanced_extra": "Separate experimental branch from main capstone.",
     "watch_for": [
@@ -1295,15 +1295,16 @@
     "done_when": "Validator prove independent of this video."
   },
   "65": {
-    "one_liner": "Microsoft GraphRAG repo—reference architecture for graph-based retrieval (read selectively).",
+    "one_liner": "Microsoft GraphRAG documentation—how graph indexing differs from your validator scope.",
     "why_now": "Understand hype vs your scoped validator use case.",
     "mental_model": "GraphRAG pipeline = expensive; you borrow ideas, not whole stack.",
-    "beginner_extra": "Read README architecture diagram only unless opting into frontier work.",
-    "intermediate_deep_dive": "List components you are NOT building and why.",
-    "advanced_extra": "If experimenting, measure cost vs flat RAG on same question set.",
+    "beginner_extra": "Start at **Get started** on the official docs. Skim architecture; use the linked GitHub repo only after SCOPE.md is written.",
+    "intermediate_deep_dive": "List GraphRAG subsystems you are NOT building and map one idea to your capstone validator only.",
+    "advanced_extra": "If experimenting, benchmark indexing cost and answer quality vs flat RAG on 10–20 labeled questions.",
     "read_sections": [
-      "README",
-      "Indexing pipeline overview"
+      "Get started",
+      "Indexing pipeline overview",
+      "Query modes (local vs global)"
     ],
     "failure_modes": [
       "Adopting GraphRAG without eval uplift proof"

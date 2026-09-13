@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { profileFromGoogleCredential } from "../utils/googleAuth";
 
-export default function GoogleSignInButton({ onSuccess, enabled, hint }) {
+export default function GoogleSignInButton({ onSuccess, enabled, hint, width }) {
   if (!enabled) {
     return (
       <p className="text-xs text-slate-500 m-0" style={{ lineHeight: 1.4 }}>
@@ -22,9 +22,10 @@ export default function GoogleSignInButton({ onSuccess, enabled, hint }) {
         /* user cancelled or misconfigured client */
       }}
       theme="filled_black"
-      size="medium"
+      size="large"
       text="signin_with"
       shape="rectangular"
+      width={width || undefined}
     />
   );
 }
