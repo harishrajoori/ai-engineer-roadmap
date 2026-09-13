@@ -416,7 +416,7 @@ export default function Inspector({
           <div className="inspector-section">
             <div className="section-title">Level-wise stack (free resources)</div>
             <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginBottom: "0.5rem" }}>
-              Beginner → advanced links for this topic. Primary lecture stays under the Lecture tab.
+              Implementation repos are matched to this lesson first (🔧). Primary lecture stays under the Lecture tab.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               {displayResources.length === 0 && (

@@ -13,6 +13,9 @@ CATALOG_PATH = REPO_ROOT / "data" / "implementation_repo_catalog.json"
 
 _cache: dict[str, Any] | None = None
 MAX_REPOS_PER_LESSON = 4
+MIN_ATTACH_SCORE = 6
+GENERIC_REPO_IDS = frozenset({"patchy-hub", "ai-engineering-from-scratch"})
+GENERIC_MIN_SCORE = 12
 
 
 def load_implementation_catalog() -> dict[str, Any]:
@@ -38,31 +41,43 @@ def _validated_repos() -> list[dict[str, Any]]:
     return out
 
 
+def _pattern_matches_url(pattern: str, url: str) -> bool:
+    p = (pattern or "").strip().lower()
+    if not p or not url:
+        return False
+    if len(p) < 8 and "youtube.com" not in p and "github.com" not in p:
+        return False
+    return p in url
+
+
 def _score_repo(entry: dict[str, Any], lesson: dict) -> int:
     url = (lesson.get("url") or "").lower()
     title = normalize_lesson_title(lesson.get("lesson") or "")
     title_tokens = token_set(title)
     score = 0
     course = str(lesson.get("course", ""))
-    for c in entry.get("courses") or []:
-        if str(c) == course:
-            score += 3
     for pat in entry.get("url_match") or []:
-        if pat and pat.lower() in url:
-            score += 12
+        if _pattern_matches_url(str(pat), url):
+            score += 15
     for tok in entry.get("title_match") or []:
-        t = (tok or "").lower()
-        if len(t) > 2 and (t in title or t in title_tokens):
-            score += 6
-    # Avoid generic hub on every lesson unless course matches strongly
-    if entry.get("id") == "patchy-hub" and score < 5:
-        score = 0
-    if entry.get("id") == "ai-engineering-from-scratch" and int(course) > 10:
-        score = max(0, score - 2)
+        t = (tok or "").lower().strip()
+        if len(t) < 4:
+            continue
+        if t in title or t in title_tokens:
+            score += 8
+    # Course alone is never enough — avoids same hub on every topic in a month
+    on_course = course in [str(c) for c in entry.get("courses") or []]
+    if on_course and score > 0:
+        score += 2
+    repo_id = entry.get("id") or ""
+    if repo_id in GENERIC_REPO_IDS and score < GENERIC_MIN_SCORE:
+        return 0
+    if repo_id == "patchy-hub":
+        return 0
     return score
 
 
-def _resource_from_entry(entry: dict[str, Any]) -> dict[str, Any]:
+def _resource_from_entry(entry: dict[str, Any], match_score: int) -> dict[str, Any]:
     val = entry.get("github_validation") or {}
     stars = val.get("stars")
     desc = (entry.get("description") or "").strip()
@@ -76,6 +91,7 @@ def _resource_from_entry(entry: dict[str, Any]) -> dict[str, Any]:
         "description": desc or "Validated open-source reference implementation.",
         "source": "verified_repo_catalog",
         "repo_id": entry.get("id"),
+        "match_score": match_score,
     }
 
 
@@ -83,48 +99,55 @@ def pick_repos_for_lesson(lesson: dict) -> list[dict[str, Any]]:
     scored: list[tuple[int, dict[str, Any]]] = []
     for entry in _validated_repos():
         s = _score_repo(entry, lesson)
-        if s > 0:
+        if s >= MIN_ATTACH_SCORE:
             scored.append((s, entry))
     scored.sort(key=lambda x: (-x[0], x[1].get("title") or ""))
     picked: list[dict[str, Any]] = []
     seen_urls: set[str] = set()
-    for _, entry in scored:
+    for match_score, entry in scored:
         url = (entry.get("url") or "").strip().lower()
         if not url or url in seen_urls:
             continue
-        picked.append(_resource_from_entry(entry))
+        picked.append(_resource_from_entry(entry, match_score))
         seen_urls.add(url)
         if len(picked) >= MAX_REPOS_PER_LESSON:
             break
-
-    if len(picked) < 2:
-        course = str(lesson.get("course", ""))
-        for entry in _validated_repos():
-            if course not in [str(c) for c in entry.get("courses") or []]:
-                continue
-            url = (entry.get("url") or "").strip().lower()
-            if not url or url in seen_urls:
-                continue
-            picked.append(_resource_from_entry(entry))
-            seen_urls.add(url)
-            if len(picked) >= min(2, MAX_REPOS_PER_LESSON):
-                break
     return picked
+
+
+def strip_stale_catalog_resources(row: dict) -> None:
+    """Remove prior catalog attachments so merge_enrichment cannot leave stale hub links."""
+    kept = []
+    for res in row.get("resources") or []:
+        if res.get("source") == "verified_repo_catalog":
+            continue
+        kept.append(res)
+    row["resources"] = kept
 
 
 def append_implementation_repos(row: dict) -> None:
     """Merge catalog repos into row['resources'] (after external curriculum)."""
+    strip_stale_catalog_resources(row)
     extras = pick_repos_for_lesson(row)
     if not extras:
         return
     resources = list(row.get("resources") or [])
-    seen = {(r.get("url") or "").strip().lower() for r in resources}
+    index_by_url: dict[str, int] = {}
+    for i, existing in enumerate(resources):
+        u = (existing.get("url") or "").strip().lower()
+        if u:
+            index_by_url[u] = i
     for res in extras:
         url_key = (res.get("url") or "").strip().lower()
-        if not url_key or url_key in seen:
+        if not url_key:
+            continue
+        if url_key in index_by_url:
+            idx = index_by_url[url_key]
+            merged = {**resources[idx], **res, "type": "implementation"}
+            resources[idx] = merged
             continue
         resources.append(res)
-        seen.add(url_key)
+        index_by_url[url_key] = len(resources) - 1
     row["resources"] = resources
 
 
@@ -139,8 +162,13 @@ def local_setup_for_lesson(lesson: dict) -> dict[str, Any]:
         s = _score_repo(entry, lesson)
         if s > 0:
             scored.append((s, entry))
-    scored.sort(key=lambda x: -x[0])
-    primary = scored[0][1] if scored else None
+    specific = [(s, e) for s, e in scored if s >= MIN_ATTACH_SCORE and (e.get("id") or "") not in GENERIC_REPO_IDS]
+    specific.sort(key=lambda x: -x[0])
+    primary = specific[0][1] if specific else None
+    if not primary:
+        fallback = [(s, e) for s, e in scored if s >= MIN_ATTACH_SCORE]
+        fallback.sort(key=lambda x: -x[0])
+        primary = fallback[0][1] if fallback else None
     local = (primary or {}).get("local") or {}
 
     workspace = f"~/ai-systems-lab/course-{course}"

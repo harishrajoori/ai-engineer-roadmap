@@ -2092,6 +2092,17 @@ header {
   margin: 0;
   max-width: none;
 }
+.lab-prove-topic-repo-card {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.lab-prove-topic-repo-card:last-child {
+  border-bottom: none;
+}
+.lab-prove-topic-repos {
+  border-left: 3px solid var(--accent);
+  padding-left: 0.75rem;
+}
 .lab-prove-topic-blurb {
   margin-bottom: 0.75rem !important;
 }

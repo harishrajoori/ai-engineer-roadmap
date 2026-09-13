@@ -534,7 +534,8 @@
       ],
       "url_match": [
         "gofastmcp.com",
-        "fastmcp"
+        "modelcontextprotocol.io/introduction",
+        "modelcontextprotocol.io/docs"
       ],
       "title_match": [
         "mcp",
@@ -897,14 +898,13 @@
         4
       ],
       "url_match": [
-        "zgnjmwipirk",
-        "rag",
-        "zjk"
+        "youtube.com/watch?v=zgnjmwipirk",
+        "document chat"
       ],
       "title_match": [
-        "rag",
+        "document chat",
         "retrieval",
-        "document chat"
+        "hybrid"
       ],
       "level": "intermediate",
       "description": "Minimal end-to-end RAG stack for local experiments.",
@@ -1654,6 +1654,197 @@
         ],
         "default_branch": "main",
         "pushed_at": "2026-09-12T16:23:01Z"
+      }
+    },
+    {
+      "id": "ms-generative-ai-for-beginners",
+      "title": "Microsoft \u2014 Generative AI for Beginners",
+      "url": "https://github.com/microsoft/generative-ai-for-beginners",
+      "courses": [
+        0,
+        1
+      ],
+      "url_match": [
+        "deeplearning.ai/courses/generative-ai",
+        "generative-ai-with-llms"
+      ],
+      "title_match": [
+        "generative ai",
+        "llm foundations"
+      ],
+      "level": "beginner",
+      "description": "21-lesson GitHub course with Jupyter labs (Azure OpenAI + open models).",
+      "local": {
+        "clone": "git clone https://github.com/microsoft/generative-ai-for-beginners.git",
+        "setup": [
+          "cd generative-ai-for-beginners",
+          "pip install -r requirements.txt",
+          "jupyter lab"
+        ],
+        "env": [
+          "AZURE_OPENAI_API_KEY=",
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Port one lesson pattern into your portfolio labs/ folder."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "full_name": "microsoft/generative-ai-for-beginners",
+        "stars": 119661,
+        "size_kb": 6634808,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "JavaScript",
+          "TypeScript",
+          "Shell",
+          "PowerShell",
+          "Batchfile",
+          "HTML"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T01:09:32Z"
+      }
+    },
+    {
+      "id": "ms-ai-agents-for-beginners",
+      "title": "Microsoft \u2014 AI Agents for Beginners",
+      "url": "https://github.com/microsoft/ai-agents-for-beginners",
+      "courses": [
+        2,
+        3
+      ],
+      "url_match": [
+        "deeplearning.ai/short-courses/ai-agents-in-langgraph",
+        "anthropic.com/engineering/building-effective-agents"
+      ],
+      "title_match": [
+        "langgraph",
+        "agent",
+        "effective agents"
+      ],
+      "level": "intermediate",
+      "description": "12 lessons on agent patterns, tools, and Azure AI Agent Service labs.",
+      "local": {
+        "clone": "git clone https://github.com/microsoft/ai-agents-for-beginners.git",
+        "setup": [
+          "cd ai-agents-for-beginners",
+          "pip install -r requirements.txt"
+        ],
+        "env": [
+          "AZURE_OPENAI_API_KEY=",
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Compare lesson 07 tool design with your MCP prove server."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/microsoft/ai-agents-for-beginners",
+        "full_name": "microsoft/ai-agents-for-beginners",
+        "stars": 74599,
+        "size_kb": 3803431,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "C#",
+          "PowerShell",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T17:41:19Z"
+      }
+    },
+    {
+      "id": "google-gemini-cookbook",
+      "title": "Google \u2014 Gemini API Cookbook",
+      "url": "https://github.com/google-gemini/cookbook",
+      "courses": [
+        1,
+        2
+      ],
+      "url_match": [
+        "ai.google.dev",
+        "gemini-api"
+      ],
+      "title_match": [
+        "gemini",
+        "google ai"
+      ],
+      "level": "intermediate",
+      "description": "Official Gemini notebooks: prompting, tools, structured output, agents.",
+      "local": {
+        "clone": "git clone https://github.com/google-gemini/cookbook.git",
+        "setup": [
+          "cd cookbook",
+          "pip install google-genai",
+          "jupyter lab quickstarts/"
+        ],
+        "env": [
+          "GEMINI_API_KEY="
+        ],
+        "portfolio_note": "Optional provider path alongside LiteLLM gateway."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/google-gemini/cookbook",
+        "full_name": "google-gemini/cookbook",
+        "stars": 17769,
+        "size_kb": 1023445,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "JavaScript",
+          "Shell"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T10:41:06Z"
+      }
+    },
+    {
+      "id": "dspy",
+      "title": "DSPy \u2014 programmatic LM pipelines",
+      "url": "https://github.com/stanfordnlp/dspy",
+      "courses": [
+        13
+      ],
+      "url_match": [
+        "github.com/stanfordnlp/dspy",
+        "dspy.ai"
+      ],
+      "title_match": [
+        "dspy"
+      ],
+      "level": "advanced",
+      "description": "Optimize prompts/programs with metrics\u2014frontier month optional.",
+      "local": {
+        "clone": "git clone https://github.com/stanfordnlp/dspy.git",
+        "setup": [
+          "cd dspy",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Document bottleneck + metric if adopted."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/stanfordnlp/dspy",
+        "full_name": "stanfordnlp/dspy",
+        "stars": 37998,
+        "size_kb": 182353,
+        "languages": [
+          "Python",
+          "JavaScript"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-11T22:21:38Z"
       }
     }
   ]

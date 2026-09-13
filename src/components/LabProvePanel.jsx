@@ -17,6 +17,7 @@ import {
   requiredChecklistProgress,
   toggleChecklistItem,
 } from "../utils/proveWorkflow";
+import { getTopicImplementationResources } from "../utils/implementationResources";
 
 /**
  * End-to-end Lab & Prove helper: scenario, rubric checklist, portfolio + artifact URLs.
@@ -40,6 +41,8 @@ export default function LabProvePanel({
   const provePack = courseRef.prove_pack || {};
   const realWorld = courseRef.real_world || {};
   const labPlan = lesson.lab_plan || null;
+  const topicImplRepos = getTopicImplementationResources(lesson, { max: 4 });
+  const showPortfolioStarter = Boolean(portfolioStarter?.repo_url && lesson.is_start_here);
   const acceptance = provePack.acceptance || [];
   const progress = requiredChecklistProgress(acceptance, proveChecklistMap, courseId);
 
@@ -93,6 +96,33 @@ export default function LabProvePanel({
           auto-grade.
         </p>
       </div>
+
+      {topicImplRepos.length > 0 && (
+        <section className="lab-prove-section lab-prove-topic-repos" aria-labelledby="lab-topic-repos-heading">
+          <h4 id="lab-topic-repos-heading" className="lab-prove-section-title">
+            Code for this topic
+          </h4>
+          <p className="lab-prove-muted">
+            Validated implementation repos matched to this lesson (not your portfolio hub).
+          </p>
+          <ul className="lab-prove-impl-link-list">
+            {topicImplRepos.map((repo) => (
+              <li key={repo.url} className="lab-prove-topic-repo-card">
+                <a
+                  href={repo.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="learning-resource-link"
+                >
+                  <ExternalLink size={14} />
+                  {repo.title}
+                </a>
+                {repo.description && <p className="lab-prove-body">{repo.description}</p>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {labPlan?.steps?.length > 0 && (
         <section className="lab-prove-section" aria-labelledby="lab-impl-plan-heading">
@@ -280,7 +310,7 @@ export default function LabProvePanel({
         </section>
       )}
 
-      {portfolioStarter?.repo_url && (
+      {showPortfolioStarter && (
         <section className="lab-prove-section lab-prove-starter" aria-labelledby="lab-starter-heading">
           <h4 id="lab-starter-heading" className="lab-prove-section-title">
             {portfolioStarter.title || "Portfolio starter"}

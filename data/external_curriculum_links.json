@@ -199,6 +199,78 @@
         "level": "intermediate",
         "description": "Graph + MCP reference from the hub for Month 6 prove slice."
       }
+    ],
+    "c0|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c1|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c2|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c4|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c7|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c8|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c10|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
+    ],
+    "c14|u|https://applied-llms.org/": [
+      {
+        "title": "Microsoft \u2014 Generative AI for Beginners (labs)",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners",
+        "type": "implementation",
+        "level": "beginner",
+        "description": "Hands-on notebooks while reading Applied LLMs sections (gateways, RAG, eval)."
+      }
     ]
   }
 }

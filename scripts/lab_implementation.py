@@ -10,21 +10,32 @@ from topic_hints import get_topic_hint
 
 
 def _implementation_resources(row: dict) -> list[dict]:
-    out: list[dict] = []
+    generic_ids = {"patchy-hub", "ai-engineering-from-scratch"}
+    candidates: list[tuple[int, dict]] = []
     for res in row.get("resources") or []:
         if (res.get("type") or "").lower() != "implementation":
             continue
         url = (res.get("url") or "").strip()
         if not url.startswith("http"):
             continue
-        out.append(
-            {
-                "title": (res.get("title") or "Implementation reference").strip(),
-                "url": url,
-                "description": (res.get("description") or "").strip(),
-            }
+        score = int(res.get("match_score") or 0)
+        repo_id = res.get("repo_id") or ""
+        if repo_id in generic_ids and score < 12:
+            continue
+        candidates.append(
+            (
+                score,
+                {
+                    "title": (res.get("title") or "Implementation reference").strip(),
+                    "url": url,
+                    "description": (res.get("description") or "").strip(),
+                    "match_score": score,
+                    "repo_id": repo_id,
+                },
+            )
         )
-    return out
+    candidates.sort(key=lambda x: (-x[0], x[1]["title"]))
+    return [item for _, item in candidates[:4]]
 
 
 def _orient_bullets(hint: dict[str, Any], lesson: dict) -> list[str]:

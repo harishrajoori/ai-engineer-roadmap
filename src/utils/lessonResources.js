@@ -1,3 +1,5 @@
+import { getTopicImplementationResources } from "./implementationResources.js";
+
 /**
  * Always include the syllabus primary URL in the resource stack for the UI.
  */
@@ -19,5 +21,13 @@ export function getLessonResources(lesson) {
     });
   }
 
-  return list;
+  const impl = getTopicImplementationResources(lesson, { max: 12, includeGeneric: true });
+  const implUrls = new Set(impl.map((r) => (r.url || "").trim()));
+  const rest = list.filter((r) => {
+    if ((r.type || "").toLowerCase() !== "implementation") {
+      return true;
+    }
+    return !implUrls.has((r.url || "").trim());
+  });
+  return [...impl, ...rest];
 }
