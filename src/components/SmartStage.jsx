@@ -23,6 +23,7 @@ import {
 import { stripDuplicateTheoryTitle } from "../utils/markdownDisplay";
 import { proveCompletionWarnings } from "../utils/proveWorkflow";
 import LabProvePanel from "./LabProvePanel";
+import LearningFocusBar from "./LearningFocusBar";
 
 const DEFAULT_RESOURCES = [
   {
@@ -104,6 +105,11 @@ export default function SmartStage({
   proveChecklistMap = {},
   onProveChecklistChange,
   portfolioStarter = null,
+  learningLayout = null,
+  onLearningLayoutChange = null,
+  isWideDesktop = false,
+  mobilePanel = null,
+  onMobilePanelChange = null,
 }) {
   const primaryVideoId = useMemo(() => {
     if (!lesson) {
@@ -209,6 +215,14 @@ export default function SmartStage({
         <span className="learning-stage-sep">/</span>
         <span className="learning-stage-topic">{lesson.course_title}</span>
       </div>
+
+      <LearningFocusBar
+        layout={learningLayout}
+        onLayoutChange={onLearningLayoutChange}
+        isWideDesktop={isWideDesktop}
+        mobilePanel={mobilePanel}
+        onMobilePanelChange={onMobilePanelChange}
+      />
 
       <div className="learning-stage-hero">
         <div className="learning-stage-hero-text">

@@ -3,6 +3,7 @@ const LAYOUT_KEY = "ai_hub_learning_layout";
 const DEFAULTS = {
   curriculumOpen: true,
   stageOpen: true,
+  mentorOpen: true,
   mentorExpanded: false,
   navWidth: 228,
   syllabusWidth: 300,
@@ -21,6 +22,7 @@ export function readLearningLayout() {
       return {
         curriculumOpen: parsed.curriculumOpen !== false,
         stageOpen: parsed.stageOpen !== false,
+        mentorOpen: parsed.mentorOpen !== false,
         mentorExpanded: Boolean(parsed.mentorExpanded),
         navWidth: clamp(Number(parsed.navWidth) || DEFAULTS.navWidth, 180, 360),
         syllabusWidth: clamp(Number(parsed.syllabusWidth) || DEFAULTS.syllabusWidth, 220, 480),
@@ -49,6 +51,9 @@ export function layoutContainerClass(layout) {
   if (!layout.stageOpen) {
     parts.push("layout-stage-collapsed");
   }
+  if (layout.mentorOpen === false) {
+    parts.push("layout-mentor-collapsed");
+  }
   if (layout.mentorExpanded) {
     parts.push("layout-mentor-expanded");
   }
@@ -71,6 +76,8 @@ export function gridTemplateColumnsForLayout(layout) {
   if (layout.stageOpen) {
     cols.push("minmax(0, 1fr)");
   }
-  cols.push(`minmax(280px, ${mentor}px)`);
+  if (layout.mentorOpen !== false) {
+    cols.push(`minmax(280px, ${mentor}px)`);
+  }
   return cols.join(" ");
 }

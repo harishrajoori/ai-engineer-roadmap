@@ -5,6 +5,7 @@ import { BookOpen, ExternalLink, ListChecks } from "lucide-react";
 import { buildCourseTopicOutline, formatTopicTitle } from "../utils/syllabusDisplay";
 import CourseEnrichmentPanels from "./CourseEnrichmentPanels";
 import CourseWalkthroughPanel from "./CourseWalkthroughPanel";
+import LearningFocusBar from "./LearningFocusBar";
 
 export default function CourseStage({
   course,
@@ -12,6 +13,11 @@ export default function CourseStage({
   onSelectLesson,
   programPrimerMarkdown = "",
   glossary = [],
+  learningLayout = null,
+  onLearningLayoutChange = null,
+  isWideDesktop = false,
+  mobilePanel = null,
+  onMobilePanelChange = null,
 }) {
   const outline = useMemo(() => buildCourseTopicOutline(course?.lessons || []), [course]);
 
@@ -37,6 +43,14 @@ export default function CourseStage({
         <span className="learning-stage-sep">/</span>
         <span className="learning-stage-topic">Overview &amp; walkthrough</span>
       </div>
+
+      <LearningFocusBar
+        layout={learningLayout}
+        onLayoutChange={onLearningLayoutChange}
+        isWideDesktop={isWideDesktop}
+        mobilePanel={mobilePanel}
+        onMobilePanelChange={onMobilePanelChange}
+      />
 
       <div className="learning-stage-hero">
         <div className="learning-stage-hero-text">

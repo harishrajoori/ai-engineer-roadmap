@@ -754,6 +754,11 @@ export default function App() {
               onSelectLesson={handleSelectLesson}
               programPrimerMarkdown={programPrimerMarkdown}
               glossary={glossary}
+              learningLayout={learningLayout}
+              onLearningLayoutChange={setLearningLayout}
+              isWideDesktop={resizableDesktopGrid}
+              mobilePanel={mobilePanel}
+              onMobilePanelChange={setMobilePanel}
             />
           ) : (
           <SmartStage
@@ -779,12 +784,17 @@ export default function App() {
             proveChecklistMap={proveChecklistMap}
             onProveChecklistChange={handleProveChecklistChange}
             portfolioStarter={portfolioStarter}
+            learningLayout={learningLayout}
+            onLearningLayoutChange={setLearningLayout}
+            isWideDesktop={resizableDesktopGrid}
+            mobilePanel={mobilePanel}
+            onMobilePanelChange={setMobilePanel}
           />
           )}
         </main>
 
         <div className="layout-cell layout-cell-mentor">
-          {resizableDesktopGrid && !isHomeView && (
+          {resizableDesktopGrid && !isHomeView && learningLayout.mentorOpen !== false && (
             <ColumnResizeHandle
               side="left"
               label="Drag to resize chat panel"
@@ -818,6 +828,15 @@ export default function App() {
           />
         </div>
       </div>
+
+      {!isHomeView && mobilePanel && (
+        <button
+          type="button"
+          className="mobile-panel-backdrop"
+          aria-label="Close panel and focus on content"
+          onClick={() => setMobilePanel(null)}
+        />
+      )}
 
       <MobileLearningBar activePanel={mobilePanel} onSelectPanel={setMobilePanel} />
 

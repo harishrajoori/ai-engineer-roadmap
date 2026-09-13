@@ -316,6 +316,12 @@ header {
   .app-container.layout-mentor-expanded.layout-curriculum-collapsed.layout-stage-collapsed .inspector-panel {
     max-width: none;
   }
+  .app-container.layout-mentor-collapsed .layout-cell-mentor {
+    display: none !important;
+  }
+  .app-container.layout-mentor-collapsed.layout-curriculum-collapsed:not(.layout-stage-collapsed) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .home-stage {
@@ -1005,47 +1011,64 @@ header {
   }
 }
 
+/* Tablet / narrow: full-width content; side panels as overlays */
 @media (max-width: 1180px) {
-  .app-container {
-    grid-template-columns: 200px 260px minmax(0, 1fr);
+  .app-container:not(.home-view) {
+    grid-template-columns: 1fr !important;
   }
-  .inspector-panel {
+  .app-container:not(.home-view) .layout-cell-nav,
+  .app-container:not(.home-view) .layout-cell-syllabus,
+  .app-container:not(.home-view) .layout-cell-mentor {
     display: none;
+  }
+  .app-container:not(.home-view) .sidebar,
+  .app-container:not(.home-view) .course-accordion-pane,
+  .app-container:not(.home-view) .inspector-panel {
+    display: none;
+  }
+  .app-container.mobile-panel-courses .layout-cell-nav {
+    display: block;
+    position: fixed;
+    inset: 64px 0 56px 0;
+    z-index: 45;
+    width: min(100%, 320px);
+    box-shadow: var(--shadow-card);
+  }
+  .app-container.mobile-panel-courses .sidebar {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .app-container.mobile-panel-syllabus .layout-cell-syllabus {
+    display: block;
+    position: fixed;
+    inset: 64px 0 56px 0;
+    z-index: 45;
+    width: min(100%, 380px);
+    box-shadow: var(--shadow-card);
+  }
+  .app-container.mobile-panel-syllabus .course-accordion-pane {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+  .app-container.mobile-panel-mentor .layout-cell-mentor {
+    display: block;
+    position: fixed;
+    inset: 64px 0 56px 0;
+    z-index: 45;
+    width: 100%;
+    max-width: 100%;
   }
   .app-container.mobile-panel-mentor .inspector-panel {
     display: flex;
-    position: fixed;
-    inset: 64px 0 56px 0;
-    z-index: 40;
+    height: 100%;
     width: 100%;
     max-width: 100%;
   }
 }
 
-@media (max-width: 900px) {
-  .app-container {
-    grid-template-columns: 1fr;
-  }
-  .sidebar,
-  .course-accordion-pane {
-    display: none;
-  }
-  .app-container.mobile-panel-courses .sidebar {
-    display: flex;
-    position: fixed;
-    inset: 64px 0 56px 0;
-    z-index: 40;
-    width: min(100%, 320px);
-    box-shadow: var(--shadow-card);
-  }
-  .app-container.mobile-panel-syllabus .course-accordion-pane {
-    display: flex;
-    position: fixed;
-    inset: 64px 0 56px 0;
-    z-index: 40;
-    width: min(100%, 380px);
-    box-shadow: var(--shadow-card);
-  }
+@media (max-width: 1180px) {
   .stage {
     padding-bottom: 4.5rem;
     padding-left: 0.75rem;
@@ -1092,7 +1115,23 @@ header {
   display: none;
 }
 
-@media (max-width: 900px) {
+.mobile-panel-backdrop {
+  display: none;
+}
+
+@media (max-width: 1180px) {
+  .mobile-panel-backdrop {
+    display: block;
+    position: fixed;
+    inset: 64px 0 56px 0;
+    z-index: 44;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    cursor: default;
+    background: var(--modal-backdrop);
+  }
   .mobile-learning-bar {
     display: flex;
     position: fixed;
@@ -1125,6 +1164,67 @@ header {
   .mobile-learning-btn.active,
   .mobile-learning-btn.learn {
     color: var(--accent);
+  }
+  .app-container:not(.home-view) .stage {
+    padding-bottom: 4.5rem;
+  }
+}
+
+.learning-focus-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.35rem 0 0.85rem;
+  padding: 0.35rem 0.45rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-alt);
+}
+.learning-focus-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.learning-focus-btn:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+}
+.learning-focus-btn.active {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--text);
+}
+.learning-focus-btn-primary.active {
+  border-color: color-mix(in srgb, var(--cyan) 45%, var(--border));
+  background: color-mix(in srgb, var(--cyan) 14%, transparent);
+}
+.learning-focus-btn-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 520px) {
+  .learning-focus-btn span:not(.learning-focus-btn-sr) {
+    display: none;
+  }
+  .learning-focus-btn {
+    padding: 0.45rem 0.5rem;
   }
 }
 

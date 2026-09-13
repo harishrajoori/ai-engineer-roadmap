@@ -1,5 +1,13 @@
 import React from "react";
-import { PanelLeft, PanelLeftClose, BookOpen, BookOpenCheck, Maximize2, Minimize2 } from "lucide-react";
+import {
+  PanelLeft,
+  PanelLeftClose,
+  PanelRightClose,
+  BookOpen,
+  BookOpenCheck,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 import { clamp, defaultLearningLayout } from "../utils/learningLayout";
 
 /**
@@ -31,6 +39,15 @@ export default function MentorLayoutBar({ layout, onLayoutChange }) {
       </button>
       <button
         type="button"
+        className={`filter-btn mentor-layout-btn ${layout.mentorOpen === false ? "" : "active"}`}
+        title={layout.mentorOpen === false ? "Show mentor panel" : "Hide mentor panel"}
+        onClick={() => set({ mentorOpen: layout.mentorOpen === false })}
+      >
+        <PanelRightClose size={13} />
+        <span>{layout.mentorOpen === false ? "Show mentor" : "Hide mentor"}</span>
+      </button>
+      <button
+        type="button"
         className={`filter-btn mentor-layout-btn ${layout.mentorExpanded ? "active" : ""}`}
         title={layout.mentorExpanded ? "Normal mentor width" : "Widen mentor chat"}
         onClick={() =>
@@ -46,11 +63,12 @@ export default function MentorLayoutBar({ layout, onLayoutChange }) {
       <button
         type="button"
         className="filter-btn mentor-layout-btn"
-        title="Maximize mentor: hide curriculum and theory"
+        title="Maximize mentor: hide curriculum rails"
         onClick={() =>
           set({
             curriculumOpen: false,
             stageOpen: false,
+            mentorOpen: true,
             mentorExpanded: true,
             mentorWidth: 720,
           })
