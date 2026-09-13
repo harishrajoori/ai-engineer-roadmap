@@ -118,44 +118,52 @@ Format output in excellent Markdown: start with a one-line summary, use ## heade
             <label style={{ fontSize: '0.78rem', fontWeight: 600 }}>Select Learning Lens</label>
             
             <div
-              className={`digest-card ${lens === 'staff' ? 'digest-card-rules' : ''}`}
-              style={{ cursor: 'pointer', borderColor: lens === 'staff' ? 'var(--accent)' : 'var(--border)' }}
+              className={`regen-lens-option digest-card ${lens === 'staff' ? 'is-selected' : ''}`}
               onClick={() => setLens('staff')}
+              onKeyDown={(e) => e.key === 'Enter' && setLens('staff')}
+              role="button"
+              tabIndex={0}
             >
-              <div style={{ fontWeight: 600, color: '#fff' }}>👔 Staff System Design Lens</div>
+              <div className="regen-lens-title">👔 Staff System Design Lens</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.2rem' }}>
                 Reframes lesson around latency budgets, QPS trade-offs, SLAs, and production failure modes.
               </div>
             </div>
 
             <div
-              className={`digest-card ${lens === 'eli5' ? 'digest-card-rules' : ''}`}
-              style={{ cursor: 'pointer', borderColor: lens === 'eli5' ? 'var(--accent)' : 'var(--border)' }}
+              className={`regen-lens-option digest-card ${lens === 'eli5' ? 'is-selected' : ''}`}
               onClick={() => setLens('eli5')}
+              onKeyDown={(e) => e.key === 'Enter' && setLens('eli5')}
+              role="button"
+              tabIndex={0}
             >
-              <div style={{ fontWeight: 600, color: '#fff' }}>👶 Visual Mental Models / ELI5</div>
+              <div className="regen-lens-title">👶 Visual Mental Models / ELI5</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.2rem' }}>
                 Simplifies dense math and terminology into clear visual analogies and intuitive explanations.
               </div>
             </div>
 
             <div
-              className={`digest-card ${lens === 'interview' ? 'digest-card-rules' : ''}`}
-              style={{ cursor: 'pointer', borderColor: lens === 'interview' ? 'var(--accent)' : 'var(--border)' }}
+              className={`regen-lens-option digest-card ${lens === 'interview' ? 'is-selected' : ''}`}
               onClick={() => setLens('interview')}
+              onKeyDown={(e) => e.key === 'Enter' && setLens('interview')}
+              role="button"
+              tabIndex={0}
             >
-              <div style={{ fontWeight: 600, color: '#fff' }}>🎯 Interview Rapid-Fire Sheet</div>
+              <div className="regen-lens-title">🎯 Interview Rapid-Fire Sheet</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.2rem' }}>
                 Transforms the topic into 5 high-probability Tier-1 AI engineer interview questions & answers.
               </div>
             </div>
 
             <div
-              className={`digest-card ${lens === 'code' ? 'digest-card-rules' : ''}`}
-              style={{ cursor: 'pointer', borderColor: lens === 'code' ? 'var(--accent)' : 'var(--border)' }}
+              className={`regen-lens-option digest-card ${lens === 'code' ? 'is-selected' : ''}`}
               onClick={() => setLens('code')}
+              onKeyDown={(e) => e.key === 'Enter' && setLens('code')}
+              role="button"
+              tabIndex={0}
             >
-              <div style={{ fontWeight: 600, color: '#fff' }}>💻 Code-First Teardown</div>
+              <div className="regen-lens-title">💻 Code-First Teardown</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--muted)', marginTop: '0.2rem' }}>
                 Extracts the theory into a clean, annotated, runnable Python/PyTorch code template with assertions.
               </div>

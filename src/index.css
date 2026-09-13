@@ -2507,6 +2507,25 @@ header {
   background: rgba(244, 63, 94, 0.05);
 }
 
+.regen-lens-option {
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.regen-lens-option:hover {
+  border-color: rgba(99, 102, 241, 0.45);
+}
+.regen-lens-option.is-selected {
+  border-color: var(--accent);
+  background: rgba(99, 102, 241, 0.08);
+  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.25);
+}
+.regen-lens-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.35;
+}
+
 .digest-actions {
   display: flex;
   gap: 0.75rem;
