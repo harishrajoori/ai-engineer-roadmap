@@ -1,9 +1,9 @@
 # AI Systems Engineer: 15-Month Migration & Learning Platform (2027 Target)
 
-> **Live Command Hub (GitHub Pages):** `https://<YOUR_USERNAME>.github.io/ai-engineer-roadmap/`  
-> **Notion Syllabi & Lesson Database:** Automated via `python3 src/sync_notion.py sync`
+> **Live Command Hub (GitHub Pages):** [https://harishrajoori.github.io/ai-engineer-roadmap/](https://harishrajoori.github.io/ai-engineer-roadmap/)  
+> **Target Level:** Staff / Principal AI System Engineer (2026–2027)
 
-An enterprise-grade curriculum and interactive tracking platform designed for transitioning from **Staff Data Platform Engineering** to **Senior/Staff AI Systems & AI Platform Engineering** (2027 target).
+An enterprise-grade curriculum and interactive tracking platform designed for transitioning from **Staff Data Platform Engineering** to **Senior/Staff AI Systems & AI Platform Engineering** (2026–2027 target).
 
 ---
 
@@ -32,42 +32,35 @@ An enterprise-grade curriculum and interactive tracking platform designed for tr
 
 ## ⚡ Quickstart
 
-### 1. Launch the Local Learning Hub
+### 1. Launch the Local Studio (React + Vite)
 ```bash
-./serve.sh
+npm install
+npm run dev
+# or ./serve.sh
 ```
-Open **[http://127.0.0.1:8765](http://127.0.0.1:8765)** in your browser for the full cinema-mode lecture player, progress tracker, and interactive notes scratchpad.
+Open **[http://localhost:8765](http://localhost:8765)** in your browser for the cinema-mode lecture player, multi-agent AI mentor (Gemini 3.x / Groq / OpenRouter), interactive notes scratchpad, and live code architecture lab.
 
-### 2. Sync Curriculum to Notion
+### 2. Build for Production
 ```bash
-cp .env.example .env
-# Edit NOTION_TOKEN and NOTION_PARENT_PAGE_ID in .env
-python3 src/sync_notion.py setup --parent-page-id "$NOTION_PARENT_PAGE_ID"
-python3 src/sync_notion.py sync
-python3 src/sync_notion.py import-md --replace
+npm run build
 ```
+Generates universal production assets in `dist/` which are automatically deployed to GitHub Pages on each push to `main`.
 
 ---
 
 ## 📁 Repository Structure
 
 ```
-├── docs/
-│   ├── AI_System_Engineer_plan_2027.md              # Strategy, market deconstruction, capstone spec
-│   ├── AI_System_Engineer_Learning_Track_2027.md    # Canonical Courses 0–15 syllabus
-│   ├── AI_System_Engineer_Learning_Track_2027_REFERENCE.md # Granular topics & interview prep
-│   └── NOTION_SETUP.md                              # Notion sync setup guide
 ├── src/
-│   ├── generate_lessons.py                          # Parses curriculum markdown to CSV/JSON/HTML
-│   ├── sync_notion.py                               # Notion API sync pipeline
-│   └── md_to_notion_blocks.py                       # Markdown to Notion rich callout converter
-├── data/
-│   ├── lessons.json                                 # 145 structured lesson items
-│   ├── notion_lessons.csv                           # Notion database CSV
-│   └── notion_course_progress.csv                   # Course progress board CSV
-├── public/
-│   └── index.html                                   # Cyber-luxe single-page learning dashboard
-└── .github/workflows/pages.yml                      # Automated GitHub Pages CI/CD
+│   ├── components/       # SmartStage, LessonFeed, Inspector, Sidebar, Header, Modals
+│   ├── services/         # Multi-provider AI service (Gemini 3.x/2.0/1.5, Groq, OpenRouter)
+│   ├── data/             # Bundled lesson data (142 verified curriculum items + blueprints)
+│   ├── App.jsx           # Root reactive state manager with local storage & confetti
+│   └── index.css         # Dark cyberpunk / obsidian glassmorphism design tokens
+├── scripts/              # Data enrichment and curriculum generation utilities
+├── docs/                 # Strategy plans, curriculum specifications, and reference blueprints
+├── public/               # Static assets and production build preview
+└── .github/workflows/    # Automated GitHub Actions Pages deployment
 ```
 
 ---
@@ -75,4 +68,4 @@ python3 src/sync_notion.py import-md --replace
 ## 🛡️ IP & Data Privacy Protocol
 - All code exercises and capstone platforms run on **100% synthetic telemetry or public datasets**.
 - Zero dependency on proprietary employer data or client PII.
-- Private developer API keys only.
+- Client-side Bring-Your-Own-Key (BYOK) architecture: AI keys and progress stay 100% in browser `localStorage`.

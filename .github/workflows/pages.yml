@@ -1,4 +1,4 @@
-name: Deploy Learning Hub to GitHub Pages
+name: Deploy AI Engineer Studio to GitHub Pages
 
 on:
   push:
@@ -24,13 +24,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build React Studio
+        run: npm run build
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public/
+          path: dist/
 
       - name: Deploy to GitHub Pages
         id: deployment
