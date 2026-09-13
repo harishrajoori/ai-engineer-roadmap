@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google";
 import { resolveGoogleClientId } from "./utils/googleAuth";
+import { loadStudioRuntimeConfig } from "./utils/studioRuntimeConfig";
 import { readJsonStorage } from "./utils/localStorage";
 import confetti from "canvas-confetti";
 import { invalidateCurriculumCache, loadCurriculum } from "./services/curriculumLoader";
@@ -77,6 +78,8 @@ export default function App() {
     return Object.keys(progress).length === 0;
   });
   const [cloudSyncStatus, setCloudSyncStatus] = useState("idle");
+  const [runtimeStudioConfig, setRuntimeStudioConfig] = useState({});
+  const [googleAuthError, setGoogleAuthError] = useState("");
   const stageRef = useRef(null);
   const idTokenRef = useRef(null);
   const cloudSyncPauseRef = useRef(false);
@@ -147,6 +150,10 @@ export default function App() {
         setCurriculumError(err.message || "Failed to load curriculum");
       });
   }, [applyCurriculum]);
+
+  useEffect(() => {
+    void loadStudioRuntimeConfig().then(setRuntimeStudioConfig);
+  }, []);
 
   const courses = useMemo(() => {
     const coursesMap = new Map();
@@ -223,7 +230,7 @@ export default function App() {
   const completedCount = lessonsData.filter((l) => progressMap[l.order]).length;
   const progressPct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
   const streakDays = computeStreakDays(studyDays);
-  const googleClientId = resolveGoogleClientId(apiKeys);
+  const googleClientId = resolveGoogleClientId(apiKeys, runtimeStudioConfig);
   const googleOAuthEnabled = Boolean(googleClientId);
 
   const scrollStageTop = useCallback(() => {
@@ -302,12 +309,22 @@ export default function App() {
   );
 
   const handleGoogleLogin = (decodedProfile, idToken = null) => {
-    if (decodedProfile?.name || decodedProfile?.email) {
-      setUserProfile(decodedProfile);
-      void runCloudSyncAfterLogin(decodedProfile, idToken);
-      confetti({ particleCount: 50, spread: 60 });
+    if (!decodedProfile?.sub) {
+      return;
     }
+    setGoogleAuthError("");
+    const profile = {
+      ...decodedProfile,
+      name: decodedProfile.name || decodedProfile.email || "Google user",
+    };
+    setUserProfile(profile);
+    void runCloudSyncAfterLogin(profile, idToken);
+    confetti({ particleCount: 50, spread: 60 });
   };
+
+  const handleGoogleAuthError = useCallback((message) => {
+    setGoogleAuthError(message || "Google sign-in failed.");
+  }, []);
 
   const handleGoogleLogout = () => {
     if (googleOAuthEnabled) {
@@ -568,6 +585,7 @@ export default function App() {
         userProfile={userProfile}
         onGoogleLogin={handleGoogleLogin}
         onGoogleLogout={handleGoogleLogout}
+        onGoogleAuthError={handleGoogleAuthError}
         googleOAuthEnabled={googleOAuthEnabled}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onExportBackup={handleExportBackup}
@@ -624,6 +642,8 @@ export default function App() {
               cloudSyncStatus={cloudSyncStatus}
               onGoogleLogin={handleGoogleLogin}
               onGoogleLogout={handleGoogleLogout}
+              onGoogleAuthError={handleGoogleAuthError}
+              googleAuthError={googleAuthError}
               onOpenSettings={() => setIsSettingsOpen(true)}
             />
           ) : courseOverviewMode ? (
@@ -686,7 +706,8 @@ export default function App() {
         userProfile={userProfile}
         onGoogleLogin={handleGoogleLogin}
         onGoogleLogout={handleGoogleLogout}
-        googleOAuthEnabled={googleOAuthEnabled}
+        onGoogleAuthError={handleGoogleAuthError}
+        runtimeStudioConfig={runtimeStudioConfig}
         onExportBackup={handleExportBackup}
         onImportBackup={handleImportBackup}
       />

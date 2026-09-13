@@ -12,6 +12,7 @@ export default function Header({
   userProfile,
   onGoogleLogin,
   onGoogleLogout,
+  onGoogleAuthError,
   googleOAuthEnabled = false,
   onOpenSettings,
   onExportBackup,
@@ -108,7 +109,11 @@ export default function Header({
           </div>
         ) : (
           <div className="google-signin-header" style={{ minWidth: googleOAuthEnabled ? 180 : undefined }}>
-            <GoogleSignInButton enabled={googleOAuthEnabled} onSuccess={onGoogleLogin} />
+            <GoogleSignInButton
+              enabled={googleOAuthEnabled}
+              onSuccess={onGoogleLogin}
+              onAuthError={onGoogleAuthError}
+            />
           </div>
         )}
 

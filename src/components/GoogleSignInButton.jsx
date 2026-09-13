@@ -2,7 +2,7 @@ import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { profileFromGoogleCredential } from "../utils/googleAuth";
 
-export default function GoogleSignInButton({ onSuccess, enabled, hint, width }) {
+export default function GoogleSignInButton({ onSuccess, onAuthError, enabled, hint, width }) {
   if (!enabled) {
     return (
       <p className="text-xs text-slate-500 m-0" style={{ lineHeight: 1.4 }}>
@@ -19,7 +19,9 @@ export default function GoogleSignInButton({ onSuccess, enabled, hint, width }) 
         }
       }}
       onError={() => {
-        /* user cancelled or misconfigured client */
+        onAuthError?.(
+          "Google sign-in failed. Confirm the OAuth Web Client ID, click Save Settings if you pasted it locally, and add this site URL under Authorized JavaScript origins in Google Cloud Console."
+        );
       }}
       theme="filled_black"
       size="large"

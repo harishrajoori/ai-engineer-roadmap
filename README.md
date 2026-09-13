@@ -42,11 +42,17 @@ npm run build
 
 ### Sign in with Google + cloud sync
 
-1. Create a **Google OAuth Web Client ID** (authorized origins: localhost + your GitHub Pages URL).
-2. Set `VITE_GOOGLE_CLIENT_ID` in `.env` or as a GitHub Actions secret (see `.github/workflows/pages.yml`).
-3. Optional: deploy `sync-worker/` to Cloudflare KV and set `VITE_STUDIO_SYNC_URL` so progress, notes, prove links, API keys, and AI regenerations sync across devices after sign-in.
+Sign-in uses a **Google OAuth Web Client ID** (`*.apps.googleusercontent.com`). That is **not** the Gemini API key from AI Studio — you can log in without any AI API key.
 
-The **home page** has a **Sign in with Google** card; the header also supports sign-in when OAuth is configured.
+1. In [Google Cloud Console → Credentials](https://console.cloud.google.com/apis/credentials), create **OAuth 2.0 Client ID → Web application**.
+2. Add **Authorized JavaScript origins** for each URL you use (exact origin only, e.g. `http://localhost:5173`, `https://<user>.github.io`).
+3. Configure the client ID in **one** of these ways:
+   - GitHub Actions secret `VITE_GOOGLE_CLIENT_ID` (baked into the Pages build), or
+   - Copy `public/studio-config.json.example` → `public/studio-config.json` and commit the client ID (public identifier, not a secret), or
+   - Paste in **Settings → Apply client ID** (stored in your browser only).
+4. Optional: deploy `sync-worker/` and set `VITE_STUDIO_SYNC_URL` so progress syncs across devices after sign-in.
+
+The **home page** has a **Sign in with Google** card; failed sign-in shows a short error hint (usually wrong client ID or missing authorized origin).
 
 ## Architecture (capstone spine)
 

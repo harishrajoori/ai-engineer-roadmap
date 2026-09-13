@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { X, Key, Shield, Download, Upload, Check, ExternalLink } from "lucide-react";
 import { AVAILABLE_MODELS } from "../services/aiService";
 import GoogleSignInButton from "./GoogleSignInButton";
+import { resolveGoogleClientId } from "../utils/googleAuth";
 
 export default function SettingsModal({
   isOpen,
@@ -13,7 +14,8 @@ export default function SettingsModal({
   userProfile,
   onGoogleLogin,
   onGoogleLogout,
-  googleOAuthEnabled = false,
+  runtimeStudioConfig = {},
+  onGoogleAuthError,
   onExportBackup,
   onImportBackup
 }) {
@@ -26,6 +28,20 @@ export default function SettingsModal({
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   if (!isOpen) return null;
+
+  const oauthReadyForSignIn = Boolean(
+    resolveGoogleClientId({ ...keys, googleClientId: googleClientId.trim() }, runtimeStudioConfig)
+  );
+
+  const handleApplyGoogleClientId = () => {
+    const id = googleClientId.trim();
+    if (!id) {
+      return;
+    }
+    onSaveKeys({ ...keys, googleClientId: id });
+    setSavedSuccess(true);
+    setTimeout(() => setSavedSuccess(false), 1200);
+  };
 
   const handleSave = () => {
     const finalModel = model === "custom" ? customModel : model;
@@ -103,7 +119,12 @@ export default function SettingsModal({
                   Sign Out ({userProfile.name?.split(" ")[0]})
                 </button>
               ) : (
-                <GoogleSignInButton enabled={googleOAuthEnabled} onSuccess={onGoogleLogin} />
+                <GoogleSignInButton
+                  enabled={oauthReadyForSignIn}
+                  onSuccess={onGoogleLogin}
+                  onAuthError={onGoogleAuthError}
+                  hint="Save or Apply the Web Client ID below, then sign in."
+                />
               )}
             </div>
             <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0, lineHeight: 1.45 }}>
@@ -114,23 +135,43 @@ export default function SettingsModal({
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.5rem" }}>
               <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
-                Google OAuth Web Client ID (optional)
+                Google OAuth Web Client ID (sign-in — not the Gemini key)
               </label>
-              <input
-                type="text"
-                className="chat-input"
-                placeholder="xxxx.apps.googleusercontent.com"
-                value={googleClientId}
-                onChange={(e) => setGoogleClientId(e.target.value)}
-                autoComplete="off"
-              />
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                <input
+                  type="text"
+                  className="chat-input"
+                  placeholder="xxxx.apps.googleusercontent.com"
+                  value={googleClientId}
+                  onChange={(e) => setGoogleClientId(e.target.value)}
+                  autoComplete="off"
+                  style={{ flex: "1 1 12rem" }}
+                />
+                <button type="button" className="filter-btn" onClick={handleApplyGoogleClientId}>
+                  Apply client ID
+                </button>
+              </div>
               <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0, lineHeight: 1.4 }}>
-                Enables Sign in with Google. Add authorized origins for localhost and your GitHub Pages URL. AI Mentor still uses a separate Gemini API key below.
+                Create an OAuth 2.0 <strong>Web application</strong> client in Google Cloud Console. Under{" "}
+                <em>Authorized JavaScript origins</em>, add your exact site origin (e.g.{" "}
+                <code style={{ fontSize: "0.7rem" }}>http://localhost:5173</code> and your GitHub Pages URL — no path,
+                no trailing slash). Then click Apply or Save Settings before Sign in with Google.
               </p>
+              <a
+                href="https://console.cloud.google.com/apis/credentials"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="stage-launch-btn secondary-btn"
+                style={{ fontSize: "0.72rem", padding: "0.35rem 0.65rem", width: "fit-content", textDecoration: "none" }}
+              >
+                Open Google Cloud credentials
+                <ExternalLink size={11} />
+              </a>
             </div>
 
             <p style={{ fontSize: "0.75rem", color: "var(--muted)", margin: 0, lineHeight: 1.4 }}>
-              Signing in with Google personalizes streaks and mentor greetings. Save settings after pasting the client ID, then sign in.
+              Site owners can also copy <code style={{ fontSize: "0.7rem" }}>public/studio-config.json.example</code> to{" "}
+              <code style={{ fontSize: "0.7rem" }}>studio-config.json</code> so visitors do not each paste a client ID.
             </p>
 
             <a

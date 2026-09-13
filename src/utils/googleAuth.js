@@ -7,7 +7,7 @@ export function profileFromGoogleCredential(credential) {
   const decoded = jwtDecode(credential);
   return {
     sub: decoded.sub || "",
-    name: decoded.name || "",
+    name: decoded.name || decoded.email || "Google user",
     email: decoded.email || "",
     given_name: decoded.given_name || "",
     picture: decoded.picture || "",
@@ -15,8 +15,13 @@ export function profileFromGoogleCredential(credential) {
   };
 }
 
-export function resolveGoogleClientId(apiKeys = {}) {
+/**
+ * @param {Record<string, string>} apiKeys
+ * @param {{ googleClientId?: string }} runtimeConfig from public/studio-config.json (optional)
+ */
+export function resolveGoogleClientId(apiKeys = {}, runtimeConfig = {}) {
   const fromSettings = (apiKeys.googleClientId || "").trim();
+  const fromRuntime = (runtimeConfig.googleClientId || "").trim();
   const fromEnv = (import.meta.env.VITE_GOOGLE_CLIENT_ID || "").trim();
-  return fromSettings || fromEnv;
+  return fromSettings || fromRuntime || fromEnv;
 }

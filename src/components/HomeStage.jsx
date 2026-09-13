@@ -32,6 +32,8 @@ export default function HomeStage({
   cloudSyncStatus = "idle",
   onGoogleLogin,
   onGoogleLogout,
+  onGoogleAuthError,
+  googleAuthError = "",
   onOpenSettings,
 }) {
   const hasProgress = completedCount > 0;
@@ -103,6 +105,8 @@ export default function HomeStage({
           cloudSyncStatus={cloudSyncStatus}
           onGoogleLogin={onGoogleLogin}
           onGoogleLogout={onGoogleLogout}
+          onGoogleAuthError={onGoogleAuthError}
+          googleAuthError={googleAuthError}
           onOpenSettings={onOpenSettings}
         />
 

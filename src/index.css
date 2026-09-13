@@ -297,6 +297,14 @@ header {
   max-width: 40rem;
   margin-bottom: 1rem;
 }
+.home-auth-error {
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: #f87171;
+  max-width: 36rem;
+}
+
 .home-auth-google-wrap {
   display: flex;
   justify-content: flex-start;

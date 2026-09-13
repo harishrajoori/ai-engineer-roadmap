@@ -12,6 +12,8 @@ export default function HomeAuthPanel({
   cloudSyncStatus = "idle",
   onGoogleLogin,
   onGoogleLogout,
+  onGoogleAuthError,
+  googleAuthError = "",
   onOpenSettings,
 }) {
   if (userProfile) {
@@ -61,18 +63,28 @@ export default function HomeAuthPanel({
         Sign in to save progress everywhere
       </h2>
       <p className="home-auth-lead">
-        Use your Google account to restore progress, notes, prove links, regenerated theory, and your Gemini API key on
-        any device. The AI mentor uses the API key you save in Settings after sign-in.
+        Sign in with Google to save progress in the browser (and optionally sync across devices). This is{" "}
+        <strong>not</strong> the Gemini API key — you do not need an AI Studio key to log in. Add a Gemini key in
+        Settings only if you want the AI mentor.
       </p>
       {googleOAuthEnabled ? (
         <div className="home-auth-google-wrap">
-          <GoogleSignInButton enabled onSuccess={onGoogleLogin} width={320} />
+          <GoogleSignInButton
+            enabled
+            onSuccess={onGoogleLogin}
+            onAuthError={onGoogleAuthError}
+            width={320}
+          />
+          {googleAuthError ? (
+            <p className="home-auth-error" role="alert">{googleAuthError}</p>
+          ) : null}
         </div>
       ) : (
         <div className="home-auth-setup">
           <p>
-            Google sign-in needs a <strong>Web Client ID</strong>. Paste it in Settings, or set{" "}
-            <code>VITE_GOOGLE_CLIENT_ID</code> when building the site.
+            The site needs a one-time <strong>OAuth Web Client ID</strong> (free from Google Cloud Console). The owner
+            can add <code>public/studio-config.json</code>, set GitHub secret <code>VITE_GOOGLE_CLIENT_ID</code>, or
+            paste the ID in Settings and click <strong>Save Settings</strong> before signing in.
           </p>
           <button type="button" className="home-cta home-cta-primary" onClick={onOpenSettings}>
             Open Settings — add Google Client ID
