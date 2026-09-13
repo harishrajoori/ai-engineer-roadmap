@@ -42,6 +42,12 @@ import {
   mergeStudioCloudPayload,
   pushStudioCloudPayload,
 } from "./utils/studioCloudSync";
+import {
+  readPortfolioRepoUrl,
+  readProveChecklistMap,
+  savePortfolioRepoUrl,
+  writeProveChecklistMap,
+} from "./utils/proveWorkflow";
 
 const PROGRESS_KEY = "ai_hub_react_progress";
 const NOTES_KEY = "ai_hub_react_notes";
@@ -56,6 +62,8 @@ export default function App() {
   const [progressMap, setProgressMap] = useState(() => readJsonStorage(PROGRESS_KEY, {}));
   const [notesMap, setNotesMap] = useState(() => readJsonStorage(NOTES_KEY, {}));
   const [proveMap, setProveMap] = useState(() => readJsonStorage(PROVE_KEY, {}));
+  const [portfolioRepoUrl, setPortfolioRepoUrl] = useState(() => readPortfolioRepoUrl());
+  const [proveChecklistMap, setProveChecklistMap] = useState(() => readProveChecklistMap());
   const [videoOverrides, setVideoOverrides] = useState(() => readJsonStorage(OVERRIDES_KEY, {}));
   const [regenerations, setRegenerations] = useState(() =>
     loadTheoryRegenerations(readJsonStorage(USER_KEY, null))
@@ -114,6 +122,12 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(PROVE_KEY, JSON.stringify(proveMap));
   }, [proveMap]);
+  useEffect(() => {
+    savePortfolioRepoUrl(portfolioRepoUrl);
+  }, [portfolioRepoUrl]);
+  useEffect(() => {
+    writeProveChecklistMap(proveChecklistMap);
+  }, [proveChecklistMap]);
   useEffect(() => {
     localStorage.setItem(OVERRIDES_KEY, JSON.stringify(videoOverrides));
   }, [videoOverrides]);
@@ -538,6 +552,14 @@ export default function App() {
     setProveMap((prev) => ({ ...prev, [order]: url }));
   };
 
+  const handleSavePortfolioRepoUrl = (url) => {
+    setPortfolioRepoUrl(url);
+  };
+
+  const handleProveChecklistChange = (nextMap) => {
+    setProveChecklistMap(nextMap);
+  };
+
   const handleSaveVideoOverride = (order, ytId) => {
     setVideoOverrides((prev) => ({ ...prev, [order]: ytId }));
   };
@@ -554,6 +576,8 @@ export default function App() {
       progress: progressMap,
       notes: notesMap,
       proveUrls: proveMap,
+      portfolioRepoUrl,
+      proveChecklistMap,
       videoOverrides,
       regenerations: flattenRegenerationsForBackup(regenerations),
       theory_regenerations: regenerations,
@@ -581,6 +605,12 @@ export default function App() {
     }
     if (data.proveUrls) {
       setProveMap(data.proveUrls);
+    }
+    if (typeof data.portfolioRepoUrl === "string") {
+      setPortfolioRepoUrl(data.portfolioRepoUrl);
+    }
+    if (data.proveChecklistMap && typeof data.proveChecklistMap === "object") {
+      setProveChecklistMap(data.proveChecklistMap);
     }
     if (data.videoOverrides) {
       setVideoOverrides(data.videoOverrides);
@@ -732,6 +762,10 @@ export default function App() {
             regenerationMeta={regenerations[String(activeLesson?.order)] || regenerations[activeLesson?.order]}
             proveUrl={proveMap[activeLesson?.order] || ""}
             onSaveProveUrl={handleSaveProveUrl}
+            portfolioRepoUrl={portfolioRepoUrl}
+            onSavePortfolioRepoUrl={handleSavePortfolioRepoUrl}
+            proveChecklistMap={proveChecklistMap}
+            onProveChecklistChange={handleProveChecklistChange}
           />
           )}
         </main>

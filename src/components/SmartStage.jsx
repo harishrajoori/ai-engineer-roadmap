@@ -8,7 +8,6 @@ import {
   Code2,
   Sparkles,
   ExternalLink,
-  ShieldCheck,
   ChevronLeft,
   ChevronRight
 } from "lucide-react";
@@ -22,6 +21,8 @@ import {
   THEORY_LEVELS,
 } from "../utils/theoryLevelPreference";
 import { stripDuplicateTheoryTitle } from "../utils/markdownDisplay";
+import { proveCompletionWarnings } from "../utils/proveWorkflow";
+import LabProvePanel from "./LabProvePanel";
 
 const DEFAULT_RESOURCES = [
   {
@@ -96,7 +97,11 @@ export default function SmartStage({
   regeneratedContent,
   regenerationMeta = null,
   proveUrl = "",
-  onSaveProveUrl
+  onSaveProveUrl,
+  portfolioRepoUrl = "",
+  onSavePortfolioRepoUrl,
+  proveChecklistMap = {},
+  onProveChecklistChange,
 }) {
   const primaryVideoId = useMemo(() => {
     if (!lesson) {
@@ -124,9 +129,26 @@ export default function SmartStage({
   const [activeTab, setActiveTab] = useState(() => defaultTabForLesson(lesson));
   const [theoryLevel, setTheoryLevel] = useState(() => loadTheoryLevelPreference());
 
+  const theoryLevelOptions = useMemo(() => {
+    if (!lesson?.theory_studio_guide) {
+      return THEORY_LEVELS;
+    }
+    return THEORY_LEVELS.map((lvl) =>
+      lvl.id === "intermediate"
+        ? { ...lvl, label: "Visual guide", hint: "Authored diagrams, architecture, and full topic map" }
+        : lvl,
+    );
+  }, [lesson?.theory_studio_guide]);
+
   useEffect(() => {
     setActiveTab(defaultTabForLesson(lesson));
   }, [lesson?.order]);
+
+  useEffect(() => {
+    if (lesson?.theory_studio_guide && !regeneratedContent) {
+      setTheoryLevel("intermediate");
+    }
+  }, [lesson?.order, lesson?.theory_studio_guide, regeneratedContent]);
 
   const resources = useMemo(() => {
     if (!lesson) {
@@ -265,9 +287,15 @@ export default function SmartStage({
               . Open <strong>Study guide</strong> when Foundations feels easy on this topic.
             </span>
           </div>
+          {lesson.theory_studio_guide && !regeneratedContent && (
+            <div className="theory-studio-banner" role="note">
+              <strong>Studio visual guide</strong> — diagrams and architecture for this topic. Want a different
+              angle? Use <strong>Regenerate theory</strong> in the mentor panel (your API keys).
+            </div>
+          )}
           {!regeneratedContent && lesson.theory_levels && (
             <div className="theory-level-pills" role="group" aria-label="Theory depth">
-              {THEORY_LEVELS.map((lvl) => (
+              {theoryLevelOptions.map((lvl) => (
                 <button
                   key={lvl.id}
                   type="button"
@@ -345,6 +373,22 @@ export default function SmartStage({
               No primary URL for this item — use More resources or the inspector panel.
             </p>
           )}
+          {onSaveVideoOverride && (
+            <div className="learning-prove-form learning-video-override-form">
+              <label htmlFor="yt-override">Primary YouTube ID override (optional)</label>
+              <input
+                id="yt-override"
+                type="text"
+                className="chat-input"
+                placeholder="11-character video id"
+                value={videoOverrides[lesson.order] || ""}
+                onChange={(e) => onSaveVideoOverride(lesson.order, e.target.value.trim())}
+              />
+              <p className="learning-video-override-hint">
+                Fixes a wrong or missing embed on this tab. Leave blank to use the syllabus default.
+              </p>
+            </div>
+          )}
         </div>
       )}
 
@@ -383,64 +427,16 @@ export default function SmartStage({
 
       {activeTab === "lab" && (
         <div className="learning-tab-panel animation-fade-in">
-          <div className="learning-lab-card">
-            <Code2 size={28} className="learning-lab-icon" />
-            <h3>Hands-on lab & prove gate</h3>
-            <p>
-              {lesson.prove_criteria
-                ? lesson.prove_criteria
-                : lesson.type === "Prove"
-                  ? "Submit proof of work (repo, notebook, benchmark, or dashboard) and link it below."
-                  : "Implement the milestone from the syllabus and capture artifacts for your portfolio."}
-            </p>
-            {lesson.url && lesson.type === "Build" && (
-              <a href={lesson.url} target="_blank" rel="noopener noreferrer" className="learning-resource-link inline">
-                <ExternalLink size={14} />
-                Open build reference
-              </a>
-            )}
-            <p className="learning-lab-hint">
-              There is no auto-graded harness in this studio — you self-certify by linking evidence and marking the topic
-              complete. Use your own repo tests (e.g. pytest) per the course README.
-            </p>
-          </div>
-
-          {(lesson.type === "Prove" || lesson.type === "Build" || lesson.prove_criteria) && onSaveProveUrl && (
-            <div className="learning-prove-form">
-              <label htmlFor="prove-url-input">
-                <ShieldCheck size={16} />
-                Artifact URL (GitHub, Colab, Hugging Face, etc.)
-              </label>
-              <input
-                id="prove-url-input"
-                type="url"
-                className="chat-input"
-                placeholder="https://github.com/you/milestone-..."
-                value={proveUrl}
-                onChange={(e) => onSaveProveUrl(lesson.order, e.target.value.trim())}
-              />
-              {proveUrl && (
-                <a href={proveUrl} target="_blank" rel="noopener noreferrer" className="learning-resource-link">
-                  <ExternalLink size={14} />
-                  Open your artifact
-                </a>
-              )}
-            </div>
-          )}
-
-          {onSaveVideoOverride && (
-            <div className="learning-prove-form">
-              <label htmlFor="yt-override">Primary YouTube ID override (optional)</label>
-              <input
-                id="yt-override"
-                type="text"
-                className="chat-input"
-                placeholder="11-character video id"
-                value={videoOverrides[lesson.order] || ""}
-                onChange={(e) => onSaveVideoOverride(lesson.order, e.target.value.trim())}
-              />
-            </div>
-          )}
+          <LabProvePanel
+            lesson={lesson}
+            courseRef={courseRef}
+            proveUrl={proveUrl}
+            onSaveProveUrl={onSaveProveUrl}
+            portfolioRepoUrl={portfolioRepoUrl}
+            onSavePortfolioRepoUrl={onSavePortfolioRepoUrl}
+            proveChecklistMap={proveChecklistMap}
+            onProveChecklistChange={onProveChecklistChange}
+          />
         </div>
       )}
 
@@ -458,7 +454,28 @@ export default function SmartStage({
         <button
           type="button"
           className={`completion-btn ${isCompleted ? "completed" : ""}`}
-          onClick={() => onToggleComplete(lesson)}
+          onClick={() => {
+            if (isCompleted) {
+              onToggleComplete(lesson);
+              return;
+            }
+            const warnings = proveCompletionWarnings(
+              lesson,
+              proveUrl,
+              portfolioRepoUrl,
+              courseRef,
+              proveChecklistMap,
+            );
+            if (warnings.length > 0) {
+              const proceed = window.confirm(
+                `Before marking complete:\n\n• ${warnings.join("\n• ")}\n\nMark complete anyway?`,
+              );
+              if (!proceed) {
+                return;
+              }
+            }
+            onToggleComplete(lesson);
+          }}
         >
           <CheckCircle2 size={18} />
           {isCompleted ? "Completed" : "Mark complete"}

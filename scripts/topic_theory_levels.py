@@ -291,6 +291,8 @@ def _advanced_tradeoffs(ltype: str, hint: dict, title: str) -> str:
 
 
 def attach_theory_levels(lesson: dict, course_outcomes: list[str], coverage_note: str | None, intermediate_md: str) -> None:
+    from topic_theory_docs import apply_studio_theory_docs
+
     lesson["theory_levels"] = {
         "beginner": build_beginner_markdown(lesson, course_outcomes),
         "intermediate": intermediate_md,
@@ -298,3 +300,4 @@ def attach_theory_levels(lesson: dict, course_outcomes: list[str], coverage_note
     }
     lesson["theory_summary"] = intermediate_md
     lesson["study_order"] = "theory_then_lecture"
+    apply_studio_theory_docs(lesson)

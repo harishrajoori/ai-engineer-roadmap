@@ -75,9 +75,14 @@ if (!data.program_primer_markdown || data.program_primer_markdown.length < 200) 
 if (!Array.isArray(data.glossary) || data.glossary.length < 10) {
   checks.push("glossary missing or too small in lessons.json");
 }
-const sample = LESSONS_DATA[0];
+const studioGuideCount = LESSONS_DATA.filter((l) => l.theory_studio_guide).length;
+const sample =
+  LESSONS_DATA.find((l) => !l.theory_studio_guide) || LESSONS_DATA[0];
 if (!sample.theory_summary?.includes("Study guide (five layers)")) {
   checks.push("theory_summary missing five-layer study guide — run npm run curriculum");
+}
+if (studioGuideCount < 1) {
+  checks.push("expected at least one theory_studio_guide topic in docs/topic_theory/");
 }
 const levels = sample.theory_levels;
 const begOk =

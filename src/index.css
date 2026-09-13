@@ -1204,6 +1204,69 @@ header {
   font-size: inherit;
 }
 
+.theory-studio-banner {
+  font-size: 0.8rem;
+  color: var(--text);
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 40%, var(--border-subtle));
+  background: color-mix(in srgb, var(--cyan) 8%, var(--bg-alt));
+  line-height: 1.55;
+}
+
+.theory-diagram-card {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-alt);
+  overflow-x: auto;
+}
+
+.theory-diagram-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.theory-mermaid-output svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.theory-mermaid-fallback,
+.theory-code-block {
+  font-size: 0.78rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: var(--code-bg);
+  overflow-x: auto;
+}
+
+.theory-inline-code {
+  font-size: 0.88em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: var(--code-bg);
+}
+
+.prose-theory h2 {
+  margin-top: 1.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.prose-theory h2:first-of-type {
+  border-top: none;
+  margin-top: 0.5rem;
+}
+
 .theory-level-pills {
   display: flex;
   flex-wrap: wrap;
@@ -1956,10 +2019,33 @@ header {
   border: 1px dashed var(--border);
   border-radius: 12px;
   background: var(--bg-alt);
+  color: var(--text);
+}
+.learning-lab-card h3 {
+  color: var(--text);
+  font-size: 1.05rem;
+  margin: 0 0 0.65rem;
+}
+.learning-lab-card p {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  max-width: 36rem;
+  margin: 0 auto;
 }
 .learning-lab-icon {
   color: var(--muted);
   margin-bottom: 0.5rem;
+}
+.learning-video-override-form {
+  margin-top: 1.5rem;
+  max-width: 28rem;
+}
+.learning-video-override-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.4;
 }
 .learning-lab-snippet {
   margin-top: 1.25rem;
@@ -1983,6 +2069,140 @@ header {
   font-size: 0.78rem;
   font-weight: 600;
   color: var(--muted);
+}
+.lab-prove-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.lab-prove-panel .learning-lab-card {
+  text-align: left;
+}
+.lab-prove-panel .learning-lab-card p {
+  margin: 0;
+  max-width: none;
+}
+.lab-prove-topic-blurb {
+  margin-bottom: 0.75rem !important;
+}
+.lab-prove-section {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-alt);
+}
+.lab-prove-section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.65rem;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+.lab-prove-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.lab-prove-section-head .lab-prove-section-title {
+  margin-bottom: 0;
+}
+.lab-prove-progress {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--cyan);
+}
+.lab-prove-body,
+.lab-prove-muted {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 0.5rem;
+}
+.lab-prove-muted strong {
+  color: var(--text);
+}
+.lab-prove-ladder {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.lab-prove-ladder-name {
+  display: block;
+  font-weight: 600;
+  color: var(--text);
+}
+.lab-prove-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.lab-prove-check-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.lab-prove-check-row:hover {
+  background: var(--bg);
+  border-color: var(--border);
+}
+.lab-prove-check-row.is-checked {
+  border-color: color-mix(in srgb, var(--cyan) 35%, var(--border));
+}
+.lab-prove-check-row svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--muted);
+}
+.lab-prove-check-row.is-checked svg {
+  color: var(--cyan);
+}
+.lab-prove-optional {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--muted);
+}
+.lab-prove-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.lab-prove-cmd {
+  flex: 1;
+  font-size: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 6px;
+  background: var(--code-bg);
+  overflow-x: auto;
+}
+.lab-prove-readme-details {
+  margin-top: 0.75rem;
+}
+.lab-prove-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 .learning-stage-footer {
   display: flex;

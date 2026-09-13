@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import MermaidBlock from "./MermaidBlock";
 
 /**
  * Shared GFM renderer for theory, primer, and inline home copy.
@@ -34,12 +35,35 @@ export default function MarkdownProse({ children, variant = "theory", math = fal
     ),
   };
 
+  const theoryComponents = {
+    ...tableWrap,
+    pre: ({ children }) => <>{children}</>,
+    code: ({ className, children }) => {
+      const lang = /language-(\w+)/.exec(className || "");
+      const language = lang?.[1];
+      const text = String(children).replace(/\n$/, "");
+      if (language === "mermaid") {
+        return <MermaidBlock chart={text} />;
+      }
+      if (className) {
+        return (
+          <pre className="theory-code-block">
+            <code className={className}>{children}</code>
+          </pre>
+        );
+      }
+      return <code className="theory-inline-code">{children}</code>;
+    },
+  };
+
   const components =
     variant === "inline"
       ? {
           p: ({ children: c }) => <span className="markdown-inline-root">{c}</span>,
         }
-      : tableWrap;
+      : variant === "theory" || variant === "primer"
+        ? theoryComponents
+        : tableWrap;
 
   return (
     <div className={className}>

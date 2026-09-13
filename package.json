@@ -21,6 +21,7 @@
     "canvas-confetti": "^1.9.4",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^1.45.0",
+    "mermaid": "^11.17.2",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-markdown": "^10.1.0",

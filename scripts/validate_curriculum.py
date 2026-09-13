@@ -252,6 +252,19 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
             shallow_advanced += 1
         if adv and beg and len(adv) < len(beg):
             advanced_shorter_than_beginner += 1
+    try:
+        from topic_theory_docs import list_studio_guide_orders, validate_studio_orders
+
+        studio_orders = set(list_studio_guide_orders())
+        if studio_orders:
+            warnings.append(
+                f"{len(studio_orders)} topics use studio visual guides (docs/topic_theory/*.studio.md)"
+            )
+        for issue in validate_studio_orders({int(les["order"]) for les in lessons}):
+            warnings.append(issue)
+    except ImportError:
+        pass
+
     if shallow_advanced:
         warnings.append(f"{shallow_advanced} lessons with advanced theory < 1600 chars (target richer platform depth)")
     if advanced_shorter_than_beginner:

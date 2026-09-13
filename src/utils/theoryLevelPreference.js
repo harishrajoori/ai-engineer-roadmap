@@ -4,7 +4,11 @@ const THEORY_LEVEL_KEY = "ai_hub_theory_level_pref";
 
 export const THEORY_LEVELS = [
   { id: "beginner", label: "Foundations", hint: "Plain English and data-pipeline analogies" },
-  { id: "intermediate", label: "Study guide", hint: "Checklists, prove rubric, and steps" },
+  {
+    id: "intermediate",
+    label: "Study guide",
+    hint: "Full topic walkthrough — diagrams, architecture, checklists",
+  },
   { id: "advanced", label: "Platform depth", hint: "Tradeoffs, metrics, failures, interviews" },
 ];
 
