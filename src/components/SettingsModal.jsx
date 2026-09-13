@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { X, Key, Shield, Download, Upload, Bot, Check, ExternalLink, UserCheck } from "lucide-react";
+import { X, Key, Shield, Download, Upload, Check, ExternalLink } from "lucide-react";
 import { AVAILABLE_MODELS } from "../services/aiService";
+import GoogleSignInButton from "./GoogleSignInButton";
 
 export default function SettingsModal({
   isOpen,
@@ -12,12 +13,14 @@ export default function SettingsModal({
   userProfile,
   onGoogleLogin,
   onGoogleLogout,
+  googleOAuthEnabled = false,
   onExportBackup,
   onImportBackup
 }) {
   const [geminiKey, setGeminiKey] = useState(keys.gemini || "");
   const [groqKey, setGroqKey] = useState(keys.groq || "");
   const [openRouterKey, setOpenRouterKey] = useState(keys.openrouter || "");
+  const [googleClientId, setGoogleClientId] = useState(keys.googleClientId || "");
   const [model, setModel] = useState(preferredModel || "gemini-2.5-flash");
   const [customModel, setCustomModel] = useState("");
   const [savedSuccess, setSavedSuccess] = useState(false);
@@ -29,7 +32,8 @@ export default function SettingsModal({
     onSaveKeys({
       gemini: geminiKey.trim(),
       groq: groqKey.trim(),
-      openrouter: openRouterKey.trim()
+      openrouter: openRouterKey.trim(),
+      googleClientId: googleClientId.trim()
     });
     onSaveModel(finalModel);
     setSavedSuccess(true);
@@ -48,7 +52,7 @@ export default function SettingsModal({
         const data = JSON.parse(event.target.result);
         onImportBackup(data);
         alert("Study progress & notes backup imported successfully!");
-      } catch (err) {
+      } catch {
         alert("Invalid backup JSON file.");
       }
     };
@@ -99,18 +103,29 @@ export default function SettingsModal({
                   Sign Out ({userProfile.name?.split(" ")[0]})
                 </button>
               ) : (
-                <button
-                  className="filter-btn active"
-                  style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem" }}
-                  onClick={onGoogleLogin}
-                >
-                  Sign in with Google
-                </button>
+                <GoogleSignInButton enabled={googleOAuthEnabled} onSuccess={onGoogleLogin} />
               )}
             </div>
 
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.5rem" }}>
+              <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
+                Google OAuth Web Client ID (optional)
+              </label>
+              <input
+                type="text"
+                className="chat-input"
+                placeholder="xxxx.apps.googleusercontent.com"
+                value={googleClientId}
+                onChange={(e) => setGoogleClientId(e.target.value)}
+                autoComplete="off"
+              />
+              <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0, lineHeight: 1.4 }}>
+                Enables Sign in with Google. Add authorized origins for localhost and your GitHub Pages URL. AI Mentor still uses a separate Gemini API key below.
+              </p>
+            </div>
+
             <p style={{ fontSize: "0.75rem", color: "var(--muted)", margin: 0, lineHeight: 1.4 }}>
-              Signing in with Google associates your study streaks and notes. For the <strong>AI Mentor</strong>, Google provides a free Gemini API key with your Google account.
+              Signing in with Google personalizes streaks and mentor greetings. Save settings after pasting the client ID, then sign in.
             </p>
 
             <a

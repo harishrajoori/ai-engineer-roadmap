@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
+import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google";
+import { resolveGoogleClientId } from "./utils/googleAuth";
 import confetti from "canvas-confetti";
 import { LESSONS_DATA, COURSES_REF_DATA } from "./data/lessonsData";
 import Header from "./components/Header";
@@ -9,6 +10,7 @@ import SmartStage from "./components/SmartStage";
 import Inspector from "./components/Inspector";
 import SettingsModal from "./components/SettingsModal";
 import RegenerateModal from "./components/RegenerateModal";
+import { computeStreakDays, loadStudyDays, recordStudyDay, saveStudyDays } from "./utils/studyStreak";
 
 export default function App() {
   // Persistence Keys
@@ -54,6 +56,7 @@ export default function App() {
       return null;
     }
   });
+  const [studyDays, setStudyDays] = useState(() => loadStudyDays());
 
   const [activeCourseNum, setActiveCourseNum] = useState(0);
   const [activeLessonOrder, setActiveLessonOrder] = useState(0);
@@ -136,6 +139,9 @@ export default function App() {
   const totalCount = LESSONS_DATA.length;
   const completedCount = LESSONS_DATA.filter((l) => progressMap[l.order]).length;
   const progressPct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+  const streakDays = computeStreakDays(studyDays);
+  const googleClientId = resolveGoogleClientId(apiKeys);
+  const googleOAuthEnabled = Boolean(googleClientId);
 
   // Handlers
   const handleToggleTheme = () => {
@@ -150,6 +156,13 @@ export default function App() {
   };
 
   const handleGoogleLogout = () => {
+    if (googleOAuthEnabled) {
+      try {
+        googleLogout();
+      } catch {
+        /* provider not mounted */
+      }
+    }
     setUserProfile(null);
   };
 
@@ -180,6 +193,11 @@ export default function App() {
           spread: 70,
           origin: { y: 0.6 }
         });
+        setStudyDays((days) => {
+          const updated = recordStudyDay(days);
+          saveStudyDays(updated);
+          return updated;
+        });
       }
       return { ...prev, [order]: next };
     });
@@ -209,7 +227,8 @@ export default function App() {
       notes: notesMap,
       proveUrls: proveMap,
       videoOverrides,
-      regenerations
+      regenerations,
+      studyDays
     };
     const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -226,20 +245,25 @@ export default function App() {
     if (data.videoOverrides) setVideoOverrides(data.videoOverrides);
     if (data.regenerations) setRegenerations(data.regenerations);
     if (data.user) setUserProfile(data.user);
+    if (data.studyDays) {
+      setStudyDays(data.studyDays);
+      saveStudyDays(data.studyDays);
+    }
   };
 
-  return (
-    <GoogleOAuthProvider clientId={apiKeys.googleClientId || "dummy-client-id.apps.googleusercontent.com"}>
+  const layout = (
+    <>
       <Header
         progressPct={progressPct}
         completedCount={completedCount}
         totalCount={totalCount}
-        streakDays={5}
+        streakDays={streakDays}
         theme={theme}
         onToggleTheme={handleToggleTheme}
         userProfile={userProfile}
         onGoogleLogin={handleGoogleLogin}
         onGoogleLogout={handleGoogleLogout}
+        googleOAuthEnabled={googleOAuthEnabled}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onExportBackup={handleExportBackup}
       />
@@ -295,6 +319,8 @@ export default function App() {
           preferredModel={preferredModel}
           onSelectModel={setPreferredModel}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          apiKeys={apiKeys}
+          userProfile={userProfile}
         />
       </div>
 
@@ -309,6 +335,7 @@ export default function App() {
         userProfile={userProfile}
         onGoogleLogin={handleGoogleLogin}
         onGoogleLogout={handleGoogleLogout}
+        googleOAuthEnabled={googleOAuthEnabled}
         onExportBackup={handleExportBackup}
         onImportBackup={handleImportBackup}
       />
@@ -319,7 +346,18 @@ export default function App() {
         lesson={activeLesson}
         onSaveRegeneration={handleSaveRegeneration}
         preferredModel={preferredModel}
+        apiKeys={apiKeys}
       />
-    </GoogleOAuthProvider>
+    </>
   );
+
+  if (googleOAuthEnabled) {
+    return (
+      <GoogleOAuthProvider clientId={googleClientId} key={googleClientId}>
+        {layout}
+      </GoogleOAuthProvider>
+    );
+  }
+
+  return layout;
 }

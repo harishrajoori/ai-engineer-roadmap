@@ -1,5 +1,50 @@
-// Auto-generated 142 lessons and reference blueprints
+// Auto-generated — run `npm run curriculum` after editing docs/AI_System_Engineer_Learning_Track_2027.md
 export const LESSONS_DATA = [
+  {
+    "order": 1,
+    "course": 1,
+    "course_title": "Open Video Spine → Course 1",
+    "month": "M1 Oct 2026",
+    "section": "video_spine",
+    "type": "Video",
+    "lesson": "Generative AI with Large Language Models",
+    "url": "https://www.youtube.com/learn/generative-ai-with-llms",
+    "duration": "~16 h",
+    "required": "Yes",
+    "open_how": "Embed / YouTube",
+    "embed_url": "",
+    "status": "Not started"
+  },
+  {
+    "order": 2,
+    "course": 2,
+    "course_title": "Open Video Spine → Course 2",
+    "month": "M2 Nov 2026",
+    "section": "video_spine",
+    "type": "Video",
+    "lesson": "AI Agents in LangGraph",
+    "url": "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/",
+    "duration": "2–3 h",
+    "required": "Yes",
+    "open_how": "Embed / YouTube",
+    "embed_url": "",
+    "status": "Not started"
+  },
+  {
+    "order": 3,
+    "course": 2,
+    "course_title": "Open Video Spine → Course 2",
+    "month": "M2 Nov 2026",
+    "section": "video_spine",
+    "type": "Video",
+    "lesson": "Generative AI Engineering with LLMs specialization (cherry-pick)",
+    "url": "https://www.youtube.com/specializations/generative-ai-engineering-with-llms",
+    "duration": "optional",
+    "required": "No",
+    "open_how": "Embed / YouTube",
+    "embed_url": "",
+    "status": "Not started"
+  },
   {
     "order": 7,
     "course": 0,
@@ -7,19 +52,19 @@ export const LESSONS_DATA = [
     "month": "Pre Oct 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "Karpathy \u2014 Intro to LLMs",
+    "lesson": "Karpathy — Intro to LLMs",
     "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g",
     "duration": "~1 h",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/zjkBMFhNj_g",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -60,7 +105,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Karpathy \u2014 Intro to LLMs",
+      "title": "Karpathy — Intro to LLMs",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -84,19 +129,19 @@ export const LESSONS_DATA = [
     "month": "Pre Oct 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "DeepLearning.AI \u2014 Pydantic for LLM Workflows",
+    "lesson": "DeepLearning.AI — Pydantic for LLM Workflows",
     "url": "https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/",
     "duration": "~1 h",
     "required": "Yes",
-    "open_how": "DL.AI browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -154,7 +199,7 @@ export const LESSONS_DATA = [
     "month": "Pre Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Instructor \u2014 quick start",
+    "lesson": "Instructor — quick start",
     "url": "https://python.useinstructor.com/",
     "duration": "",
     "required": "Yes",
@@ -162,11 +207,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -186,7 +231,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Instructor: Retries, Validators, and Partial Streaming",
-        "url": "https://python.useinstructor.com/concepts/retries/",
+        "url": "https://python.useinstructor.com/",
         "type": "text",
         "level": "intermediate",
         "description": "Automatic error correction loops feeding validation errors back to the LLM for self-healing."
@@ -232,11 +277,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -294,7 +339,7 @@ export const LESSONS_DATA = [
     "month": "Pre Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "LiteLLM \u2014 reliable completions / fallbacks",
+    "lesson": "LiteLLM — reliable completions / fallbacks",
     "url": "https://docs.litellm.ai/docs/completion/reliable_completions",
     "duration": "",
     "required": "Yes",
@@ -302,11 +347,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -364,7 +409,7 @@ export const LESSONS_DATA = [
     "month": "Pre Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Hamel \u2014 evals intro",
+    "lesson": "Hamel — evals intro",
     "url": "https://hamel.dev/blog/posts/evals/",
     "duration": "",
     "required": "Yes",
@@ -372,11 +417,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -442,11 +487,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -505,7 +550,7 @@ export const LESSONS_DATA = [
     "month": "Pre Oct 2026",
     "section": "build",
     "type": "Build",
-    "lesson": "Repo: `production-log-reconciler` or `telemetry-log-reconciler` \u00b7 synthetic/public data only",
+    "lesson": "Repo: `production-log-reconciler` or `telemetry-log-reconciler` · synthetic/public data only",
     "url": "",
     "duration": "",
     "required": "Yes",
@@ -513,11 +558,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -551,7 +596,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Repo: `production-log-reconciler` or `telemetry-log-reconciler` \u00b7 synthetic/public data only",
+      "title": "Repo: `production-log-reconciler` or `telemetry-log-reconciler` · synthetic/public data only",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -583,11 +628,11 @@ export const LESSONS_DATA = [
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
-      "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
       "LLMs as untrusted kernels; schemas as contracts",
       "Instructor `response_model`, validation errors as control flow",
       "LiteLLM: model string, fallbacks, timeouts",
-      "Golden set: input log snippet \u2192 expected Pydantic JSON",
+      "Golden set: input log snippet → expected Pydantic JSON",
       "Invariants beyond JSON Schema (balances, sums, ranges)",
       "Threat model: prompt injection on log fields, log exfiltration"
     ],
@@ -650,14 +695,13 @@ export const LESSONS_DATA = [
     "course": 1,
     "course_title": "M1 (Oct 2026): LLM foundations & structured extraction",
     "month": "M1 Oct 2026",
-    "section": "masterclass",
-    "type": "Video",
-    "lesson": "Building GPT from Scratch in PyTorch",
-    "content": "## \ud83c\udfd7\ufe0f Architectural Overview\nA typical GPT model uses a decoder-only transformer architecture. \n\n### Core Components:\n1. **Token Embeddings:** Maps vocabulary to dense vectors.\n2. **Positional Encoding:** Injects sequence order.\n3. **Self-Attention Blocks:** Captures relationships.\n\n```python\nimport torch\nimport torch.nn as nn\nfrom torch.nn import functional as F\n\nclass Head(nn.Module):\n    \\\"\\\"\\\" one head of self-attention \\\"\\\"\\\"\n    def __init__(self, head_size):\n        super().__init__()\n        self.key = nn.Linear(n_embd, head_size, bias=False)\n        self.query = nn.Linear(n_embd, head_size, bias=False)\n        self.value = nn.Linear(n_embd, head_size, bias=False)\n        self.register_buffer(\"tril\", torch.tril(torch.ones(block_size, block_size)))\n\n    def forward(self, x):\n        B, T, C = x.shape\n        k = self.key(x)   \n        q = self.query(x) \n        wei = q @ k.transpose(-2,-1) * C**-0.5 \n        wei = wei.masked_fill(self.tril[:T, :T] == 0, float(\"-inf\"))\n        wei = F.softmax(wei, dim=-1)\n        v = self.value(x) \n        return wei @ v \n```\n\n### \ud83e\udde0 Mathematical Intuition\n$$ \\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V $$\n\n### \ud83d\udee1\ufe0f Production Invariants\n- Always enforce `B, T, C` tensor shape contracts.\n- Apply `torch.nn.utils.clip_grad_norm_` to prevent gradient explosion.\n",
-    "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+    "section": "syllabus",
+    "type": "Read",
+    "lesson": "Generative AI with Large Language Models",
+    "url": "https://www.coursera.org/learn/generative-ai-with-llms",
     "duration": "~16 h",
     "required": "Yes",
-    "open_how": "Embed / YouTube",
+    "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -698,7 +742,6 @@ export const LESSONS_DATA = [
         "description": "The cleanest, simplest repository for training/fine-tuning medium-sized GPTs with PyTorch 2.0 compile."
       }
     ],
-    "title": "Karpathy: Neural Networks Zero to Hero",
     "digest": {
       "title": "Building GPT from Scratch in PyTorch",
       "takeaways": [
@@ -715,20 +758,21 @@ export const LESSONS_DATA = [
         "Premature optimization before establishing measurable evaluation benchmarks.",
         "Lack of fallback mechanisms during third-party API rate limits and outages."
       ]
-    }
+    },
+    "content": "## 🏗️ Architectural Overview\nA typical GPT model uses a decoder-only transformer architecture. \n\n### Core Components:\n1. **Token Embeddings:** Maps vocabulary to dense vectors.\n2. **Positional Encoding:** Injects sequence order.\n3. **Self-Attention Blocks:** Captures relationships.\n\n```python\nimport torch\nimport torch.nn as nn\nfrom torch.nn import functional as F\n\nclass Head(nn.Module):\n    \\\"\\\"\\\" one head of self-attention \\\"\\\"\\\"\n    def __init__(self, head_size):\n        super().__init__()\n        self.key = nn.Linear(n_embd, head_size, bias=False)\n        self.query = nn.Linear(n_embd, head_size, bias=False)\n        self.value = nn.Linear(n_embd, head_size, bias=False)\n        self.register_buffer(\"tril\", torch.tril(torch.ones(block_size, block_size)))\n\n    def forward(self, x):\n        B, T, C = x.shape\n        k = self.key(x)   \n        q = self.query(x) \n        wei = q @ k.transpose(-2,-1) * C**-0.5 \n        wei = wei.masked_fill(self.tril[:T, :T] == 0, float(\"-inf\"))\n        wei = F.softmax(wei, dim=-1)\n        v = self.value(x) \n        return wei @ v \n```\n\n### 🧠 Mathematical Intuition\n$$ \\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V $$\n\n### 🛡️ Production Invariants\n- Always enforce `B, T, C` tensor shape contracts.\n- Apply `torch.nn.utils.clip_grad_norm_` to prevent gradient explosion.\n"
   },
   {
     "order": 17,
     "course": 1,
     "course_title": "M1 (Oct 2026): LLM foundations & structured extraction",
     "month": "M1 Oct 2026",
-    "section": "masterclass",
+    "section": "syllabus",
     "type": "Read",
     "lesson": "DL.AI course landing",
     "url": "https://www.deeplearning.ai/courses/generative-ai-with-llms",
     "duration": "same content",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "DL.AI browser",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -794,11 +838,11 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "Karpathy \u2014 Deep Dive into LLMs",
+    "lesson": "Karpathy — Deep Dive into LLMs",
     "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI",
     "duration": "~3 h",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/7xTGNNLPyMI",
     "status": "Not started",
     "course_concepts": [
@@ -847,7 +891,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Karpathy \u2014 Deep Dive into LLMs",
+      "title": "Karpathy — Deep Dive into LLMs",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -871,11 +915,11 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "3Blue1Brown \u2014 neural networks / attention",
+    "lesson": "3Blue1Brown — neural networks / attention",
     "url": "https://www.3blue1brown.com/topics/neural-networks",
-    "duration": "2\u20134 h",
+    "duration": "2–4 h",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -917,7 +961,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "3Blue1Brown \u2014 neural networks / attention",
+      "title": "3Blue1Brown — neural networks / attention",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -941,11 +985,11 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "*(optional)* StatQuest video index \u00b7 search attention / embedding",
+    "lesson": "*(optional)* StatQuest video index · search attention / embedding",
     "url": "https://statquest.org/video-index/",
     "duration": "",
     "required": "No",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -987,7 +1031,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "*(optional)* StatQuest video index \u00b7 search attention / embedding",
+      "title": "*(optional)* StatQuest video index · search attention / embedding",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -1015,7 +1059,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/@DeepLearningAI",
     "duration": "",
     "required": "No",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -1085,7 +1129,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/c/AndrejKarpathy",
     "duration": "",
     "required": "No",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -1158,7 +1202,7 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Applied LLMs \u2014 3+ sections",
+    "lesson": "Applied LLMs — 3+ sections",
     "url": "https://applied-llms.org/",
     "duration": "",
     "required": "Yes",
@@ -1229,7 +1273,7 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Instructor \u2014 patterns & retries",
+    "lesson": "Instructor — patterns & retries",
     "url": "https://python.useinstructor.com/",
     "duration": "",
     "required": "Yes",
@@ -1261,7 +1305,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Instructor: Retries, Validators, and Partial Streaming",
-        "url": "https://python.useinstructor.com/concepts/retries/",
+        "url": "https://python.useinstructor.com/",
         "type": "text",
         "level": "intermediate",
         "description": "Automatic error correction loops feeding validation errors back to the LLM for self-healing."
@@ -1369,7 +1413,7 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Chip Huyen \u2014 blog",
+    "lesson": "Chip Huyen — blog",
     "url": "https://chiphuyen.com/",
     "duration": "",
     "required": "Yes",
@@ -1415,7 +1459,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Chip Huyen \u2014 blog",
+      "title": "Chip Huyen — blog",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -1509,7 +1553,7 @@ export const LESSONS_DATA = [
     "month": "M1 Oct 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "*(optional)* Outlines \u2014 constrained decoding",
+    "lesson": "*(optional)* Outlines — constrained decoding",
     "url": "https://github.com/dottxt-ai/outlines",
     "duration": "",
     "required": "No",
@@ -1555,7 +1599,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "*(optional)* Outlines \u2014 constrained decoding",
+      "title": "*(optional)* Outlines — constrained decoding",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -1717,13 +1761,13 @@ export const LESSONS_DATA = [
     "course": 2,
     "course_title": "M2 (Nov 2026): LangGraph & agent state machines",
     "month": "M2 Nov 2026",
-    "section": "masterclass",
+    "section": "syllabus",
     "type": "Read",
     "lesson": "AI Agents in LangGraph",
     "url": "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/",
-    "duration": "2\u20133 h",
+    "duration": "2–3 h",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "DL.AI browser",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -1732,7 +1776,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -1793,11 +1837,11 @@ export const LESSONS_DATA = [
     "course": 2,
     "course_title": "M2 (Nov 2026): LangGraph & agent state machines",
     "month": "M2 Nov 2026",
-    "section": "masterclass",
+    "section": "syllabus",
     "type": "Read",
-    "lesson": "LangChain Academy \u2014 LangGraph modules",
+    "lesson": "LangChain Academy — LangGraph modules",
     "url": "https://academy.langchain.com/",
-    "duration": "4\u20138 h",
+    "duration": "4–8 h",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
@@ -1808,7 +1852,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -1871,11 +1915,11 @@ export const LESSONS_DATA = [
     "month": "M2 Nov 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "LangChain \u2014 Context Engineering for Agents",
+    "lesson": "LangChain — Context Engineering for Agents",
     "url": "https://www.youtube.com/watch?v=4GiqzUHD5AA",
     "duration": "~1 h",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/4GiqzUHD5AA",
     "status": "Not started",
     "course_concepts": [
@@ -1884,7 +1928,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -1947,11 +1991,11 @@ export const LESSONS_DATA = [
     "month": "M2 Nov 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "Dave Ebbelaar \u2014 LangGraph production",
+    "lesson": "Dave Ebbelaar — LangGraph production",
     "url": "https://www.youtube.com/@daveebbelaar",
-    "duration": "pick 1\u20132",
+    "duration": "pick 1–2",
     "required": "Yes",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -1960,7 +2004,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2023,11 +2067,11 @@ export const LESSONS_DATA = [
     "month": "M2 Nov 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "Berkeley RDI \u2014 compound AI / agents",
+    "lesson": "Berkeley RDI — compound AI / agents",
     "url": "https://www.youtube.com/@BerkeleyRDI",
     "duration": "1 lecture",
     "required": "Yes",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -2036,7 +2080,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2103,7 +2147,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/@LangChain",
     "duration": "",
     "required": "No",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -2112,7 +2156,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2175,7 +2219,7 @@ export const LESSONS_DATA = [
     "month": "M2 Nov 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Anthropic \u2014 Building Effective Agents",
+    "lesson": "Anthropic — Building Effective Agents",
     "url": "https://www.anthropic.com/engineering/building-effective-agents",
     "duration": "",
     "required": "Yes",
@@ -2188,7 +2232,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2264,7 +2308,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2327,7 +2371,7 @@ export const LESSONS_DATA = [
     "month": "M2 Nov 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Applied LLMs \u2014 agents / orchestration",
+    "lesson": "Applied LLMs — agents / orchestration",
     "url": "https://applied-llms.org/",
     "duration": "",
     "required": "Yes",
@@ -2340,7 +2384,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2410,7 +2454,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2473,7 +2517,7 @@ export const LESSONS_DATA = [
     "month": "M2 Nov 2026",
     "section": "prove",
     "type": "Prove",
-    "lesson": "README demo: validation fail \u2192 `interrupt()` HITL",
+    "lesson": "README demo: validation fail → `interrupt()` HITL",
     "url": "",
     "duration": "",
     "required": "Yes",
@@ -2486,7 +2530,7 @@ export const LESSONS_DATA = [
       "`interrupt()` and human-in-the-loop patterns",
       "Subgraphs vs monolith; when to use Send/API",
       "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
-      "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
     ],
     "course_prompts": [
       "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
@@ -2549,11 +2593,11 @@ export const LESSONS_DATA = [
     "month": "M3 Dec 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "Daily Dose of DS \u2014 MCP topics",
+    "lesson": "Daily Dose of DS — MCP topics",
     "url": "https://www.youtube.com/@dailydoseofds",
-    "duration": "1\u20132 videos",
+    "duration": "1–2 videos",
     "required": "Yes",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -2561,9 +2605,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2582,7 +2625,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -2617,7 +2660,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/watch?v=LZAGlCqmhZQ",
     "duration": "~2 h",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/LZAGlCqmhZQ",
     "status": "Not started",
     "course_concepts": [
@@ -2625,9 +2668,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2688,7 +2730,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/watch?v=BM39OouLNsM",
     "duration": "long",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/BM39OouLNsM",
     "status": "Not started",
     "course_concepts": [
@@ -2696,9 +2738,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2755,11 +2796,11 @@ export const LESSONS_DATA = [
     "month": "M3 Dec 2026",
     "section": "watch",
     "type": "Video",
-    "lesson": "*(optional)* CampusX MCP episode \u2014 LangGraph playlist",
+    "lesson": "*(optional)* CampusX MCP episode — LangGraph playlist",
     "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL",
     "duration": "",
     "required": "No",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -2767,9 +2808,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2838,9 +2878,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2859,7 +2898,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -2902,9 +2941,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2923,7 +2961,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -2966,9 +3004,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -2987,7 +3024,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3030,9 +3067,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -3051,7 +3087,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3082,7 +3118,7 @@ export const LESSONS_DATA = [
     "month": "M3 Dec 2026",
     "section": "read",
     "type": "Read",
-    "lesson": "Hub roadmap \u2014 MCP section",
+    "lesson": "Hub roadmap — MCP section",
     "url": "https://github.com/patchy631/ai-engineering-hub/blob/main/ai-engineering-roadmap/README.md",
     "duration": "",
     "required": "Yes",
@@ -3094,9 +3130,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -3115,7 +3150,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3158,9 +3193,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "0Il85xyb46M",
     "resources": [
       {
@@ -3179,7 +3213,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3222,9 +3256,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "0Il85xyb46M",
     "resources": [
       {
@@ -3243,7 +3276,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3286,9 +3319,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "0Il85xyb46M",
     "resources": [
       {
@@ -3307,7 +3339,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3350,9 +3382,8 @@ export const LESSONS_DATA = [
       "Transport: stdio vs SSE; security boundaries",
       "Tool schema versioning; breaking changes",
       "Audit log design for compliance interviews",
-      "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
     ],
-    "course_prompts": [],
     "youtube_id": "T7keBSZf0ys",
     "resources": [
       {
@@ -3371,7 +3402,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Official Model Context Protocol Specification",
-        "url": "https://spec.modelcontextprotocol.io/",
+        "url": "https://modelcontextprotocol.io/specification/2025-11-25",
         "type": "text",
         "level": "advanced",
         "description": "Formal RFC spec: JSON-RPC 2.0 messages, Stdio vs SSE transports, tool authorization, and audit logging."
@@ -3406,7 +3437,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/watch?v=ZgNJMWipirk",
     "duration": "~45 m",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/ZgNJMWipirk",
     "status": "Not started",
     "course_concepts": [
@@ -3417,7 +3448,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3467,11 +3497,11 @@ export const LESSONS_DATA = [
     "month": "M4 Jan 2027",
     "section": "watch",
     "type": "Video",
-    "lesson": "*(optional)* CampusX Advanced RAG outline \u00b7 hybrid modules",
+    "lesson": "*(optional)* CampusX Advanced RAG outline · hybrid modules",
     "url": "https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265",
     "duration": "",
     "required": "No",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -3482,7 +3512,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3547,7 +3576,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3597,7 +3625,7 @@ export const LESSONS_DATA = [
     "month": "M4 Jan 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Qdrant \u2014 hybrid queries",
+    "lesson": "Qdrant — hybrid queries",
     "url": "https://qdrant.tech/documentation/concepts/hybrid-queries/",
     "duration": "",
     "required": "Yes",
@@ -3612,7 +3640,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3677,7 +3704,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3727,7 +3753,7 @@ export const LESSONS_DATA = [
     "month": "M4 Jan 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Applied LLMs \u2014 retrieval",
+    "lesson": "Applied LLMs — retrieval",
     "url": "https://applied-llms.org/",
     "duration": "",
     "required": "Yes",
@@ -3742,7 +3768,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3808,7 +3833,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3873,7 +3897,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3938,7 +3961,6 @@ export const LESSONS_DATA = [
       "Agent tool: `search_corpus(query) -> citations`",
       "Evaluation: recall@k, MRR; labeled q/a set"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -3992,7 +4014,7 @@ export const LESSONS_DATA = [
     "url": "https://github.com/DS4SD/docling",
     "duration": "README / release demos",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -4002,7 +4024,6 @@ export const LESSONS_DATA = [
       "LlamaParse vs self-hosted Docling tradeoffs",
       "`chunks.jsonl` contract for downstream index"
     ],
-    "course_prompts": [],
     "youtube_id": "zSA7ylHP6AY",
     "resources": [
       {
@@ -4056,7 +4077,7 @@ export const LESSONS_DATA = [
     "url": "https://github.com/DS4SD/docling#documentation",
     "duration": "",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -4066,7 +4087,6 @@ export const LESSONS_DATA = [
       "LlamaParse vs self-hosted Docling tradeoffs",
       "`chunks.jsonl` contract for downstream index"
     ],
-    "course_prompts": [],
     "youtube_id": "zSA7ylHP6AY",
     "resources": [
       {
@@ -4120,7 +4140,7 @@ export const LESSONS_DATA = [
     "url": "https://docs.cloud.llamaindex.ai/llamaparse/getting_started",
     "duration": "",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -4130,7 +4150,6 @@ export const LESSONS_DATA = [
       "LlamaParse vs self-hosted Docling tradeoffs",
       "`chunks.jsonl` contract for downstream index"
     ],
-    "course_prompts": [],
     "youtube_id": "mUHPPBbumIs",
     "resources": [
       {
@@ -4180,11 +4199,11 @@ export const LESSONS_DATA = [
     "month": "M5 Feb 2027",
     "section": "watch",
     "type": "Video",
-    "lesson": "Chip Huyen \u2014 data for LLM systems",
+    "lesson": "Chip Huyen — data for LLM systems",
     "url": "https://chiphuyen.com/",
     "duration": "",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -4194,7 +4213,6 @@ export const LESSONS_DATA = [
       "LlamaParse vs self-hosted Docling tradeoffs",
       "`chunks.jsonl` contract for downstream index"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4220,7 +4238,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Chip Huyen \u2014 data for LLM systems",
+      "title": "Chip Huyen — data for LLM systems",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -4258,7 +4276,6 @@ export const LESSONS_DATA = [
       "LlamaParse vs self-hosted Docling tradeoffs",
       "`chunks.jsonl` contract for downstream index"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4322,7 +4339,6 @@ export const LESSONS_DATA = [
       "LlamaParse vs self-hosted Docling tradeoffs",
       "`chunks.jsonl` contract for downstream index"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4374,19 +4390,18 @@ export const LESSONS_DATA = [
     "type": "Video",
     "lesson": "Neo4j GraphAcademy",
     "url": "https://graphacademy.neo4j.com/",
-    "duration": "4\u20138 h",
+    "duration": "4–8 h",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
       "Property graph vs RDF; when graphs help reconciliation",
       "GraphRAG vs simple vector RAG",
-      "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+      "Validator pattern: “no deploy if dependency cycle”",
       "Cypher basics: match, where, return",
       "Scope: **one** validator, not full GraphRAG product"
     ],
-    "course_prompts": [],
     "youtube_id": "X257Vk21U0U",
     "resources": [
       {
@@ -4398,7 +4413,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Cohere LLM University: Hybrid Search & Reciprocal Rank Fusion",
-        "url": "https://cohere.com/llmu/hybrid-search",
+        "url": "https://www.pinecone.io/learn/hybrid-search-intro/",
         "type": "text",
         "level": "intermediate",
         "description": "Fusing BM25 keyword matching with dense embeddings and Cross-Encoder neural rerankers."
@@ -4447,17 +4462,16 @@ export const LESSONS_DATA = [
     "url": "https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265",
     "duration": "",
     "required": "No",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
       "Property graph vs RDF; when graphs help reconciliation",
       "GraphRAG vs simple vector RAG",
-      "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+      "Validator pattern: “no deploy if dependency cycle”",
       "Cypher basics: match, where, return",
       "Scope: **one** validator, not full GraphRAG product"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4469,7 +4483,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Cohere LLM University: Hybrid Search & Reciprocal Rank Fusion",
-        "url": "https://cohere.com/llmu/hybrid-search",
+        "url": "https://www.pinecone.io/learn/hybrid-search-intro/",
         "type": "text",
         "level": "intermediate",
         "description": "Fusing BM25 keyword matching with dense embeddings and Cross-Encoder neural rerankers."
@@ -4524,11 +4538,10 @@ export const LESSONS_DATA = [
     "course_concepts": [
       "Property graph vs RDF; when graphs help reconciliation",
       "GraphRAG vs simple vector RAG",
-      "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+      "Validator pattern: “no deploy if dependency cycle”",
       "Cypher basics: match, where, return",
       "Scope: **one** validator, not full GraphRAG product"
     ],
-    "course_prompts": [],
     "youtube_id": "X257Vk21U0U",
     "resources": [
       {
@@ -4540,7 +4553,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Cohere LLM University: Hybrid Search & Reciprocal Rank Fusion",
-        "url": "https://cohere.com/llmu/hybrid-search",
+        "url": "https://www.pinecone.io/learn/hybrid-search-intro/",
         "type": "text",
         "level": "intermediate",
         "description": "Fusing BM25 keyword matching with dense embeddings and Cross-Encoder neural rerankers."
@@ -4595,11 +4608,10 @@ export const LESSONS_DATA = [
     "course_concepts": [
       "Property graph vs RDF; when graphs help reconciliation",
       "GraphRAG vs simple vector RAG",
-      "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+      "Validator pattern: “no deploy if dependency cycle”",
       "Cypher basics: match, where, return",
       "Scope: **one** validator, not full GraphRAG product"
     ],
-    "course_prompts": [],
     "youtube_id": "X257Vk21U0U",
     "resources": [
       {
@@ -4611,7 +4623,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Cohere LLM University: Hybrid Search & Reciprocal Rank Fusion",
-        "url": "https://cohere.com/llmu/hybrid-search",
+        "url": "https://www.pinecone.io/learn/hybrid-search-intro/",
         "type": "text",
         "level": "intermediate",
         "description": "Fusing BM25 keyword matching with dense embeddings and Cross-Encoder neural rerankers."
@@ -4666,11 +4678,10 @@ export const LESSONS_DATA = [
     "course_concepts": [
       "Property graph vs RDF; when graphs help reconciliation",
       "GraphRAG vs simple vector RAG",
-      "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+      "Validator pattern: “no deploy if dependency cycle”",
       "Cypher basics: match, where, return",
       "Scope: **one** validator, not full GraphRAG product"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4682,7 +4693,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Cohere LLM University: Hybrid Search & Reciprocal Rank Fusion",
-        "url": "https://cohere.com/llmu/hybrid-search",
+        "url": "https://www.pinecone.io/learn/hybrid-search-intro/",
         "type": "text",
         "level": "intermediate",
         "description": "Fusing BM25 keyword matching with dense embeddings and Cross-Encoder neural rerankers."
@@ -4737,11 +4748,10 @@ export const LESSONS_DATA = [
     "course_concepts": [
       "Property graph vs RDF; when graphs help reconciliation",
       "GraphRAG vs simple vector RAG",
-      "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+      "Validator pattern: “no deploy if dependency cycle”",
       "Cypher basics: match, where, return",
       "Scope: **one** validator, not full GraphRAG product"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4753,7 +4763,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Cohere LLM University: Hybrid Search & Reciprocal Rank Fusion",
-        "url": "https://cohere.com/llmu/hybrid-search",
+        "url": "https://www.pinecone.io/learn/hybrid-search-intro/",
         "type": "text",
         "level": "intermediate",
         "description": "Fusing BM25 keyword matching with dense embeddings and Cross-Encoder neural rerankers."
@@ -4802,7 +4812,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/watch?v=bB56BaQIBm4",
     "duration": "~1 h",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/bB56BaQIBm4",
     "status": "Not started",
     "course_concepts": [
@@ -4814,7 +4824,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4864,11 +4873,11 @@ export const LESSONS_DATA = [
     "month": "M7 Apr 2027",
     "section": "watch",
     "type": "Video",
-    "lesson": "*(optional)* CampusX RAGAS module \u2014 Advanced RAG outline",
+    "lesson": "*(optional)* CampusX RAGAS module — Advanced RAG outline",
     "url": "https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265",
     "duration": "",
     "required": "No",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -4880,7 +4889,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -4930,7 +4938,7 @@ export const LESSONS_DATA = [
     "month": "M7 Apr 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Hamel \u2014 evals",
+    "lesson": "Hamel — evals",
     "url": "https://hamel.dev/blog/posts/evals/",
     "duration": "",
     "required": "Yes",
@@ -4946,7 +4954,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -4996,7 +5003,7 @@ export const LESSONS_DATA = [
     "month": "M7 Apr 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Applied LLMs \u2014 evaluation",
+    "lesson": "Applied LLMs — evaluation",
     "url": "https://applied-llms.org/",
     "duration": "",
     "required": "Yes",
@@ -5012,7 +5019,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5079,7 +5085,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5129,7 +5134,7 @@ export const LESSONS_DATA = [
     "month": "M7 Apr 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Ragas \u2014 install",
+    "lesson": "Ragas — install",
     "url": "https://docs.ragas.io/en/stable/getstarted/install/",
     "duration": "",
     "required": "Yes",
@@ -5145,7 +5150,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -5195,7 +5199,7 @@ export const LESSONS_DATA = [
     "month": "M7 Apr 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Ragas \u2014 metrics",
+    "lesson": "Ragas — metrics",
     "url": "https://docs.ragas.io/en/stable/concepts/metrics/",
     "duration": "",
     "required": "Yes",
@@ -5211,7 +5215,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "2TJxpyO3ei4",
     "resources": [
       {
@@ -5261,7 +5264,7 @@ export const LESSONS_DATA = [
     "month": "M7 Apr 2027",
     "section": "build",
     "type": "Build",
-    "lesson": "`evals/golden.jsonl`, `python -m evals.run` \u2192 JSON report",
+    "lesson": "`evals/golden.jsonl`, `python -m evals.run` → JSON report",
     "url": "",
     "duration": "",
     "required": "Yes",
@@ -5277,7 +5280,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5343,7 +5345,6 @@ export const LESSONS_DATA = [
       "DeepEval: pytest integration",
       "Version golden set in git; review PRs that change labels"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5393,7 +5394,7 @@ export const LESSONS_DATA = [
     "month": "M8 May 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Hamel \u2014 articles index",
+    "lesson": "Hamel — articles index",
     "url": "https://hamel.dev/",
     "duration": "",
     "required": "Yes",
@@ -5406,7 +5407,6 @@ export const LESSONS_DATA = [
       "Flaky evals: fixed seeds, cache LLM responses for CI optional",
       "Fail messages: which case regressed"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5456,7 +5456,7 @@ export const LESSONS_DATA = [
     "month": "M8 May 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "DeepEval \u2014 CI/CD",
+    "lesson": "DeepEval — CI/CD",
     "url": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd",
     "duration": "",
     "required": "Yes",
@@ -5469,7 +5469,6 @@ export const LESSONS_DATA = [
       "Flaky evals: fixed seeds, cache LLM responses for CI optional",
       "Fail messages: which case regressed"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5519,7 +5518,7 @@ export const LESSONS_DATA = [
     "month": "M8 May 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Applied LLMs \u2014 testing / monitoring",
+    "lesson": "Applied LLMs — testing / monitoring",
     "url": "https://applied-llms.org/",
     "duration": "",
     "required": "Yes",
@@ -5532,7 +5531,6 @@ export const LESSONS_DATA = [
       "Flaky evals: fixed seeds, cache LLM responses for CI optional",
       "Fail messages: which case regressed"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5596,7 +5594,6 @@ export const LESSONS_DATA = [
       "Flaky evals: fixed seeds, cache LLM responses for CI optional",
       "Fail messages: which case regressed"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5659,7 +5656,6 @@ export const LESSONS_DATA = [
       "Flaky evals: fixed seeds, cache LLM responses for CI optional",
       "Fail messages: which case regressed"
     ],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -5711,9 +5707,9 @@ export const LESSONS_DATA = [
     "type": "Video",
     "lesson": "LangSmith crash course",
     "url": "https://www.youtube.com/watch?v=4FFspU4riHk",
-    "duration": "map concepts to Langfuse \u00b7 ~2 h",
+    "duration": "map concepts to Langfuse · ~2 h",
     "required": "Yes",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/4FFspU4riHk",
     "status": "Not started",
     "course_concepts": [
@@ -5723,7 +5719,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -5773,11 +5768,11 @@ export const LESSONS_DATA = [
     "month": "M9 Jun 2027",
     "section": "watch",
     "type": "Video",
-    "lesson": "*(optional)* Context Engineering for Agents \u00b7 ~1 h",
+    "lesson": "*(optional)* Context Engineering for Agents · ~1 h",
     "url": "https://www.youtube.com/watch?v=4GiqzUHD5AA",
     "duration": "",
     "required": "No",
-    "open_how": "Embed",
+    "open_how": "Embed / YouTube",
     "embed_url": "https://www.youtube.com/embed/4GiqzUHD5AA",
     "status": "Not started",
     "course_concepts": [
@@ -5787,7 +5782,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "4GiqzUHD5AA",
     "resources": [
       {
@@ -5858,7 +5852,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "S3a8RP8Bfc8",
     "resources": [
       {
@@ -5929,7 +5922,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -5979,7 +5971,7 @@ export const LESSONS_DATA = [
     "month": "M9 Jun 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Langfuse \u2014 tracing",
+    "lesson": "Langfuse — tracing",
     "url": "https://langfuse.com/docs/tracing",
     "duration": "",
     "required": "Yes",
@@ -5993,7 +5985,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -6019,7 +6010,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Langfuse \u2014 tracing",
+      "title": "Langfuse — tracing",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -6043,7 +6034,7 @@ export const LESSONS_DATA = [
     "month": "M9 Jun 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "OpenTelemetry \u2014 Python",
+    "lesson": "OpenTelemetry — Python",
     "url": "https://opentelemetry.io/docs/languages/python/",
     "duration": "",
     "required": "Yes",
@@ -6057,7 +6048,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -6083,7 +6073,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "OpenTelemetry \u2014 Python",
+      "title": "OpenTelemetry — Python",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -6107,7 +6097,7 @@ export const LESSONS_DATA = [
     "month": "M9 Jun 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "LiteLLM \u2014 Langfuse integration",
+    "lesson": "LiteLLM — Langfuse integration",
     "url": "https://docs.litellm.ai/docs/observability/langfuse_integration",
     "duration": "",
     "required": "Yes",
@@ -6121,7 +6111,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -6185,7 +6174,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -6249,7 +6237,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "S3a8RP8Bfc8",
     "resources": [
       {
@@ -6313,7 +6300,6 @@ export const LESSONS_DATA = [
       "Correlate `run_id` across LiteLLM + LangGraph",
       "Redaction before screenshotting traces"
     ],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -6370,8 +6356,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "zSA7ylHP6AY",
     "resources": [
       {
@@ -6428,8 +6412,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -6486,8 +6468,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -6537,15 +6517,13 @@ export const LESSONS_DATA = [
     "month": "M10 Jul 2027",
     "section": "capstone checklist",
     "type": "Capstone",
-    "lesson": "Invariants & lineage: root validators; chunk \u2192 model \u2192 row events",
+    "lesson": "Invariants & lineage: root validators; chunk → model → row events",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -6564,14 +6542,14 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Temporal: Durable Execution for Resilient AI Workflows",
-        "url": "https://temporal.io/blog/reliable-ai-agents-with-temporal",
+        "url": "https://docs.temporal.io/ai",
         "type": "text",
         "level": "advanced",
         "description": "Distributed agent orchestration that guarantees execution across server crashes, timeouts, and network partitions."
       }
     ],
     "digest": {
-      "title": "Invariants & lineage: root validators; chunk \u2192 model \u2192 row events",
+      "title": "Invariants & lineage: root validators; chunk → model → row events",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -6602,8 +6580,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -6653,15 +6629,13 @@ export const LESSONS_DATA = [
     "month": "M10 Jul 2027",
     "section": "capstone checklist",
     "type": "Capstone",
-    "lesson": "LangGraph: pass \u2192 stage write; fail \u2192 `interrupt()` HITL",
+    "lesson": "LangGraph: pass → stage write; fail → `interrupt()` HITL",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "S3a8RP8Bfc8",
     "resources": [
       {
@@ -6725,8 +6699,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "sVcwVQRHIc8",
     "resources": [
       {
@@ -6783,8 +6755,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "OyrmR0CSRWs",
     "resources": [
       {
@@ -6834,20 +6804,18 @@ export const LESSONS_DATA = [
     "month": "M10 Jul 2027",
     "section": "capstone checklist",
     "type": "Capstone",
-    "lesson": "*(optional Phase 5)* E2B, semantic cache, NeMo \u2014 document as Phase 2 if deferred",
+    "lesson": "*(optional Phase 5)* E2B, semantic cache, NeMo — document as Phase 2 if deferred",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "SwqusllMCnE",
     "resources": [
       {
         "title": "Meta Llama Guard: Input/Output Safety Taxonomy",
-        "url": "https://github.com/meta-llama/llama-guard",
+        "url": "https://github.com/meta-llama/PurpleLlama",
         "type": "repo",
         "level": "beginner",
         "description": "Classify prompts and responses against safety hazards (hate speech, violence, cyberattacks)."
@@ -6861,14 +6829,14 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Automated LLM Regression Gates in GitHub Actions",
-        "url": "https://www.confident-ai.com/blog/how-to-set-up-llm-ci-cd-pipelines-with-deepeval",
+        "url": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd",
         "type": "text",
         "level": "advanced",
         "description": "Blocking PR merges if faithfulness drops below 0.85 or P99 latency spikes beyond budget."
       }
     ],
     "digest": {
-      "title": "*(optional Phase 5)* E2B, semantic cache, NeMo \u2014 document as Phase 2 if deferred",
+      "title": "*(optional Phase 5)* E2B, semantic cache, NeMo — document as Phase 2 if deferred",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -6899,8 +6867,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -6957,8 +6923,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7022,8 +6986,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7073,15 +7035,13 @@ export const LESSONS_DATA = [
     "month": "M10 Jul 2027",
     "section": "practical gate",
     "type": "Capstone",
-    "lesson": "README table: TTFT + cached vs uncached tokens (\u226510 requests, same workload)",
+    "lesson": "README table: TTFT + cached vs uncached tokens (≥10 requests, same workload)",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7100,14 +7060,14 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Temporal: Durable Execution for Resilient AI Workflows",
-        "url": "https://temporal.io/blog/reliable-ai-agents-with-temporal",
+        "url": "https://docs.temporal.io/ai",
         "type": "text",
         "level": "advanced",
         "description": "Distributed agent orchestration that guarantees execution across server crashes, timeouts, and network partitions."
       }
     ],
     "digest": {
-      "title": "README table: TTFT + cached vs uncached tokens (\u226510 requests, same workload)",
+      "title": "README table: TTFT + cached vs uncached tokens (≥10 requests, same workload)",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -7138,8 +7098,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -7158,7 +7116,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Temporal: Durable Execution for Resilient AI Workflows",
-        "url": "https://temporal.io/blog/reliable-ai-agents-with-temporal",
+        "url": "https://docs.temporal.io/ai",
         "type": "text",
         "level": "advanced",
         "description": "Distributed agent orchestration that guarantees execution across server crashes, timeouts, and network partitions."
@@ -7193,11 +7151,9 @@ export const LESSONS_DATA = [
     "url": "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/",
     "duration": "revisit as needed",
     "required": "Yes",
-    "open_how": "DL.AI browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "S3a8RP8Bfc8",
     "resources": [
       {
@@ -7261,8 +7217,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7281,7 +7235,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Temporal: Durable Execution for Resilient AI Workflows",
-        "url": "https://temporal.io/blog/reliable-ai-agents-with-temporal",
+        "url": "https://docs.temporal.io/ai",
         "type": "text",
         "level": "advanced",
         "description": "Distributed agent orchestration that guarantees execution across server crashes, timeouts, and network partitions."
@@ -7319,8 +7273,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7339,7 +7291,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Temporal: Durable Execution for Resilient AI Workflows",
-        "url": "https://temporal.io/blog/reliable-ai-agents-with-temporal",
+        "url": "https://docs.temporal.io/ai",
         "type": "text",
         "level": "advanced",
         "description": "Distributed agent orchestration that guarantees execution across server crashes, timeouts, and network partitions."
@@ -7377,8 +7329,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7390,7 +7340,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Instructor: Retries, Validators, and Partial Streaming",
-        "url": "https://python.useinstructor.com/concepts/retries/",
+        "url": "https://python.useinstructor.com/",
         "type": "text",
         "level": "intermediate",
         "description": "Automatic error correction loops feeding validation errors back to the LLM for self-healing."
@@ -7428,15 +7378,13 @@ export const LESSONS_DATA = [
     "month": "M10 Jul 2027",
     "section": "build",
     "type": "Build",
-    "lesson": "Ingest \u2192 gateway (caching on) \u2192 extract \u2192 validate \u2192 LangGraph \u2192 stage DB",
+    "lesson": "Ingest → gateway (caching on) → extract → validate → LangGraph → stage DB",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "S3a8RP8Bfc8",
     "resources": [
       {
@@ -7500,8 +7448,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "tLKKmouUams",
     "resources": [
       {
@@ -7520,7 +7466,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Temporal: Durable Execution for Resilient AI Workflows",
-        "url": "https://temporal.io/blog/reliable-ai-agents-with-temporal",
+        "url": "https://docs.temporal.io/ai",
         "type": "text",
         "level": "advanced",
         "description": "Distributed agent orchestration that guarantees execution across server crashes, timeouts, and network partitions."
@@ -7555,7 +7501,7 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/c/kubernetescommunity",
     "duration": "pick relevant talks",
     "required": "Yes",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -7564,7 +7510,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "s_o8dwzRlu4",
     "resources": [
       {
@@ -7621,7 +7566,7 @@ export const LESSONS_DATA = [
     "month": "M11 Aug 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Kubernetes \u2014 Deployments",
+    "lesson": "Kubernetes — Deployments",
     "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/",
     "duration": "",
     "required": "Yes",
@@ -7634,7 +7579,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "s_o8dwzRlu4",
     "resources": [
       {
@@ -7667,7 +7611,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Kubernetes \u2014 Deployments",
+      "title": "Kubernetes — Deployments",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -7704,7 +7648,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "s_o8dwzRlu4",
     "resources": [
       {
@@ -7761,7 +7704,7 @@ export const LESSONS_DATA = [
     "month": "M11 Aug 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Argo CD \u2014 getting started",
+    "lesson": "Argo CD — getting started",
     "url": "https://argo-cd.readthedocs.io/en/stable/getting_started/",
     "duration": "",
     "required": "Yes",
@@ -7774,7 +7717,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "WBqjB4UMXXE",
     "resources": [
       {
@@ -7807,7 +7749,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "Argo CD \u2014 getting started",
+      "title": "Argo CD — getting started",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -7844,7 +7786,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "WBqjB4UMXXE",
     "resources": [
       {
@@ -7907,7 +7848,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "s_o8dwzRlu4",
     "resources": [
       {
@@ -7977,7 +7917,6 @@ export const LESSONS_DATA = [
       "Health checks: API, worker, vector DB",
       "`docs/adding-a-tool.md`: schema, auth, eval case required"
     ],
-    "course_prompts": [],
     "youtube_id": "WBqjB4UMXXE",
     "resources": [
       {
@@ -8038,7 +7977,7 @@ export const LESSONS_DATA = [
     "url": "https://www.openlineage.io/",
     "duration": "",
     "required": "Yes",
-    "open_how": "Browser",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
     "course_concepts": [
@@ -8046,7 +7985,6 @@ export const LESSONS_DATA = [
       "Emit on: chunk id, model call id, row id",
       "Threat model: injection via retrieved docs, tool escalation"
     ],
-    "course_prompts": [],
     "youtube_id": "R-_UkFI0nYo",
     "resources": [
       {
@@ -8065,7 +8003,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Zero-Trust Enterprise Data Governance Architecture for GenAI",
-        "url": "https://aws.amazon.com/blogs/big-data/governing-generative-ai-data-with-amazon-datazone-and-aws-lake-formation/",
+        "url": "https://aws.amazon.com/blogs/big-data/category/analytics/amazon-datazone/",
         "type": "text",
         "level": "advanced",
         "description": "Fine-grained column/row level access controls, data anonymization, and regulatory audit compliance."
@@ -8108,7 +8046,6 @@ export const LESSONS_DATA = [
       "Emit on: chunk id, model call id, row id",
       "Threat model: injection via retrieved docs, tool escalation"
     ],
-    "course_prompts": [],
     "youtube_id": "R-_UkFI0nYo",
     "resources": [
       {
@@ -8127,7 +8064,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Zero-Trust Enterprise Data Governance Architecture for GenAI",
-        "url": "https://aws.amazon.com/blogs/big-data/governing-generative-ai-data-with-amazon-datazone-and-aws-lake-formation/",
+        "url": "https://aws.amazon.com/blogs/big-data/category/analytics/amazon-datazone/",
         "type": "text",
         "level": "advanced",
         "description": "Fine-grained column/row level access controls, data anonymization, and regulatory audit compliance."
@@ -8158,7 +8095,7 @@ export const LESSONS_DATA = [
     "month": "M12 Sep 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Applied LLMs \u2014 production pitfalls",
+    "lesson": "Applied LLMs — production pitfalls",
     "url": "https://applied-llms.org/",
     "duration": "",
     "required": "Yes",
@@ -8170,7 +8107,6 @@ export const LESSONS_DATA = [
       "Emit on: chunk id, model call id, row id",
       "Threat model: injection via retrieved docs, tool escalation"
     ],
-    "course_prompts": [],
     "youtube_id": "bZQun8Y4L2A",
     "resources": [
       {
@@ -8233,7 +8169,6 @@ export const LESSONS_DATA = [
       "Emit on: chunk id, model call id, row id",
       "Threat model: injection via retrieved docs, tool escalation"
     ],
-    "course_prompts": [],
     "youtube_id": "bZQun8Y4L2A",
     "resources": [
       {
@@ -8252,7 +8187,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Zero-Trust Enterprise Data Governance Architecture for GenAI",
-        "url": "https://aws.amazon.com/blogs/big-data/governing-generative-ai-data-with-amazon-datazone-and-aws-lake-formation/",
+        "url": "https://aws.amazon.com/blogs/big-data/category/analytics/amazon-datazone/",
         "type": "text",
         "level": "advanced",
         "description": "Fine-grained column/row level access controls, data anonymization, and regulatory audit compliance."
@@ -8295,7 +8230,6 @@ export const LESSONS_DATA = [
       "Emit on: chunk id, model call id, row id",
       "Threat model: injection via retrieved docs, tool escalation"
     ],
-    "course_prompts": [],
     "youtube_id": "bZQun8Y4L2A",
     "resources": [
       {
@@ -8314,7 +8248,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Zero-Trust Enterprise Data Governance Architecture for GenAI",
-        "url": "https://aws.amazon.com/blogs/big-data/governing-generative-ai-data-with-amazon-datazone-and-aws-lake-formation/",
+        "url": "https://aws.amazon.com/blogs/big-data/category/analytics/amazon-datazone/",
         "type": "text",
         "level": "advanced",
         "description": "Fine-grained column/row level access controls, data anonymization, and regulatory audit compliance."
@@ -8341,19 +8275,17 @@ export const LESSONS_DATA = [
   {
     "order": 132,
     "course": 13,
-    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1\u20132)",
+    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)",
     "month": "M13 Oct 2027",
     "section": "pick one or two tracks",
     "type": "Frontier",
-    "lesson": "**vLLM** \u2014 docs \u00b7 local model behind LiteLLM",
+    "lesson": "**vLLM** — docs · local model behind LiteLLM",
     "url": "https://docs.vllm.ai/",
     "duration": "",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "p1n4tgQta2U",
     "resources": [
       {
@@ -8399,19 +8331,17 @@ export const LESSONS_DATA = [
   {
     "order": 133,
     "course": 13,
-    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1\u20132)",
+    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)",
     "month": "M13 Oct 2027",
     "section": "pick one or two tracks",
     "type": "Frontier",
-    "lesson": "**DSPy** \u2014 GitHub \u00b7 one compiled extractor metric",
+    "lesson": "**DSPy** — GitHub · one compiled extractor metric",
     "url": "https://github.com/stanfordnlp/dspy",
     "duration": "",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "dA-NhCtrrVE",
     "resources": [
       {
@@ -8444,7 +8374,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "**DSPy** \u2014 GitHub \u00b7 one compiled extractor metric",
+      "title": "**DSPy** — GitHub · one compiled extractor metric",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -8464,19 +8394,17 @@ export const LESSONS_DATA = [
   {
     "order": 134,
     "course": 13,
-    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1\u20132)",
+    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)",
     "month": "M13 Oct 2027",
     "section": "pick one or two tracks",
     "type": "Frontier",
-    "lesson": "**Prefix caching** \u2014 Anthropic \u00b7 TTFT before/after",
+    "lesson": "**Prefix caching** — Anthropic · TTFT before/after",
     "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
     "duration": "",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "dA-NhCtrrVE",
     "resources": [
       {
@@ -8529,19 +8457,17 @@ export const LESSONS_DATA = [
   {
     "order": 135,
     "course": 13,
-    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1\u20132)",
+    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)",
     "month": "M13 Oct 2027",
     "section": "pick one or two tracks",
     "type": "Frontier",
-    "lesson": "**Semantic cache** \u2014 GPTCache \u00b7 optional gateway layer",
+    "lesson": "**Semantic cache** — GPTCache · optional gateway layer",
     "url": "https://github.com/zilliztech/gptcache",
     "duration": "",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "dA-NhCtrrVE",
     "resources": [
       {
@@ -8574,7 +8500,7 @@ export const LESSONS_DATA = [
       }
     ],
     "digest": {
-      "title": "**Semantic cache** \u2014 GPTCache \u00b7 optional gateway layer",
+      "title": "**Semantic cache** — GPTCache · optional gateway layer",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -8594,7 +8520,7 @@ export const LESSONS_DATA = [
   {
     "order": 136,
     "course": 13,
-    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1\u20132)",
+    "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)",
     "month": "M13 Oct 2027",
     "section": "prove",
     "type": "Prove",
@@ -8605,8 +8531,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "dA-NhCtrrVE",
     "resources": [
       {
@@ -8665,13 +8589,11 @@ export const LESSONS_DATA = [
     "type": "Read",
     "lesson": "Unsloth",
     "url": "https://github.com/unslothai/unsloth",
-    "duration": "[HF PEFT](https://huggingface.co/docs/peft/index) \u00b7 LoRA/QLoRA skim",
+    "duration": "[HF PEFT](https://huggingface.co/docs/peft/index) · LoRA/QLoRA skim",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "W_xh6qNSfAQ",
     "resources": [
       {
@@ -8735,13 +8657,11 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "SwqusllMCnE",
     "resources": [
       {
         "title": "Meta Llama Guard: Input/Output Safety Taxonomy",
-        "url": "https://github.com/meta-llama/llama-guard",
+        "url": "https://github.com/meta-llama/PurpleLlama",
         "type": "repo",
         "level": "beginner",
         "description": "Classify prompts and responses against safety hazards (hate speech, violence, cyberattacks)."
@@ -8755,7 +8675,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Automated LLM Regression Gates in GitHub Actions",
-        "url": "https://www.confident-ai.com/blog/how-to-set-up-llm-ci-cd-pipelines-with-deepeval",
+        "url": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd",
         "type": "text",
         "level": "advanced",
         "description": "Blocking PR merges if faithfulness drops below 0.85 or P99 latency spikes beyond budget."
@@ -8793,8 +8713,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "bZQun8Y4L2A",
     "resources": [
       {
@@ -8813,7 +8731,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
@@ -8848,11 +8766,9 @@ export const LESSONS_DATA = [
     "url": "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ",
     "duration": "",
     "required": "No",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "bZQun8Y4L2A",
     "resources": [
       {
@@ -8909,15 +8825,13 @@ export const LESSONS_DATA = [
     "month": "M14 Nov 2027",
     "section": "prove",
     "type": "Prove",
-    "lesson": "Posts + resume (Plan \u00a714)",
+    "lesson": "Posts + resume (Plan §14)",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "bZQun8Y4L2A",
     "resources": [
       {
@@ -8936,14 +8850,14 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
       }
     ],
     "digest": {
-      "title": "Posts + resume (Plan \u00a714)",
+      "title": "Posts + resume (Plan §14)",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -8969,13 +8883,11 @@ export const LESSONS_DATA = [
     "type": "Video",
     "lesson": "AI Engineer conference channel",
     "url": "https://www.youtube.com/@ai.engineer",
-    "duration": "pick 3\u20135 talks",
+    "duration": "pick 3–5 talks",
     "required": "Yes",
-    "open_how": "YouTube",
+    "open_how": "Embed / YouTube",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -8994,7 +8906,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
@@ -9032,8 +8944,6 @@ export const LESSONS_DATA = [
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -9084,15 +8994,13 @@ export const LESSONS_DATA = [
     "month": "M15 Dec 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Anthropic \u2014 Building Effective Agents",
+    "lesson": "Anthropic — Building Effective Agents",
     "url": "https://www.anthropic.com/engineering/building-effective-agents",
     "duration": "",
     "required": "Yes",
     "open_how": "Browser",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "S3a8RP8Bfc8",
     "resources": [
       {
@@ -9149,15 +9057,13 @@ export const LESSONS_DATA = [
     "month": "M15 Dec 2027",
     "section": "read",
     "type": "Read",
-    "lesson": "Interview positioning \u2014 Plan \u00a714\u2013\u00a715 (sibling page `AI_System_Engineer_plan_2027.md`)",
+    "lesson": "Interview positioning — Plan §14–§15 (sibling page `AI_System_Engineer_plan_2027.md`)",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -9176,14 +9082,14 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
       }
     ],
     "digest": {
-      "title": "Interview positioning \u2014 Plan \u00a714\u2013\u00a715 (sibling page `AI_System_Engineer_plan_2027.md`)",
+      "title": "Interview positioning — Plan §14–§15 (sibling page `AI_System_Engineer_plan_2027.md`)",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -9207,15 +9113,13 @@ export const LESSONS_DATA = [
     "month": "M15 Dec 2027",
     "section": "do",
     "type": "Do",
-    "lesson": "3\u20135 quality applications/week",
+    "lesson": "3–5 quality applications/week",
     "url": "",
     "duration": "",
     "required": "Yes",
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -9234,14 +9138,14 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
       }
     ],
     "digest": {
-      "title": "3\u20135 quality applications/week",
+      "title": "3–5 quality applications/week",
       "takeaways": [
         "Focus on system reliability, schema contracts, and deterministic behavior.",
         "Always decouple orchestration logic from individual LLM model providers.",
@@ -9272,8 +9176,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -9292,7 +9194,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
@@ -9330,8 +9232,6 @@ export const LESSONS_DATA = [
     "open_how": "Checkbox",
     "embed_url": "",
     "status": "Not started",
-    "course_concepts": [],
-    "course_prompts": [],
     "youtube_id": "i7twT3x5yv8",
     "resources": [
       {
@@ -9350,7 +9250,7 @@ export const LESSONS_DATA = [
       },
       {
         "title": "Staff+ Engineer System Design Playbook (Will Larson / StaffEng)",
-        "url": "https://staffeng.com/guides/system-design-interview/",
+        "url": "https://staffeng.com/guides/",
         "type": "text",
         "level": "advanced",
         "description": "Demonstrating architectural authority, failure-mode mitigation, cost modeling, and organizational impact."
@@ -9377,18 +9277,169 @@ export const LESSONS_DATA = [
 ];
 
 export const COURSES_REF_DATA = {
-  "0": {
-    "name": "Boot Sprint (Pre-Oct 5 Boot Sprint)",
+  "1": {
+    "name": "M1 (Oct 2026): LLM foundations & structured extraction",
     "concepts": [
-      "Deterministic data extraction vs free-form chat generation",
-      "Pydantic V2 schema definition, validators, and serialization",
-      "Instructor self-healing validation retry loops",
-      "LiteLLM gateway routing, cooldowns, and fallback cascades",
-      "Assertion-based evaluations vs subjective vibes"
+      "Transformer stack at high level: embeddings, attention, decoder-only inference",
+      "Training vs inference; context window; knowledge cutoff",
+      "Sampling: temperature, top-p; when to use low temperature for extraction",
+      "Tokenization and cost estimation",
+      "Hallucination modes: fabrication vs omission vs formatting",
+      "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+      "Gateway pattern: single entry for models, budgets, logging"
     ],
     "prompts": [
-      "When would you NOT use an LLM in a data engineering pipeline?",
-      "How do you guarantee valid JSON output from an LLM under latency constraints?"
+      "Explain attention in one minute for a data engineer audience.",
+      "When would you **not** use an LLM in a pipeline?"
     ]
+  },
+  "2": {
+    "name": "M2 (Nov 2026): LangGraph & agent state machines",
+    "concepts": [
+      "State graph: nodes as pure-ish steps, edges as routing",
+      "Checkpointing: resume after crash; thread id",
+      "`interrupt()` and human-in-the-loop patterns",
+      "Subgraphs vs monolith; when to use Send/API",
+      "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+      "Papers (skim): ReAct, Toolformer — see Appendix F"
+    ],
+    "prompts": [
+      "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+      "How do you test a non-deterministic node?"
+    ]
+  },
+  "0": {
+    "name": "Boot sprint (7 days before 5 Oct 2026)",
+    "concepts": [
+      "Agentic SDLC: Cursor rules, typing, pytest before “vibe” commits",
+      "LLMs as untrusted kernels; schemas as contracts",
+      "Instructor `response_model`, validation errors as control flow",
+      "LiteLLM: model string, fallbacks, timeouts",
+      "Golden set: input log snippet → expected Pydantic JSON",
+      "Invariants beyond JSON Schema (balances, sums, ranges)",
+      "Threat model: prompt injection on log fields, log exfiltration"
+    ],
+    "prompts": [
+      "How do you separate **schema validity** from **semantic correctness**?",
+      "What do you log when an extraction fails after max retries?"
+    ]
+  },
+  "3": {
+    "name": "M3 (Dec 2026): MCP & secure tool surfaces",
+    "concepts": [
+      "MCP: resources vs tools vs prompts",
+      "Transport: stdio vs SSE; security boundaries",
+      "Tool schema versioning; breaking changes",
+      "Audit log design for compliance interviews",
+      "Mapping to “internal API platform” narrative (CARL, Cube)"
+    ],
+    "prompts": []
+  },
+  "4": {
+    "name": "M4 (Jan 2027): Hybrid retrieval",
+    "concepts": [
+      "Embeddings: bi-encoder, cosine similarity",
+      "BM25 / sparse retrieval; when lexical beats dense",
+      "RRF fusion formula and parameter sensitivity",
+      "Chunking interaction: recall vs precision",
+      "Agent tool: `search_corpus(query) -> citations`",
+      "Evaluation: recall@k, MRR; labeled q/a set"
+    ],
+    "prompts": []
+  },
+  "5": {
+    "name": "M5 (Feb 2027): Document parsing at scale",
+    "concepts": [
+      "Layout-aware parsing vs naive `pypdf` text",
+      "Tables, headers, footnotes in financial docs",
+      "Chunk boundaries and overlap; metadata for lineage",
+      "LlamaParse vs self-hosted Docling tradeoffs",
+      "`chunks.jsonl` contract for downstream index"
+    ],
+    "prompts": []
+  },
+  "6": {
+    "name": "M6 (Mar 2027): Graph & GraphRAG slice",
+    "concepts": [
+      "Property graph vs RDF; when graphs help reconciliation",
+      "GraphRAG vs simple vector RAG",
+      "Validator pattern: “no deploy if dependency cycle”",
+      "Cypher basics: match, where, return",
+      "Scope: **one** validator, not full GraphRAG product"
+    ],
+    "prompts": []
+  },
+  "7": {
+    "name": "M7 (Apr 2027): Evaluation harness",
+    "concepts": [
+      "Golden set schema: `input`, `expected`, `tags`, `tier`",
+      "Tier 1: JSON/schema 100%",
+      "Tier 2: field-level F1 / exact match",
+      "Tier 3: LLM-judge / faithfulness (use sparingly)",
+      "Ragas metrics: context precision, faithfulness",
+      "DeepEval: pytest integration",
+      "Version golden set in git; review PRs that change labels"
+    ],
+    "prompts": []
+  },
+  "8": {
+    "name": "M8 (May 2027): Eval CI/CD gates",
+    "concepts": [
+      "Baseline file committed; PR diffs metrics",
+      "Secrets in CI: API keys via GitHub secrets",
+      "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+      "Fail messages: which case regressed"
+    ],
+    "prompts": []
+  },
+  "9": {
+    "name": "M9 (Jun 2027): Policy (OPA) + tracing",
+    "concepts": [
+      "OPA: allow/deny on `input.tool`, `input.role`",
+      "Test Rego with `opa test`",
+      "Langfuse traces: spans for LLM, tools, graph nodes",
+      "Correlate `run_id` across LiteLLM + LangGraph",
+      "Redaction before screenshotting traces"
+    ],
+    "prompts": []
+  },
+  "10": {
+    "name": "M10 (Jul 2027): Capstone integration alpha",
+    "concepts": [],
+    "prompts": []
+  },
+  "11": {
+    "name": "M11 (Aug 2027): Deploy & platform UX",
+    "concepts": [
+      "Twelve-factor for agents: config, logs, stateless API",
+      "Sidecar vs separate LiteLLM deployment",
+      "Health checks: API, worker, vector DB",
+      "`docs/adding-a-tool.md`: schema, auth, eval case required"
+    ],
+    "prompts": []
+  },
+  "12": {
+    "name": "M12 (Sep 2027): Lineage & hardening",
+    "concepts": [
+      "OpenLineage job/run/dataset model",
+      "Emit on: chunk id, model call id, row id",
+      "Threat model: injection via retrieved docs, tool escalation"
+    ],
+    "prompts": []
+  },
+  "13": {
+    "name": "M13 (Oct 2027): Frontier deep dive (pick 1–2)",
+    "concepts": [],
+    "prompts": []
+  },
+  "14": {
+    "name": "M14 (Nov 2027): Frontier + portfolio",
+    "concepts": [],
+    "prompts": []
+  },
+  "15": {
+    "name": "M15 (Dec 2027): Interviews & offers",
+    "concepts": [],
+    "prompts": []
   }
 };

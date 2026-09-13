@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, X, Check, Loader2 } from 'lucide-react';
+import { Sparkles, X, Loader2 } from 'lucide-react';
 import { generateAiResponse } from '../services/aiService';
 
 export default function RegenerateModal({
@@ -7,10 +7,11 @@ export default function RegenerateModal({
   onClose,
   lesson,
   onSaveRegeneration,
-  preferredModel
+  preferredModel,
+  apiKeys = {}
 }) {
   const [lens, setLens] = useState('staff'); // 'staff' | 'eli5' | 'interview' | 'code'
-  const [selectedModel, setSelectedModel] = useState(preferredModel || 'gemini-3.7-flash');
+  const [selectedModel, setSelectedModel] = useState(preferredModel || 'gemini-2.5-flash');
   const [isGenerating, setIsGenerating] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -38,7 +39,8 @@ Format output in clean, beautiful Markdown with clear section headers, bullet li
       const response = await generateAiResponse({
         prompt,
         systemInstruction: "You are a world-class AI engineering educator and Staff AI Systems Architect.",
-        preferredModel: selectedModel
+        preferredModel: selectedModel,
+        keys: apiKeys
       });
 
       onSaveRegeneration(lesson.order, response);

@@ -1088,6 +1088,15 @@ header {
 .topic-status {
   margin-top: 0.1rem;
 }
+.topic-status-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .topic-name {
   font-size: 0.9rem;
   font-weight: 500;

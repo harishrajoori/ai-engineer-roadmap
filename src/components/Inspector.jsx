@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   BookOpen,
   Bot,
@@ -6,45 +6,29 @@ import {
   HelpCircle,
   Map,
   Send,
-  Sparkles,
-  Check,
   Copy,
   ExternalLink,
   ChevronDown,
-  Cpu,
-  Key,
-  ShieldAlert
+  Key
 } from "lucide-react";
 import { generateAiResponse, AVAILABLE_MODELS } from "../services/aiService";
 
-export default function Inspector({
+function MentorChatPanel({
   lesson,
-  courseRef = { concepts: [], prompts: [] },
-  notes = {},
-  onSaveNotes,
-  proveUrl = "",
-  onSaveProveUrl,
-  isCompleted,
-  onToggleComplete,
-  preferredModel = "gemini-2.5-flash",
+  mentorGreeting,
+  preferredModel,
   onSelectModel,
-  onOpenSettings
+  onOpenSettings,
+  apiKeys,
+  userProfile,
+  notes,
+  onSaveNotes,
+  onOpenNotesTab
 }) {
-  const [activeTab, setActiveTab] = useState("overview"); // "overview" | "mentor" | "notes" | "prompts" | "blueprint"
   const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
-
-  // AI Mentor Chat State
-  const [messages, setMessages] = useState([
-    {
-      role: "ai",
-      text: "👋 Hi Harish! I am your Staff AI Systems Mentor. Ask me any doubt about this topic, system bottlenecks, or architecture tradeoffs!"
-    }
-  ]);
+  const [messages, setMessages] = useState([{ role: "ai", text: mentorGreeting }]);
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoadingAi, setIsLoadingAi] = useState(false);
-  const [revealedPrompts, setRevealedPrompts] = useState({});
-
-  if (!lesson) return null;
 
   const currentModelObj =
     AVAILABLE_MODELS.find((m) => m.id === preferredModel) || AVAILABLE_MODELS[0];
@@ -59,14 +43,16 @@ export default function Inspector({
     setIsLoadingAi(true);
 
     try {
-      const systemInstruction = `You are a Principal AI System Engineer mentoring Harish to transition into a Staff AI Platform Engineer.
+      const learner = userProfile?.name || "the learner";
+      const systemInstruction = `You are a Principal AI System Engineer mentoring ${learner} to transition into a Staff AI Platform Engineer.
 The user is currently studying Course ${lesson.course}: "${lesson.course_title}", Topic: "${lesson.lesson}" (${lesson.type}).
 Keep your explanations precise, highly technical, systems-focused, and pragmatic. Frame with constraints (QPS, SLA, P99 latency, cost/token, failure modes) and minimal code examples where helpful.`;
 
       const response = await generateAiResponse({
         prompt: textToSend,
         systemInstruction,
-        preferredModel
+        preferredModel,
+        keys: apiKeys
       });
 
       setMessages([...newMessages, { role: "ai", text: response }]);
@@ -87,8 +73,151 @@ Keep your explanations precise, highly technical, systems-focused, and pragmatic
     const currentNote = notes[lesson.order] || "";
     const updated = currentNote ? `${currentNote}\n\n---\n**AI Synthesis:**\n${text}` : text;
     onSaveNotes(lesson.order, updated);
-    setActiveTab("notes");
+    onOpenNotesTab();
   };
+
+  return (
+    <div className="inspector-content" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      <div className="chat-container">
+        <div className="chat-messages">
+          {messages.map((m, idx) => (
+            <div key={idx} className={`chat-bubble ${m.role === "user" ? "chat-bubble-user" : "chat-bubble-ai"}`}>
+              <div style={{ whiteSpace: "pre-wrap" }}>{m.text}</div>
+              {m.role === "ai" && idx > 0 && (
+                <button
+                  className="filter-btn"
+                  style={{ fontSize: "0.68rem", padding: "0.2rem 0.45rem", marginTop: "0.5rem" }}
+                  onClick={() => handleCopyToNotes(m.text)}
+                >
+                  <Copy size={10} />
+                  <span>Save to Notes</span>
+                </button>
+              )}
+            </div>
+          ))}
+          {isLoadingAi && (
+            <div className="chat-bubble chat-bubble-ai" style={{ color: "var(--muted)" }}>
+              <span>Synthesizing response from {currentModelObj.name}...</span>
+            </div>
+          )}
+        </div>
+
+        <div style={{ display: "flex", gap: "0.4rem", overflowX: "auto", paddingBottom: "0.25rem" }}>
+          <button
+            className="filter-btn"
+            style={{ fontSize: "0.68rem" }}
+            onClick={() => handleSendMessage(`Break down the failure modes and P99 latency bottlenecks of ${lesson.lesson}.`)}
+          >
+            ⚡ Latency & Bottlenecks
+          </button>
+          <button
+            className="filter-btn"
+            style={{ fontSize: "0.68rem" }}
+            onClick={() => handleSendMessage(`Explain ${lesson.lesson} like I am 5 with an intuitive real-world metaphor.`)}
+          >
+            🐣 ELI5 Metaphor
+          </button>
+        </div>
+
+        <div className="ide-model-bar">
+          <div
+            className="ide-model-trigger"
+            onClick={() => setIsModelDropdownOpen(!isModelDropdownOpen)}
+            title="Switch active model on the fly"
+          >
+            <span>{currentModelObj.icon}</span>
+            <span>{currentModelObj.name}</span>
+            <span className="level-badge level-beginner" style={{ fontSize: "0.62rem" }}>
+              {currentModelObj.badge}
+            </span>
+            <ChevronDown size={12} />
+          </div>
+
+          {isModelDropdownOpen && (
+            <div className="ide-model-dropdown">
+              <div style={{ padding: "0.3rem 0.5rem", fontSize: "0.68rem", fontWeight: 700, color: "var(--muted)", textTransform: "uppercase" }}>
+                Select Active AI Model:
+              </div>
+              {AVAILABLE_MODELS.map((m) => (
+                <div
+                  key={m.id}
+                  className={`ide-model-option ${m.id === preferredModel ? "active" : ""}`}
+                  onClick={() => {
+                    onSelectModel?.(m.id);
+                    setIsModelDropdownOpen(false);
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                    <span>{m.icon}</span>
+                    <span>{m.name}</span>
+                  </div>
+                  <span className="level-badge level-intermediate" style={{ fontSize: "0.62rem" }}>
+                    {m.badge}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <button
+            className="filter-btn"
+            style={{ fontSize: "0.7rem", padding: "0.25rem 0.5rem" }}
+            onClick={onOpenSettings}
+            title="Configure API Keys"
+          >
+            <Key size={11} />
+            <span>Keys</span>
+          </button>
+        </div>
+
+        <div className="chat-input-row">
+          <input
+            type="text"
+            className="chat-input"
+            placeholder={`Ask ${currentModelObj.name} about ${lesson.lesson}...`}
+            value={inputPrompt}
+            onChange={(e) => setInputPrompt(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
+          />
+          <button
+            className="stage-launch-btn"
+            style={{ padding: "0.5rem 0.85rem" }}
+            onClick={() => handleSendMessage()}
+            disabled={isLoadingAi}
+          >
+            <Send size={13} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Inspector({
+  lesson,
+  courseRef = { concepts: [], prompts: [] },
+  notes = {},
+  onSaveNotes,
+  proveUrl: _proveUrl = "",
+  onSaveProveUrl: _onSaveProveUrl,
+  isCompleted: _isCompleted,
+  onToggleComplete: _onToggleComplete,
+  preferredModel = "gemini-2.5-flash",
+  onSelectModel,
+  onOpenSettings,
+  apiKeys = {},
+  userProfile = null
+}) {
+  const [activeTab, setActiveTab] = useState("overview"); // "overview" | "mentor" | "notes" | "prompts" | "blueprint"
+  const [revealedPrompts, setRevealedPrompts] = useState({});
+
+  const mentorGreeting = useMemo(() => {
+    const name = userProfile?.given_name || userProfile?.name?.split(" ")?.[0];
+    const hi = name ? `Hi ${name}` : "Hi";
+    return `👋 ${hi}! I am your Staff AI Systems Mentor. Ask about this topic, bottlenecks, or architecture tradeoffs.`;
+  }, [userProfile]);
+
+  if (!lesson) return null;
 
   const toggleRevealPrompt = (idx) => {
     setRevealedPrompts((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -201,124 +330,20 @@ Keep your explanations precise, highly technical, systems-focused, and pragmatic
         </div>
       )}
 
-      {/* Tab 2: AI Mentor Chat with IDE Model Dropdown */}
       {activeTab === "mentor" && (
-        <div className="inspector-content" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-          <div className="chat-container">
-            <div className="chat-messages">
-              {messages.map((m, idx) => (
-                <div key={idx} className={`chat-bubble ${m.role === "user" ? "chat-bubble-user" : "chat-bubble-ai"}`}>
-                  <div style={{ whiteSpace: "pre-wrap" }}>{m.text}</div>
-                  {m.role === "ai" && idx > 0 && (
-                    <button
-                      className="filter-btn"
-                      style={{ fontSize: "0.68rem", padding: "0.2rem 0.45rem", marginTop: "0.5rem" }}
-                      onClick={() => handleCopyToNotes(m.text)}
-                    >
-                      <Copy size={10} />
-                      <span>Save to Notes</span>
-                    </button>
-                  )}
-                </div>
-              ))}
-              {isLoadingAi && (
-                <div className="chat-bubble chat-bubble-ai" style={{ color: "var(--muted)" }}>
-                  <span>Synthesizing response from {currentModelObj.name}...</span>
-                </div>
-              )}
-            </div>
-
-            {/* Quick Prompt Chips */}
-            <div style={{ display: "flex", gap: "0.4rem", overflowX: "auto", paddingBottom: "0.25rem" }}>
-              <button
-                className="filter-btn"
-                style={{ fontSize: "0.68rem" }}
-                onClick={() => handleSendMessage(`Break down the failure modes and P99 latency bottlenecks of ${lesson.lesson}.`)}
-              >
-                ⚡ Latency & Bottlenecks
-              </button>
-              <button
-                className="filter-btn"
-                style={{ fontSize: "0.68rem" }}
-                onClick={() => handleSendMessage(`Explain ${lesson.lesson} like I am 5 with an intuitive real-world metaphor.`)}
-              >
-                🐣 ELI5 Metaphor
-              </button>
-            </div>
-
-            {/* IDE-Style Inline Model Switcher Dropdown */}
-            <div className="ide-model-bar">
-              <div
-                className="ide-model-trigger"
-                onClick={() => setIsModelDropdownOpen(!isModelDropdownOpen)}
-                title="Switch active model on the fly"
-              >
-                <span>{currentModelObj.icon}</span>
-                <span>{currentModelObj.name}</span>
-                <span className="level-badge level-beginner" style={{ fontSize: "0.62rem" }}>
-                  {currentModelObj.badge}
-                </span>
-                <ChevronDown size={12} />
-              </div>
-
-              {isModelDropdownOpen && (
-                <div className="ide-model-dropdown">
-                  <div style={{ padding: "0.3rem 0.5rem", fontSize: "0.68rem", fontWeight: 700, color: "var(--muted)", textTransform: "uppercase" }}>
-                    Select Active AI Model:
-                  </div>
-                  {AVAILABLE_MODELS.map((m) => (
-                    <div
-                      key={m.id}
-                      className={`ide-model-option ${m.id === preferredModel ? "active" : ""}`}
-                      onClick={() => {
-                        onSelectModel && onSelectModel(m.id);
-                        setIsModelDropdownOpen(false);
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                        <span>{m.icon}</span>
-                        <span>{m.name}</span>
-                      </div>
-                      <span className="level-badge level-intermediate" style={{ fontSize: "0.62rem" }}>
-                        {m.badge}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              <button
-                className="filter-btn"
-                style={{ fontSize: "0.7rem", padding: "0.25rem 0.5rem" }}
-                onClick={onOpenSettings}
-                title="Configure API Keys"
-              >
-                <Key size={11} />
-                <span>Keys</span>
-              </button>
-            </div>
-
-            {/* Chat Input Row */}
-            <div className="chat-input-row">
-              <input
-                type="text"
-                className="chat-input"
-                placeholder={`Ask ${currentModelObj.name} about ${lesson.lesson}...`}
-                value={inputPrompt}
-                onChange={(e) => setInputPrompt(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-              />
-              <button
-                className="stage-launch-btn"
-                style={{ padding: "0.5rem 0.85rem" }}
-                onClick={() => handleSendMessage()}
-                disabled={isLoadingAi}
-              >
-                <Send size={13} />
-              </button>
-            </div>
-          </div>
-        </div>
+        <MentorChatPanel
+          key={lesson.order}
+          lesson={lesson}
+          mentorGreeting={mentorGreeting}
+          preferredModel={preferredModel}
+          onSelectModel={onSelectModel}
+          onOpenSettings={onOpenSettings}
+          apiKeys={apiKeys}
+          userProfile={userProfile}
+          notes={notes}
+          onSaveNotes={onSaveNotes}
+          onOpenNotesTab={() => setActiveTab("notes")}
+        />
       )}
 
       {/* Tab 3: Notes Scratchpad */}

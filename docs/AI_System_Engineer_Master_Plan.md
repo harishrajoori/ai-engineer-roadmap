@@ -15,7 +15,7 @@
 
 **Core strategy:** Keep income and production scale via 2K (telemetry, Kafka/streaming, data quality). Build **governed agent platform** skills in parallel on **OSS + synthetic/public data**, and on **client work only where policy allows**. Treat LLMs as **untrusted compute kernels**; your moat is deterministic infrastructure around them.
 
-**Daily learning (Local Hub / mobile):** Import **[`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md)** as your **Interactive Learning Hub & Curriculum** — checkbox syllabi, Prove gates, Courses 0–15. **Deep topics, appendices, and optional shelf:** **[`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md)**. This plan file keeps strategy, market context, capstone §13, ethics, and resume.
+**Daily learning:** Run the **React studio** (`npm run dev` / `./serve.sh`) — curriculum from **[`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md)** (Courses 0–15, Prove gates). **Strategy, capstone, ethics, resume, and module depth** are in **this file** (§1–16 + **§17 appendices**).
 
 ---
 
@@ -168,17 +168,19 @@ Use this to avoid tutorial paralysis. **P0** must appear in capstone or work sam
 
 ## 6. Learning curriculum (canonical)
 
-**Two-file curriculum:**
+**Curriculum + app (this repo):**
 
-| File | Use |
+| File / command | Use |
 | --- | --- |
-| [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) | **Daily driver** — Modular Courses 0–15, checkbox syllabi, Prove gates |
-| [`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md) | **Depth** — concept maps, interview prompts, hub/CampusX tables, appendices A–F |
-| [`ai-learning-hub/`](./ai-learning-hub/) | **Local Learning Hub** (`serve.sh`) |
+| [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) | **Curriculum only** — Courses 0–15 checklists (feeds the React app via `npm run curriculum`) |
+| [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) | **Everything else** — strategy, capstone, ethics, resume, **§17 module reference & appendices** |
+| `npm run dev` or [`serve.sh`](../serve.sh) | **Local studio** — React hub at http://localhost:8765 |
+| `npm run curriculum` | Regenerate `data/lessons.json` + `src/data/lessonsData.js` from the track |
+| `npm run validate` | Link checks + curriculum ↔ app consistency |
 
 **Foundational Video Spines:** Andrej Karpathy (Zero to Hero, NanoGPT), DeepLearning.AI Open Academy, and Stanford CS224N.
 
-Do not maintain a third parallel resource list; add new links to the Reference (and mirror required items in the track).
+Add new **required** study links to the track; add **optional depth** links to **§17** (and mirror must-haves in the track when they become gates).
 
 ---
 
@@ -186,7 +188,7 @@ Do not maintain a third parallel resource list; add new links to the Reference (
 
 **Schedule:** Explore deeply **after** P0 harness ships (typically **Oct–Dec 2027**). Re-evaluate against current market before investing months in any one item.
 
-**Watch / read / build links:** Learning track **Courses 13–14**; Reference **Appendix D**.
+**Watch / read / build links:** Learning track **Courses 13–14**; **§17 Appendix D**.
 
 1. **DSPy (Stanford NLP) — Compiling Instead of Prompting:**
    * **Concept:** Compile declarative signatures into prompts/few-shots against a metric instead of manual prompt crafting.
@@ -199,7 +201,7 @@ Do not maintain a third parallel resource list; add new links to the Reference (
 
 3. **In-Model Prompt Caching & Prefix Caching:**
    * **Concept:** Cache static prefixes (schemas, docs, tools) across requests; lower cost and TTFT.
-   * **Resource:** [Anthropic Prompt Caching Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) & [vLLM Automatic Prefix Caching](https://docs.vllm.ai/en/latest/features/prefix_caching.html)
+   * **Resource:** [Anthropic Prompt Caching Guide](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) & [vLLM Automatic Prefix Caching](https://docs.vllm.ai/en/latest/design/automatic_prefix_caching/)
 
 4. **Browser-Use & Vision-to-Action Agents:**
    * **Concept:** DOM/visual browser automation for legacy UIs without APIs.
@@ -396,26 +398,19 @@ Production-grade **open-source** system (financial **or** game-telemetry ops—*
 
 ## 16. Quarterly “Read & Implement” (Research depth without PhD)
 
-Scheduled links: **Reference → Appendix D**.
+Scheduled links: **§17 → Appendix D**.
 
 ---
 
-*Original plan file: `AI_System_Engineer_plan.md` — superseded for timeline (2027 target). **Curriculum:** [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md). **Detailed reference:** [`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md).*
+## 17. Module reference & appendices
 
-
---------------------------------------------------------------------------------
-
-# APPENDICES & REFERENCE MATERIAL
-
-# AI Systems Engineer — Detailed Module Reference (2027)
-
-**Purpose:** Self-study depth behind the Learning track [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md). Use this on laptop when you want granular topics, optional resources, code-lab indexes, and interview prep — not on mobile day-to-day.
+Granular concept maps, interview prompts, optional shelf, and appendices A–F. The **learning track** stays the short daily checklist; this section is for laptop deep-dives.
 
 | Document | Role |
 | --- | --- |
-| **Learning Track** | Open Video / Docs-style checklists, Prove gates, import-ready |
-| **This file** | Exhaustive topics, appendices, optional shelf |
-| **Plan 2027** | Strategy, ethics §11, capstone §13, resume §14–15 |
+| **Learning track** | Daily Watch / Read / Build / Prove checklists → React studio |
+| **This plan (§1–16)** | Strategy, phases, capstone §13, ethics, resume |
+| **This plan (§17+)** | Per-course depth, link log, appendices |
 
 ---
 
@@ -961,7 +956,7 @@ Canonical destinations for the 37-item **AI Learning Resources** PDF (`~/Downloa
 | 1 | GenAI Agents | https://github.com/NirDiamant/GenAI_Agents |
 | 2 | Microsoft AI Agents for Beginners | https://github.com/microsoft/ai-agents-for-beginners |
 | 3 | Prompt Engineering Guide | https://github.com/dair-ai/Prompt-Engineering-Guide |
-| 4 | Hands-On Large Language Models | https://github.com/hands-on-llm/hands-on-large-language-models |
+| 4 | Hands-On Large Language Models | https://github.com/HandsOnLLM/Hands-On-Large-Language-Models |
 | 5 | AI Agents for Beginners | https://github.com/microsoft/ai-agents-for-beginners |
 | 6 | GenAI Agents (alt) | https://github.com/NirDiamant/GenAI_Agents |
 | 7 | Made with ML | https://github.com/GokuMohandas/Made-With-ML |
@@ -975,8 +970,8 @@ Canonical destinations for the 37-item **AI Learning Resources** PDF (`~/Downloa
 
 | # | Title | Link |
 | --- | --- | --- |
-| 1 | Google Agent Whitepaper | https://www.kaggle.com/whitepaper-agents |
-| 2 | Google Agent Companion | https://www.kaggle.com/whitepaper-agents |
+| 1 | Google Agent Whitepaper | https://ai.google.dev/gemini-api/docs/agents |
+| 2 | Google Agent Companion | https://ai.google.dev/gemini-api/docs/agents |
 | 3 | Anthropic Building Effective Agents | https://www.anthropic.com/engineering/building-effective-agents |
 | 4 | Claude Code best practices | https://docs.anthropic.com/en/docs/claude-code |
 | 5 | OpenAI Practical Guide to Building Agents | https://openai.com/business/guides-and-resources/ |
