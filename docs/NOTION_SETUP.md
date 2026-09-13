@@ -1,6 +1,6 @@
 # One-place learning setup (Notion + local hub)
 
-This folder is the **runtime** for your certificate: **automate with `sync_notion.py`** or import CSVs manually, use **`index.html`** for YouTube-in-one-window, keep Coursera in its app.
+This folder is the **runtime** for your certificate: **automate with `sync_notion.py`** or import CSVs manually, use **`index.html`** for YouTube-in-one-window, access all free video masterclasses in one window.
 
 ## Files
 
@@ -62,7 +62,7 @@ python3 generate_lessons.py && python3 sync_notion.py sync
 
 **Limits (no automation can fix)**
 
-- Coursera videos still open in Coursera (add embed blocks manually for YouTube only).
+- Video Masterclass videos still open in Video Masterclass (add embed blocks manually for YouTube only).
 - Notion API cannot auto-embed YouTube inside every row — open a lesson page and paste `url` for a player.
 - Markdown import is simplified (not a perfect `.md` → Notion conversion); for pretty docs, still use Notion **Import → Markdown** once.
 
@@ -77,10 +77,10 @@ python3 generate_lessons.py && python3 sync_notion.py sync
    | --- | --- | --- |
    | `lesson` | Title | Already title |
    | `course` | Number | Group boards by this |
-   | `type` | Select | Video, Coursera, Read, Build, Prove, … |
+   | `type` | Select | Video, Video Masterclass, Read, Build, Prove, … |
    | `url` | URL | Click to open |
    | `embed_url` | URL | Paste into page body to embed YouTube |
-   | `open_how` | Select | Embed · Coursera app · Browser · … |
+   | `open_how` | Select | Embed · Video Masterclass app · Browser · … |
    | `required` | Select | Yes / No |
    | `status` | Select | Not started · In progress · Done |
    | `prove_url` | URL | For Prove-type rows only |
@@ -96,7 +96,7 @@ python3 generate_lessons.py && python3 sync_notion.py sync
 
    - Open a lesson row as a page.
    - If `embed_url` is filled, type `/embed` and paste the **YouTube watch URL** (or paste `embed_url` — Notion accepts both for YouTube).
-   - Coursera rows: add a **button** or callout “Open in Coursera” linking to `url` (cannot embed).
+   - Video Masterclass rows: add a **button** or callout “Open in Video Masterclass” linking to `url` (cannot embed).
 
 7. Import **`notion_course_progress.csv`** as a second database **Course progress**. Link to Lessons optionally via relation (manual) or keep side-by-side.
 
@@ -121,18 +121,18 @@ Open **http://127.0.0.1:8765** → `index.html`.
 - Left: course picker  
 - Center: **YouTube player** when the lesson has an embed  
 - Right: open link, mark done (stored in **browser localStorage**)  
-- Coursera / docs: **Open link** (external)
+- Video Masterclass / docs: **Open link** (external)
 
 You can also open `index.html` directly from Finder; `file://` works for the UI, but use `serve.sh` if anything blocks local scripts.
 
-## C. Coursera (unavoidable second app)
+## C. Video Masterclass (unavoidable second app)
 
-Only **two spine courses** must live in Coursera:
+Only **two spine courses** must live in Video Masterclass:
 
 - Generative AI with LLMs  
 - AI Agents in LangGraph  
 
-Use the **Coursera iOS/Android app** for offline-ish viewing. Notion lesson rows with `open_how` = **Coursera app** are your deep links.
+Use the **Video Masterclass iOS/Android app** for offline-ish viewing. Notion lesson rows with `open_how` = **Video Masterclass app** are your deep links.
 
 ## D. Long reads (optional third app)
 
@@ -148,6 +148,6 @@ Re-import CSV into Notion (merge) or update rows manually.
 
 ## What is not possible
 
-- Coursera video inside Notion (DRM).  
+- Video Masterclass video inside Notion (DRM).  
 - Scraping full doc sites into Notion.  
-- One commercial app that replaces Coursera + YouTube + GitHub — this stack is the practical maximum.
+- One commercial app that replaces Video Masterclass + YouTube + GitHub — this stack is the practical maximum.

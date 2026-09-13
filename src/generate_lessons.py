@@ -37,7 +37,7 @@ SECTION_TO_TYPE = {
     "build": "Build",
     "prove": "Prove",
     "do": "Do",
-    "coursera": "Coursera",
+    "video": "Video",
     "pick one or two tracks": "Frontier",
     "capstone checklist": "Capstone",
     "practical gate": "Capstone",
@@ -59,8 +59,8 @@ def youtube_embed(url: str) -> str | None:
 
 
 def open_mode(url: str, lesson_type: str) -> str:
-    if lesson_type == "Coursera" or "coursera.org" in url:
-        return "Coursera app"
+    if lesson_type == "Video" or "youtube.com" in url:
+        return "Embed / YouTube"
     if embed := youtube_embed(url):
         return "Embed"
     if "youtube.com" in url or "youtu.be" in url:
@@ -77,11 +77,11 @@ def embed_url(url: str) -> str:
 
 
 def spine_lessons() -> list[dict]:
-    """Coursera Plus block at top of track (not under a Course heading)."""
+    """Open Video Masterclass block at top of track (not under a Course heading)."""
     rows = [
         (
             "Generative AI with Large Language Models",
-            "https://www.coursera.org/learn/generative-ai-with-llms",
+            "https://www.youtube.com/learn/generative-ai-with-llms",
             "~16 h",
             1,
         ),
@@ -93,7 +93,7 @@ def spine_lessons() -> list[dict]:
         ),
         (
             "Generative AI Engineering with LLMs specialization (cherry-pick)",
-            "https://www.coursera.org/specializations/generative-ai-engineering-with-llms",
+            "https://www.youtube.com/specializations/generative-ai-engineering-with-llms",
             "optional",
             2,
         ),
@@ -105,15 +105,15 @@ def spine_lessons() -> list[dict]:
             {
                 "order": i,
                 "course": maps_to,
-                "course_title": f"Coursera spine → Course {maps_to}",
+                "course_title": f"Open Video Spine → Course {maps_to}",
                 "month": MONTH_BY_COURSE.get(str(maps_to), ""),
-                "section": "coursera_spine",
-                "type": "Coursera",
+                "section": "video_spine",
+                "type": "Video",
                 "lesson": title,
                 "url": url,
                 "duration": dur,
                 "required": "No" if optional else "Yes",
-                "open_how": open_mode(url, "Coursera"),
+                "open_how": open_mode(url, "Video"),
                 "embed_url": "",
                 "status": "Not started",
             }
@@ -137,8 +137,8 @@ def parse_track(text: str) -> list[dict]:
             section = ""
             continue
 
-        if line.startswith("### Coursera") or "Coursera (required" in line or "Coursera / DL.AI" in line:
-            section = "coursera"
+        if line.startswith("### Open Video") or "Video (required" in line or "Video / DL.AI" in line:
+            section = "video"
             continue
         if line.startswith("**Watch"):
             section = "watch"
@@ -770,7 +770,7 @@ def write_html(lessons: list[dict], path: Path) -> None:
       white-space: nowrap;
     }}
     .badge-Video {{ background: rgba(236, 72, 153, 0.15); color: #F472B6; border: 1px solid rgba(236, 72, 153, 0.35); }}
-    .badge-Coursera {{ background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.35); }}
+    .badge-Video {{ background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.35); }}
     .badge-Read {{ background: rgba(139, 92, 246, 0.15); color: #C084FC; border: 1px solid rgba(139, 92, 246, 0.35); }}
     .badge-Build {{ background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35); }}
     .badge-Prove {{ background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.35); }}
@@ -951,7 +951,7 @@ def write_html(lessons: list[dict], path: Path) -> None:
         <div class="filter-chips">
           <button class="chip active" data-type="" onclick="setTypeFilter('', this)">All</button>
           <button class="chip" data-type="Video" onclick="setTypeFilter('Video', this)">📺 Video</button>
-          <button class="chip" data-type="Coursera" onclick="setTypeFilter('Coursera', this)">🎓 Coursera</button>
+          <button class="chip" data-type="Video" onclick="setTypeFilter('Video', this)">🎬 Video</button>
           <button class="chip" data-type="Read" onclick="setTypeFilter('Read', this)">📖 Read</button>
           <button class="chip" data-type="Build" onclick="setTypeFilter('Build', this)">🛠️ Build</button>
           <button class="chip" data-type="Prove" onclick="setTypeFilter('Prove', this)">🏆 Prove</button>

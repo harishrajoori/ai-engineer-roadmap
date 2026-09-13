@@ -1,7 +1,4 @@
 order,course,month,type,lesson,url,embed_url,open_how,duration,required,status,prove_url,notes
-1,1,M1 Oct 2026,Coursera,Generative AI with Large Language Models,https://www.coursera.org/learn/generative-ai-with-llms,,Coursera app,~16 h,Yes,Not started,,Coursera spine → Course 1
-2,2,M2 Nov 2026,Coursera,AI Agents in LangGraph,https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/,,Coursera app,2–3 h,Yes,Not started,,Coursera spine → Course 2
-3,2,M2 Nov 2026,Coursera,Generative AI Engineering with LLMs specialization (cherry-pick),https://www.coursera.org/specializations/generative-ai-engineering-with-llms,,Coursera app,optional,No,Not started,,Coursera spine → Course 2
 7,0,Pre Oct 2026,Video,Karpathy — Intro to LLMs,https://www.youtube.com/watch?v=zjkBMFhNj_g,https://www.youtube.com/embed/zjkBMFhNj_g,Embed,~1 h,Yes,Not started,,Boot sprint (7 days before 5 Oct 2026)
 8,0,Pre Oct 2026,Video,DeepLearning.AI — Pydantic for LLM Workflows,https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/,,DL.AI browser,~1 h,Yes,Not started,,Boot sprint (7 days before 5 Oct 2026)
 9,0,Pre Oct 2026,Read,Instructor — quick start,https://python.useinstructor.com/,,Browser,,Yes,Not started,,Boot sprint (7 days before 5 Oct 2026)
@@ -11,8 +8,8 @@ order,course,month,type,lesson,url,embed_url,open_how,duration,required,status,p
 13,0,Pre Oct 2026,Read,Applied LLMs in Production,https://applied-llms.org/,,Browser,skim structure,Yes,Not started,,Boot sprint (7 days before 5 Oct 2026)
 14,0,Pre Oct 2026,Build,Repo: `production-log-reconciler` or `telemetry-log-reconciler` · synthetic/public data only,,,Checkbox,,Yes,Not started,,Boot sprint (7 days before 5 Oct 2026)
 15,0,Pre Oct 2026,Prove,Paste GitHub URL + README golden-set metric,,,Checkbox,,Yes,Not started,,Boot sprint (7 days before 5 Oct 2026)
-16,1,M1 Oct 2026,Coursera,Generative AI with Large Language Models,https://www.coursera.org/learn/generative-ai-with-llms,,Coursera app,~16 h,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
-17,1,M1 Oct 2026,Coursera,DL.AI course landing,https://www.deeplearning.ai/courses/generative-ai-with-llms,,Coursera app,same content,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
+16,1,M1 Oct 2026,Video,Building GPT from Scratch in PyTorch,https://www.youtube.com/watch?v=kCc8FmEb1nY,,Embed / YouTube,~16 h,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
+17,1,M1 Oct 2026,Read,DL.AI course landing,https://www.deeplearning.ai/courses/generative-ai-with-llms,,Browser,same content,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
 18,1,M1 Oct 2026,Video,Karpathy — Deep Dive into LLMs,https://www.youtube.com/watch?v=7xTGNNLPyMI,https://www.youtube.com/embed/7xTGNNLPyMI,Embed,~3 h,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
 19,1,M1 Oct 2026,Video,3Blue1Brown — neural networks / attention,https://www.3blue1brown.com/topics/neural-networks,,Browser,2–4 h,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
 20,1,M1 Oct 2026,Video,*(optional)* StatQuest video index · search attention / embedding,https://statquest.org/video-index/,,Browser,,No,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
@@ -26,8 +23,8 @@ order,course,month,type,lesson,url,embed_url,open_how,duration,required,status,p
 28,1,M1 Oct 2026,Read,*(optional)* Outlines — constrained decoding,https://github.com/dottxt-ai/outlines,,Browser,,No,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
 29,1,M1 Oct 2026,Build,Tag `v0.2`; LiteLLM router + per-request cost log,,,Checkbox,,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
 30,1,M1 Oct 2026,Prove,Release `v0.2` link + README metrics,,,Checkbox,,Yes,Not started,,M1 (Oct 2026): LLM foundations & structured extraction
-31,2,M2 Nov 2026,Coursera,AI Agents in LangGraph,https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/,,Coursera app,2–3 h,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines
-32,2,M2 Nov 2026,Coursera,LangChain Academy — LangGraph modules,https://academy.langchain.com/,,Coursera app,4–8 h,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines
+31,2,M2 Nov 2026,Read,AI Agents in LangGraph,https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/,,Browser,2–3 h,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines
+32,2,M2 Nov 2026,Read,LangChain Academy — LangGraph modules,https://academy.langchain.com/,,Browser,4–8 h,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines
 33,2,M2 Nov 2026,Video,LangChain — Context Engineering for Agents,https://www.youtube.com/watch?v=4GiqzUHD5AA,https://www.youtube.com/embed/4GiqzUHD5AA,Embed,~1 h,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines
 34,2,M2 Nov 2026,Video,Dave Ebbelaar — LangGraph production,https://www.youtube.com/@daveebbelaar,,YouTube,pick 1–2,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines
 35,2,M2 Nov 2026,Video,Berkeley RDI — compound AI / agents,https://www.youtube.com/@BerkeleyRDI,,YouTube,1 lecture,Yes,Not started,,M2 (Nov 2026): LangGraph & agent state machines

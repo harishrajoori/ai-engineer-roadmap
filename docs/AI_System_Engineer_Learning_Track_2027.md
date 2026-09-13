@@ -4,7 +4,7 @@
 > 1. **Notion:** Import `ai-learning-hub/notion_lessons.csv` + `notion_course_progress.csv` → lesson DB + course board. Full steps: **`ai-learning-hub/NOTION_SETUP.md`**.  
 > 2. **Local “course app”:** Run `ai-learning-hub/serve.sh` → open http://127.0.0.1:8765 for **YouTube embeds** + progress (browser storage).  
 > 3. **Markdown siblings:** Import `AI_System_Engineer_plan_2027.md` + `AI_System_Engineer_Learning_Track_2027_REFERENCE.md`; link Plan §13 with `@`.  
-> 4. **Coursera:** Spine courses open in the **Coursera app** (cannot embed in Notion).  
+> 4. **Open Video / Docs:** Spine courses open in the **Open Video / Docs app** (cannot embed in Notion).  
 > 5. After editing this track, run `python3 ai-learning-hub/generate_lessons.py` to refresh CSV/HTML.
 
 | | |
@@ -40,15 +40,10 @@
 | 14 | Frontier + portfolio | M14 Nov 2027 | 8–12 | Posts + resume refresh |
 | 15 | Interviews & offers | M15 Dec 2027 | 10–20 | Offer or feedback notes |
 
-### Coursera Plus spine (parallel with Courses 1–2)
-
-- [ ] [Generative AI with Large Language Models](https://www.coursera.org/learn/generative-ai-with-llms) (~16 h) — **Course 1**
-- [ ] [AI Agents in LangGraph](https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/) (~2–3 h) — **Course 2**
-- [ ] Optional: [Generative AI Engineering with LLMs specialization](https://www.coursera.org/specializations/generative-ai-engineering-with-llms) — cherry-pick only; **do not** finish all 7 if capstone slips.
-
-**Udemy:** not required.
-
----
+### Open-Access Foundational Spines (100% Free)
+- [ ] [Andrej Karpathy: Neural Networks: Zero to Hero](https://youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ) — **Building GPT from Scratch** (~15 h)
+- [ ] [Stanford CS224N: Natural Language Processing with Deep Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ) — **Transformer & Attention Systems** (~20 h)
+- [ ] [DeepLearning.AI Free Masterclasses](https://www.deeplearning.ai/short-courses/) — **LangGraph, Function Calling & vLLM** (~10 h)
 
 ## Progress dashboard
 
@@ -137,14 +132,14 @@
 ### What you'll learn
 
 - LLM lifecycle, limits, and interview-ready mental models
-- Coursera **Gen AI with LLMs** (full or weeks 1–2 time-boxed)
+- Open Video / Docs **Gen AI with LLMs** (full or weeks 1–2 time-boxed)
 - LiteLLM cost logging and CLI hardening
 
 ### Syllabus
 
-**Coursera (required spine)**
+**Foundational Video Masterclasses (Free YouTube / Open Series)**
 
-- [ ] [Generative AI with Large Language Models](https://www.coursera.org/learn/generative-ai-with-llms) · ~16 h
+- [ ] [Generative AI with Large Language Models](https://youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ) · ~16 h
 - [ ] [DL.AI course landing](https://www.deeplearning.ai/courses/generative-ai-with-llms) · same content
 
 **Watch**
@@ -191,7 +186,7 @@
 
 ### Syllabus
 
-**Coursera / DL.AI**
+**DeepLearning.AI / YouTube Masterclasses**
 
 - [ ] [AI Agents in LangGraph](https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/) · 2–3 h
 - [ ] [LangChain Academy — LangGraph modules](https://academy.langchain.com/) · 4–8 h

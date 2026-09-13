@@ -126,7 +126,8 @@ def select_prop(value: str) -> dict[str, Any]:
 def lesson_icon(lesson_type: str) -> dict[str, Any]:
     icons = {
         "Video": "📺",
-        "Coursera": "🎓",
+        "Paper": "📄",
+        "Masterclass": "🎬",
         "Read": "📖",
         "Build": "🛠️",
         "Prove": "🏆",

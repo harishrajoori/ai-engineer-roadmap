@@ -4,7 +4,7 @@
 
 | Document | Role |
 | --- | --- |
-| **Learning Track (Notion)** | Coursera-style checklists, Prove gates, import-ready |
+| **Learning Track (Notion)** | Open Video / Docs-style checklists, Prove gates, import-ready |
 | **This file** | Exhaustive topics, appendices, optional shelf |
 | **Plan 2027** | Strategy, ethics §11, capstone §13, resume §14–15 |
 
@@ -65,11 +65,11 @@
 - Structured output strategies: tool JSON, Instructor, outlines/constrained decoding
 - Gateway pattern: single entry for models, budgets, logging
 
-## Coursera spine
+## Open Video Spine
 
 | Course | Link | ~Time |
 | --- | --- | --- |
-| Generative AI with LLMs | https://www.coursera.org/learn/generative-ai-with-llms | 16 h |
+| Generative AI with LLMs | https://youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ | 16 h |
 | DL.AI landing | https://www.deeplearning.ai/courses/generative-ai-with-llms | — |
 
 ## Watch / read (extended)
@@ -119,7 +119,7 @@
 - Comparison: ReAct loop, LangChain AgentExecutor, LangGraph
 - Papers (skim): ReAct, Toolformer — see Appendix F
 
-## Coursera / academy
+## Open Video / Docs / academy
 
 | Course | Link | ~Time |
 | --- | --- | --- |
@@ -492,7 +492,7 @@ Catalog: https://www.deeplearning.ai/short-courses/
 | Advanced RAG | https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265 | M4–M7 |
 | LangGraph notes | https://learnwith.campusx.in/courses/LangGraph-YouTube-69145df5c26d79058b698748 | M2–M3 |
 
-Do not substitute CampusX for Coursera Courses 1–2 or capstone Prove gates.
+Do not skip hands-on coding or capstone Prove gates.
 
 ---
 

@@ -1,7 +1,7 @@
 course,month,title,status,prove_url,prove_hint
 0,Pre Oct 2026,Boot sprint (7 days before 5 Oct 2026),Not started,,Public GitHub reconciler
-1,M1 Oct 2026,Coursera spine → Course 1,Not started,,Release v0.2 + README metrics
-2,M2 Nov 2026,Coursera spine → Course 2,Not started,,HITL demo in README
+1,M1 Oct 2026,M1 (Oct 2026): LLM foundations & structured extraction,Not started,,Release v0.2 + README metrics
+2,M2 Nov 2026,M2 (Nov 2026): LangGraph & agent state machines,Not started,,HITL demo in README
 3,M3 Dec 2026,M3 (Dec 2026): MCP & secure tool surfaces,Not started,,MCP README + redacted config
 4,M4 Jan 2027,M4 (Jan 2027): Hybrid retrieval,Not started,,Hybrid benchmark table
 5,M5 Feb 2027,M5 (Feb 2027): Document parsing at scale,Not started,,chunks.jsonl + schema
