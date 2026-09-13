@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   Bot,
   FileText,
@@ -12,6 +12,16 @@ import {
 } from "lucide-react";
 import { generateAiResponse, AVAILABLE_MODELS } from "../services/aiService";
 import { getLessonResources } from "../utils/lessonResources";
+import MarkdownProse from "./MarkdownProse";
+import MentorLayoutBar from "./MentorLayoutBar";
+
+const MENTOR_SYSTEM_TAIL = `
+Format every reply in GitHub-flavored Markdown:
+- Use ## section headings when the answer has multiple parts.
+- Use bullet lists and **bold** for key terms, tradeoffs, and metrics (QPS, P99, cost).
+- Use fenced code blocks only for short, relevant snippets (commands, config, pseudo-code).
+- Aim for depth: roughly 150–350 words unless the user asks for a one-liner.
+- End with a **Takeaway** or **Next step** line when it helps the learner act.`;
 
 function MentorChatPanel({
   lesson,
@@ -23,12 +33,27 @@ function MentorChatPanel({
   userProfile,
   notes,
   onSaveNotes,
-  onOpenNotesTab
+  onOpenNotesTab,
+  learningLayout,
+  onLearningLayoutChange
 }) {
   const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
   const [messages, setMessages] = useState([{ role: "ai", text: mentorGreeting }]);
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoadingAi, setIsLoadingAi] = useState(false);
+  const [loadingSeconds, setLoadingSeconds] = useState(0);
+
+  useEffect(() => {
+    if (!isLoadingAi) {
+      setLoadingSeconds(0);
+      return undefined;
+    }
+    const started = Date.now();
+    const timer = setInterval(() => {
+      setLoadingSeconds(Math.floor((Date.now() - started) / 1000));
+    }, 500);
+    return () => clearInterval(timer);
+  }, [isLoadingAi]);
 
   const currentModelObj =
     AVAILABLE_MODELS.find((m) => m.id === preferredModel) || AVAILABLE_MODELS[0];
@@ -46,7 +71,8 @@ function MentorChatPanel({
       const learner = userProfile?.name || "the learner";
       const systemInstruction = `You are a Principal AI System Engineer mentoring ${learner} to transition into a Staff AI Platform Engineer.
 The user is currently studying Course ${lesson.course}: "${lesson.course_title}", Topic: "${lesson.lesson}" (${lesson.type}).
-Keep your explanations precise, highly technical, systems-focused, and pragmatic. Frame with constraints (QPS, SLA, P99 latency, cost/token, failure modes) and minimal code examples where helpful.`;
+Keep explanations precise, systems-focused, and pragmatic. Frame with constraints (QPS, SLA, P99 latency, cost/token, failure modes) and production tradeoffs.
+${MENTOR_SYSTEM_TAIL}`;
 
       const response = await generateAiResponse({
         prompt: textToSend,
@@ -77,12 +103,19 @@ Keep your explanations precise, highly technical, systems-focused, and pragmatic
   };
 
   return (
-    <div className="inspector-content" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <div className="inspector-content inspector-content-mentor" style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+      {learningLayout && onLearningLayoutChange && (
+        <MentorLayoutBar layout={learningLayout} onLayoutChange={onLearningLayoutChange} />
+      )}
       <div className="chat-container">
         <div className="chat-messages">
           {messages.map((m, idx) => (
             <div key={idx} className={`chat-bubble ${m.role === "user" ? "chat-bubble-user" : "chat-bubble-ai"}`}>
-              <div style={{ whiteSpace: "pre-wrap" }}>{m.text}</div>
+              {m.role === "user" ? (
+                <div className="chat-plain">{m.text}</div>
+              ) : (
+                <MarkdownProse variant="chat">{m.text}</MarkdownProse>
+              )}
               {m.role === "ai" && m.text.includes("API Notice") && onOpenSettings && (
                 <button
                   type="button"
@@ -107,8 +140,12 @@ Keep your explanations precise, highly technical, systems-focused, and pragmatic
             </div>
           ))}
           {isLoadingAi && (
-            <div className="chat-bubble chat-bubble-ai" style={{ color: "var(--muted)" }}>
-              <span>Synthesizing response from {currentModelObj.name}...</span>
+            <div className="chat-bubble chat-bubble-ai chat-bubble-loading" aria-live="polite">
+              <span className="chat-loading-dot" aria-hidden />
+              <span>
+                {currentModelObj.name} is thinking
+                {loadingSeconds >= 3 ? ` (${loadingSeconds}s — richer answers can take a moment)` : "…"}
+              </span>
             </div>
           )}
         </div>
@@ -217,7 +254,9 @@ export default function Inspector({
   onSelectModel,
   onOpenSettings,
   apiKeys = {},
-  userProfile = null
+  userProfile = null,
+  learningLayout = null,
+  onLearningLayoutChange = null
 }) {
   const [activeTab, setActiveTab] = useState("mentor");
   const [revealedPrompts, setRevealedPrompts] = useState({});
@@ -346,6 +385,8 @@ export default function Inspector({
           notes={notes}
           onSaveNotes={onSaveNotes}
           onOpenNotesTab={() => setActiveTab("notes")}
+          learningLayout={learningLayout}
+          onLearningLayoutChange={onLearningLayoutChange}
         />
       )}
 

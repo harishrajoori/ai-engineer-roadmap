@@ -149,6 +149,11 @@ async function callGemini({ prompt, systemInstruction, apiKey, model, tried = nu
     };
   }
 
+  payload.generationConfig = {
+    temperature: 0.45,
+    maxOutputTokens: 4096,
+  };
+
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

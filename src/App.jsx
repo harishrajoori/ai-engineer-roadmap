@@ -26,6 +26,7 @@ import {
   saveTheoryRegeneration,
 } from "./utils/theoryRegenerationStore";
 import { normalizePreferredModel } from "./services/aiService";
+import { layoutContainerClass, persistLearningLayout, readLearningLayout } from "./utils/learningLayout";
 import {
   applyStudioCloudPayload,
   buildStudioCloudPayload,
@@ -83,6 +84,7 @@ export default function App() {
   const [cloudSyncStatus, setCloudSyncStatus] = useState("idle");
   const [runtimeStudioConfig, setRuntimeStudioConfig] = useState({});
   const [googleAuthError, setGoogleAuthError] = useState("");
+  const [learningLayout, setLearningLayout] = useState(() => readLearningLayout());
   const stageRef = useRef(null);
   const idTokenRef = useRef(null);
   const cloudSyncPauseRef = useRef(false);
@@ -157,6 +159,10 @@ export default function App() {
   useEffect(() => {
     void loadStudioRuntimeConfig().then(setRuntimeStudioConfig);
   }, []);
+
+  useEffect(() => {
+    persistLearningLayout(learningLayout);
+  }, [learningLayout]);
 
   const courses = useMemo(() => {
     const coursesMap = new Map();
@@ -596,7 +602,7 @@ export default function App() {
       />
 
       <div
-        className={`app-container ${isHomeView ? "home-view" : ""} ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""}`}
+        className={`app-container ${isHomeView ? "home-view" : ""} ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""} ${!isHomeView ? layoutContainerClass(learningLayout) : ""}`}
       >
         <Sidebar
           courses={courses}
@@ -694,6 +700,8 @@ export default function App() {
           onOpenSettings={() => setIsSettingsOpen(true)}
           apiKeys={apiKeys}
           userProfile={userProfile}
+          learningLayout={learningLayout}
+          onLearningLayoutChange={setLearningLayout}
         />
       </div>
 

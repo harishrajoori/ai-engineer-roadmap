@@ -9,16 +9,18 @@ import rehypeKatex from "rehype-katex";
  *
  * @param {object} props
  * @param {string} props.children Markdown source
- * @param {"theory" | "primer" | "inline"} [props.variant]
+ * @param {"theory" | "primer" | "inline" | "chat"} [props.variant]
  * @param {boolean} [props.math] Enable KaTeX (topic theory only)
  */
 export default function MarkdownProse({ children, variant = "theory", math = false }) {
   const className =
     variant === "inline"
       ? "markdown-inline"
-      : variant === "primer"
-        ? "markdown-theory prose-learning prose-primer"
-        : "markdown-theory prose-learning prose-theory";
+      : variant === "chat"
+        ? "markdown-theory prose-learning prose-chat"
+        : variant === "primer"
+          ? "markdown-theory prose-learning prose-primer"
+          : "markdown-theory prose-learning prose-theory";
 
   const plugins = math
     ? { remark: [remarkGfm, remarkMath], rehype: [rehypeKatex] }

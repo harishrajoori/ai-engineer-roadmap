@@ -235,6 +235,41 @@ header {
   display: none !important;
 }
 
+/* Learning layout — collapse curriculum / theory; widen mentor (desktop) */
+@media (min-width: 1024px) {
+  .app-container.layout-curriculum-collapsed {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  }
+  .app-container.layout-curriculum-collapsed .sidebar,
+  .app-container.layout-curriculum-collapsed .course-accordion-pane {
+    display: none;
+  }
+  .app-container.layout-curriculum-collapsed.layout-stage-collapsed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-container.layout-curriculum-collapsed.layout-stage-collapsed .stage {
+    display: none;
+  }
+  .app-container.layout-stage-collapsed:not(.layout-curriculum-collapsed) {
+    grid-template-columns: 228px 300px minmax(0, 1fr);
+  }
+  .app-container.layout-stage-collapsed:not(.layout-curriculum-collapsed) .stage {
+    display: none;
+  }
+  .app-container.layout-mentor-expanded:not(.layout-stage-collapsed):not(.layout-curriculum-collapsed) {
+    grid-template-columns: 228px 300px minmax(0, 1fr) minmax(420px, 48vw);
+  }
+  .app-container.layout-mentor-expanded.layout-curriculum-collapsed:not(.layout-stage-collapsed) {
+    grid-template-columns: minmax(0, 1fr) minmax(420px, 52vw);
+  }
+  .app-container.layout-mentor-expanded.layout-curriculum-collapsed.layout-stage-collapsed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .app-container.layout-mentor-expanded.layout-curriculum-collapsed.layout-stage-collapsed .inspector-panel {
+    max-width: none;
+  }
+}
+
 .home-stage {
   height: 100%;
   overflow-y: auto;
@@ -2690,6 +2725,80 @@ header {
   border: 1px solid var(--border);
   align-self: flex-start;
   color: var(--text);
+  max-width: 100%;
+}
+.chat-bubble-ai .prose-chat {
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+.chat-bubble-ai .prose-chat h2 {
+  font-size: 0.95rem;
+  margin: 0.75rem 0 0.35rem;
+}
+.chat-bubble-ai .prose-chat h3 {
+  font-size: 0.88rem;
+  margin: 0.6rem 0 0.3rem;
+}
+.chat-bubble-ai .prose-chat p {
+  margin: 0.35rem 0;
+}
+.chat-bubble-ai .prose-chat ul,
+.chat-bubble-ai .prose-chat ol {
+  margin: 0.35rem 0 0.5rem;
+  padding-left: 1.15rem;
+}
+.chat-plain {
+  white-space: pre-wrap;
+}
+.chat-bubble-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.chat-loading-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: chat-pulse 1s ease-in-out infinite;
+}
+@keyframes chat-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+.inspector-content-mentor {
+  padding-top: 0.65rem !important;
+  gap: 0.5rem !important;
+}
+.mentor-layout-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.25rem;
+}
+.mentor-layout-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  margin-right: 0.15rem;
+}
+.mentor-layout-btn {
+  font-size: 0.68rem !important;
+  padding: 0.22rem 0.45rem !important;
 }
 
 /* Inline IDE Model Selector Dropdown */
