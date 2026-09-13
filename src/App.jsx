@@ -26,7 +26,14 @@ import {
   saveTheoryRegeneration,
 } from "./utils/theoryRegenerationStore";
 import { normalizePreferredModel } from "./services/aiService";
-import { layoutContainerClass, persistLearningLayout, readLearningLayout } from "./utils/learningLayout";
+import {
+  clamp,
+  gridTemplateColumnsForLayout,
+  layoutContainerClass,
+  persistLearningLayout,
+  readLearningLayout,
+} from "./utils/learningLayout";
+import ColumnResizeHandle from "./components/ColumnResizeHandle";
 import {
   applyStudioCloudPayload,
   buildStudioCloudPayload,
@@ -85,6 +92,9 @@ export default function App() {
   const [runtimeStudioConfig, setRuntimeStudioConfig] = useState({});
   const [googleAuthError, setGoogleAuthError] = useState("");
   const [learningLayout, setLearningLayout] = useState(() => readLearningLayout());
+  const [resizableDesktopGrid, setResizableDesktopGrid] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(min-width: 1181px)").matches
+  );
   const stageRef = useRef(null);
   const idTokenRef = useRef(null);
   const cloudSyncPauseRef = useRef(false);
@@ -163,6 +173,13 @@ export default function App() {
   useEffect(() => {
     persistLearningLayout(learningLayout);
   }, [learningLayout]);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1181px)");
+    const onChange = () => setResizableDesktopGrid(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
 
   const courses = useMemo(() => {
     const coursesMap = new Map();
@@ -602,18 +619,50 @@ export default function App() {
       />
 
       <div
-        className={`app-container ${isHomeView ? "home-view" : ""} ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""} ${!isHomeView ? layoutContainerClass(learningLayout) : ""}`}
+        className={`app-container ${isHomeView ? "home-view" : ""} ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""} ${!isHomeView ? layoutContainerClass(learningLayout) : ""} ${!isHomeView && resizableDesktopGrid ? "layout-custom-columns" : ""}`}
+        style={
+          !isHomeView && resizableDesktopGrid
+            ? { gridTemplateColumns: gridTemplateColumnsForLayout(learningLayout) }
+            : undefined
+        }
       >
-        <Sidebar
-          courses={courses}
-          activeCourseNum={activeCourseNum}
-          onSelectCourse={handleSelectCourse}
-          currentTier={currentTier}
-          onSetTier={setCurrentTier}
-          progressMap={progressMap}
-        />
+        <div className="layout-cell layout-cell-nav">
+          {resizableDesktopGrid && learningLayout.curriculumOpen && (
+            <ColumnResizeHandle
+              side="right"
+              label="Resize curriculum modules column"
+              onResizeDelta={(dx) =>
+                setLearningLayout((prev) => ({
+                  ...prev,
+                  navWidth: clamp(prev.navWidth + dx, 180, 360),
+                }))
+              }
+            />
+          )}
+          <Sidebar
+            courses={courses}
+            activeCourseNum={activeCourseNum}
+            onSelectCourse={handleSelectCourse}
+            currentTier={currentTier}
+            onSetTier={setCurrentTier}
+            progressMap={progressMap}
+          />
+        </div>
 
-        <aside className="course-accordion-pane">
+        <div className="layout-cell layout-cell-syllabus">
+          {resizableDesktopGrid && learningLayout.curriculumOpen && (
+            <ColumnResizeHandle
+              side="right"
+              label="Resize syllabus column"
+              onResizeDelta={(dx) =>
+                setLearningLayout((prev) => ({
+                  ...prev,
+                  syllabusWidth: clamp(prev.syllabusWidth + dx, 220, 480),
+                }))
+              }
+            />
+          )}
+          <aside className="course-accordion-pane">
           <LessonFeed
             courseTitle={activeCourse?.title || `Course ${activeCourseNum}`}
             courseMonth={activeCourse?.month}
@@ -629,7 +678,8 @@ export default function App() {
             typeFilter={typeFilter}
             onSetTypeFilter={setTypeFilter}
           />
-        </aside>
+          </aside>
+        </div>
 
         <main className="stage" ref={stageRef}>
           {isHomeView ? (
@@ -686,23 +736,37 @@ export default function App() {
           )}
         </main>
 
-        <Inspector
-          lesson={isHomeView || courseOverviewMode ? null : activeLesson}
-          courseRef={activeCourseRef}
-          notes={notesMap}
-          onSaveNotes={handleSaveNotes}
-          proveUrl={proveMap[activeLesson?.order] || ""}
-          onSaveProveUrl={handleSaveProveUrl}
-          isCompleted={!!progressMap[activeLesson?.order]}
-          onToggleComplete={handleToggleComplete}
-          preferredModel={preferredModel}
-          onSelectModel={setPreferredModel}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-          apiKeys={apiKeys}
-          userProfile={userProfile}
-          learningLayout={learningLayout}
-          onLearningLayoutChange={setLearningLayout}
-        />
+        <div className="layout-cell layout-cell-mentor">
+          {resizableDesktopGrid && !isHomeView && (
+            <ColumnResizeHandle
+              side="left"
+              label="Drag to resize chat panel"
+              onResizeDelta={(dx) =>
+                setLearningLayout((prev) => ({
+                  ...prev,
+                  mentorWidth: clamp(prev.mentorWidth - dx, 300, 960),
+                }))
+              }
+            />
+          )}
+          <Inspector
+            lesson={isHomeView || courseOverviewMode ? null : activeLesson}
+            courseRef={activeCourseRef}
+            notes={notesMap}
+            onSaveNotes={handleSaveNotes}
+            proveUrl={proveMap[activeLesson?.order] || ""}
+            onSaveProveUrl={handleSaveProveUrl}
+            isCompleted={!!progressMap[activeLesson?.order]}
+            onToggleComplete={handleToggleComplete}
+            preferredModel={preferredModel}
+            onSelectModel={setPreferredModel}
+            onOpenSettings={() => setIsSettingsOpen(true)}
+            apiKeys={apiKeys}
+            userProfile={userProfile}
+            learningLayout={learningLayout}
+            onLearningLayoutChange={setLearningLayout}
+          />
+        </div>
       </div>
 
       <MobileLearningBar activePanel={mobilePanel} onSelectPanel={setMobilePanel} />

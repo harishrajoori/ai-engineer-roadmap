@@ -240,6 +240,8 @@ header {
   .app-container.layout-curriculum-collapsed {
     grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
   }
+  .app-container.layout-curriculum-collapsed .layout-cell-nav,
+  .app-container.layout-curriculum-collapsed .layout-cell-syllabus,
   .app-container.layout-curriculum-collapsed .sidebar,
   .app-container.layout-curriculum-collapsed .course-accordion-pane {
     display: none;
@@ -2799,6 +2801,68 @@ header {
 .mentor-layout-btn {
   font-size: 0.68rem !important;
   padding: 0.22rem 0.45rem !important;
+}
+.mentor-layout-drag-hint {
+  width: 100%;
+  margin: 0.35rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.layout-cell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+.layout-cell .sidebar,
+.layout-cell .course-accordion-pane,
+.layout-cell .inspector-panel {
+  height: 100%;
+  width: 100%;
+}
+.layout-cell-syllabus .course-accordion-pane {
+  border-right: 1px solid var(--border);
+}
+.col-resize-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  z-index: 30;
+  cursor: col-resize;
+  touch-action: none;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+.col-resize-handle:hover,
+.col-resize-handle:active {
+  background: rgba(99, 102, 241, 0.35);
+}
+.col-resize-handle-left {
+  left: 0;
+  transform: translateX(-45%);
+}
+.col-resize-handle-right {
+  right: 0;
+  transform: translateX(45%);
+}
+body.is-column-resizing,
+body.is-column-resizing * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+@media (max-width: 1180px) {
+  .col-resize-handle {
+    display: none;
+  }
+}
+@media (min-width: 1181px) {
+  .app-container.layout-custom-columns {
+    /* inline gridTemplateColumns from React */
+  }
 }
 
 /* Inline IDE Model Selector Dropdown */
