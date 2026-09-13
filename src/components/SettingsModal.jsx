@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { X, Key, Shield, Download, Upload, Check, ExternalLink } from "lucide-react";
 import { AVAILABLE_MODELS, normalizePreferredModel } from "../services/aiService";
 import { PROVIDER_KEY_LINKS } from "../config/aiModels";
+import { readGovernanceSettings, readUsageSnapshot, saveGovernanceSettings } from "../utils/tokenGovernance";
 import GoogleSignInButton from "./GoogleSignInButton";
 import { resolveGoogleClientId } from "../utils/googleAuth";
 
@@ -28,32 +29,61 @@ export default function SettingsModal({
   const [model, setModel] = useState(() => normalizePreferredModel(preferredModel));
   const [customModel, setCustomModel] = useState("");
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const [dailyTokenBudget, setDailyTokenBudget] = useState(() => {
+    const g = readGovernanceSettings();
+    return g.dailyBudgetTokens == null ? "0" : String(g.dailyBudgetTokens);
+  });
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    setGeminiKey(keys.gemini || "");
+    setGroqKey(keys.groq || "");
+    setOpenRouterKey(keys.openrouter || "");
+    setGoogleClientId(keys.googleClientId || "");
+    setModel(normalizePreferredModel(preferredModel));
+    const g = readGovernanceSettings();
+    setDailyTokenBudget(g.dailyBudgetTokens == null ? "0" : String(g.dailyBudgetTokens));
+  }, [isOpen, keys, preferredModel]);
 
   if (!isOpen) return null;
 
-  const oauthReadyForSignIn = Boolean(
-    resolveGoogleClientId({ ...keys, googleClientId: googleClientId.trim() }, runtimeStudioConfig)
-  );
+  const usageToday = readUsageSnapshot().today.total_tokens;
+
+  const oauthConfigured = Boolean(resolveGoogleClientId(keys, runtimeStudioConfig));
+  const oauthReadyForSignIn = oauthConfigured;
 
   const handleApplyGoogleClientId = () => {
     const id = googleClientId.trim();
     if (!id) {
       return;
     }
+    if (!id.includes(".apps.googleusercontent.com")) {
+      onGoogleAuthError?.(
+        "That does not look like a Web Client ID. It should end with .apps.googleusercontent.com",
+      );
+      return;
+    }
     onSaveKeys({ ...keys, googleClientId: id });
+    onGoogleAuthError?.("");
     setSavedSuccess(true);
     setTimeout(() => setSavedSuccess(false), 1200);
   };
 
   const handleSave = () => {
     const finalModel = model === "custom" ? customModel : model;
+    const trimmedOAuthId = googleClientId.trim();
     onSaveKeys({
       gemini: geminiKey.trim(),
       groq: groqKey.trim(),
       openrouter: openRouterKey.trim(),
-      googleClientId: googleClientId.trim()
+      googleClientId: trimmedOAuthId || keys.googleClientId || "",
     });
     onSaveModel(finalModel);
+    saveGovernanceSettings({
+      dailyBudgetTokens: dailyTokenBudget === "0" ? 0 : dailyTokenBudget,
+    });
     setSavedSuccess(true);
     setTimeout(() => {
       setSavedSuccess(false);
@@ -120,13 +150,16 @@ export default function SettingsModal({
                 >
                   Sign Out ({userProfile.name?.split(" ")[0]})
                 </button>
-              ) : (
+              ) : oauthReadyForSignIn ? (
                 <GoogleSignInButton
-                  enabled={oauthReadyForSignIn}
+                  enabled
                   onSuccess={onGoogleLogin}
                   onAuthError={onGoogleAuthError}
-                  hint="Save or Apply the Web Client ID below, then sign in."
                 />
+              ) : (
+                <span style={{ fontSize: "0.72rem", color: "var(--muted)" }}>
+                  Paste Client ID below → <strong>Apply client ID</strong>
+                </span>
               )}
               {googleAuthError && (
                 <p style={{ color: "#ef4444", fontSize: "0.75rem", marginTop: "0.5rem", border: "1px solid #ef4444", padding: "0.5rem", borderRadius: "4px", backgroundColor: "rgba(239,68,68,0.1)" }}>
@@ -181,6 +214,27 @@ export default function SettingsModal({
               <code style={{ fontSize: "0.7rem" }}>studio-config.json</code> so visitors do not each paste a client ID.
             </p>
 
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
+              Daily token budget (local mentor tracking)
+            </label>
+            <input
+              type="number"
+              min={0}
+              step={1000}
+              className="chat-input"
+              value={dailyTokenBudget}
+              onChange={(e) => setDailyTokenBudget(e.target.value)}
+              placeholder="120000"
+              style={{ padding: "0.5rem" }}
+            />
+            <p style={{ fontSize: "0.72rem", color: "var(--muted)", lineHeight: 1.45, margin: 0 }}>
+              Estimates input + output cap per request. Set <strong>0</strong> for unlimited. Today so far: ~
+              {usageToday.toLocaleString()} tokens. OpenRouter billing is separate — use <strong>Brief</strong> depth
+              on low credits.
+            </p>
           </div>
 
           {/* Model Selection */}

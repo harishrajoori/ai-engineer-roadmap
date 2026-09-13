@@ -61,11 +61,12 @@ Format output in excellent Markdown: start with a one-line summary, use ## heade
 
 
     try {
-      const response = await generateAiResponse({
+      const { text: response } = await generateAiResponse({
         prompt,
         systemInstruction: "You are a world-class AI engineering educator and Staff AI Systems Architect.",
         preferredModel: selectedModel,
-        keys: apiKeys
+        keys: apiKeys,
+        maxOutputTokens: 4096,
       });
 
       onSaveRegeneration(lesson.order, response, { model: selectedModel, lens });

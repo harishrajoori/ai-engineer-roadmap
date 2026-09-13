@@ -217,6 +217,40 @@ header {
   background: var(--surface-hover);
 }
 
+.google-signin-header {
+  max-width: 11rem;
+}
+.google-signin-unconfigured {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+  max-width: 14rem;
+}
+.google-signin-setup-btn {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.google-signin-setup-btn:hover {
+  border-color: var(--accent);
+  background: var(--surface-hover);
+}
+.google-signin-setup-hint {
+  margin: 0;
+  font-size: 0.62rem;
+  line-height: 1.35;
+  color: var(--muted);
+  text-align: right;
+  max-width: 12rem;
+}
+
 /* App Layout — Coursera-style: courses | syllabus | content | mentor */
 .app-container {
   display: grid;
@@ -230,9 +264,19 @@ header {
 .app-container.home-view {
   grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
 }
-.app-container.home-view .course-accordion-pane,
-.app-container.home-view .inspector-panel {
+.app-container.home-view .layout-cell-syllabus,
+.app-container.home-view .layout-cell-mentor {
   display: none !important;
+}
+.app-container.home-view .layout-cell-nav {
+  grid-column: 1;
+  grid-row: 1;
+  min-height: 0;
+}
+.app-container.home-view .stage {
+  grid-column: 2;
+  grid-row: 1;
+  min-height: 0;
 }
 
 /* Learning layout — collapse curriculum / theory; widen mentor (desktop) */
@@ -921,6 +965,12 @@ header {
 @media (max-width: 900px) {
   .app-container.home-view {
     grid-template-columns: 1fr;
+  }
+  .app-container.home-view .layout-cell-nav {
+    display: none;
+  }
+  .app-container.home-view .stage {
+    grid-column: 1;
   }
   .app-container.home-view .sidebar {
     display: none;
@@ -2694,6 +2744,100 @@ header {
 .resource-title { font-size: 0.85rem; font-weight: 600; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.35rem; }
 .resource-title:hover { color: var(--cyan); text-decoration: underline; }
 .resource-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+
+/* Mentor token governance */
+.mentor-token-bar {
+  flex-shrink: 0;
+  margin: 0 0 0.5rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.mentor-token-bar-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+}
+.mentor-token-depth-row {
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid var(--border);
+}
+.mentor-token-stat {
+  color: var(--text);
+  font-weight: 600;
+}
+.mentor-token-budget {
+  font-weight: 500;
+  color: var(--muted);
+}
+.mentor-token-pct {
+  font-weight: 700;
+  color: var(--cyan);
+}
+.mentor-token-pct-warn {
+  color: var(--orange, #f59e0b);
+}
+.mentor-token-reset {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.35rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.mentor-token-reset:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+.mentor-token-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.62rem;
+  margin-right: 0.15rem;
+}
+.mentor-depth-btn {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+}
+.mentor-depth-btn.active {
+  border-color: var(--accent);
+  color: var(--text);
+  background: rgba(99, 102, 241, 0.12);
+}
+.mentor-token-cap {
+  margin-left: auto;
+  font-size: 0.62rem;
+}
+.mentor-token-warning {
+  margin: 0.35rem 0 0;
+  color: var(--orange, #f59e0b);
+  font-weight: 600;
+}
+.mentor-token-last {
+  margin: 0.25rem 0 0;
+  color: var(--text);
+}
+.mentor-token-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.62rem;
+  opacity: 0.85;
+}
 
 /* AI Mentor Chat & IDE-Style Model Switcher */
 .chat-container {

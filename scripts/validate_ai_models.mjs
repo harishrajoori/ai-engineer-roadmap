@@ -81,6 +81,26 @@ const probes = [
     },
   },
   {
+    name: "openrouter-openai/gpt-5.6-terra",
+    run: async () => {
+      if (!openRouterKey) return "skip (no OPENROUTER_API_KEY)";
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${openRouterKey}`,
+        },
+        body: JSON.stringify({
+          model: "openai/gpt-5.6-terra",
+          messages: [{ role: "user", content: "Reply with exactly: ok" }],
+          max_tokens: 8,
+        }),
+      });
+      if (!res.ok) return `fail ${res.status}: ${(await res.text()).slice(0, 200)}`;
+      return "ok";
+    },
+  },
+  {
     name: "openrouter-google/gemini-3.6-flash",
     run: async () => {
       if (!openRouterKey) return "skip (no OPENROUTER_API_KEY)";

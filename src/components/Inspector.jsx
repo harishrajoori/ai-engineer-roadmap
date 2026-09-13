@@ -10,21 +10,26 @@ import {
   ChevronDown,
   Key
 } from "lucide-react";
-import { generateAiResponse, AVAILABLE_MODELS } from "../services/aiService";
+import { generateAiResponse, AVAILABLE_MODELS, formatMentorApiError } from "../services/aiService";
+import { buildMentorChatMessages, estimateMentorInputTokens } from "../services/mentorContext";
 import { getLessonResources } from "../utils/lessonResources";
+import {
+  checkTokenBudget,
+  depthConfig,
+  formatUsageLine,
+  readReplyDepth,
+  readUsageSnapshot,
+  recordTokenUsage,
+  resetSessionUsage,
+  saveReplyDepth,
+} from "../utils/tokenGovernance";
 import MarkdownProse from "./MarkdownProse";
 import MentorLayoutBar from "./MentorLayoutBar";
-
-const MENTOR_SYSTEM_TAIL = `
-Format every reply in GitHub-flavored Markdown:
-- Use ## section headings when the answer has multiple parts.
-- Use bullet lists and **bold** for key terms, tradeoffs, and metrics (QPS, P99, cost).
-- Use fenced code blocks only for short, relevant snippets (commands, config, pseudo-code).
-- Aim for depth: roughly 150–350 words unless the user asks for a one-liner.
-- End with a **Takeaway** or **Next step** line when it helps the learner act.`;
+import MentorTokenBar from "./MentorTokenBar";
 
 function MentorChatPanel({
   lesson,
+  courseRef,
   mentorGreeting,
   preferredModel,
   onSelectModel,
@@ -42,6 +47,10 @@ function MentorChatPanel({
   const [inputPrompt, setInputPrompt] = useState("");
   const [isLoadingAi, setIsLoadingAi] = useState(false);
   const [loadingSeconds, setLoadingSeconds] = useState(0);
+  const [replyDepth, setReplyDepth] = useState(() => readReplyDepth());
+  const [usageSnapshot, setUsageSnapshot] = useState(() => readUsageSnapshot());
+  const [lastUsageLine, setLastUsageLine] = useState("");
+  const [budgetWarning, setBudgetWarning] = useState("");
 
   useEffect(() => {
     if (!isLoadingAi) {
@@ -58,6 +67,17 @@ function MentorChatPanel({
   const currentModelObj =
     AVAILABLE_MODELS.find((m) => m.id === preferredModel) || AVAILABLE_MODELS[0];
 
+  const handleDepthChange = (depthId) => {
+    setReplyDepth(depthId);
+    saveReplyDepth(depthId);
+  };
+
+  const handleResetSessionUsage = () => {
+    setUsageSnapshot(resetSessionUsage());
+    setLastUsageLine("");
+    setBudgetWarning("");
+  };
+
   const handleSendMessage = async (customText) => {
     const textToSend = customText || inputPrompt;
     if (!textToSend.trim() || isLoadingAi) return;
@@ -66,20 +86,48 @@ function MentorChatPanel({
     setMessages(newMessages);
     if (!customText) setInputPrompt("");
     setIsLoadingAi(true);
+    setBudgetWarning("");
+
+    const depth = depthConfig(replyDepth);
+    const learnerName = userProfile?.given_name || userProfile?.name;
+    const chatMessages = buildMentorChatMessages({
+      lesson,
+      courseRef,
+      userQuestion: textToSend,
+      uiMessages: messages.filter((m) => m.role === "user" || m.role === "ai"),
+      learnerName,
+      depthId: replyDepth,
+    });
+    const estimatedInput = estimateMentorInputTokens(chatMessages);
+    const budgetCheck = checkTokenBudget({
+      estimatedInput,
+      maxOutput: depth.maxOutputTokens,
+    });
+    setUsageSnapshot(budgetCheck.snapshot);
+
+    if (!budgetCheck.allowed) {
+      setMessages([
+        ...newMessages,
+        { role: "ai", text: `⚠️ **Token budget:** ${budgetCheck.message}` },
+      ]);
+      setIsLoadingAi(false);
+      return;
+    }
+    if (budgetCheck.message) {
+      setBudgetWarning(budgetCheck.message);
+    }
 
     try {
-      const learner = userProfile?.name || "the learner";
-      const systemInstruction = `You are a Principal AI System Engineer mentoring ${learner} to transition into a Staff AI Platform Engineer.
-The user is currently studying Course ${lesson.course}: "${lesson.course_title}", Topic: "${lesson.lesson}" (${lesson.type}).
-Keep explanations precise, systems-focused, and pragmatic. Frame with constraints (QPS, SLA, P99 latency, cost/token, failure modes) and production tradeoffs.
-${MENTOR_SYSTEM_TAIL}`;
-
-      const response = await generateAiResponse({
-        prompt: textToSend,
-        systemInstruction,
+      const { text: response, usage } = await generateAiResponse({
+        messages: chatMessages,
         preferredModel,
-        keys: apiKeys
+        keys: apiKeys,
+        maxOutputTokens: depth.maxOutputTokens,
       });
+
+      const snapshot = recordTokenUsage(usage);
+      setUsageSnapshot(snapshot);
+      setLastUsageLine(formatUsageLine(usage, depth.maxOutputTokens));
 
       setMessages([...newMessages, { role: "ai", text: response }]);
     } catch (err) {
@@ -87,7 +135,7 @@ ${MENTOR_SYSTEM_TAIL}`;
         ...newMessages,
         {
           role: "ai",
-          text: `⚠️ **API Notice:** ${err.message}\n\n💡 *Tip: If you have a Google account, click [aistudio.google.com/apikey](https://aistudio.google.com/apikey) to generate a free Gemini key in 10 seconds, then click Settings ⚙️ to paste it!*`
+          text: formatMentorApiError(err, preferredModel),
         }
       ]);
     } finally {
@@ -107,6 +155,14 @@ ${MENTOR_SYSTEM_TAIL}`;
       {learningLayout && onLearningLayoutChange && (
         <MentorLayoutBar layout={learningLayout} onLayoutChange={onLearningLayoutChange} />
       )}
+      <MentorTokenBar
+        snapshot={usageSnapshot}
+        replyDepth={replyDepth}
+        onReplyDepthChange={handleDepthChange}
+        lastUsageLine={lastUsageLine}
+        onResetSession={handleResetSessionUsage}
+        budgetWarning={budgetWarning}
+      />
       <div className="chat-container">
         <div className="chat-messages">
           {messages.map((m, idx) => (
@@ -116,7 +172,7 @@ ${MENTOR_SYSTEM_TAIL}`;
               ) : (
                 <MarkdownProse variant="chat">{m.text}</MarkdownProse>
               )}
-              {m.role === "ai" && m.text.includes("API Notice") && onOpenSettings && (
+              {m.role === "ai" && m.text.includes("API notice") && onOpenSettings && (
                 <button
                   type="button"
                   className="filter-btn"
@@ -127,7 +183,7 @@ ${MENTOR_SYSTEM_TAIL}`;
                   <span>Open Settings</span>
                 </button>
               )}
-              {m.role === "ai" && idx > 0 && !m.text.includes("API Notice") && (
+              {m.role === "ai" && idx > 0 && !m.text.includes("API notice") && (
                 <button
                   className="filter-btn"
                   style={{ fontSize: "0.68rem", padding: "0.2rem 0.45rem", marginTop: "0.5rem" }}
@@ -376,6 +432,7 @@ export default function Inspector({
         <MentorChatPanel
           key={lesson.order}
           lesson={lesson}
+          courseRef={courseRef}
           mentorGreeting={mentorGreeting}
           preferredModel={preferredModel}
           onSelectModel={onSelectModel}

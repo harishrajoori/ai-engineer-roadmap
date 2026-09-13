@@ -16,7 +16,7 @@ export const PROVIDER_KEY_LINKS = {
   },
   openrouter: {
     label: "OpenRouter",
-    hint: "One key for Gemini, Claude, DeepSeek, and more",
+    hint: "One key for GPT, Gemini, Claude, DeepSeek, and more",
     url: "https://openrouter.ai/keys",
   },
 };
@@ -70,6 +70,24 @@ export const AI_MODEL_CATALOG = [
     icon: "⚡",
     keyProvider: "groq",
     apiModel: "llama-3.1-8b-instant",
+  },
+  {
+    id: "openrouter-openai/gpt-6-astra",
+    name: "GPT-6 Astra (OpenRouter)",
+    provider: "OpenRouter",
+    badge: "OpenAI flagship",
+    icon: "🧠",
+    keyProvider: "openrouter",
+    apiModel: "openai/gpt-6-astra",
+  },
+  {
+    id: "openrouter-openai/gpt-5.6-terra",
+    name: "GPT-5.6 Terra (OpenRouter)",
+    provider: "OpenRouter",
+    badge: "Balanced",
+    icon: "🌍",
+    keyProvider: "openrouter",
+    apiModel: "openai/gpt-5.6-terra",
   },
   {
     id: "openrouter-google/gemini-3.6-flash",

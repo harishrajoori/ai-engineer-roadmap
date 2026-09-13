@@ -42,6 +42,20 @@ jobs:
       - name: Sync curriculum to public bundle
         run: npm run curriculum
 
+      - name: Inject studio-config.json for OAuth (runtime fallback)
+        env:
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
+        run: |
+          if [ -n "$VITE_GOOGLE_CLIENT_ID" ]; then
+            node --input-type=module -e "
+              import fs from 'node:fs';
+              fs.writeFileSync(
+                'public/studio-config.json',
+                JSON.stringify({ googleClientId: process.env.VITE_GOOGLE_CLIENT_ID }, null, 2) + '\n'
+              );
+            "
+          fi
+
       - name: Build React Studio
         env:
           VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}

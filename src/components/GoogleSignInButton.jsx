@@ -2,12 +2,27 @@ import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { profileFromGoogleCredential } from "../utils/googleAuth";
 
-export default function GoogleSignInButton({ onSuccess, onAuthError, enabled, hint, width }) {
+export default function GoogleSignInButton({
+  onSuccess,
+  onAuthError,
+  enabled,
+  hint,
+  width,
+  onConfigureOAuth,
+}) {
   if (!enabled) {
     return (
-      <p className="text-xs text-slate-500 m-0" style={{ lineHeight: 1.4 }}>
-        {hint || "Add a Google OAuth Web Client ID in Settings to enable sign-in."}
-      </p>
+      <div className="google-signin-unconfigured">
+        {onConfigureOAuth ? (
+          <button type="button" className="google-signin-setup-btn" onClick={onConfigureOAuth}>
+            Set up Google sign-in
+          </button>
+        ) : null}
+        <p className="google-signin-setup-hint">
+          {hint ||
+            "Add your OAuth Web Client ID in Settings (Apply), or set VITE_GOOGLE_CLIENT_ID on deploy."}
+        </p>
+      </div>
     );
   }
 

@@ -113,6 +113,7 @@ export default function Header({
               enabled={googleOAuthEnabled}
               onSuccess={onGoogleLogin}
               onAuthError={onGoogleAuthError}
+              onConfigureOAuth={onOpenSettings}
             />
           </div>
         )}
