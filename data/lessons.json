@@ -40,7 +40,7 @@
         },
         {
           "title": "3Blue1Brown: Visual Transformer Intuition",
-          "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+          "url": "https://www.youtube.com/watch?v=wjZofJX0v4U",
           "type": "video",
           "level": "beginner",
           "description": "Visual 3D walkthrough of how vectors, embeddings, and attention weights operate under the hood."
@@ -106,7 +106,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "XIdQ6gO3NuA",
       "resources": [
         {
           "title": "Pydantic V2 Quickstart & Core Concepts",
@@ -176,7 +176,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "ujIQXzP1xKQ",
       "resources": [
         {
           "title": "Instructor Python Quickstart",
@@ -246,7 +246,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "XIdQ6gO3NuA",
       "resources": [
         {
           "title": "Pydantic V2 Quickstart & Core Concepts",
@@ -386,7 +386,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -456,7 +456,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -527,7 +527,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -597,7 +597,7 @@
         "What do you log when an extraction fails after max retries?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "zjkBMFhNj_g",
       "resources": [
         {
           "title": "Andrej Karpathy: Intro to Large Language Models",
@@ -608,7 +608,7 @@
         },
         {
           "title": "3Blue1Brown: Visual Transformer Intuition",
-          "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+          "url": "https://www.youtube.com/watch?v=wjZofJX0v4U",
           "type": "video",
           "level": "beginner",
           "description": "Visual 3D walkthrough of how vectors, embeddings, and attention weights operate under the hood."
@@ -745,7 +745,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -815,7 +815,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "7xTGNNLPyMI",
+      "youtube_id": "zjkBMFhNj_g",
       "resources": [
         {
           "title": "Andrej Karpathy: Intro to Large Language Models",
@@ -826,7 +826,7 @@
         },
         {
           "title": "3Blue1Brown: Visual Transformer Intuition",
-          "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+          "url": "https://www.youtube.com/watch?v=wjZofJX0v4U",
           "type": "video",
           "level": "beginner",
           "description": "Visual 3D walkthrough of how vectors, embeddings, and attention weights operate under the hood."
@@ -892,7 +892,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "eMlx5fFNoYc",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -962,7 +962,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "viZrOnJclY0",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -1032,7 +1032,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -1102,7 +1102,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "zjkBMFhNj_g",
       "resources": [
         {
           "title": "Andrej Karpathy: Intro to Large Language Models",
@@ -1113,7 +1113,7 @@
         },
         {
           "title": "3Blue1Brown: Visual Transformer Intuition",
-          "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+          "url": "https://www.youtube.com/watch?v=wjZofJX0v4U",
           "type": "video",
           "level": "beginner",
           "description": "Visual 3D walkthrough of how vectors, embeddings, and attention weights operate under the hood."
@@ -1179,7 +1179,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -1250,7 +1250,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "ujIQXzP1xKQ",
       "resources": [
         {
           "title": "Instructor Python Quickstart",
@@ -1390,7 +1390,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -1460,7 +1460,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -1530,7 +1530,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -1670,7 +1670,7 @@
         "When would you **not** use an LLM in a pipeline?",
         ""
       ],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "kCc8FmEb1nY",
       "resources": [
         {
           "title": "StatQuest: Transformer Attention Visually",
@@ -1739,7 +1739,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -1815,7 +1815,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -1891,7 +1891,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "4GiqzUHD5AA",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -1967,7 +1967,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "jGg_1h0qzaM",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2043,7 +2043,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "QjVpE6-G18U",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2119,7 +2119,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2195,7 +2195,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2271,7 +2271,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2347,7 +2347,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -2417,7 +2417,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2493,7 +2493,7 @@
         "How do you test a non-deterministic node?",
         ""
       ],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2564,7 +2564,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -2628,7 +2628,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2699,7 +2699,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2770,7 +2770,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -2841,7 +2841,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -2905,7 +2905,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -2969,7 +2969,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3033,7 +3033,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3097,7 +3097,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3161,7 +3161,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "0Il85xyb46M",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3225,7 +3225,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "0Il85xyb46M",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3289,7 +3289,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "0Il85xyb46M",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3353,7 +3353,7 @@
         "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
       ],
       "course_prompts": [],
-      "youtube_id": "T7keBSZf0ys",
+      "youtube_id": "kQlCOv_wTio",
       "resources": [
         {
           "title": "Anthropic: Model Context Protocol (MCP) Introduction",
@@ -3418,7 +3418,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3483,7 +3483,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3548,7 +3548,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3613,7 +3613,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3678,7 +3678,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3743,7 +3743,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3809,7 +3809,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3874,7 +3874,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -3939,7 +3939,7 @@
         "Evaluation: recall@k, MRR; labeled q/a set"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -4003,7 +4003,7 @@
         "`chunks.jsonl` contract for downstream index"
       ],
       "course_prompts": [],
-      "youtube_id": "zSA7ylHP6AY",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -4067,7 +4067,7 @@
         "`chunks.jsonl` contract for downstream index"
       ],
       "course_prompts": [],
-      "youtube_id": "zSA7ylHP6AY",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -4131,7 +4131,7 @@
         "`chunks.jsonl` contract for downstream index"
       ],
       "course_prompts": [],
-      "youtube_id": "mUHPPBbumIs",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -4195,7 +4195,7 @@
         "`chunks.jsonl` contract for downstream index"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -4259,7 +4259,7 @@
         "`chunks.jsonl` contract for downstream index"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -4323,7 +4323,7 @@
         "`chunks.jsonl` contract for downstream index"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -4387,7 +4387,7 @@
         "Scope: **one** validator, not full GraphRAG product"
       ],
       "course_prompts": [],
-      "youtube_id": "X257Vk21U0U",
+      "youtube_id": "2TJxpyO3ei4",
       "resources": [
         {
           "title": "Pinecone: Vector Search & Embeddings 101",
@@ -4529,7 +4529,7 @@
         "Scope: **one** validator, not full GraphRAG product"
       ],
       "course_prompts": [],
-      "youtube_id": "X257Vk21U0U",
+      "youtube_id": "2TJxpyO3ei4",
       "resources": [
         {
           "title": "Pinecone: Vector Search & Embeddings 101",
@@ -4600,7 +4600,7 @@
         "Scope: **one** validator, not full GraphRAG product"
       ],
       "course_prompts": [],
-      "youtube_id": "X257Vk21U0U",
+      "youtube_id": "2TJxpyO3ei4",
       "resources": [
         {
           "title": "Pinecone: Vector Search & Embeddings 101",
@@ -4815,7 +4815,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -4881,7 +4881,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -4947,7 +4947,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5013,7 +5013,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5080,7 +5080,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5146,7 +5146,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5212,7 +5212,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "2TJxpyO3ei4",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5278,7 +5278,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5344,7 +5344,7 @@
         "Version golden set in git; review PRs that change labels"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5407,7 +5407,7 @@
         "Fail messages: which case regressed"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5470,7 +5470,7 @@
         "Fail messages: which case regressed"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5533,7 +5533,7 @@
         "Fail messages: which case regressed"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5597,7 +5597,7 @@
         "Fail messages: which case regressed"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5660,7 +5660,7 @@
         "Fail messages: which case regressed"
       ],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -5724,7 +5724,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -5788,7 +5788,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "4GiqzUHD5AA",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -5859,7 +5859,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -5930,7 +5930,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -5994,7 +5994,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -6058,7 +6058,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -6122,7 +6122,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "bZQun8Y4L2A",
       "resources": [
         {
           "title": "LiteLLM Quickstart: 100+ LLMs with One OpenAI Interface",
@@ -6186,7 +6186,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -6250,7 +6250,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "bZQun8Y4L2A",
       "resources": [
         {
           "title": "LiteLLM Quickstart: 100+ LLMs with One OpenAI Interface",
@@ -6314,7 +6314,7 @@
         "Redaction before screenshotting traces"
       ],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -6372,7 +6372,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "zSA7ylHP6AY",
+      "youtube_id": "dkyY9W810W4",
       "resources": [
         {
           "title": "Unstructured.io: Document Layout Parsing Guide",
@@ -6430,7 +6430,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "bZQun8Y4L2A",
       "resources": [
         {
           "title": "LiteLLM Quickstart: 100+ LLMs with One OpenAI Interface",
@@ -6488,7 +6488,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "XIdQ6gO3NuA",
       "resources": [
         {
           "title": "Pydantic V2 Quickstart & Core Concepts",
@@ -6546,7 +6546,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "0iBP4_uH6eA",
       "resources": [
         {
           "title": "FastAPI: High-Performance Async Python & Streaming (SSE)",
@@ -6604,7 +6604,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -6662,7 +6662,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -6727,7 +6727,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "sVcwVQRHIc8",
+      "youtube_id": "zixdQy-1yqk",
       "resources": [
         {
           "title": "Hamel Husain: Your AI Product Needs Evals",
@@ -6785,7 +6785,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "OyrmR0CSRWs",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -6843,7 +6843,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "SwqusllMCnE",
+      "youtube_id": "1g9b3KqP5tM",
       "resources": [
         {
           "title": "Meta Llama Guard: Input/Output Safety Taxonomy",
@@ -6901,7 +6901,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Open Policy Agent: Rego Policy Language 101",
@@ -6959,7 +6959,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -7024,7 +7024,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "bZQun8Y4L2A",
       "resources": [
         {
           "title": "LiteLLM Quickstart: 100+ LLMs with One OpenAI Interface",
@@ -7082,7 +7082,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "0iBP4_uH6eA",
       "resources": [
         {
           "title": "FastAPI: High-Performance Async Python & Streaming (SSE)",
@@ -7140,7 +7140,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "0iBP4_uH6eA",
       "resources": [
         {
           "title": "FastAPI: High-Performance Async Python & Streaming (SSE)",
@@ -7198,7 +7198,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -7263,7 +7263,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "0iBP4_uH6eA",
       "resources": [
         {
           "title": "FastAPI: High-Performance Async Python & Streaming (SSE)",
@@ -7321,7 +7321,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "0iBP4_uH6eA",
       "resources": [
         {
           "title": "FastAPI: High-Performance Async Python & Streaming (SSE)",
@@ -7379,7 +7379,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "ujIQXzP1xKQ",
       "resources": [
         {
           "title": "Instructor Python Quickstart",
@@ -7437,7 +7437,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -7502,7 +7502,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "tLKKmouUams",
+      "youtube_id": "0iBP4_uH6eA",
       "resources": [
         {
           "title": "FastAPI: High-Performance Async Python & Streaming (SSE)",
@@ -7565,7 +7565,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "s_o8dwzRlu4",
+      "youtube_id": "80bZXzK2Y_A",
       "resources": [
         {
           "title": "vLLM Documentation & Quickstart Deployment",
@@ -7635,7 +7635,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "s_o8dwzRlu4",
+      "youtube_id": "80bZXzK2Y_A",
       "resources": [
         {
           "title": "vLLM Documentation & Quickstart Deployment",
@@ -7705,7 +7705,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "s_o8dwzRlu4",
+      "youtube_id": "80bZXzK2Y_A",
       "resources": [
         {
           "title": "vLLM Documentation & Quickstart Deployment",
@@ -7775,7 +7775,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "WBqjB4UMXXE",
+      "youtube_id": "80bZXzK2Y_A",
       "resources": [
         {
           "title": "vLLM Documentation & Quickstart Deployment",
@@ -7845,7 +7845,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "WBqjB4UMXXE",
+      "youtube_id": "bZQun8Y4L2A",
       "resources": [
         {
           "title": "LiteLLM Quickstart: 100+ LLMs with One OpenAI Interface",
@@ -7908,7 +7908,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "s_o8dwzRlu4",
+      "youtube_id": "80bZXzK2Y_A",
       "resources": [
         {
           "title": "vLLM Documentation & Quickstart Deployment",
@@ -7978,7 +7978,7 @@
         "`docs/adding-a-tool.md`: schema, auth, eval case required"
       ],
       "course_prompts": [],
-      "youtube_id": "WBqjB4UMXXE",
+      "youtube_id": "80bZXzK2Y_A",
       "resources": [
         {
           "title": "vLLM Documentation & Quickstart Deployment",
@@ -8047,7 +8047,7 @@
         "Threat model: injection via retrieved docs, tool escalation"
       ],
       "course_prompts": [],
-      "youtube_id": "R-_UkFI0nYo",
+      "youtube_id": "z97-Vb9zW7U",
       "resources": [
         {
           "title": "OpenLineage 101: Metadata Standard for AI & Data Lineage",
@@ -8109,7 +8109,7 @@
         "Threat model: injection via retrieved docs, tool escalation"
       ],
       "course_prompts": [],
-      "youtube_id": "R-_UkFI0nYo",
+      "youtube_id": "z97-Vb9zW7U",
       "resources": [
         {
           "title": "OpenLineage 101: Metadata Standard for AI & Data Lineage",
@@ -8171,7 +8171,7 @@
         "Threat model: injection via retrieved docs, tool escalation"
       ],
       "course_prompts": [],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -8234,7 +8234,7 @@
         "Threat model: injection via retrieved docs, tool escalation"
       ],
       "course_prompts": [],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "z97-Vb9zW7U",
       "resources": [
         {
           "title": "OpenLineage 101: Metadata Standard for AI & Data Lineage",
@@ -8296,7 +8296,7 @@
         "Threat model: injection via retrieved docs, tool escalation"
       ],
       "course_prompts": [],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "z97-Vb9zW7U",
       "resources": [
         {
           "title": "OpenLineage 101: Metadata Standard for AI & Data Lineage",
@@ -8354,7 +8354,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "p1n4tgQta2U",
+      "youtube_id": "bZQun8Y4L2A",
       "resources": [
         {
           "title": "LiteLLM Quickstart: 100+ LLMs with One OpenAI Interface",
@@ -8412,7 +8412,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "dA-NhCtrrVE",
+      "youtube_id": "7xTGNNLPyMI",
       "resources": [
         {
           "title": "StatQuest: LoRA (Low-Rank Adaptation) Visually Explained",
@@ -8477,7 +8477,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "dA-NhCtrrVE",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -8542,7 +8542,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "dA-NhCtrrVE",
+      "youtube_id": "7xTGNNLPyMI",
       "resources": [
         {
           "title": "StatQuest: LoRA (Low-Rank Adaptation) Visually Explained",
@@ -8607,7 +8607,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "dA-NhCtrrVE",
+      "youtube_id": "7xTGNNLPyMI",
       "resources": [
         {
           "title": "StatQuest: LoRA (Low-Rank Adaptation) Visually Explained",
@@ -8672,7 +8672,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "W_xh6qNSfAQ",
+      "youtube_id": "7xTGNNLPyMI",
       "resources": [
         {
           "title": "StatQuest: LoRA (Low-Rank Adaptation) Visually Explained",
@@ -8737,7 +8737,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "SwqusllMCnE",
+      "youtube_id": "1g9b3KqP5tM",
       "resources": [
         {
           "title": "Meta Llama Guard: Input/Output Safety Taxonomy",
@@ -8795,7 +8795,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
@@ -8853,7 +8853,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "zjkBMFhNj_g",
       "resources": [
         {
           "title": "Andrej Karpathy: Intro to Large Language Models",
@@ -8864,7 +8864,7 @@
         },
         {
           "title": "3Blue1Brown: Visual Transformer Intuition",
-          "url": "https://www.youtube.com/watch?v=wjZofJX0v4M",
+          "url": "https://www.youtube.com/watch?v=wjZofJX0v4U",
           "type": "video",
           "level": "beginner",
           "description": "Visual 3D walkthrough of how vectors, embeddings, and attention weights operate under the hood."
@@ -8918,7 +8918,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "bZQun8Y4L2A",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
@@ -8976,7 +8976,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
@@ -9034,7 +9034,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "w5cM_E5n2z0",
       "resources": [
         {
           "title": "Eugene Yan & Bryan Bischof: Applied LLMs in Production",
@@ -9093,7 +9093,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "S3a8RP8Bfc8",
+      "youtube_id": "vPzZ4zCqIeQ",
       "resources": [
         {
           "title": "DeepLearning.AI: AI Agents in LangGraph (Harrison Chase)",
@@ -9158,7 +9158,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
@@ -9216,7 +9216,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
@@ -9274,7 +9274,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
@@ -9332,7 +9332,7 @@
       "status": "Not started",
       "course_concepts": [],
       "course_prompts": [],
-      "youtube_id": "i7twT3x5yv8",
+      "youtube_id": "X_zT483Xkxg",
       "resources": [
         {
           "title": "Tech Interview Handbook: Behavioral & Technical Communication",
