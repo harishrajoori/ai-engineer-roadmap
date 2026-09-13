@@ -1,4 +1,6 @@
 import React from "react";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 import { Flame, Settings, Download, Sun, Moon, LogIn, LogOut, CheckCircle2 } from "lucide-react";
 
 export default function Header({

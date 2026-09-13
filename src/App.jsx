@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import confetti from "canvas-confetti";
 import { LESSONS_DATA, COURSES_REF_DATA } from "./data/lessonsData";
 import Header from "./components/Header";
@@ -141,18 +142,11 @@ export default function App() {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  const handleGoogleLogin = () => {
-    const inputName = prompt("Enter your Name for Google Cloud Profile Sync:", userProfile?.name || "Harish Rajoori");
-    if (!inputName) return;
-    const inputEmail = prompt("Enter your Google Account Email:", userProfile?.email || "harish.rajoori@gmail.com");
-    if (!inputEmail) return;
-
-    setUserProfile({
-      name: inputName,
-      email: inputEmail,
-      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(inputName)}`
-    });
-    confetti({ particleCount: 50, spread: 60 });
+  const handleGoogleLogin = (decodedProfile) => {
+    if (decodedProfile && decodedProfile.name) {
+      setUserProfile(decodedProfile);
+      confetti({ particleCount: 50, spread: 60 });
+    }
   };
 
   const handleGoogleLogout = () => {
@@ -235,7 +229,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <GoogleOAuthProvider clientId={apiKeys.googleClientId || "dummy-client-id.apps.googleusercontent.com"}>
       <Header
         progressPct={progressPct}
         completedCount={completedCount}
@@ -261,6 +255,20 @@ export default function App() {
           progressMap={progressMap}
         />
 
+        {/* Course Accordion Pane */}
+        <aside className="course-accordion-pane">
+          <LessonFeed
+            courseTitle={activeCourse?.title || `Course ${activeCourseNum}`}
+            lessons={courseLessons}
+            activeLessonOrder={activeLessonOrder}
+            onSelectLesson={handleSelectLesson}
+            onToggleComplete={handleToggleComplete}
+            progressMap={progressMap}
+            typeFilter={typeFilter}
+            onSetTypeFilter={setTypeFilter}
+          />
+        </aside>
+
         {/* Center Stage */}
         <main className="stage" ref={stageRef}>
           <SmartStage
@@ -271,17 +279,6 @@ export default function App() {
             onSaveVideoOverride={handleSaveVideoOverride}
             onOpenRegenerateModal={() => setIsRegenOpen(true)}
             regeneratedContent={regenerations[activeLesson?.order]}
-          />
-
-          <LessonFeed
-            courseTitle={activeCourse?.title || `Course ${activeCourseNum}`}
-            lessons={courseLessons}
-            activeLessonOrder={activeLessonOrder}
-            onSelectLesson={handleSelectLesson}
-            onToggleComplete={handleToggleComplete}
-            progressMap={progressMap}
-            typeFilter={typeFilter}
-            onSetTypeFilter={setTypeFilter}
           />
         </main>
 
@@ -323,6 +320,6 @@ export default function App() {
         onSaveRegeneration={handleSaveRegeneration}
         preferredModel={preferredModel}
       />
-    </>
+    </GoogleOAuthProvider>
   );
 }

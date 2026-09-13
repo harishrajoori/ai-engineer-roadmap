@@ -4,115 +4,142 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
-import { CheckCircle2, PlayCircle, BookOpen, AlertTriangle, Lightbulb, ExternalLink } from "lucide-react";
+import { CheckCircle2, PlayCircle, BookOpen, AlertTriangle, Lightbulb, Code2 } from "lucide-react";
 
-export default function SmartStage({ lesson, isCompleted, onToggleComplete, allLessons }) {
-  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+export default function SmartStage({ lesson, isCompleted, onToggleComplete }) {
+  const [activeTab, setActiveTab] = useState("theory");
 
   if (!lesson) return null;
 
   // Fallback video ID if none provided
   const videoId = lesson.videoId || "kCc8FmEb1nY"; 
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?rel=0&showinfo=0&autohide=1`;
 
   const resources = lesson.resources || [
-    { level: "Beginner", label: "StatQuest", color: "var(--brand-green)" },
-    { level: "Intermediate", label: "Andrej Karpathy", color: "var(--brand-blue)" },
-    { level: "Advanced", label: "nanoGPT", color: "var(--brand-red)" }
+    { level: "Beginner", label: "StatQuest: Transformer Attention Visually", color: "var(--brand-green)", videoId: "zxQyTK8quyY", add: "Step-by-step breakdown of query, key, value matrix multiplications." },
+    { level: "Intermediate", label: "Andrej Karpathy: Let's Build GPT from Scratch", color: "var(--brand-blue)", videoId: "kCc8FmEb1nY", add: "Coding character-level nanoGPT in raw PyTorch line-by-line." },
   ];
-
-  const videos = lesson.videos || [
-    { title: "Let's Build GPT from Scratch", author: "Andrej Karpathy", id: "kCc8FmEb1nY", valueAdd: "Coding character-level nanoGPT in raw PyTorch line-by-line." }
-  ];
-  
-  const activeVideo = videos[activeVideoIndex];
-  const activeEmbedUrl = `https://www.youtube.com/embed/${activeVideo.id}?rel=0&showinfo=0&autohide=1`;
 
   return (
-    <div className="stage coursera-stage">
+    <div className="stage coursera-stage pb-20">
       
-      {/* 1. Header & Breadcrumbs */}
-      <div className="stage-header mb-6">
-        <div className="stage-breadcrumbs text-sm text-slate-400 mb-2 font-medium">
-          {lesson.course_title} <span className="mx-2">›</span> {lesson.lesson}
-        </div>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-100 mb-4">{lesson.lesson}</h1>
-        
-        <div className="quick-resources flex flex-wrap gap-2 mb-6">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mr-2 flex items-center">Resource Levels:</span>
-          {resources.map((r, idx) => (
-            <span key={idx} className="resource-pill" style={{ borderColor: r.color, color: r.color, backgroundColor: `${r.color}15` }}>
-              <span className="dot" style={{ backgroundColor: r.color }}></span>
-              {r.level}: {r.label}
-            </span>
-          ))}
+      {/* 1. Top Bar / Tabs */}
+      <div className="stage-header mb-8 pb-4 border-b border-slate-800 flex justify-between items-end">
+        <div>
+          <div className="text-sm font-semibold tracking-wider text-blue-400 mb-1">
+            {lesson.section?.toUpperCase() || "CORE TOPIC"}
+          </div>
+          <h2 className="text-3xl font-bold text-slate-100">{lesson.lesson}</h2>
         </div>
       </div>
 
-      {/* 2. Text-First Theory / Architecture (Markdown) */}
-      {lesson.content ? (
-        <div className="markdown-theory mb-10 prose prose-invert max-w-none bg-slate-900/40 border border-slate-800/60 p-8 rounded-2xl shadow-xl">
-          <ReactMarkdown 
-            remarkPlugins={[remarkGfm, remarkMath]} 
-            rehypePlugins={[rehypeKatex]}
-          >
-            {lesson.content}
-          </ReactMarkdown>
-        </div>
-      ) : (
-        <div className="markdown-theory mb-10 p-6 bg-slate-900/20 border border-slate-800/40 rounded-xl text-slate-400 italic text-center">
-          <Lightbulb className="inline-block mb-2 text-slate-500" size={24} />
-          <p>Detailed architectural theory is currently being drafted for this topic.</p>
-          <p className="text-sm mt-1">Please refer to the interactive lecture below in the meantime.</p>
+      <div className="flex gap-6 mb-8 border-b border-slate-800">
+        <button 
+          className={`pb-3 font-semibold transition-colors flex items-center gap-2 ${activeTab === 'theory' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-400 hover:text-slate-200'}`}
+          onClick={() => setActiveTab('theory')}
+        >
+          <BookOpen size={18} />
+          Theory & Architecture
+        </button>
+        <button 
+          className={`pb-3 font-semibold transition-colors flex items-center gap-2 ${activeTab === 'videos' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-400 hover:text-slate-200'}`}
+          onClick={() => setActiveTab('videos')}
+        >
+          <PlayCircle size={18} />
+          Video Lectures
+        </button>
+        <button 
+          className={`pb-3 font-semibold transition-colors flex items-center gap-2 ${activeTab === 'deep-dive' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-400 hover:text-slate-200'}`}
+          onClick={() => setActiveTab('deep-dive')}
+        >
+          <Code2 size={18} />
+          Deep Dive / Lab
+        </button>
+      </div>
+
+      {/* TAB CONTENT: THEORY */}
+      {activeTab === "theory" && (
+        <div className="tab-pane-theory animation-fade-in">
+          {lesson.content ? (
+            <div className="markdown-theory prose prose-invert max-w-none bg-slate-900/40 border border-slate-800/60 p-8 rounded-2xl shadow-xl">
+              <ReactMarkdown 
+                remarkPlugins={[remarkGfm, remarkMath]} 
+                rehypePlugins={[rehypeKatex]}
+              >
+                {lesson.content}
+              </ReactMarkdown>
+            </div>
+          ) : (
+            <div className="markdown-theory p-10 bg-slate-900/20 border border-slate-800/40 rounded-xl text-slate-400 italic text-center">
+              <Lightbulb className="inline-block mb-3 text-slate-500" size={32} />
+              <h3 className="text-xl font-semibold mb-2">Architectural Theory Draft</h3>
+              <p>Detailed architectural theory, invariants, and code teardowns are currently being generated for this topic.</p>
+              <p className="text-sm mt-2 text-slate-500">You can use the local generate_theory.py script to populate this instantly using Gemini API.</p>
+              <button className="mt-6 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm transition-colors" onClick={() => setActiveTab('videos')}>
+                View Video Lectures
+              </button>
+            </div>
+          )}
         </div>
       )}
 
-      {/* 3. Native YouTube Video Player */}
-      <div className="video-section mb-10">
-        <h2 className="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-          <PlayCircle size={18} className="text-blue-400"/> Interactive Lecture
-        </h2>
-        <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-slate-700/50">
-          <iframe 
-            width="100%" 
-            height="100%" 
-            src={activeEmbedUrl} 
-            title={activeVideo.title}
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowFullScreen>
-          </iframe>
-        </div>
-      </div>
-
-      {/* 4. Multi-Video Playlist Selector */}
-      {videos.length > 1 && (
-        <div className="playlist-section mb-10">
-          <h2 className="text-lg font-bold text-slate-200 mb-4">Masterclass Lectures ({videos.length})</h2>
-          <div className="playlist-grid grid grid-cols-1 md:grid-cols-2 gap-4">
-            {videos.map((vid, idx) => {
-              const isActive = activeVideoIndex === idx;
-              return (
-                <div 
-                  key={idx} 
-                  className={`playlist-card p-4 rounded-xl border transition-all cursor-pointer ${isActive ? 'bg-blue-900/20 border-blue-500/50' : 'bg-slate-900/50 border-slate-800 hover:border-slate-600'}`}
-                  onClick={() => setActiveVideoIndex(idx)}
-                >
-                  <div className="font-bold text-slate-200 text-sm mb-1">{vid.title}</div>
-                  <div className="text-xs text-slate-400 mb-3">{vid.author}</div>
-                  <div className="value-add bg-slate-950/50 text-xs p-2 rounded text-slate-300 border border-slate-800/50">
-                    <span className="font-bold text-blue-400">Value Add:</span> {vid.valueAdd}
-                  </div>
-                  {isActive && <div className="mt-3 text-xs font-bold text-emerald-400 flex items-center gap-1"><PlayCircle size={12}/> Currently Playing</div>}
+      {/* TAB CONTENT: VIDEOS */}
+      {activeTab === "videos" && (
+        <div className="tab-pane-videos animation-fade-in flex flex-col gap-12">
+          {resources.map((res, idx) => (
+            <div key={idx} className="video-block bg-slate-900/30 border border-slate-800/50 rounded-2xl overflow-hidden shadow-2xl">
+              <div className="p-4 bg-slate-900/80 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span 
+                    className="text-xs font-bold px-2 py-1 rounded uppercase tracking-wider text-slate-900" 
+                    style={{ backgroundColor: res.color }}
+                  >
+                    {res.level}
+                  </span>
+                  <span className="font-semibold text-slate-200">{res.label}</span>
                 </div>
-              );
-            })}
+              </div>
+              
+              <div className="aspect-video w-full bg-black relative">
+                <iframe
+                  src={`https://www.youtube.com/embed/${res.videoId || videoId}?rel=0&showinfo=0&autohide=1`}
+                  title={res.label}
+                  className="absolute top-0 left-0 w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              
+              <div className="p-6 bg-slate-900/50">
+                <h4 className="text-sm font-bold text-slate-400 mb-2 uppercase tracking-wide">Video Summary & Value Add</h4>
+                <p className="text-slate-300 leading-relaxed text-sm">
+                  {res.add || "This masterclass lecture provides foundational context and step-by-step intuition for the topic."}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* TAB CONTENT: DEEP DIVE */}
+      {activeTab === "deep-dive" && (
+        <div className="tab-pane-deep-dive animation-fade-in">
+          <div className="p-10 bg-slate-900/20 border border-slate-800/40 rounded-xl text-slate-400 text-center">
+            <Code2 className="inline-block mb-3 text-slate-500" size={32} />
+            <h3 className="text-xl font-semibold mb-2">Code Lab & Prove Gate</h3>
+            <p>Ready to implement? Clone the target repository and pass the automated test suites.</p>
+            <div className="mt-8 bg-slate-950 p-6 rounded-lg text-left border border-slate-800 font-mono text-sm">
+              <div className="text-green-400 mb-2"># 1. Clone the assignment</div>
+              <div className="text-slate-300 mb-4">git clone https://github.com/your-org/ai-labs.git</div>
+              
+              <div className="text-green-400 mb-2"># 2. Run the test harness</div>
+              <div className="text-slate-300">pytest tests/test_milestone_{lesson.order}.py</div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* 5. Completion Action */}
-      <div className="stage-actions flex justify-end items-center mt-8 pt-8 border-t border-slate-800/50">
+      {/* Completion Action */}
+      <div className="stage-actions flex justify-end items-center mt-12 pt-8 border-t border-slate-800/50">
         <button
           className={`completion-btn px-6 py-3 rounded-lg font-bold flex items-center gap-2 transition-all ${isCompleted ? 'bg-slate-800 text-slate-300 hover:bg-slate-700' : 'bg-blue-600 text-white hover:bg-blue-500 shadow-lg shadow-blue-500/25'}`}
           onClick={() => onToggleComplete(lesson.order)}
