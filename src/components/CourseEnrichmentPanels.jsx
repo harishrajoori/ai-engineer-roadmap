@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import MarkdownProse from "./MarkdownProse";
 import {
   BookMarked,
   ChevronDown,
@@ -125,8 +124,8 @@ export default function CourseEnrichmentPanels({
             <span>Full program primer (read once)</span>
           </button>
           {primerOpen && (
-            <div className="markdown-theory prose-learning course-primer-body">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{programPrimerMarkdown}</ReactMarkdown>
+            <div className="course-primer-body">
+              <MarkdownProse variant="primer">{programPrimerMarkdown}</MarkdownProse>
             </div>
           )}
         </section>

@@ -80,8 +80,12 @@ if (!sample.theory_summary?.includes("Study guide (five layers)")) {
   checks.push("theory_summary missing five-layer study guide — run npm run curriculum");
 }
 const levels = sample.theory_levels;
-if (!levels?.beginner?.includes("**Beginner**") || !levels?.advanced?.includes("**Advanced**")) {
-  checks.push("theory_levels missing beginner/advanced — run npm run curriculum");
+const begOk =
+  levels?.beginner?.includes("**Foundations**") || levels?.beginner?.includes("**Beginner**");
+const advOk =
+  levels?.advanced?.includes("**Platform depth**") || levels?.advanced?.includes("**Advanced**");
+if (!begOk || !advOk) {
+  checks.push("theory_levels missing foundations/platform depth callouts — run npm run curriculum");
 }
 
 const loaderPath = path.join(root, "src/services/curriculumLoader.js");

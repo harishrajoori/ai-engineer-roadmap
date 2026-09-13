@@ -208,17 +208,6 @@ def build_theory_summary(
         lines.append(f"- [ ] {item}")
     lines.append("")
 
-    lines.append("## Using the studio")
-    lines.append("")
-    lines.append("| Tab | Use it for |")
-    lines.append("| --- | --- |")
-    lines.append("| **Lecture** | Embed or open the primary source |")
-    lines.append("| **More resources** | Alternates and deep links |")
-    lines.append("| **Lab & Prove** | Artifact URL + self-certify (no auto-grader) |")
-    lines.append("| **Mentor** | Interview prep, tradeoffs, notes |")
-    lines.append("| **Regenerate** | AI rewrite with your chosen model (saved per Google account) |")
-    lines.append("")
-
     if primary_url.startswith("http"):
         lines.append(f"[Open primary source ↗]({primary_url})")
 

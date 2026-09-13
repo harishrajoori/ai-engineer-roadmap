@@ -1,9 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
-import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
+import MarkdownProse from "./MarkdownProse";
 import {
   CheckCircle2,
   PlayCircle,
@@ -24,6 +21,7 @@ import {
   saveTheoryLevelPreference,
   THEORY_LEVELS,
 } from "../utils/theoryLevelPreference";
+import { stripDuplicateTheoryTitle } from "../utils/markdownDisplay";
 
 const DEFAULT_RESOURCES = [
   {
@@ -139,10 +137,8 @@ export default function SmartStage({
 
   const theoryMarkdown = useMemo(() => {
     const fromLevels = markdownForTheoryLevel(lesson, theoryLevel, regeneratedContent);
-    if (fromLevels) {
-      return fromLevels;
-    }
-    return buildDefaultLessonMarkdown(lesson, courseRef);
+    const raw = fromLevels || buildDefaultLessonMarkdown(lesson, courseRef);
+    return stripDuplicateTheoryTitle(raw, lesson?.lesson);
   }, [lesson, courseRef, regeneratedContent, theoryLevel]);
 
   const handleTheoryLevel = (levelId) => {
@@ -242,11 +238,11 @@ export default function SmartStage({
         <div className="learning-tab-panel animation-fade-in">
           <div className="theory-path-banner">
             <span>
-              <strong>New to AI?</strong> Use <strong>Beginner</strong> below → read this page → then{" "}
+              <strong>New to AI?</strong> Use <strong>Foundations</strong> below → read this page → then{" "}
               <button type="button" className="theory-path-link" onClick={() => setActiveTab("lecture")}>
                 Lecture
               </button>
-              . Move to Intermediate only when Beginner feels easy on this topic.
+              . Open <strong>Study guide</strong> when Foundations feels easy on this topic.
             </span>
           </div>
           {!regeneratedContent && lesson.theory_levels && (
@@ -267,7 +263,7 @@ export default function SmartStage({
           {lesson.coverage_note && (
             <div className="learning-coverage-callout">{lesson.coverage_note}</div>
           )}
-          <div className="markdown-theory prose-learning">
+          <div className="theory-prose-wrap">
             {regeneratedContent && (
               <p className="learning-ai-banner">
                 AI-regenerated view
@@ -276,9 +272,7 @@ export default function SmartStage({
                 {" — compare with curriculum sources"}
               </p>
             )}
-            <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
-              {theoryMarkdown}
-            </ReactMarkdown>
+            <MarkdownProse math>{theoryMarkdown}</MarkdownProse>
           </div>
         </div>
       )}

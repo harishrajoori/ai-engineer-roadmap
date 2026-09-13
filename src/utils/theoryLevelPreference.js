@@ -3,9 +3,9 @@ const THEORY_LEVEL_KEY = "ai_hub_theory_level_pref";
 /** @typedef {'beginner' | 'intermediate' | 'advanced'} TheoryLevel */
 
 export const THEORY_LEVELS = [
-  { id: "beginner", label: "Beginner", hint: "Plain English, DE analogies" },
-  { id: "intermediate", label: "Intermediate", hint: "Full study guide + prove rubric" },
-  { id: "advanced", label: "Advanced", hint: "Staff / interview depth" },
+  { id: "beginner", label: "Foundations", hint: "Plain English and data-pipeline analogies" },
+  { id: "intermediate", label: "Study guide", hint: "Checklists, prove rubric, and steps" },
+  { id: "advanced", label: "Platform depth", hint: "Tradeoffs, metrics, failures, interviews" },
 ];
 
 export function loadTheoryLevelPreference() {

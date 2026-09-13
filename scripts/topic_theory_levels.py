@@ -32,8 +32,8 @@ def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
     lines.append(f"# {title}")
     lines.append("")
     lines.append(
-        "> **Beginner** — plain language first. When this makes sense, open **Lecture**. "
-        "Use **Intermediate** for the full checklist and prove rubric."
+        "> **Foundations** — plain language first. When this makes sense, open **Lecture**. "
+        "Switch to **Study guide** for the full checklist and prove rubric."
     )
     lines.append("")
 
@@ -110,8 +110,8 @@ def build_advanced_markdown(lesson: dict, course_outcomes: list[str]) -> str:
     lines.append(f"# {title}")
     lines.append("")
     lines.append(
-        "> **Advanced** — platform engineering depth: tradeoffs, metrics, failures, interviews. "
-        "Read **Intermediate** first if you have not done the study guide."
+        "> **Platform depth** — engineering judgment: tradeoffs, metrics, failures, interviews. "
+        "Read **Study guide** first if you have not done the checklist."
     )
     lines.append("")
 

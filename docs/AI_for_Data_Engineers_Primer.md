@@ -12,13 +12,13 @@ An **LLM** (Large Language Model) is software that **reads text and writes text*
 | --- | --- |
 | **Left** | Courses **0 → 15** in order. Click the next course when the Prove gate is done. |
 | **Middle** | Topics for that course—work **top to bottom**. The first topic says **START HERE**. |
-| **Center** | **Theory (Beginner)** → **Lecture** → **Lab & Prove** for the topic you selected. |
+| **Center** | **Theory (Foundations)** → **Lecture** → **Lab & Prove** for the topic you selected. |
 | **Right** | Notes and optional mentor (Settings → API key). |
 
 ## Rules that keep you from getting lost
 
 1. **One topic at a time** — finish the checkbox objective, not the whole YouTube channel.
-2. **Theory before lecture** — open **Beginner** theory until the words make sense, then watch.
+2. **Theory before lecture** — open **Foundations** theory until the words make sense, then watch.
 3. **Optional means skip for now** — come back when you have time.
 4. **Prove ends the month** — paste a GitHub (or other) link when the rubric is met.
 
@@ -39,7 +39,7 @@ One practice project on GitHub (synthetic or public data only) that grows each c
 ## Your first 30 minutes
 
 1. On the **home** page, click **Start step 1 — What is an LLM?**
-2. Read **Theory** on **Beginner**.
+2. Read **Theory** on **Foundations**.
 3. Watch the **Lecture** (about one hour).
 4. Write three notes: what is a **token**, what is a **context limit**, one way the model can be **wrong**.
 
@@ -47,8 +47,8 @@ One practice project on GitHub (synthetic or public data only) that grows each c
 
 | Level | When to use it |
 | --- | --- |
-| **Beginner** | **Default** — start here on every new topic. |
-| Intermediate | After Beginner feels easy on that topic. |
-| Advanced | Interview depth and tradeoffs—later in the program. |
+| **Foundations** | **Default** — start here on every new topic. |
+| Study guide | After Foundations feels easy on that topic. |
+| Platform depth | Tradeoffs, metrics, failures—when you want staff-level depth. |
 
 Mark a topic complete when **this line’s** goal is met—not when you finish every video on the internet.

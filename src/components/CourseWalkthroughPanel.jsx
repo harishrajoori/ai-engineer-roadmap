@@ -18,7 +18,7 @@ export default function CourseWalkthroughPanel({ walkthrough, entryLessonOrder, 
       <p className="course-walkthrough-lead">{walkthrough.in_plain_english}</p>
 
       {walkthrough.learning_objectives?.length > 0 && (
-        <div className="course-walkthrough-card" style={{ marginBottom: "1rem" }}>
+        <div className="course-walkthrough-card course-walkthrough-objectives-card">
           <h3>By the end you can</h3>
           <ul className="course-walkthrough-objectives">
             {walkthrough.learning_objectives.map((item) => (

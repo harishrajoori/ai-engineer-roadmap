@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import MarkdownProse from "./MarkdownProse";
 import {
   ArrowRight,
   BookOpen,
@@ -93,8 +94,8 @@ export default function HomeStage({
             {(programWalkthrough.first_three_clicks || []).map((line, i) => (
               <li key={i}>
                 <span className="home-step-num">{i + 1}</span>
-                <div>
-                  <p>{line.replace(/\*\*/g, "")}</p>
+                <div className="home-step-body">
+                  <MarkdownProse variant="inline">{line}</MarkdownProse>
                 </div>
               </li>
             ))}
@@ -182,7 +183,7 @@ export default function HomeStage({
         )}
 
         <p className="home-footer-note">
-          {totalCount} topics total · work in order · Beginner theory is the default on every new topic
+          {totalCount} topics total · work in order · Foundations theory is the default on every new topic
         </p>
       </div>
     </div>

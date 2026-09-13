@@ -19,11 +19,11 @@ PROGRAM_WALKTHROUGH: dict[str, Any] = {
     ),
     "first_three_clicks": [
         "Click **Start step 1** on the home page (or Course 0 → first Watch topic).",
-        "Open the **Theory** tab, stay on **Beginner**, read the short guide.",
+        "Open the **Theory** tab, stay on **Foundations**, read the short guide.",
         "Open the **Lecture** tab and watch only this topic's video—not the whole channel.",
     ],
     "every_topic_same_order": [
-        "Theory (Beginner) — plain English and data-pipeline analogies.",
+        "Theory (Foundations) — plain English and data-pipeline analogies.",
         "Lecture — video or article for this checkbox only.",
         "More resources — only if you are stuck.",
         "Lab & Prove — when the topic asks for code or a link.",

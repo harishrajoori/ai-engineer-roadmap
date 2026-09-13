@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+
+import MarkdownProse from "./MarkdownProse";
 import { BookOpen, ExternalLink, ListChecks } from "lucide-react";
 import { buildCourseTopicOutline, formatTopicTitle } from "../utils/syllabusDisplay";
 import CourseEnrichmentPanels from "./CourseEnrichmentPanels";
@@ -66,7 +66,7 @@ export default function CourseStage({
       <section className="course-overview-block course-overview-topics-first">
         <h2>Topics — do these in order</h2>
         <p className="course-overview-hint">
-          The topic marked START HERE is your entry point. On each topic: Theory (Beginner) → Lecture → Lab when
+          The topic marked START HERE is your entry point. On each topic: Theory (Foundations) → Lecture → Lab when
           needed.
         </p>
         {outline.map((group) => (
@@ -114,9 +114,7 @@ export default function CourseStage({
       {summaryMd && (
         <details className="course-overview-block course-syllabus-details">
           <summary>Full syllabus checklist (optional)</summary>
-          <div className="markdown-theory prose-learning">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{summaryMd}</ReactMarkdown>
-          </div>
+          <MarkdownProse variant="primer">{summaryMd}</MarkdownProse>
         </details>
       )}
     </div>
