@@ -1088,6 +1088,19 @@ header {
   text-align: left;
 }
 
+.course-enrichment-body {
+  margin-top: 0.5rem;
+  padding: 0 0.25rem 0.5rem;
+}
+
+.course-overview-stage {
+  max-width: min(960px, 100%);
+}
+
+.course-overview-stage .stage {
+  overflow-y: auto;
+}
+
 .course-primer-body {
   margin-top: 0.75rem;
   padding: 0.5rem 0.25rem;

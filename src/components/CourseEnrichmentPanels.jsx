@@ -19,9 +19,11 @@ export default function CourseEnrichmentPanels({
   glossary = [],
   courseRef,
 }) {
-  const [primerOpen, setPrimerOpen] = useState(courseNum === 0);
+  const [primerOpen, setPrimerOpen] = useState(false);
   const [glossaryOpen, setGlossaryOpen] = useState(false);
   const [realWorldOpen, setRealWorldOpen] = useState(false);
+  const [conceptMapOpen, setConceptMapOpen] = useState(false);
+  const [provePackOpen, setProvePackOpen] = useState(false);
   const conceptMap = courseRef?.concept_map || [];
   const provePack = courseRef?.prove_pack || {};
   const realWorld = courseRef?.real_world || {};
@@ -170,24 +172,40 @@ export default function CourseEnrichmentPanels({
 
       {conceptMap.length > 0 && (
         <section className="course-overview-block">
-          <h2>
+          <button
+            type="button"
+            className="course-enrichment-toggle"
+            onClick={() => setConceptMapOpen((o) => !o)}
+            aria-expanded={conceptMapOpen}
+          >
+            {conceptMapOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
             <Map size={18} />
-            Concept map (this month)
-          </h2>
-          <ul className="course-overview-list">
-            {conceptMap.map((line, i) => (
-              <li key={i}>{line}</li>
-            ))}
-          </ul>
+            <span>Concept map (this month)</span>
+          </button>
+          {conceptMapOpen && (
+            <ul className="course-overview-list course-enrichment-body">
+              {conceptMap.map((line, i) => (
+                <li key={i}>{line}</li>
+              ))}
+            </ul>
+          )}
         </section>
       )}
 
       {provePack?.acceptance?.length > 0 && (
         <section className="course-overview-block prove-pack-block">
-          <h2>
+          <button
+            type="button"
+            className="course-enrichment-toggle"
+            onClick={() => setProvePackOpen((o) => !o)}
+            aria-expanded={provePackOpen}
+          >
+            {provePackOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
             <ClipboardCheck size={18} />
-            Prove acceptance — {provePack.title || "rubric"}
-          </h2>
+            <span>Prove acceptance — {provePack.title || "rubric"}</span>
+          </button>
+          {provePackOpen && (
+            <>
           <table className="glossary-table prove-pack-table">
             <thead>
               <tr>
@@ -217,6 +235,8 @@ export default function CourseEnrichmentPanels({
                 <code key={c} className="inline-cmd">{c}</code>
               ))}
             </p>
+          )}
+            </>
           )}
         </section>
       )}
