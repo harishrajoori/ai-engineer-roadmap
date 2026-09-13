@@ -58,6 +58,9 @@ export async function loadCurriculum() {
     coursesRef,
     programPrimerMarkdown: data.program_primer_markdown || "",
     programWalkthrough: data.program_walkthrough || {},
+    portfolioStarter: data.portfolio_starter && typeof data.portfolio_starter === "object"
+      ? data.portfolio_starter
+      : null,
     glossary: Array.isArray(data.glossary) ? data.glossary : [],
   };
   return cached;

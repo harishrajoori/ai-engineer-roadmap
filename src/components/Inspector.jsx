@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { generateAiResponse, AVAILABLE_MODELS, formatMentorApiError } from "../services/aiService";
 import { buildMentorChatMessages, estimateMentorInputTokens } from "../services/mentorContext";
+import { buildProvePlanMentorQuestion } from "../utils/proveWorkflow";
 import { getLessonResources } from "../utils/lessonResources";
 import {
   checkTokenBudget,
@@ -40,7 +41,8 @@ function MentorChatPanel({
   onSaveNotes,
   onOpenNotesTab,
   learningLayout,
-  onLearningLayoutChange
+  onLearningLayoutChange,
+  proveLab = null,
 }) {
   const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
   const [messages, setMessages] = useState([{ role: "ai", text: mentorGreeting }]);
@@ -97,6 +99,7 @@ function MentorChatPanel({
       uiMessages: messages.filter((m) => m.role === "user" || m.role === "ai"),
       learnerName,
       depthId: replyDepth,
+      proveLab,
     });
     const estimatedInput = estimateMentorInputTokens(chatMessages);
     const budgetCheck = checkTokenBudget({
@@ -221,6 +224,16 @@ function MentorChatPanel({
           >
             🐣 ELI5 Metaphor
           </button>
+          <button
+            className="filter-btn"
+            style={{ fontSize: "0.68rem" }}
+            onClick={() =>
+              handleSendMessage(buildProvePlanMentorQuestion(lesson, courseRef, proveLab || {}))
+            }
+            title="Structured prove plan using Lab tab checklist and links"
+          >
+            🎯 Plan my prove
+          </button>
         </div>
 
         <div className="ide-model-bar">
@@ -302,10 +315,12 @@ export default function Inspector({
   courseRef = { concepts: [], prompts: [] },
   notes = {},
   onSaveNotes,
-  proveUrl: _proveUrl = "",
+  proveUrl = "",
   onSaveProveUrl: _onSaveProveUrl,
   isCompleted: _isCompleted,
   onToggleComplete: _onToggleComplete,
+  portfolioRepoUrl = "",
+  proveChecklistMap = {},
   preferredModel = "gemini-3.6-flash",
   onSelectModel,
   onOpenSettings,
@@ -324,6 +339,15 @@ export default function Inspector({
   }, [userProfile]);
 
   const displayResources = useMemo(() => getLessonResources(lesson), [lesson]);
+
+  const proveLab = useMemo(
+    () => ({
+      portfolioRepoUrl,
+      proveUrl,
+      proveChecklistMap,
+    }),
+    [portfolioRepoUrl, proveUrl, proveChecklistMap],
+  );
 
   if (!lesson) {
     return (
@@ -444,6 +468,7 @@ export default function Inspector({
           onOpenNotesTab={() => setActiveTab("notes")}
           learningLayout={learningLayout}
           onLearningLayoutChange={onLearningLayoutChange}
+          proveLab={proveLab}
         />
       )}
 

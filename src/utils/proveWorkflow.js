@@ -107,13 +107,84 @@ export function proveCompletionWarnings(lesson, proveUrl, portfolioRepoUrl, cour
 
   const acceptance = courseRef?.prove_pack?.acceptance || [];
   const progress = requiredChecklistProgress(acceptance, checklistMap, courseId);
-  if (progress.total > 0 && !progress.complete) {
+  const checklistGateLesson =
+    lesson?.type === "Prove" ||
+    lesson?.type === "Build" ||
+    lesson?.type === "Capstone" ||
+    Boolean(lesson?.prove_criteria);
+  if (checklistGateLesson && progress.total > 0 && !progress.complete) {
     warnings.push(
       `Course prove checklist: ${progress.done}/${progress.total} required items checked (see Lab tab).`,
     );
   }
 
   return warnings;
+}
+
+/**
+ * @param {object} lesson
+ * @param {{ prove_pack?: { acceptance?: AcceptanceRow[], title?: string } }} courseRef
+ * @param {{ portfolioRepoUrl?: string, proveUrl?: string, proveChecklistMap?: Record<string, boolean> }} lab
+ */
+export function buildProveLabContextBlock(lesson, courseRef, lab = {}) {
+  if (!lesson) {
+    return "";
+  }
+  const courseId = lesson.course;
+  const provePack = courseRef?.prove_pack || {};
+  const acceptance = provePack.acceptance || [];
+  const progress = requiredChecklistProgress(acceptance, lab.proveChecklistMap || {}, courseId);
+  const lines = [
+    `Lab & Prove — course ${courseId} (${provePack.title || "prove pack"})`,
+    `Checklist: ${progress.done}/${progress.total} required items checked`,
+  ];
+  if ((lab.portfolioRepoUrl || "").trim()) {
+    lines.push(`Portfolio repo: ${lab.portfolioRepoUrl.trim()}`);
+  }
+  if ((lab.proveUrl || "").trim()) {
+    lines.push(`This topic milestone: ${lab.proveUrl.trim()}`);
+  }
+  if (acceptance.length) {
+    lines.push("Acceptance (unchecked required items are gaps):");
+    acceptance.forEach((row, index) => {
+      if (!row.required) {
+        return;
+      }
+      const mark = isChecklistItemChecked(lab.proveChecklistMap || {}, courseId, index) ? "done" : "open";
+      lines.push(`- [${mark}] ${row.criterion}`);
+    });
+  }
+  return lines.join("\n");
+}
+
+/**
+ * User message for mentor "Plan my prove" chip.
+ */
+export function buildProvePlanMentorQuestion(lesson, courseRef, lab = {}) {
+  const title = lesson?.lesson || "this topic";
+  const courseId = lesson?.course;
+  const provePack = courseRef?.prove_pack || {};
+  const realWorld = courseRef?.real_world || {};
+  return [
+    `Plan my prove work for **${title}** (Course ${courseId}).`,
+    "",
+    "Use the Lab & Prove context below. Give me:",
+    "1. **This week** — 3–5 concrete tasks with time-boxes",
+    "2. **Repo changes** — files/folders to add or touch",
+    "3. **Evidence** — what URL, tag, or README metric I should link in the Lab tab",
+    "4. **Tests** — pytest or CI checks to run before I mark complete",
+    "5. **Risks** — one failure mode and how to detect it in metrics",
+    "",
+    "=== Lab context ===",
+    buildProveLabContextBlock(lesson, courseRef, lab),
+    realWorld.summary ? `\nReal-world scenario: ${realWorld.summary}` : "",
+    lesson.prove_criteria ? `\nTopic prove bar: ${lesson.prove_criteria}` : "",
+    provePack.commands?.length
+      ? `\nSuggested commands:\n${provePack.commands.map((c) => `- \`${c}\``).join("\n")}`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 /**

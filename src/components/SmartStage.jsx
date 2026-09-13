@@ -102,6 +102,7 @@ export default function SmartStage({
   onSavePortfolioRepoUrl,
   proveChecklistMap = {},
   onProveChecklistChange,
+  portfolioStarter = null,
 }) {
   const primaryVideoId = useMemo(() => {
     if (!lesson) {
@@ -436,6 +437,7 @@ export default function SmartStage({
             onSavePortfolioRepoUrl={onSavePortfolioRepoUrl}
             proveChecklistMap={proveChecklistMap}
             onProveChecklistChange={onProveChecklistChange}
+            portfolioStarter={portfolioStarter}
           />
         </div>
       )}

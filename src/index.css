@@ -2204,6 +2204,12 @@ header {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+.lab-prove-starter-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.5rem;
+}
 .learning-stage-footer {
   display: flex;
   flex-wrap: wrap;

@@ -51,3 +51,7 @@ def load_program_primer_markdown() -> str:
     if PRIMER_PATH.exists():
         return PRIMER_PATH.read_text(encoding="utf-8").strip()
     return ""
+
+
+def portfolio_starter() -> dict:
+    return dict(load_curriculum_enrichment().get("portfolio_starter") or {})

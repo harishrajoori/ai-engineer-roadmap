@@ -32,6 +32,8 @@ function writeLocalMeta(updatedAt) {
  *   progressMap: Record<string, boolean>,
  *   notesMap: Record<string, string>,
  *   proveMap: Record<string, string>,
+ *   portfolioRepoUrl: string,
+ *   proveChecklistMap: Record<string, boolean>,
  *   videoOverrides: Record<string, string>,
  *   studyDays: string[],
  *   preferredModel: string,
@@ -42,11 +44,13 @@ function writeLocalMeta(updatedAt) {
 export function buildStudioCloudPayload(slice) {
   const updatedAt = new Date().toISOString();
   return {
-    version: 1,
+    version: 2,
     updatedAt,
     progress: slice.progressMap || {},
     notes: slice.notesMap || {},
     proveUrls: slice.proveMap || {},
+    portfolioRepoUrl: (slice.portfolioRepoUrl || "").trim(),
+    proveChecklistMap: slice.proveChecklistMap || {},
     videoOverrides: slice.videoOverrides || {},
     studyDays: slice.studyDays || [],
     preferredModel: slice.preferredModel || "gemini-3.6-flash",
@@ -82,6 +86,8 @@ export function mergeStudioCloudPayload(local, cloud) {
  *   setProgressMap: (v: Record<string, boolean>) => void,
  *   setNotesMap: (v: Record<string, string>) => void,
  *   setProveMap: (v: Record<string, string>) => void,
+ *   setPortfolioRepoUrl?: (v: string) => void,
+ *   setProveChecklistMap?: (v: Record<string, boolean>) => void,
  *   setVideoOverrides: (v: Record<string, string>) => void,
  *   setStudyDays: (v: string[]) => void,
  *   setPreferredModel: (v: string) => void,
@@ -106,6 +112,12 @@ export function applyStudioCloudPayload(payload, apply) {
   }
   if (payload.proveUrls && typeof payload.proveUrls === "object") {
     apply.setProveMap(payload.proveUrls);
+  }
+  if (typeof payload.portfolioRepoUrl === "string" && apply.setPortfolioRepoUrl) {
+    apply.setPortfolioRepoUrl(payload.portfolioRepoUrl);
+  }
+  if (payload.proveChecklistMap && typeof payload.proveChecklistMap === "object" && apply.setProveChecklistMap) {
+    apply.setProveChecklistMap(payload.proveChecklistMap);
   }
   if (payload.videoOverrides && typeof payload.videoOverrides === "object") {
     apply.setVideoOverrides(payload.videoOverrides);

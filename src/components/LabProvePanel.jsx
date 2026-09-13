@@ -29,6 +29,7 @@ export default function LabProvePanel({
   onSavePortfolioRepoUrl,
   proveChecklistMap = {},
   onProveChecklistChange,
+  portfolioStarter = null,
 }) {
   if (!lesson) {
     return null;
@@ -154,6 +155,44 @@ export default function LabProvePanel({
               );
             })}
           </ul>
+        </section>
+      )}
+
+      {portfolioStarter?.repo_url && (
+        <section className="lab-prove-section lab-prove-starter" aria-labelledby="lab-starter-heading">
+          <h4 id="lab-starter-heading" className="lab-prove-section-title">
+            {portfolioStarter.title || "Portfolio starter"}
+          </h4>
+          {portfolioStarter.description && (
+            <p className="lab-prove-body">{portfolioStarter.description}</p>
+          )}
+          <div className="lab-prove-starter-links">
+            <a
+              href={portfolioStarter.repo_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="learning-resource-link"
+            >
+              <ExternalLink size={14} />
+              Reference hub repo
+            </a>
+            {portfolioStarter.roadmap_url && (
+              <a
+                href={portfolioStarter.roadmap_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="learning-resource-link"
+              >
+                <ExternalLink size={14} />
+                Hub roadmap layout
+              </a>
+            )}
+          </div>
+          {portfolioStarter.suggested_name && (
+            <p className="lab-prove-muted">
+              Suggested repo name: <strong>{portfolioStarter.suggested_name}</strong> (public, synthetic data only)
+            </p>
+          )}
         </section>
       )}
 

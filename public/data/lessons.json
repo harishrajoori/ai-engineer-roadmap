@@ -234,6 +234,13 @@
       "de_analogy": "Weighted join keys—without math depth, just “focus mechanism.”"
     }
   ],
+  "portfolio_starter": {
+    "title": "One portfolio repo for the whole track",
+    "repo_url": "https://github.com/patchy631/ai-engineering-hub",
+    "roadmap_url": "https://github.com/patchy631/ai-engineering-hub/blob/main/ai-engineering-roadmap/README.md",
+    "description": "Create your own public GitHub repo (synthetic/public data only). Use the hub as a pattern library—each course prove gate becomes a tag, release, or README metric table in your portfolio.",
+    "suggested_name": "ai-systems-capstone"
+  },
   "lessons": [
     {
       "order": 1,
@@ -3119,6 +3126,13 @@
           "type": "guide",
           "level": "beginner",
           "description": "Main link for this topic from the learning track."
+        },
+        {
+          "title": "Source repository",
+          "url": "https://microsoft.github.io/graphrag/",
+          "type": "repo",
+          "level": "intermediate",
+          "description": "Implementation reference after reading the docs."
         },
         {
           "title": "Source repository",

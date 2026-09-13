@@ -1,4 +1,5 @@
 import { depthConfig } from "../utils/tokenGovernance";
+import { buildProveLabContextBlock } from "../utils/proveWorkflow";
 
 const MAX_THEORY_CHARS = 1400;
 const MAX_PRIOR_TURNS = 2;
@@ -7,7 +8,7 @@ const MAX_TURN_CHARS = 480;
 /**
  * Compact lesson grounding sent on every mentor request (not the full regenerate payload).
  */
-export function buildLessonContextBlock(lesson, courseRef = {}) {
+export function buildLessonContextBlock(lesson, courseRef = {}, proveLab = null) {
   if (!lesson) {
     return "";
   }
@@ -44,6 +45,13 @@ export function buildLessonContextBlock(lesson, courseRef = {}) {
     lines.push(`Prove bar: ${String(lesson.prove_criteria).slice(0, 280)}`);
   }
 
+  if (proveLab) {
+    const labBlock = buildProveLabContextBlock(lesson, courseRef, proveLab);
+    if (labBlock) {
+      lines.push(labBlock);
+    }
+  }
+
   return lines.join("\n");
 }
 
@@ -70,9 +78,10 @@ export function buildMentorChatMessages({
   uiMessages = [],
   learnerName,
   depthId,
+  proveLab = null,
 }) {
   const system = mentorSystemInstruction({ learnerName, depthId });
-  const contextBlock = buildLessonContextBlock(lesson, courseRef);
+  const contextBlock = buildLessonContextBlock(lesson, courseRef, proveLab);
 
   const messages = [{ role: "system", content: system }];
 

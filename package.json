@@ -13,7 +13,8 @@
     "validate:models": "node scripts/validate_ai_models.mjs",
     "validate:links": "python3 scripts/validate_curriculum.py",
     "validate": "npm run validate:app && npm run validate:links",
-    "validate:ci": "npm run validate:app && npm run validate:models && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/audit_public_content.py",
+    "test:prove": "node scripts/test_prove_workflow.mjs",
+    "validate:ci": "npm run validate:app && npm run validate:models && npm run test:prove && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/audit_public_content.py",
     "audit:public": "python3 scripts/audit_public_content.py"
   },
   "dependencies": {

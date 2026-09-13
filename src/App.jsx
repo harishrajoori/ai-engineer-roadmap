@@ -81,6 +81,7 @@ export default function App() {
   const [programPrimerMarkdown, setProgramPrimerMarkdown] = useState("");
   const [programWalkthrough, setProgramWalkthrough] = useState({});
   const [glossary, setGlossary] = useState([]);
+  const [portfolioStarter, setPortfolioStarter] = useState(null);
   const [curriculumReady, setCurriculumReady] = useState(false);
   const [curriculumError, setCurriculumError] = useState(null);
 
@@ -145,12 +146,13 @@ export default function App() {
     }
   }, [userProfile]);
 
-  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, programWalkthrough: walkthrough, glossary: terms }) => {
+  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, programWalkthrough: walkthrough, glossary: terms, portfolioStarter: starter }) => {
     setLessonsData(lessons);
     setCoursesRefData(coursesRef);
     setProgramPrimerMarkdown(primer || "");
     setProgramWalkthrough(walkthrough || {});
     setGlossary(terms || []);
+    setPortfolioStarter(starter || null);
     setActiveLessonOrder((prev) => {
       if (lessons.some((l) => l.order === prev)) {
         return prev;
@@ -297,6 +299,8 @@ export default function App() {
         progressMap,
         notesMap,
         proveMap,
+        portfolioRepoUrl,
+        proveChecklistMap,
         videoOverrides,
         studyDays,
         preferredModel,
@@ -322,6 +326,8 @@ export default function App() {
         saveStudyDays,
         importRegenerationsFromBackup,
         userProfile: decodedProfile,
+        setPortfolioRepoUrl,
+        setProveChecklistMap,
       };
       const { regenerations: mergedRegen } = applyStudioCloudPayload(merged, apply);
       setRegenerations(mergedRegen);
@@ -341,6 +347,8 @@ export default function App() {
       progressMap,
       notesMap,
       proveMap,
+      portfolioRepoUrl,
+      proveChecklistMap,
       videoOverrides,
       studyDays,
       preferredModel,
@@ -402,6 +410,8 @@ export default function App() {
         progressMap,
         notesMap,
         proveMap,
+        portfolioRepoUrl,
+        proveChecklistMap,
         videoOverrides,
         studyDays,
         preferredModel,
@@ -418,6 +428,8 @@ export default function App() {
     progressMap,
     notesMap,
     proveMap,
+    portfolioRepoUrl,
+    proveChecklistMap,
     videoOverrides,
     studyDays,
     preferredModel,
@@ -766,6 +778,7 @@ export default function App() {
             onSavePortfolioRepoUrl={handleSavePortfolioRepoUrl}
             proveChecklistMap={proveChecklistMap}
             onProveChecklistChange={handleProveChecklistChange}
+            portfolioStarter={portfolioStarter}
           />
           )}
         </main>
@@ -799,6 +812,9 @@ export default function App() {
             userProfile={userProfile}
             learningLayout={learningLayout}
             onLearningLayoutChange={setLearningLayout}
+            portfolioRepoUrl={portfolioRepoUrl}
+            proveUrl={proveMap[activeLesson?.order] || ""}
+            proveChecklistMap={proveChecklistMap}
           />
         </div>
       </div>

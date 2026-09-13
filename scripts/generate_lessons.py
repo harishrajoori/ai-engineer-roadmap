@@ -12,6 +12,7 @@ from curriculum_enrichment import (
     concept_map_for_course,
     glossary_entries,
     load_program_primer_markdown,
+    portfolio_starter,
     prove_pack_for_course,
     real_world_for_course,
 )
@@ -316,6 +317,7 @@ def write_curriculum_payload(
         "program_primer_markdown": load_program_primer_markdown(),
         "program_walkthrough": PROGRAM_WALKTHROUGH,
         "glossary": glossary_entries(),
+        "portfolio_starter": portfolio_starter(),
         "lessons": lessons,
         "courses_ref": build_courses_ref(lessons, course_outcomes, course_meta),
     }
