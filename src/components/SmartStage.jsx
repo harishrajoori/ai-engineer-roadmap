@@ -48,17 +48,17 @@ function resourceToBlock(res, fallbackVideoId) {
   };
 }
 
-function defaultTabForLesson(lesson, hasPrimaryEmbed) {
+function defaultTabForLesson(lesson) {
   if (!lesson) {
-    return "theory";
+    return "overview";
   }
-  if (lesson.type === "Video" && hasPrimaryEmbed) {
-    return "videos";
+  if (lesson.type === "Video") {
+    return "lecture";
   }
   if (lesson.type === "Prove" || lesson.type === "Build") {
     return "lab";
   }
-  return "theory";
+  return "overview";
 }
 
 export default function SmartStage({
@@ -101,7 +101,7 @@ export default function SmartStage({
 
   const showPrimaryEmbed = Boolean(primaryVideoId && lesson?.type === "Video");
 
-  const [activeTab, setActiveTab] = useState(() => defaultTabForLesson(lesson, showPrimaryEmbed));
+  const [activeTab, setActiveTab] = useState(() => defaultTabForLesson(lesson));
 
   const resources = useMemo(() => {
     if (!lesson) {
@@ -111,12 +111,30 @@ export default function SmartStage({
     return raw.map((r) => resourceToBlock(r, primaryVideoId));
   }, [lesson, primaryVideoId]);
 
+  const supplementalResources = useMemo(() => {
+    if (!lesson) {
+      return resources;
+    }
+    return resources.filter((res) => {
+      if (lesson.url && res.url === lesson.url) {
+        return false;
+      }
+      if (primaryVideoId && res.videoId === primaryVideoId) {
+        return false;
+      }
+      return true;
+    });
+  }, [resources, lesson, primaryVideoId]);
+
   const theoryMarkdown = useMemo(() => {
     if (regeneratedContent) {
       return regeneratedContent;
     }
     if (lesson?.content) {
       return lesson.content;
+    }
+    if (lesson?.theory_summary) {
+      return lesson.theory_summary;
     }
     return buildDefaultLessonMarkdown(lesson, courseRef);
   }, [lesson, courseRef, regeneratedContent]);
@@ -171,35 +189,12 @@ export default function SmartStage({
         </div>
       </div>
 
-      {showPrimaryEmbed && (
-        <div className="learning-video-hero">
-          <iframe
-            src={`https://www.youtube.com/embed/${primaryVideoId}?rel=0`}
-            title={lesson.lesson}
-            className="learning-video-iframe"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
-      )}
-
-      {externalPlatform && !showPrimaryEmbed && lesson.url && (
-        <a href={lesson.url} target="_blank" rel="noopener noreferrer" className="learning-external-card">
-          <PlayCircle size={28} />
-          <div>
-            <div className="learning-external-title">Continue on {lesson.open_how || "external platform"}</div>
-            <div className="learning-external-sub">This lecture runs in your browser (Coursera, DeepLearning.AI, etc.)</div>
-          </div>
-          <ExternalLink size={18} />
-        </a>
-      )}
-
       <div className="learning-tabs" role="tablist">
         <button
           type="button"
           role="tab"
-          className={`learning-tab ${activeTab === "theory" ? "active" : ""}`}
-          onClick={() => setActiveTab("theory")}
+          className={`learning-tab ${activeTab === "overview" ? "active" : ""}`}
+          onClick={() => setActiveTab("overview")}
         >
           <BookOpen size={17} />
           Overview
@@ -207,11 +202,20 @@ export default function SmartStage({
         <button
           type="button"
           role="tab"
-          className={`learning-tab ${activeTab === "videos" ? "active" : ""}`}
-          onClick={() => setActiveTab("videos")}
+          className={`learning-tab ${activeTab === "lecture" ? "active" : ""}`}
+          onClick={() => setActiveTab("lecture")}
         >
           <PlayCircle size={17} />
-          Lectures
+          Lecture
+        </button>
+        <button
+          type="button"
+          role="tab"
+          className={`learning-tab ${activeTab === "supplements" ? "active" : ""}`}
+          onClick={() => setActiveTab("supplements")}
+        >
+          <PlayCircle size={17} />
+          More resources
         </button>
         <button
           type="button"
@@ -224,8 +228,11 @@ export default function SmartStage({
         </button>
       </div>
 
-      {activeTab === "theory" && (
+      {activeTab === "overview" && (
         <div className="learning-tab-panel animation-fade-in">
+          {lesson.coverage_note && (
+            <div className="learning-coverage-callout">{lesson.coverage_note}</div>
+          )}
           <div className="markdown-theory prose-learning">
             {regeneratedContent && (
               <p className="learning-ai-banner">AI-regenerated view — compare with curriculum sources</p>
@@ -234,22 +241,53 @@ export default function SmartStage({
               {theoryMarkdown}
             </ReactMarkdown>
           </div>
-          {lesson.digest?.takeaways?.length > 0 && !regeneratedContent && (
-            <div className="learning-digest-card">
-              <h4>{lesson.digest.title || "Quick digest"}</h4>
-              <ul>
-                {lesson.digest.takeaways.map((t, i) => (
-                  <li key={i}>{t}</li>
-                ))}
-              </ul>
+        </div>
+      )}
+
+      {activeTab === "lecture" && (
+        <div className="learning-tab-panel animation-fade-in">
+          {showPrimaryEmbed ? (
+            <div className="learning-video-hero">
+              <iframe
+                src={`https://www.youtube.com/embed/${primaryVideoId}?rel=0`}
+                title={lesson.lesson}
+                className="learning-video-iframe"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
+          ) : externalPlatform && lesson.url ? (
+            <a href={lesson.url} target="_blank" rel="noopener noreferrer" className="learning-external-card">
+              <PlayCircle size={28} />
+              <div>
+                <div className="learning-external-title">Open on {lesson.open_how || "external platform"}</div>
+                <div className="learning-external-sub">
+                  Coursera and DeepLearning.AI are not embeddable here — open in a new tab, then mark complete when this
+                  topic&apos;s objective is met.
+                </div>
+              </div>
+              <ExternalLink size={18} />
+            </a>
+          ) : lesson.url ? (
+            <a href={lesson.url} target="_blank" rel="noopener noreferrer" className="learning-external-card">
+              <ExternalLink size={28} />
+              <div>
+                <div className="learning-external-title">Primary resource</div>
+                <div className="learning-external-sub">Open the syllabus link for this topic.</div>
+              </div>
+            </a>
+          ) : (
+            <p className="learning-empty-tab">No primary lecture URL for this item — use More resources or the Resources panel.</p>
           )}
         </div>
       )}
 
-      {activeTab === "videos" && (
+      {activeTab === "supplements" && (
         <div className="learning-tab-panel animation-fade-in learning-video-list">
-          {resources.map((res, idx) => (
+          {supplementalResources.length === 0 && (
+            <p className="learning-empty-tab">No supplemental links beyond the primary resource for this topic.</p>
+          )}
+          {supplementalResources.map((res, idx) => (
             <article key={idx} className="learning-video-card">
               <header className="learning-video-card-head">
                 <span className="learning-video-level" style={{ background: res.color }}>{res.level}</span>
@@ -283,22 +321,25 @@ export default function SmartStage({
             <Code2 size={28} className="learning-lab-icon" />
             <h3>Hands-on lab & prove gate</h3>
             <p>
-              {lesson.type === "Prove"
-                ? "Submit proof of work (repo, notebook, benchmark, or dashboard) and link it below."
-                : "Implement the milestone, run local tests, and capture artifacts for your portfolio."}
+              {lesson.prove_criteria
+                ? lesson.prove_criteria
+                : lesson.type === "Prove"
+                  ? "Submit proof of work (repo, notebook, benchmark, or dashboard) and link it below."
+                  : "Implement the milestone from the syllabus and capture artifacts for your portfolio."}
             </p>
-            {lesson.url && (lesson.type === "Build" || lesson.type === "Prove") && (
+            {lesson.url && lesson.type === "Build" && (
               <a href={lesson.url} target="_blank" rel="noopener noreferrer" className="learning-resource-link inline">
                 <ExternalLink size={14} />
-                Open assignment reference
+                Open build reference
               </a>
             )}
-            <pre className="learning-lab-snippet">
-              <code># Suggested prove harness{"\n"}pytest tests/test_milestone_{lesson.order}.py</code>
-            </pre>
+            <p className="learning-lab-hint">
+              There is no auto-graded harness in this studio — you self-certify by linking evidence and marking the topic
+              complete. Use your own repo tests (e.g. pytest) per the course README.
+            </p>
           </div>
 
-          {(lesson.type === "Prove" || lesson.type === "Build") && onSaveProveUrl && (
+          {(lesson.type === "Prove" || lesson.type === "Build" || lesson.prove_criteria) && onSaveProveUrl && (
             <div className="learning-prove-form">
               <label htmlFor="prove-url-input">
                 <ShieldCheck size={16} />

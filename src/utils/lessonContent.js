@@ -6,6 +6,10 @@ export function buildDefaultLessonMarkdown(lesson, courseRef = {}) {
     return "";
   }
 
+  if (lesson.theory_summary) {
+    return lesson.theory_summary;
+  }
+
   const lines = [];
   lines.push(`# ${lesson.lesson}`);
   lines.push("");

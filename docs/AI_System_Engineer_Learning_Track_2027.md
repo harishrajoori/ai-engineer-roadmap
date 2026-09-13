@@ -2,7 +2,7 @@
 
 > **One-place setup (this repo — `ai-engineer-roadmap`)**  
 > 1. **Local studio:** `npm install` → `./serve.sh` (or `npm run dev`) → http://localhost:8765 — YouTube embeds, progress, AI mentor (BYOK keys).  
-> 2. **After editing this file:** `npm run curriculum` → refreshes `data/lessons.json` and `src/data/lessonsData.js`.  
+> 2. **After editing this file:** `npm run curriculum` → refreshes `data/lessons.json` and `public/data/lessons.json` (studio loads at runtime).  
 > 3. **Strategy & depth:** [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) (§1–16 strategy, §17+ module reference & appendices).  
 > 4. **Coursera spine:** Opens in the Coursera app (not embeddable).  
 > 5. **Validate links:** `npm run validate` (run before release).
@@ -14,7 +14,7 @@
 | **Job target** | Senior / Staff AI Systems Engineer — **2027** hiring |
 | **Runway** | Oct 2026 → Dec 2027 · **10–15 h/week** (20+ h sprint weeks only) |
 | **Links validated** | 13 Sep 2026 — `npm run validate` (docs + lesson resources) |
-| **Curriculum data** | `data/lessons.json` · `src/data/lessonsData.js` · React studio |
+| **Curriculum data** | `data/lessons.json` · `public/data/lessons.json` · React studio |
 
 ---
 

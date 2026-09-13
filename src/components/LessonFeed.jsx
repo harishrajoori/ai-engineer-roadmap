@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { CheckCircle2, Circle, PlayCircle, BookOpen, PenTool, ShieldCheck, Filter } from "lucide-react";
+import { groupLessonsBySection } from "../utils/sectionGroups";
 
 export default function LessonFeed({
   courseTitle,
@@ -24,6 +25,8 @@ export default function LessonFeed({
     }
     return lessons.filter((l) => l.type === typeFilter);
   }, [lessons, typeFilter]);
+
+  const sectionGroups = useMemo(() => groupLessonsBySection(filteredLessons), [filteredLessons]);
 
   const completedInView = filteredLessons.filter((l) => progressMap[l.order]).length;
 
@@ -83,49 +86,60 @@ export default function LessonFeed({
       )}
 
       <div className="syllabus-topic-list" role="list">
-        {filteredLessons.map((lesson, index) => {
-          const isCompleted = !!progressMap[lesson.order];
-          const isActive = activeLessonOrder === lesson.order;
+        {sectionGroups.reduce((acc, group) => {
+          acc.nodes.push(
+            <div key={group.id} className="syllabus-section-group">
+              <div className="syllabus-section-heading">{group.label}</div>
+              {group.lessons.map((lesson) => {
+                acc.index += 1;
+                const displayIndex = acc.index;
+                const isCompleted = !!progressMap[lesson.order];
+                const isActive = activeLessonOrder === lesson.order;
 
-          return (
-            <div
-              key={lesson.order}
-              role="listitem"
-              onClick={() => onSelectLesson(lesson.order)}
-              className={`syllabus-topic ${isActive ? "active" : ""} ${isCompleted ? "done" : ""}`}
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  onSelectLesson(lesson.order);
-                }
-              }}
-            >
-              <span className="syllabus-topic-index">{index + 1}</span>
-              <button
-                type="button"
-                className="syllabus-topic-check"
-                onClick={(e) => handleToggleComplete(e, lesson.order)}
-                aria-label={isCompleted ? "Mark incomplete" : "Mark complete"}
-              >
-                {isCompleted ? (
-                  <CheckCircle2 size={18} className="syllabus-check-done" />
-                ) : (
-                  <Circle size={18} className="syllabus-check-open" />
-                )}
-              </button>
-              <div className="syllabus-topic-body">
-                <div className="syllabus-topic-name">{lesson.lesson}</div>
-                <div className="syllabus-topic-meta">
-                  {getIcon(lesson.type)}
-                  <span>{lesson.type}</span>
-                  <span className="syllabus-topic-dot">·</span>
-                  <span>{lesson.duration || "~15m"}</span>
-                  {lesson.required === "Yes" && <span className="syllabus-required">Required</span>}
-                </div>
-              </div>
+                return (
+                  <div
+                    key={lesson.order}
+                    role="listitem"
+                    onClick={() => onSelectLesson(lesson.order)}
+                    className={`syllabus-topic ${isActive ? "active" : ""} ${isCompleted ? "done" : ""}`}
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        onSelectLesson(lesson.order);
+                      }
+                    }}
+                  >
+                    <span className="syllabus-topic-index">{displayIndex}</span>
+                  <button
+                    type="button"
+                    className="syllabus-topic-check"
+                    onClick={(e) => handleToggleComplete(e, lesson.order)}
+                    aria-label={isCompleted ? "Mark incomplete" : "Mark complete"}
+                  >
+                    {isCompleted ? (
+                      <CheckCircle2 size={18} className="syllabus-check-done" />
+                    ) : (
+                      <Circle size={18} className="syllabus-check-open" />
+                    )}
+                  </button>
+                  <div className="syllabus-topic-body">
+                    <div className="syllabus-topic-name">{lesson.lesson}</div>
+                    <div className="syllabus-topic-meta">
+                      {getIcon(lesson.type)}
+                      <span>{lesson.type}</span>
+                      <span className="syllabus-topic-dot">·</span>
+                      <span>{lesson.duration || "~15m"}</span>
+                      {lesson.coverage_note && <span className="syllabus-shared" title="Shared URL">↗ shared</span>}
+                      {lesson.required === "Yes" && <span className="syllabus-required">Required</span>}
+                    </div>
+                  </div>
+                  </div>
+                );
+              })}
             </div>
           );
-        })}
+          return acc;
+        }, { index: 0, nodes: [] }).nodes}
       </div>
     </div>
   );

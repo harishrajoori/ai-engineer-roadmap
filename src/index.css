@@ -452,6 +452,50 @@ header {
   font-weight: 700;
   margin-left: 0.15rem;
 }
+.syllabus-shared {
+  color: var(--cyan);
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+.syllabus-section-group {
+  margin-bottom: 0.5rem;
+}
+.syllabus-section-heading {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding: 0.65rem 0.5rem 0.35rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.syllabus-section-group:first-child .syllabus-section-heading {
+  border-top: none;
+  padding-top: 0.35rem;
+}
+.learning-coverage-callout {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  background: rgba(6, 182, 212, 0.08);
+  color: var(--text);
+}
+.learning-empty-tab {
+  color: var(--muted);
+  font-size: 0.88rem;
+  padding: 1.5rem;
+  text-align: center;
+}
+.learning-lab-hint {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: left;
+}
 .topic-icon-video { color: var(--cyan); }
 .topic-icon-read { color: var(--purple); }
 .topic-icon-build { color: var(--warning); }

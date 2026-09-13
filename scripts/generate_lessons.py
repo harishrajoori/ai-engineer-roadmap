@@ -5,9 +5,17 @@ from __future__ import annotations
 
 import json
 import re
+from collections import defaultdict
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+from theory_builder import build_theory_summary, section_label
+
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+REPO_ROOT = _SCRIPTS_DIR.parent
+import sys
+
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
 TRACK = REPO_ROOT / "docs" / "AI_System_Engineer_Learning_Track_2027.md"
 OUT_DIR = REPO_ROOT / "data"
 PUBLIC_DATA_DIR = REPO_ROOT / "public" / "data"
@@ -35,6 +43,7 @@ ENRICH_FIELDS = (
     "digest",
     "content",
     "videoId",
+    "prove_criteria",
 )
 
 COURSE_RE = re.compile(r"^## Course (\d+) — (.+)$")
@@ -213,7 +222,7 @@ def spine_lessons() -> list[dict]:
     rows = [
         (
             "Generative AI with Large Language Models",
-            "https://www.youtube.com/learn/generative-ai-with-llms",
+            "https://www.coursera.org/learn/generative-ai-with-llms",
             "~16 h",
             1,
         ),
@@ -225,7 +234,7 @@ def spine_lessons() -> list[dict]:
         ),
         (
             "Generative AI Engineering with LLMs specialization (cherry-pick)",
-            "https://www.youtube.com/specializations/generative-ai-engineering-with-llms",
+            "https://www.coursera.org/specializations/generative-ai-engineering-with-llms",
             "optional",
             2,
         ),
@@ -251,6 +260,63 @@ def spine_lessons() -> list[dict]:
             }
         )
     return out
+
+
+def parse_course_outcomes(text: str) -> dict[str, list[str]]:
+    outcomes: dict[str, list[str]] = {}
+    current_course: str | None = None
+    in_outcomes = False
+    for raw in text.splitlines():
+        line = raw.strip()
+        m_course = COURSE_RE.match(line)
+        if m_course:
+            current_course = m_course.group(1)
+            in_outcomes = False
+            continue
+        if line == "### What you'll learn":
+            in_outcomes = True
+            if current_course:
+                outcomes.setdefault(current_course, [])
+            continue
+        if in_outcomes and line.startswith("###"):
+            in_outcomes = False
+            continue
+        if in_outcomes and current_course and line.startswith("- "):
+            outcomes[current_course].append(line[2:].strip())
+    return outcomes
+
+
+def annotate_shared_urls(lessons: list[dict]) -> None:
+    by_url: dict[str, list[int]] = defaultdict(list)
+    for row in lessons:
+        url = (row.get("url") or "").strip()
+        if url.startswith("http"):
+            by_url[url].append(int(row["order"]))
+    for row in lessons:
+        url = (row.get("url") or "").strip()
+        orders = by_url.get(url, [])
+        if len(orders) > 1:
+            others = [o for o in orders if o != row["order"]]
+            titles_hint = f"topics #{', #'.join(str(o) for o in sorted(others)[:4])}"
+            row["coverage_note"] = (
+                f"This URL is shared across {len(orders)} syllabus items ({titles_hint}). "
+                f"For «{row.get('lesson')}», focus only the relevant module or timestamp; "
+                f"mark complete when this topic's learning objective is met, not the entire series."
+            )
+
+
+def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]]) -> list[dict]:
+    annotate_shared_urls(lessons)
+    for row in lessons:
+        row["section_label"] = section_label(row.get("section") or "")
+        ckey = str(row.get("course", ""))
+        outcomes = course_outcomes.get(ckey, [])
+        note = row.get("coverage_note")
+        if row.get("content"):
+            row["theory_summary"] = row["content"]
+        else:
+            row["theory_summary"] = build_theory_summary(row, outcomes, note)
+    return lessons
 
 
 def parse_track(text: str) -> list[dict]:
@@ -304,6 +370,7 @@ def parse_track(text: str) -> list[dict]:
         title = ""
         url = ""
         duration = ""
+        prove_criteria = ""
 
         m_link = CHECKBOX_LINK.match(line)
         if m_link:
@@ -320,14 +387,19 @@ def parse_track(text: str) -> list[dict]:
                 continue
             optional = bool(m_plain.group(1))
             body = m_plain.group(2).strip()
-            # Frontier row: **vLLM** — [docs](url)
-            link_in_body = re.search(r"\[([^\]]+)\]\(([^)]+)\)", body)
-            if link_in_body:
-                title = body.replace(link_in_body.group(0), link_in_body.group(1)).strip(" —·")
-                url = link_in_body.group(2)
-            else:
-                title = re.sub(r"\*\*([^*]+)\*\*", r"\1", body)
+            prove_criteria = ""
+            if section.lower() == "prove" and not body.startswith("["):
+                prove_criteria = re.sub(r"\*\*([^*]+)\*\*", r"\1", body)
+                title = prove_criteria[:80] + ("…" if len(prove_criteria) > 80 else "")
                 url = ""
+            else:
+                link_in_body = re.search(r"\[([^\]]+)\]\(([^)]+)\)", body)
+                if link_in_body:
+                    title = body.replace(link_in_body.group(0), link_in_body.group(1)).strip(" —·")
+                    url = link_in_body.group(2)
+                else:
+                    title = re.sub(r"\*\*([^*]+)\*\*", r"\1", body)
+                    url = ""
 
         sec_key = section.lower()
         lesson_type = SECTION_TO_TYPE.get(sec_key, "Read")
@@ -336,23 +408,26 @@ def parse_track(text: str) -> list[dict]:
 
         order += 1
         open_how = open_mode(url, lesson_type) if url else "Checkbox"
-        lessons.append(
-            {
-                "order": order,
-                "course": int(course_num),
-                "course_title": course_title,
-                "month": MONTH_BY_COURSE.get(course_num, ""),
-                "section": section or "syllabus",
-                "type": lesson_type,
-                "lesson": title,
-                "url": url,
-                "duration": duration,
-                "required": "No" if optional else "Yes",
-                "open_how": open_how,
-                "embed_url": embed_url(url) if url else "",
-                "status": "Not started",
-            }
-        )
+        row: dict = {
+            "order": order,
+            "course": int(course_num),
+            "course_title": course_title,
+            "month": MONTH_BY_COURSE.get(course_num, ""),
+            "section": section or "syllabus",
+            "type": lesson_type,
+            "lesson": title,
+            "url": url,
+            "duration": duration,
+            "required": "No" if optional else "Yes",
+            "open_how": open_how,
+            "embed_url": embed_url(url) if url else "",
+            "status": "Not started",
+        }
+        if section.lower() == "prove" and prove_criteria:
+            row["prove_criteria"] = prove_criteria
+            if not url:
+                row["lesson"] = "Prove gate"
+        lessons.append(row)
 
     return lessons
 
@@ -366,6 +441,7 @@ def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     text = TRACK.read_text(encoding="utf-8")
+    course_outcomes = parse_course_outcomes(text)
     lessons = spine_lessons()
     parsed = parse_track(text)
     base = len(lessons)
@@ -379,6 +455,7 @@ def main() -> None:
         existing = parse_existing_lessons_js(LESSONS_JS_PATH)
     lessons = merge_enrichment(lessons, existing)
     lessons = apply_url_fixes(lessons)
+    lessons = finalize_lessons(lessons, course_outcomes)
 
     track_rel = str(TRACK.relative_to(REPO_ROOT))
     payload = write_curriculum_payload(lessons, track_rel)

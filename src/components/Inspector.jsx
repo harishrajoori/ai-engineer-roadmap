@@ -198,8 +198,8 @@ export default function Inspector({
   courseRef = { concepts: [], prompts: [] },
   notes = {},
   onSaveNotes,
-  proveUrl = "",
-  onSaveProveUrl,
+  proveUrl: _proveUrl = "",
+  onSaveProveUrl: _onSaveProveUrl,
   isCompleted: _isCompleted,
   onToggleComplete: _onToggleComplete,
   preferredModel = "gemini-2.5-flash",
@@ -208,7 +208,7 @@ export default function Inspector({
   apiKeys = {},
   userProfile = null
 }) {
-  const [activeTab, setActiveTab] = useState("overview"); // "overview" | "mentor" | "notes" | "prompts" | "blueprint"
+  const [activeTab, setActiveTab] = useState("overview");
   const [revealedPrompts, setRevealedPrompts] = useState({});
 
   const mentorGreeting = useMemo(() => {
@@ -236,11 +236,19 @@ export default function Inspector({
         </button>
 
         <button
+          className={`tab-btn ${activeTab === "resources" ? "active" : ""}`}
+          onClick={() => setActiveTab("resources")}
+        >
+          <ExternalLink size={13} />
+          <span>Resources</span>
+        </button>
+
+        <button
           className={`tab-btn ${activeTab === "mentor" ? "active" : ""}`}
           onClick={() => setActiveTab("mentor")}
         >
           <Bot size={13} />
-          <span>AI Mentor</span>
+          <span>Mentor</span>
         </button>
 
         <button
@@ -298,22 +306,33 @@ export default function Inspector({
             </div>
           </div>
 
-          {(lesson.type === "Prove" || lesson.type === "Build") && onSaveProveUrl && (
+          {lesson.coverage_note && (
             <div className="inspector-section">
-              <div className="section-title">Prove artifact</div>
-              <input
-                type="url"
-                className="chat-input"
-                placeholder="Link to repo, notebook, or demo"
-                value={proveUrl}
-                onChange={(e) => onSaveProveUrl(lesson.order, e.target.value.trim())}
-              />
+              <div className="section-title">Shared resource note</div>
+              <p style={{ fontSize: "0.78rem", color: "var(--muted)", lineHeight: 1.5 }}>{lesson.coverage_note}</p>
             </div>
           )}
 
+          {lesson.section_label && (
+            <div className="inspector-section">
+              <div className="section-title">Syllabus block</div>
+              <p style={{ fontSize: "0.82rem", fontWeight: 600 }}>{lesson.section_label}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === "resources" && (
+        <div className="inspector-content">
           <div className="inspector-section">
-            <div className="section-title">Granular Learning Stack (All Levels)</div>
+            <div className="section-title">Level-wise stack (free resources)</div>
+            <p style={{ fontSize: "0.75rem", color: "var(--muted)", marginBottom: "0.5rem" }}>
+              Beginner → advanced links for this topic. Primary lecture stays under the Lecture tab.
+            </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {(lesson.resources || []).length === 0 && (
+                <p style={{ fontSize: "0.78rem", color: "var(--muted)" }}>No enriched resource stack — use the primary link in Overview.</p>
+              )}
               {(lesson.resources || []).map((r, idx) => (
                 <div key={idx} className="resource-card">
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -325,15 +344,14 @@ export default function Inspector({
                     </span>
                   </div>
 
-                  <a
-                    href={r.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="resource-title"
-                  >
-                    <span>{r.title}</span>
-                    <ExternalLink size={12} />
-                  </a>
+                  {r.url ? (
+                    <a href={r.url} target="_blank" rel="noopener noreferrer" className="resource-title">
+                      <span>{r.title}</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  ) : (
+                    <div className="resource-title">{r.title}</div>
+                  )}
 
                   <div className="resource-desc">{r.description}</div>
                 </div>
