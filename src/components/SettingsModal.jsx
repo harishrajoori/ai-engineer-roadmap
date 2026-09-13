@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { X, Key, Shield, Download, Upload, Check, ExternalLink } from "lucide-react";
 import { AVAILABLE_MODELS, normalizePreferredModel } from "../services/aiService";
+import { PROVIDER_KEY_LINKS } from "../config/aiModels";
 import GoogleSignInButton from "./GoogleSignInButton";
 import { resolveGoogleClientId } from "../utils/googleAuth";
 
@@ -180,24 +181,6 @@ export default function SettingsModal({
               <code style={{ fontSize: "0.7rem" }}>studio-config.json</code> so visitors do not each paste a client ID.
             </p>
 
-            <a
-              href="https://aistudio.google.com/apikey"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="stage-launch-btn"
-              style={{
-                background: "linear-gradient(135deg, #4285F4, #34A853)",
-                fontSize: "0.75rem",
-                padding: "0.45rem 0.85rem",
-                textDecoration: "none",
-                width: "fit-content",
-                marginTop: "0.25rem"
-              }}
-            >
-              <Key size={12} />
-              <span>🔑 Get Free Gemini Key via Google AI Studio (10 seconds)</span>
-              <ExternalLink size={11} />
-            </a>
           </div>
 
           {/* Model Selection */}
@@ -224,53 +207,76 @@ export default function SettingsModal({
               <input
                 type="text"
                 className="chat-input"
-                placeholder="e.g. gemini-3.0-ultra-preview"
+                placeholder="e.g. gemini-2.5-flash or openrouter-anthropic/claude-sonnet-4.6"
                 value={customModel}
                 onChange={(e) => setCustomModel(e.target.value)}
               />
             </div>
           )}
 
+          <div
+            style={{
+              background: "rgba(99, 102, 241, 0.08)",
+              border: "1px solid rgba(99, 102, 241, 0.25)",
+              borderRadius: "8px",
+              padding: "0.75rem",
+              fontSize: "0.78rem",
+              lineHeight: 1.45,
+            }}
+          >
+            <strong>One key for many models?</strong> Use{" "}
+            <a href={PROVIDER_KEY_LINKS.openrouter.url} target="_blank" rel="noopener noreferrer">
+              OpenRouter
+            </a>{" "}
+            only — pick models labeled <em>(via OpenRouter)</em> or any <code>openrouter-*</code> entry. Direct
+            Google/Groq keys are optional for lower latency on those providers.
+          </div>
+
           {/* Key Inputs */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-              <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
-                Google AI Studio API Key (Gemini)
-              </label>
-              <input
-                type="password"
-                className="chat-input"
-                placeholder="AIzaSy..."
-                value={geminiKey}
-                onChange={(e) => setGeminiKey(e.target.value)}
-              />
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-              <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
-                Groq API Key (Ultra-Low Latency Backup)
-              </label>
-              <input
-                type="password"
-                className="chat-input"
-                placeholder="gsk_..."
-                value={groqKey}
-                onChange={(e) => setGroqKey(e.target.value)}
-              />
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-              <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>
-                OpenRouter API Key (Optional - Claude / DeepSeek)
-              </label>
-              <input
-                type="password"
-                className="chat-input"
-                placeholder="sk-or-v1-..."
-                value={openRouterKey}
-                onChange={(e) => setOpenRouterKey(e.target.value)}
-              />
-            </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
+            {[
+              { field: "gemini", label: "Google AI Studio (Gemini direct)", placeholder: "AIzaSy...", value: geminiKey, set: setGeminiKey },
+              { field: "groq", label: "Groq (Llama direct)", placeholder: "gsk_...", value: groqKey, set: setGroqKey },
+              {
+                field: "openrouter",
+                label: "OpenRouter (Gemini, Claude, DeepSeek — single key)",
+                placeholder: "sk-or-v1-...",
+                value: openRouterKey,
+                set: setOpenRouterKey,
+              },
+            ].map(({ field, label, placeholder, value, set }) => {
+              const link = PROVIDER_KEY_LINKS[field];
+              return (
+                <div key={field} style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                  <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>{label}</label>
+                  <input
+                    type="password"
+                    className="chat-input"
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={(e) => set(e.target.value)}
+                    autoComplete="off"
+                  />
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="stage-launch-btn secondary-btn"
+                    style={{
+                      fontSize: "0.72rem",
+                      padding: "0.35rem 0.65rem",
+                      width: "fit-content",
+                      textDecoration: "none",
+                    }}
+                  >
+                    <Key size={11} />
+                    Get API key — {link.label}
+                    <ExternalLink size={11} />
+                  </a>
+                  <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0 }}>{link.hint}</p>
+                </div>
+              );
+            })}
           </div>
 
           {/* Backup & Restore */}

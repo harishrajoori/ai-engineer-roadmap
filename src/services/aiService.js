@@ -1,32 +1,40 @@
-export const GEMINI_FALLBACK_CHAIN = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-1.5-pro"];
+import {
+  AI_MODEL_CATALOG,
+  AVAILABLE_MODELS,
+  DEFAULT_GEMINI_MODEL,
+  GEMINI_FALLBACK_CHAIN,
+  apiModelIdForStudioModel,
+  catalogEntryForModelId,
+  keyProviderForStudioModel,
+} from "../config/aiModels";
 
-export const AVAILABLE_MODELS = [
-  { id: "gemini-3.6-flash", name: "Gemini 3.6 Flash", provider: "Google", badge: "Latest", icon: "⚡" },
-  { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", provider: "Google", badge: "Stable", icon: "✨" },
-  { id: "gemini-1.5-pro", name: "Gemini 1.5 Pro", provider: "Google", badge: "Deep Reasoning", icon: "🧠" },
-  { id: "groq-llama-3.3-70b-versatile", name: "Groq Llama 3.3 70B", provider: "Groq", badge: "Ultra Low Latency", icon: "🚀" },
-  { id: "groq-mixtral-8x7b-32768", name: "Groq Mixtral 8x7B", provider: "Groq", badge: "32k Context", icon: "⚡" },
-  { id: "openrouter-anthropic/claude-3.7-sonnet", name: "Claude 3.7 Sonnet", provider: "OpenRouter", badge: "Top Tier", icon: "💎" },
-  { id: "openrouter-deepseek/deepseek-r1", name: "DeepSeek R1", provider: "OpenRouter", badge: "Math / Logic", icon: "🔬" }
-];
+export { AVAILABLE_MODELS, GEMINI_FALLBACK_CHAIN, DEFAULT_GEMINI_MODEL };
 
 const KEYS_STORAGE = "ai_hub_react_api_keys";
 
-const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash";
+const RETIRED_MODEL_MAP = {
+  "gemini-2.0-flash": DEFAULT_GEMINI_MODEL,
+  "gemini-1.5-pro": "gemini-2.5-flash",
+  "gemini-3.6-pro": DEFAULT_GEMINI_MODEL,
+  "gemini-3.7-flash": DEFAULT_GEMINI_MODEL,
+  "gemini-3.8-flash": DEFAULT_GEMINI_MODEL,
+  "groq-mixtral-8x7b-32768": "groq-llama-3.1-8b-instant",
+  "openrouter-anthropic/claude-3.7-sonnet": "openrouter-anthropic/claude-sonnet-4.6",
+};
 
-/** Remap retired or unknown Gemini ids saved in localStorage. */
+/** Remap retired or unknown ids saved in localStorage. */
 export function normalizePreferredModel(modelId) {
   const id = (modelId || "").trim();
-  const retired = new Set([
-    "gemini-2.0-flash",
-    "gemini-3.6-pro",
-    "gemini-3.7-flash",
-    "gemini-3.8-flash",
-  ]);
-  if (!id || retired.has(id)) {
+  if (!id) {
     return DEFAULT_GEMINI_MODEL;
   }
-  if (id.startsWith("gemini") && !AVAILABLE_MODELS.some((m) => m.id === id)) {
+  if (RETIRED_MODEL_MAP[id]) {
+    return RETIRED_MODEL_MAP[id];
+  }
+  if (catalogEntryForModelId(id)) {
+    return id;
+  }
+  if (id.startsWith("gemini")) {
     return DEFAULT_GEMINI_MODEL;
   }
   return id;
@@ -41,7 +49,7 @@ export function readStoredApiKeys() {
       return {
         gemini: (parsed.gemini || "").trim(),
         groq: (parsed.groq || "").trim(),
-        openrouter: (parsed.openrouter || "").trim()
+        openrouter: (parsed.openrouter || "").trim(),
       };
     }
   } catch {
@@ -50,64 +58,104 @@ export function readStoredApiKeys() {
   return {
     gemini: (localStorage.getItem("ai_key_gemini") || "").trim(),
     groq: (localStorage.getItem("ai_key_groq") || "").trim(),
-    openrouter: (localStorage.getItem("ai_key_openrouter") || "").trim()
+    openrouter: (localStorage.getItem("ai_key_openrouter") || "").trim(),
   };
 }
 
-// Multi-Provider AI Engine (Gemini, Groq, OpenRouter) with Auto-Failover
+function geminiToOpenRouterModel(geminiApiModel) {
+  const bare = geminiApiModel.replace(/^models\//, "");
+  return `google/${bare}`;
+}
 
-export async function generateAiResponse({ prompt, systemInstruction, keys = {}, preferredModel = DEFAULT_GEMINI_MODEL }) {
+export async function generateAiResponse({
+  prompt,
+  systemInstruction,
+  keys = {},
+  preferredModel = DEFAULT_GEMINI_MODEL,
+}) {
   const model = normalizePreferredModel(preferredModel);
   const stored = readStoredApiKeys();
   const geminiKey = keys.gemini || stored.gemini;
   const groqKey = keys.groq || stored.groq;
   const openRouterKey = keys.openrouter || stored.openrouter;
+  const provider = keyProviderForStudioModel(model);
+  const apiModel = apiModelIdForStudioModel(model);
 
   try {
-    if (model.startsWith("gemini") || (!groqKey && !openRouterKey)) {
-      if (!geminiKey) {
-        throw new Error("Google Gemini API key not found. Please add your key in Settings ⚙️.");
+    if (provider === "openrouter") {
+      if (!openRouterKey) {
+        throw new Error("OpenRouter API key not found. Get one at openrouter.ai/keys and paste it in Settings.");
       }
-      return await callGemini({ prompt, systemInstruction, apiKey: geminiKey, model });
-    }
-    if (model.startsWith("groq-")) {
-      const groqModel = model.replace("groq-", "");
-      return await callOpenAICompatible({
-        prompt,
-        systemInstruction,
-        apiKey: groqKey,
-        endpoint: "https://api.groq.com/openai/v1/chat/completions",
-        model: groqModel
-      });
-    }
-    if (model.startsWith("openrouter-")) {
-      const orModel = model.replace("openrouter-", "");
       return await callOpenAICompatible({
         prompt,
         systemInstruction,
         apiKey: openRouterKey,
         endpoint: "https://openrouter.ai/api/v1/chat/completions",
-        model: orModel
+        model: apiModel,
+        referer: typeof window !== "undefined" ? window.location.origin : undefined,
       });
     }
-    throw new Error(`Unknown model id: ${model}`);
-  } catch (err) {
-    console.warn(`Primary provider (${model}) failed:`, err.message);
 
-    if (groqKey && !model.startsWith("groq-")) {
-      console.log("Failing over to Groq Llama-3.3-70B...");
+    if (provider === "groq") {
+      if (!groqKey) {
+        throw new Error("Groq API key not found. Get one at console.groq.com/keys and paste it in Settings.");
+      }
       return await callOpenAICompatible({
         prompt,
         systemInstruction,
         apiKey: groqKey,
         endpoint: "https://api.groq.com/openai/v1/chat/completions",
-        model: "llama-3.3-70b-versatile"
+        model: apiModel,
       });
     }
 
-    if (geminiKey && model.startsWith("groq-")) {
-      console.log(`Failing over to ${DEFAULT_GEMINI_MODEL}...`);
-      return await callGemini({ prompt, systemInstruction, apiKey: geminiKey, model: DEFAULT_GEMINI_MODEL });
+    if (geminiKey) {
+      return await callGemini({ prompt, systemInstruction, apiKey: geminiKey, model: apiModel });
+    }
+
+    if (openRouterKey) {
+      return await callOpenAICompatible({
+        prompt,
+        systemInstruction,
+        apiKey: openRouterKey,
+        endpoint: "https://openrouter.ai/api/v1/chat/completions",
+        model: geminiToOpenRouterModel(apiModel),
+        referer: typeof window !== "undefined" ? window.location.origin : undefined,
+      });
+    }
+
+    throw new Error("Google Gemini API key not found. Add a Gemini key, or use OpenRouter as a single key for all models.");
+  } catch (err) {
+    console.warn(`Primary provider (${model}) failed:`, err.message);
+
+    if (groqKey && provider !== "groq") {
+      return await callOpenAICompatible({
+        prompt,
+        systemInstruction,
+        apiKey: groqKey,
+        endpoint: "https://api.groq.com/openai/v1/chat/completions",
+        model: "llama-3.3-70b-versatile",
+      });
+    }
+
+    if (geminiKey && provider === "groq") {
+      return await callGemini({
+        prompt,
+        systemInstruction,
+        apiKey: geminiKey,
+        model: DEFAULT_GEMINI_MODEL,
+      });
+    }
+
+    if (openRouterKey && provider === "gemini") {
+      return await callOpenAICompatible({
+        prompt,
+        systemInstruction,
+        apiKey: openRouterKey,
+        endpoint: "https://openrouter.ai/api/v1/chat/completions",
+        model: geminiToOpenRouterModel(apiModel),
+        referer: typeof window !== "undefined" ? window.location.origin : undefined,
+      });
     }
 
     throw err;
@@ -115,7 +163,8 @@ export async function generateAiResponse({ prompt, systemInstruction, keys = {},
 }
 
 function resolveGeminiApiModel(model) {
-  return normalizePreferredModel(model);
+  const api = apiModelIdForStudioModel(normalizePreferredModel(model));
+  return api.startsWith("gemini") ? api : DEFAULT_GEMINI_MODEL;
 }
 
 function nextGeminiFallback(currentModel, tried) {
@@ -136,28 +185,21 @@ async function callGemini({ prompt, systemInstruction, apiKey, model, tried = nu
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${apiModel}:generateContent?key=${apiKey}`;
 
   const payload = {
-    contents: [
-      {
-        parts: [{ text: prompt }]
-      }
-    ]
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.45,
+      maxOutputTokens: 4096,
+    },
   };
 
   if (systemInstruction) {
-    payload.systemInstruction = {
-      parts: [{ text: systemInstruction }]
-    };
+    payload.systemInstruction = { parts: [{ text: systemInstruction }] };
   }
-
-  payload.generationConfig = {
-    temperature: 0.45,
-    maxOutputTokens: 4096,
-  };
 
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
   });
 
   if (!res.ok) {
@@ -180,24 +222,31 @@ async function callGemini({ prompt, systemInstruction, apiKey, model, tried = nu
   return text;
 }
 
-async function callOpenAICompatible({ prompt, systemInstruction, apiKey, endpoint, model }) {
+async function callOpenAICompatible({ prompt, systemInstruction, apiKey, endpoint, model, referer }) {
   const messages = [];
   if (systemInstruction) {
     messages.push({ role: "system", content: systemInstruction });
   }
   messages.push({ role: "user", content: prompt });
 
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${apiKey}`,
+  };
+  if (referer) {
+    headers["HTTP-Referer"] = referer;
+    headers["X-Title"] = "AI Systems Engineer Studio";
+  }
+
   const res = await fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`
-    },
+    headers,
     body: JSON.stringify({
       model,
       messages,
-      temperature: 0.2
-    })
+      temperature: 0.45,
+      max_tokens: 4096,
+    }),
   });
 
   if (!res.ok) {
@@ -207,4 +256,9 @@ async function callOpenAICompatible({ prompt, systemInstruction, apiKey, endpoin
 
   const data = await res.json();
   return data?.choices?.[0]?.message?.content || "";
+}
+
+/** For validate script / tests. */
+export function listCatalogModelIds() {
+  return AI_MODEL_CATALOG.map((m) => m.id);
 }

@@ -10,9 +10,10 @@
     "preview": "vite preview",
     "curriculum": "python3 scripts/merge_topic_handbook.py && python3 scripts/generate_lessons.py",
     "validate:app": "node scripts/validate_app.mjs",
+    "validate:models": "node scripts/validate_ai_models.mjs",
     "validate:links": "python3 scripts/validate_curriculum.py",
     "validate": "npm run validate:app && npm run validate:links",
-    "validate:ci": "npm run validate:app && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/audit_public_content.py",
+    "validate:ci": "npm run validate:app && npm run validate:models && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/audit_public_content.py",
     "audit:public": "python3 scripts/audit_public_content.py"
   },
   "dependencies": {

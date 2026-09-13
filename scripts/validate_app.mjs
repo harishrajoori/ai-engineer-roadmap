@@ -99,6 +99,15 @@ const aiSrc = readFileSync(aiPath, "utf8");
 if (!aiSrc.includes("ai_hub_react_api_keys")) {
   checks.push("aiService does not read Settings storage key");
 }
+const catalogPath = path.join(root, "src/config/aiModels.js");
+const catalogSrc = readFileSync(catalogPath, "utf8");
+const catalogIds = [...catalogSrc.matchAll(/id:\s*"([^"]+)"/g)].map((m) => m[1]);
+if (catalogIds.length < 5) {
+  checks.push("aiModels catalog too small");
+}
+if (new Set(catalogIds).size !== catalogIds.length) {
+  checks.push("duplicate ids in aiModels catalog");
+}
 
 const appSrc = readFileSync(path.join(root, "src/App.jsx"), "utf8");
 if (!appSrc.includes("loadCurriculum")) {
