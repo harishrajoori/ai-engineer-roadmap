@@ -50,7 +50,7 @@ export default function SmartStage({ lesson, isCompleted, onToggleComplete, allL
       </div>
 
       {/* 2. Text-First Theory / Architecture (Markdown) */}
-      {lesson.content && (
+      {lesson.content ? (
         <div className="markdown-theory mb-10 prose prose-invert max-w-none bg-slate-900/40 border border-slate-800/60 p-8 rounded-2xl shadow-xl">
           <ReactMarkdown 
             remarkPlugins={[remarkGfm, remarkMath]} 
@@ -58,6 +58,12 @@ export default function SmartStage({ lesson, isCompleted, onToggleComplete, allL
           >
             {lesson.content}
           </ReactMarkdown>
+        </div>
+      ) : (
+        <div className="markdown-theory mb-10 p-6 bg-slate-900/20 border border-slate-800/40 rounded-xl text-slate-400 italic text-center">
+          <Lightbulb className="inline-block mb-2 text-slate-500" size={24} />
+          <p>Detailed architectural theory is currently being drafted for this topic.</p>
+          <p className="text-sm mt-1">Please refer to the interactive lecture below in the meantime.</p>
         </div>
       )}
 
