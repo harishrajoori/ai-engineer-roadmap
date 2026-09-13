@@ -144,6 +144,17 @@ export function buildProveLabContextBlock(lesson, courseRef, lab = {}) {
   if ((lab.proveUrl || "").trim()) {
     lines.push(`This topic milestone: ${lab.proveUrl.trim()}`);
   }
+  const labPlan = lesson.lab_plan;
+  if (labPlan?.steps?.length) {
+    lines.push("Implementation plan:");
+    labPlan.steps.forEach((step) => {
+      lines.push(`- ${step.title}`);
+      (step.bullets || []).forEach((b) => lines.push(`  - ${b}`));
+    });
+    if (labPlan.done_when) {
+      lines.push(`Done when: ${labPlan.done_when}`);
+    }
+  }
   if (acceptance.length) {
     lines.push("Acceptance (unchecked required items are gaps):");
     acceptance.forEach((row, index) => {
@@ -206,6 +217,43 @@ export function buildProveWorksheetMarkdown({
     `Course ${courseId}: ${courseRef?.name || lesson?.course_title || ""}`,
     "",
   ];
+
+  const labPlan = lesson?.lab_plan;
+  if (labPlan?.steps?.length) {
+    lines.push(`## ${labPlan.title || "Implementation plan"}`, "");
+    if (labPlan.done_when) {
+      lines.push(`**Done when:** ${labPlan.done_when}`, "");
+    }
+    labPlan.steps.forEach((step, index) => {
+      lines.push(`### ${index + 1}. ${step.title}`, "");
+      if (step.detail) {
+        lines.push(step.detail, "");
+      }
+      (step.bullets || []).forEach((b) => lines.push(`- ${b}`));
+      lines.push("");
+    });
+    if (labPlan.implementation_links?.length) {
+      lines.push("### Reference implementations", "");
+      labPlan.implementation_links.forEach((link) => {
+        lines.push(`- [${link.title}](${link.url})`);
+      });
+      lines.push("");
+    }
+    const local = labPlan.local_setup;
+    if (local?.steps?.length) {
+      lines.push("### Local setup", "");
+      if (local.prerequisites?.length) {
+        lines.push(`Prerequisites: ${local.prerequisites.join(", ")}`, "");
+      }
+      lines.push("```bash", ...local.steps, "```", "");
+      if (local.env_vars?.length) {
+        lines.push("```bash", ...local.env_vars, "```", "");
+      }
+      if (local.portfolio_note) {
+        lines.push(local.portfolio_note, "");
+      }
+    }
+  }
 
   if (realWorld.summary) {
     lines.push("## Real-world scenario", "", realWorld.summary, "");

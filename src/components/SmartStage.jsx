@@ -52,7 +52,8 @@ function resourceToBlock(res, fallbackVideoId) {
     color: res.color || "var(--accent)",
     videoId: isLikelyYoutubeId(videoId) ? videoId : "",
     url: res.url,
-    add: res.description || res.add || ""
+    add: res.description || res.add || "",
+    type: res.type || "guide",
   };
 }
 
@@ -164,7 +165,7 @@ export default function SmartStage({
     if (!lesson) {
       return resources;
     }
-    return resources.filter((res) => {
+    const filtered = resources.filter((res) => {
       if (lesson.url && res.url === lesson.url) {
         return false;
       }
@@ -173,6 +174,8 @@ export default function SmartStage({
       }
       return true;
     });
+    const rank = (res) => (res.type === "implementation" ? 0 : res.type === "repo" ? 1 : 2);
+    return [...filtered].sort((a, b) => rank(a) - rank(b));
   }, [resources, lesson, primaryVideoId]);
 
   const theoryMarkdown = useMemo(() => {
@@ -402,6 +405,9 @@ export default function SmartStage({
             <article key={idx} className="learning-video-card">
               <header className="learning-video-card-head">
                 <span className="learning-video-level" style={{ background: res.color }}>{res.level}</span>
+                {res.type === "implementation" && (
+                  <span className="learning-resource-impl-badge">Implementation</span>
+                )}
                 <h3>{res.label}</h3>
               </header>
               {res.videoId ? (

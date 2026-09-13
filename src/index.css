@@ -1987,6 +1987,16 @@ header {
   font-size: 0.88rem;
   font-weight: 600;
 }
+.learning-resource-impl-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--accent);
+  flex-shrink: 0;
+}
 .learning-video-level {
   font-size: 0.62rem;
   font-weight: 800;
@@ -2124,6 +2134,52 @@ header {
 }
 .lab-prove-muted strong {
   color: var(--text);
+}
+.lab-prove-impl-steps {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.lab-prove-impl-step-title {
+  font-weight: 600;
+  color: var(--text);
+}
+.lab-prove-impl-bullets {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.lab-prove-impl-links {
+  margin-top: 0.75rem;
+}
+.lab-prove-local-setup {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+}
+.lab-prove-local-steps {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.lab-prove-local-line {
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: 0.78rem;
+}
+.lab-prove-impl-link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.35rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 .lab-prove-ladder {
   margin: 0.75rem 0 0;

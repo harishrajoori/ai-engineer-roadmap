@@ -18,7 +18,9 @@ from curriculum_enrichment import (
 )
 from walkthrough_content import PROGRAM_WALKTHROUGH, walkthrough_for_course
 from enrichment_utils import index_lessons_by_key, lesson_stable_key, sanitize_lesson_enrichment
+from append_implementation_repos import append_implementation_repos
 from external_curriculum_links import append_external_resources
+from lab_implementation import attach_lab_plan
 from link_quality import (
     READ_COMPANION_REPO,
     access_note_for_url,
@@ -582,6 +584,8 @@ def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]])
         ensure_primary_resource(row)
         merge_related_into_resources(row)
         append_external_resources(row)
+        append_implementation_repos(row)
+        attach_lab_plan(row)
         row["section_label"] = section_label(row.get("section") or "")
         ckey = str(row.get("course", ""))
         outcomes = course_outcomes.get(ckey, [])

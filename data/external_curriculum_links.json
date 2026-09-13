@@ -7,158 +7,197 @@
     "license": "MIT"
   },
   "by_lesson_key": {
-    "c0|u|https://www.youtube.com/watch?v=zjkBMFhNj_g": [
+    "c0|u|https://www.youtube.com/watch?v=zjkbmfhnj_g": [
       {
-        "title": "AI Eng. from Scratch — Prompt engineering",
+        "title": "AI Eng. from Scratch \u2014 Prompt engineering",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
-        "description": "Optional hands-on complement: typed exercises + tests after Karpathy’s mental model (not a substitute for this topic’s prove gate)."
+        "description": "Optional hands-on complement: typed exercises + tests after Karpathy\u2019s mental model (not a substitute for this topic\u2019s prove gate)."
       },
       {
-        "title": "AI Eng. from Scratch — GPT (causal LM)",
+        "title": "AI Eng. from Scratch \u2014 GPT (causal LM)",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/07-transformers-deep-dive/07-gpt-causal-language-modeling",
-        "type": "guide",
+        "type": "implementation",
         "level": "advanced",
-        "description": "Math/code path if you want to see next-token prediction built from scratch—time-box; your track stays inference-first."
+        "description": "Math/code path if you want to see next-token prediction built from scratch\u2014time-box; your track stays inference-first."
       }
     ],
     "c0|u|https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/": [
       {
-        "title": "AI Eng. from Scratch — Structured outputs",
+        "title": "AI Eng. from Scratch \u2014 Structured outputs",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/03-structured-outputs",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Parallel lab for schema-first LLM outputs; pair with your capstone Pydantic models."
       }
     ],
     "c0|u|https://python.useinstructor.com/": [
       {
-        "title": "AI Eng. from Scratch — Structured outputs",
+        "title": "AI Eng. from Scratch \u2014 Structured outputs",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/04-structured-output",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Tooling angle on the same contract you enforce with Instructor in Course 1."
       }
     ],
     "c0|u|https://hamel.dev/blog/posts/evals/": [
       {
-        "title": "AI Eng. from Scratch — LLM evaluation",
+        "title": "AI Eng. from Scratch \u2014 LLM evaluation",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/10-evaluation",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Executable eval patterns to revisit before Month 7 eval CI."
       }
     ],
     "c1|u|https://www.3blue1brown.com/topics/neural-networks": [
       {
-        "title": "AI Eng. from Scratch — Attention mechanism",
+        "title": "AI Eng. from Scratch \u2014 Attention mechanism",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/05-nlp-foundations-to-advanced/10-attention-mechanism",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "After 3Blue1Brown visuals, implement the idea with lesson tests (optional depth)."
       },
       {
-        "title": "AI Eng. from Scratch — Self-attention from scratch",
+        "title": "AI Eng. from Scratch \u2014 Self-attention from scratch",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/07-transformers-deep-dive/02-self-attention-from-scratch",
-        "type": "guide",
+        "type": "implementation",
         "level": "advanced",
-        "description": "Build self-attention by hand—useful before embedding/RAG months."
+        "description": "Build self-attention by hand\u2014useful before embedding/RAG months."
       }
     ],
     "c2|u|https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/": [
       {
-        "title": "AI Eng. from Scratch — The agent loop",
+        "title": "AI Eng. from Scratch \u2014 The agent loop",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Minimal agent loop with artifacts; maps to your reconciler-agent prove pack."
       }
     ],
     "c2|u|https://www.anthropic.com/engineering/building-effective-agents": [
       {
-        "title": "AI Eng. from Scratch — Agent engineering path",
+        "title": "AI Eng. from Scratch \u2014 Agent engineering path",
         "url": "https://aiengineeringfromscratch.com/learning-paths.html",
         "type": "guide",
         "level": "beginner",
-        "description": "Browse the agent-assisted engineering route for lab ideas alongside Anthropic’s essay."
+        "description": "Browse the agent-assisted engineering route for lab ideas alongside Anthropic\u2019s essay."
       }
     ],
     "c3|u|https://modelcontextprotocol.io/introduction": [
       {
-        "title": "AI Eng. from Scratch — MCP fundamentals",
+        "title": "Hub \u2014 llamaindex-mcp",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/llamaindex-mcp",
+        "type": "implementation",
+        "level": "intermediate",
+        "description": "End-to-end MCP server example from the program hub\u2014fork ideas, not secrets."
+      },
+      {
+        "title": "AI Eng. from Scratch \u2014 MCP fundamentals",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Focused MCP path with runnable server/client labs after the official intro."
       }
     ],
     "c3|u|https://gofastmcp.com/getting-started/welcome": [
       {
-        "title": "AI Eng. from Scratch — Building an MCP server",
+        "title": "AI Eng. from Scratch \u2014 Building an MCP server",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/07-building-an-mcp-server",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "End-to-end server lab; compare patterns with FastMCP before your prove README."
       }
     ],
     "c4|u|https://www.youtube.com/watch?v=zgnjmwipirk": [
       {
-        "title": "AI Eng. from Scratch — RAG",
-        "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/06-rag",
-        "type": "guide",
+        "title": "Hub \u2014 fastest-rag-stack",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/fastest-rag-stack",
+        "type": "implementation",
         "level": "intermediate",
-        "description": "Chunk → retrieve → generate with tests; aligns with document-chat RAG walkthrough."
+        "description": "Minimal RAG stack in the hub\u2014use as a second opinion on chunking and retrieval wiring."
       },
       {
-        "title": "AI Eng. from Scratch — Chunking strategies",
+        "title": "AI Eng. from Scratch \u2014 RAG",
+        "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/06-rag",
+        "type": "implementation",
+        "level": "intermediate",
+        "description": "Chunk \u2192 retrieve \u2192 generate with tests; aligns with document-chat RAG walkthrough."
+      },
+      {
+        "title": "AI Eng. from Scratch \u2014 Chunking strategies",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/05-nlp-foundations-to-advanced/23-chunking-strategies-rag",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Chunking tradeoffs you will feel in pgvector prove gates."
       }
     ],
     "c4|u|https://github.com/pgvector/pgvector": [
       {
-        "title": "AI Eng. from Scratch — Embeddings",
+        "title": "AI Eng. from Scratch \u2014 Embeddings",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/04-embeddings",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Embedding intuition + code before wiring pgvector in your repo."
       }
     ],
     "c7|u|https://hamel.dev/blog/posts/evals/": [
       {
-        "title": "AI Eng. from Scratch — LLM evaluation frameworks",
+        "title": "Hub \u2014 eval-and-observability",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/eval-and-observability",
+        "type": "implementation",
+        "level": "intermediate",
+        "description": "Reference eval + observability layout for your golden-set harness and CI gates."
+      },
+      {
+        "title": "AI Eng. from Scratch \u2014 LLM evaluation frameworks",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/05-nlp-foundations-to-advanced/27-llm-evaluation-frameworks",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
         "description": "Framework-level eval labs to pair with Hamel + your golden set."
       },
       {
-        "title": "AI Eng. from Scratch — RAG eval (capstone)",
+        "title": "AI Eng. from Scratch \u2014 RAG eval (capstone)",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/19-capstone-projects/68-rag-eval-precision-recall",
-        "type": "guide",
+        "type": "implementation",
         "level": "advanced",
-        "description": "Precision/recall style RAG eval project—optional stretch for Month 7."
+        "description": "Precision/recall style RAG eval project\u2014optional stretch for Month 7."
       }
     ],
     "c7|u|https://docs.confident-ai.com/docs/getting-started": [
       {
-        "title": "AI Eng. from Scratch — LLM evaluation",
+        "title": "AI Eng. from Scratch \u2014 LLM evaluation",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/10-evaluation",
-        "type": "guide",
+        "type": "implementation",
         "level": "intermediate",
-        "description": "Same eval spine as DeepEval docs—run their lesson tests, then map metrics to your harness."
+        "description": "Same eval spine as DeepEval docs\u2014run their lesson tests, then map metrics to your harness."
       }
     ],
-    "c10|t|ingest → gateway (caching on) → extract → validate → langgraph → stage db|build": [
+    "c10|t|ingest \u2192 gateway (caching on) \u2192 extract \u2192 validate \u2192 langgraph \u2192 stage db|build": [
       {
-        "title": "AI Eng. from Scratch — End-to-end RAG system",
+        "title": "AI Eng. from Scratch \u2014 End-to-end RAG system",
         "url": "https://aiengineeringfromscratch.com/lesson?path=phases/19-capstone-projects/69-end-to-end-rag-system",
-        "type": "guide",
+        "type": "implementation",
         "level": "advanced",
-        "description": "Reference capstone architecture while you wire ingest → gateway → LangGraph."
+        "description": "Reference capstone architecture while you wire ingest \u2192 gateway \u2192 LangGraph."
+      }
+    ],
+    "c2|u|https://langchain-ai.github.io/langgraph": [
+      {
+        "title": "Hub \u2014 agentic_rag (reference implementation)",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/agentic_rag",
+        "type": "implementation",
+        "level": "intermediate",
+        "description": "Runnable agent + RAG patterns to compare with your LangGraph reconciler-agent prove pack."
+      }
+    ],
+    "c6|u|https://microsoft.github.io/graphrag/": [
+      {
+        "title": "Hub \u2014 graphiti-mcp",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/graphiti-mcp",
+        "type": "implementation",
+        "level": "intermediate",
+        "description": "Graph + MCP reference from the hub for Month 6 prove slice."
       }
     ]
   }

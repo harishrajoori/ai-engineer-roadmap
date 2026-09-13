@@ -1,0 +1,1660 @@
+{
+  "schema_version": 1,
+  "notes": "Repos are merged into lesson resources when github_validation.ok is true. Re-run: python3 scripts/github_repo_validate.py",
+  "repos": [
+    {
+      "id": "ai-engineering-from-scratch",
+      "title": "AI Engineering from Scratch (full curriculum repo)",
+      "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+      "courses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        7,
+        10,
+        15
+      ],
+      "url_match": [],
+      "title_match": [],
+      "level": "intermediate",
+      "description": "MIT-licensed lesson code + tests across LLM, RAG, MCP, and eval modules\u2014run their pytest per phase.",
+      "local": {
+        "clone": "git clone https://github.com/rohitg00/ai-engineering-from-scratch.git",
+        "setup": [
+          "cd ai-engineering-from-scratch",
+          "python -m venv .venv && source .venv/bin/activate",
+          "pip install -r requirements.txt 2>/dev/null || pip install -e .",
+          "pytest -q --maxfail=1 2>/dev/null || echo 'Run tests for the phase you are studying'"
+        ],
+        "env": [
+          "OPENAI_API_KEY=",
+          "ANTHROPIC_API_KEY="
+        ],
+        "portfolio_note": "Port one phase into your portfolio repo under labs/from-scratch/<phase>/ with attribution."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+        "full_name": "rohitg00/ai-engineering-from-scratch",
+        "stars": 54440,
+        "size_kb": 42365,
+        "languages": [
+          "Python",
+          "JavaScript",
+          "HTML",
+          "TypeScript",
+          "Julia",
+          "CSS",
+          "Rust",
+          "Shell"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-07T11:42:35Z"
+      }
+    },
+    {
+      "id": "patchy-hub",
+      "title": "AI Engineering Hub (multi-project reference)",
+      "url": "https://github.com/patchy631/ai-engineering-hub",
+      "courses": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        10,
+        11,
+        14,
+        15
+      ],
+      "url_match": [
+        "patchy631"
+      ],
+      "title_match": [
+        "hub"
+      ],
+      "level": "intermediate",
+      "description": "Dozens of runnable mini-systems (RAG, MCP, agents, eval)\u2014pick the folder that matches this month\u2019s prove pack.",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub",
+          "ls -la",
+          "cd <folder-from-readme> && pip install -r requirements.txt && pytest -q 2>/dev/null || python main.py --help"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Do not fork wholesale\u2014extract one pattern (e.g. retrieval benchmark) into your capstone repo."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "instructor",
+      "title": "Instructor \u2014 Pydantic structured outputs",
+      "url": "https://github.com/instructor-ai/instructor",
+      "courses": [
+        0,
+        1
+      ],
+      "url_match": [
+        "useinstructor.com",
+        "instructor"
+      ],
+      "title_match": [
+        "instructor",
+        "structured",
+        "pydantic"
+      ],
+      "level": "intermediate",
+      "description": "Production library for response_model extraction with retries\u2014matches Course 0\u20131 extract() contracts.",
+      "local": {
+        "clone": "git clone https://github.com/instructor-ai/instructor.git",
+        "setup": [
+          "cd instructor",
+          "pip install -e '.[dev]'",
+          "pytest tests -q -x --maxfail=3"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Copy the client.patch pattern into services/extract/client.py"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/instructor-ai/instructor",
+        "full_name": "567-labs/instructor",
+        "stars": 13881,
+        "size_kb": 79480,
+        "languages": [
+          "Python",
+          "Shell"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-11T22:53:36Z"
+      }
+    },
+    {
+      "id": "pydantic",
+      "title": "Pydantic \u2014 schema validation core",
+      "url": "https://github.com/pydantic/pydantic",
+      "courses": [
+        0,
+        1
+      ],
+      "url_match": [
+        "docs.pydantic.dev"
+      ],
+      "title_match": [
+        "pydantic"
+      ],
+      "level": "beginner",
+      "description": "Reference tests and docs for validators you reuse in extraction and API models.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/pydantic/pydantic.git",
+        "setup": [
+          "cd pydantic",
+          "pip install -e .",
+          "pytest tests -q -k 'model_validator' --maxfail=1 -x"
+        ],
+        "env": [],
+        "portfolio_note": "Keep models in models/ with @model_validator for business invariants."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/pydantic/pydantic",
+        "full_name": "pydantic/pydantic",
+        "stars": 28767,
+        "size_kb": 448311,
+        "languages": [
+          "Python",
+          "Rust",
+          "Makefile",
+          "JavaScript",
+          "HTML",
+          "Shell"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-12T23:41:48Z"
+      }
+    },
+    {
+      "id": "pydantic-ai",
+      "title": "PydanticAI \u2014 typed agents & tools",
+      "url": "https://github.com/pydantic/pydantic-ai",
+      "courses": [
+        1,
+        2
+      ],
+      "url_match": [
+        "pydantic-ai",
+        "ai.pydantic.dev"
+      ],
+      "title_match": [
+        "agent",
+        "pydantic"
+      ],
+      "level": "intermediate",
+      "description": "Agent loop with typed deps\u2014compare with LangGraph before you pick one for reconciler-agent.",
+      "local": {
+        "clone": "git clone https://github.com/pydantic/pydantic-ai.git",
+        "setup": [
+          "cd pydantic-ai",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Optional alternate to LangGraph for simple tool loops."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/pydantic/pydantic-ai",
+        "full_name": "pydantic/pydantic-ai",
+        "stars": 19902,
+        "size_kb": 256952,
+        "languages": [
+          "Python",
+          "Shell",
+          "Makefile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T15:35:42Z"
+      }
+    },
+    {
+      "id": "litellm",
+      "title": "LiteLLM \u2014 gateway & router",
+      "url": "https://github.com/BerriAI/litellm",
+      "courses": [
+        1,
+        9,
+        10
+      ],
+      "url_match": [
+        "litellm.ai",
+        "litellm"
+      ],
+      "title_match": [
+        "litellm",
+        "gateway"
+      ],
+      "level": "intermediate",
+      "description": "Proxy, fallbacks, and logging hooks used in Month 1 v0.2 prove and capstone gateway.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/BerriAI/litellm.git",
+        "setup": [
+          "cd litellm",
+          "pip install litellm",
+          "litellm --help",
+          "pytest tests/litellm_core_utils -q --maxfail=1 -x 2>/dev/null || true"
+        ],
+        "env": [
+          "OPENAI_API_KEY=",
+          "LITELLM_LOG=DEBUG"
+        ],
+        "portfolio_note": "Add litellm_config.yaml at repo root; log model + usage per request."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/BerriAI/litellm",
+        "full_name": "BerriAI/litellm",
+        "stars": 58642,
+        "size_kb": 1525835,
+        "languages": [
+          "Python",
+          "TypeScript",
+          "Rust",
+          "HTML",
+          "Go",
+          "HCL",
+          "Shell",
+          "JavaScript"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T10:56:18Z"
+      }
+    },
+    {
+      "id": "outlines",
+      "title": "Outlines \u2014 constrained generation",
+      "url": "https://github.com/dottxt-ai/outlines",
+      "courses": [
+        1
+      ],
+      "url_match": [
+        "outlines",
+        "dottxt-ai"
+      ],
+      "title_match": [
+        "outlines"
+      ],
+      "level": "advanced",
+      "description": "Schema-constrained decoding for local models\u2014optional if you self-host inference.",
+      "local": {
+        "clone": "git clone https://github.com/dottxt-ai/outlines.git",
+        "setup": [
+          "cd outlines",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [],
+        "portfolio_note": "Time-box; track stays API-first unless you own GPUs."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/dottxt-ai/outlines",
+        "full_name": "dottxt-ai/outlines",
+        "stars": 15790,
+        "size_kb": 149451,
+        "languages": [
+          "Python",
+          "Nix"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-09T19:35:39Z"
+      }
+    },
+    {
+      "id": "aie-book",
+      "title": "Chip Huyen \u2014 AI Engineering book code",
+      "url": "https://github.com/chiphuyen/aie-book",
+      "courses": [
+        1
+      ],
+      "url_match": [
+        "chiphuyen/aie-book",
+        "chiphuyen.com"
+      ],
+      "title_match": [
+        "chip huyen",
+        "aie-book"
+      ],
+      "level": "intermediate",
+      "description": "Companion snippets for gateway, data, and eval chapters\u2014skim alongside Applied LLMs.",
+      "local": {
+        "clone": "git clone https://github.com/chiphuyen/aie-book.git",
+        "setup": [
+          "cd aie-book",
+          "find . -name 'requirements.txt' -exec pip install -r {} \\; 2>/dev/null || true"
+        ],
+        "env": [],
+        "portfolio_note": "Cite patterns in README ADR; do not copy without license check per folder."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/chiphuyen/aie-book",
+        "full_name": "chiphuyen/aie-book",
+        "stars": 17428,
+        "size_kb": 6686,
+        "languages": [
+          "Jupyter Notebook"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-07-03T07:04:59Z"
+      }
+    },
+    {
+      "id": "langgraph",
+      "title": "LangGraph \u2014 graph orchestration",
+      "url": "https://github.com/langchain-ai/langgraph",
+      "courses": [
+        2
+      ],
+      "url_match": [
+        "langgraph"
+      ],
+      "title_match": [
+        "langgraph",
+        "agent"
+      ],
+      "level": "intermediate",
+      "description": "Core library for checkpoints, interrupts, and HITL\u2014your Course 2 prove target.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/langchain-ai/langgraph.git",
+        "setup": [
+          "cd langgraph",
+          "pip install -e libs/langgraph",
+          "pytest libs/langgraph/tests -q --maxfail=1 -x"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Package reconciler_agent/ with SqliteSaver or Postgres checkpointer."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/langchain-ai/langgraph",
+        "full_name": "langchain-ai/langgraph",
+        "stars": 41575,
+        "size_kb": 526440,
+        "languages": [
+          "Python",
+          "Makefile",
+          "TypeScript",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T19:37:52Z"
+      }
+    },
+    {
+      "id": "langgraph-examples",
+      "title": "LangGraph \u2014 official examples",
+      "url": "https://github.com/langchain-ai/langgraph/tree/main/examples",
+      "courses": [
+        2
+      ],
+      "url_match": [
+        "langgraph",
+        "langchain"
+      ],
+      "title_match": [
+        "langgraph",
+        "reconciler"
+      ],
+      "level": "intermediate",
+      "description": "Runnable graphs including HITL patterns\u2014start from examples/ before writing from scratch.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/langchain-ai/langgraph.git",
+        "setup": [
+          "cd langgraph/examples",
+          "pip install -r requirements.txt 2>/dev/null || pip install langgraph langchain-openai",
+          "python -c \"import langgraph; print(langgraph.__version__)\""
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Adapt one example to your reconciler domain models."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/langchain-ai/langgraph/tree/main/examples",
+        "full_name": "langchain-ai/langgraph",
+        "stars": 41575,
+        "size_kb": 526440,
+        "languages": [
+          "Python",
+          "Makefile",
+          "TypeScript",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T19:37:52Z"
+      }
+    },
+    {
+      "id": "ms-ai-agents-beginners",
+      "title": "Microsoft \u2014 AI Agents for Beginners",
+      "url": "https://github.com/microsoft/ai-agents-for-beginners",
+      "courses": [
+        2,
+        3
+      ],
+      "url_match": [
+        "anthropic.com/engineering/building-effective-agents"
+      ],
+      "title_match": [
+        "agent",
+        "effective"
+      ],
+      "level": "beginner",
+      "description": "Jupyter labs for agent patterns + Azure AI\u2014good skim with LangGraph month.",
+      "local": {
+        "clone": "git clone https://github.com/microsoft/ai-agents-for-beginners.git",
+        "setup": [
+          "cd ai-agents-for-beginners",
+          "pip install -r requirements.txt",
+          "jupyter lab"
+        ],
+        "env": [
+          "AZURE_OPENAI_API_KEY=",
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Translate lessons into pytest modules in your repo."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/microsoft/ai-agents-for-beginners",
+        "full_name": "microsoft/ai-agents-for-beginners",
+        "stars": 74599,
+        "size_kb": 3803431,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "C#",
+          "PowerShell",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T17:41:19Z"
+      }
+    },
+    {
+      "id": "fastmcp",
+      "title": "FastMCP \u2014 Python MCP servers",
+      "url": "https://github.com/jlowin/fastmcp",
+      "courses": [
+        3
+      ],
+      "url_match": [
+        "gofastmcp.com",
+        "fastmcp"
+      ],
+      "title_match": [
+        "mcp",
+        "fastmcp"
+      ],
+      "level": "intermediate",
+      "description": "FastAPI-style MCP server SDK\u2014pairs with official MCP intro docs.",
+      "local": {
+        "clone": "git clone https://github.com/jlowin/fastmcp.git",
+        "setup": [
+          "cd fastmcp",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [],
+        "portfolio_note": "Expose one internal tool with audit logging to JSONL."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/jlowin/fastmcp",
+        "full_name": "PrefectHQ/fastmcp",
+        "stars": 27647,
+        "size_kb": 58328,
+        "languages": [
+          "Python",
+          "Just",
+          "Shell"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-11T19:26:19Z"
+      }
+    },
+    {
+      "id": "mcp-python-sdk",
+      "title": "MCP \u2014 official Python SDK",
+      "url": "https://github.com/modelcontextprotocol/python-sdk",
+      "courses": [
+        3
+      ],
+      "url_match": [
+        "modelcontextprotocol.io"
+      ],
+      "title_match": [
+        "mcp"
+      ],
+      "level": "intermediate",
+      "description": "Reference client/server implementation for the protocol spec.",
+      "local": {
+        "clone": "git clone https://github.com/modelcontextprotocol/python-sdk.git",
+        "setup": [
+          "cd python-sdk",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [],
+        "portfolio_note": "Compare transport (stdio vs SSE) in README."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/modelcontextprotocol/python-sdk",
+        "full_name": "modelcontextprotocol/python-sdk",
+        "stars": 24282,
+        "size_kb": 17252,
+        "languages": [
+          "Python",
+          "Shell",
+          "HTML"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T13:23:39Z"
+      }
+    },
+    {
+      "id": "mcp-servers",
+      "title": "MCP \u2014 reference servers",
+      "url": "https://github.com/modelcontextprotocol/servers",
+      "courses": [
+        3
+      ],
+      "url_match": [
+        "modelcontextprotocol"
+      ],
+      "title_match": [
+        "mcp"
+      ],
+      "level": "beginner",
+      "description": "Official sample servers (filesystem, fetch, etc.) to test your client wiring.",
+      "local": {
+        "clone": "git clone https://github.com/modelcontextprotocol/servers.git",
+        "setup": [
+          "cd servers",
+          "npm install 2>/dev/null || pip install -r src/fetch/requirements.txt 2>/dev/null || true"
+        ],
+        "env": [],
+        "portfolio_note": "Run one server locally; log tool calls for prove audit sample."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/modelcontextprotocol/servers",
+        "full_name": "modelcontextprotocol/servers",
+        "stars": 90291,
+        "size_kb": 29654,
+        "languages": [
+          "TypeScript",
+          "Python",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-03T01:42:26Z"
+      }
+    },
+    {
+      "id": "hub-llamaindex-mcp",
+      "title": "Hub \u2014 llamaindex-mcp",
+      "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/llamaindex-mcp",
+      "courses": [
+        3
+      ],
+      "url_match": [
+        "modelcontextprotocol.io",
+        "mcp"
+      ],
+      "title_match": [
+        "mcp"
+      ],
+      "level": "intermediate",
+      "description": "End-to-end MCP + LlamaIndex sample from the program hub.",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub/llamaindex-mcp",
+          "pip install -r requirements.txt",
+          "pytest -q 2>/dev/null || python main.py --help"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": ""
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/llamaindex-mcp",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "hub-agentic-rag",
+      "title": "Hub \u2014 agentic_rag",
+      "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/agentic_rag",
+      "courses": [
+        2,
+        4
+      ],
+      "url_match": [
+        "langgraph",
+        "rag"
+      ],
+      "title_match": [
+        "rag",
+        "agent"
+      ],
+      "level": "intermediate",
+      "description": "Agent loop over retrieval\u2014bridge between LangGraph and hybrid search months.",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub/agentic_rag",
+          "pip install -r requirements.txt"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": ""
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/agentic_rag",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "llamaindex",
+      "title": "LlamaIndex \u2014 RAG framework",
+      "url": "https://github.com/run-llama/llama_index",
+      "courses": [
+        4,
+        5
+      ],
+      "url_match": [
+        "llamaindex",
+        "llama-index"
+      ],
+      "title_match": [
+        "llama",
+        "rag",
+        "retrieval"
+      ],
+      "level": "intermediate",
+      "description": "Indexing, chunking, and query pipelines\u2014compare with your hybrid BM25+dense stack.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/run-llama/llama_index.git",
+        "setup": [
+          "cd llama_index",
+          "pip install llama-index",
+          "pytest llama-index-core/tests -q --maxfail=1 -x 2>/dev/null || true"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Borrow chunking settings into scripts/chunk_corpus.py"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/run-llama/llama_index",
+        "full_name": "run-llama/llama_index",
+        "stars": 52148,
+        "size_kb": 501248,
+        "languages": [
+          "Python",
+          "Jupyter Notebook",
+          "Makefile",
+          "JavaScript",
+          "HTML",
+          "Shell",
+          "EdgeQL",
+          "Starlark"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-11T18:09:01Z"
+      }
+    },
+    {
+      "id": "qdrant-client",
+      "title": "Qdrant \u2014 vector client & examples",
+      "url": "https://github.com/qdrant/qdrant-client",
+      "courses": [
+        4
+      ],
+      "url_match": [
+        "qdrant.tech"
+      ],
+      "title_match": [
+        "qdrant",
+        "hybrid",
+        "retrieval"
+      ],
+      "level": "intermediate",
+      "description": "Python client for dense + sparse hybrid queries aligned with Month 4 benchmarks.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/qdrant/qdrant-client.git",
+        "setup": [
+          "cd qdrant-client",
+          "pip install -e .",
+          "docker run -p 6333:6333 qdrant/qdrant  # optional",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [
+          "QDRANT_URL=http://localhost:6333"
+        ],
+        "portfolio_note": "scripts/benchmark_retrieval.py should emit recall@k table."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/qdrant/qdrant-client",
+        "full_name": "qdrant/qdrant-client",
+        "stars": 1355,
+        "size_kb": 7599,
+        "languages": [
+          "Python",
+          "Shell"
+        ],
+        "default_branch": "master",
+        "pushed_at": "2026-09-12T18:11:36Z"
+      }
+    },
+    {
+      "id": "pgvector",
+      "title": "pgvector \u2014 Postgres vectors",
+      "url": "https://github.com/pgvector/pgvector",
+      "courses": [
+        4
+      ],
+      "url_match": [
+        "pgvector"
+      ],
+      "title_match": [
+        "pgvector",
+        "embedding"
+      ],
+      "level": "intermediate",
+      "description": "Extension + SQL patterns when warehouse already runs Postgres.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/pgvector/pgvector.git",
+        "setup": [
+          "docker run -e POSTGRES_PASSWORD=postgres -p 5432:5432 pgvector/pgvector:pg16",
+          "psql -c 'CREATE EXTENSION vector;'"
+        ],
+        "env": [
+          "DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres"
+        ],
+        "portfolio_note": "Store embeddings in a staging schema before gold layer."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/pgvector/pgvector",
+        "full_name": "pgvector/pgvector",
+        "stars": 22999,
+        "size_kb": 2091,
+        "languages": [
+          "C",
+          "Perl",
+          "Makefile",
+          "Dockerfile"
+        ],
+        "default_branch": "master",
+        "pushed_at": "2026-09-10T13:49:14Z"
+      }
+    },
+    {
+      "id": "hub-fastest-rag",
+      "title": "Hub \u2014 fastest-rag-stack",
+      "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/fastest-rag-stack",
+      "courses": [
+        4
+      ],
+      "url_match": [
+        "zgnjmwipirk",
+        "rag",
+        "zjk"
+      ],
+      "title_match": [
+        "rag",
+        "retrieval",
+        "document chat"
+      ],
+      "level": "intermediate",
+      "description": "Minimal end-to-end RAG stack for local experiments.",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub/fastest-rag-stack",
+          "pip install -r requirements.txt"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": ""
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/fastest-rag-stack",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "docling",
+      "title": "Docling \u2014 document parsing",
+      "url": "https://github.com/DS4SD/docling",
+      "courses": [
+        5
+      ],
+      "url_match": [
+        "docling",
+        "llamaparse"
+      ],
+      "title_match": [
+        "docling",
+        "parse",
+        "document"
+      ],
+      "level": "intermediate",
+      "description": "Layout-aware PDF/HTML parsing for chunks.jsonl contract in Month 5.",
+      "local": {
+        "clone": "git clone https://github.com/DS4SD/docling.git",
+        "setup": [
+          "cd docling",
+          "pip install docling",
+          "docling --help",
+          "pytest -q --maxfail=1 -x 2>/dev/null || true"
+        ],
+        "env": [],
+        "portfolio_note": "Emit chunks.jsonl with stable ids + page metadata."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/DS4SD/docling",
+        "full_name": "docling-project/docling",
+        "stars": 66347,
+        "size_kb": 378700,
+        "languages": [
+          "Python",
+          "Shell",
+          "Dockerfile",
+          "Makefile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T14:30:33Z"
+      }
+    },
+    {
+      "id": "hub-rag-dockling",
+      "title": "Hub \u2014 rag-with-dockling (folder name typo)",
+      "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/rag-with-dockling",
+      "courses": [
+        5
+      ],
+      "url_match": [
+        "docling",
+        "dockling"
+      ],
+      "title_match": [
+        "docling",
+        "chunk"
+      ],
+      "level": "intermediate",
+      "description": "Hub sample wiring Docling \u2192 chunks \u2192 index (folder spelled dockling).",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub/rag-with-dockling",
+          "pip install -r requirements.txt"
+        ],
+        "env": [],
+        "portfolio_note": ""
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/rag-with-dockling",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "graphrag",
+      "title": "Microsoft GraphRAG",
+      "url": "https://github.com/microsoft/graphrag",
+      "courses": [
+        6
+      ],
+      "url_match": [
+        "graphrag",
+        "microsoft.github.io/graphrag"
+      ],
+      "title_match": [
+        "graph",
+        "graphrag"
+      ],
+      "level": "advanced",
+      "description": "Graph indexing pipeline\u2014time-box; prove needs only one validator test.",
+      "local": {
+        "clone": "git clone https://github.com/microsoft/graphrag.git",
+        "setup": [
+          "cd graphrag",
+          "pip install -e .",
+          "graphrag --help"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Scope to one Cypher invariant test, not full GraphRAG product."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/microsoft/graphrag",
+        "full_name": "microsoft/graphrag",
+        "stars": 35963,
+        "size_kb": 208709,
+        "languages": [
+          "Python",
+          "Jupyter Notebook",
+          "TypeScript",
+          "Dockerfile",
+          "Shell",
+          "Jinja",
+          "HTML"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-08T18:54:12Z"
+      }
+    },
+    {
+      "id": "hub-graphiti-mcp",
+      "title": "Hub \u2014 graphiti-mcp",
+      "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/graphiti-mcp",
+      "courses": [
+        6
+      ],
+      "url_match": [
+        "graphrag",
+        "neo4j",
+        "graph"
+      ],
+      "title_match": [
+        "graph"
+      ],
+      "level": "intermediate",
+      "description": "Graph + MCP reference for Month 6 slice.",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub/graphiti-mcp",
+          "pip install -r requirements.txt"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": ""
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/graphiti-mcp",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "deepeval",
+      "title": "DeepEval \u2014 LLM eval framework",
+      "url": "https://github.com/confident-ai/deepeval",
+      "courses": [
+        7,
+        8
+      ],
+      "url_match": [
+        "confident-ai.com",
+        "deepeval"
+      ],
+      "title_match": [
+        "deepeval",
+        "eval"
+      ],
+      "level": "intermediate",
+      "description": "pytest-native metrics\u2014wire into golden set for Tier 2/3 scoring.",
+      "local": {
+        "clone": "git clone https://github.com/confident-ai/deepeval.git",
+        "setup": [
+          "cd deepeval",
+          "pip install -e .",
+          "pytest tests -q --maxfail=1 -x"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "tests/test_eval.py calls DeepEval on data/golden/"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/confident-ai/deepeval",
+        "full_name": "confident-ai/deepeval",
+        "stars": 18249,
+        "size_kb": 208690,
+        "languages": [
+          "Python",
+          "TypeScript",
+          "JavaScript"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T09:24:30Z"
+      }
+    },
+    {
+      "id": "ragas",
+      "title": "Ragas \u2014 RAG evaluation metrics",
+      "url": "https://github.com/explodinggradients/ragas",
+      "courses": [
+        7
+      ],
+      "url_match": [
+        "ragas.io",
+        "ragas"
+      ],
+      "title_match": [
+        "ragas",
+        "rag eval"
+      ],
+      "level": "intermediate",
+      "description": "Faithfulness and context precision metrics for retrieval-heavy systems.",
+      "local": {
+        "clone": "git clone https://github.com/explodinggradients/ragas.git",
+        "setup": [
+          "cd ragas",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Optional path in scripts/score.py"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/explodinggradients/ragas",
+        "full_name": "vibrantlabsai/ragas",
+        "stars": 15722,
+        "size_kb": 47555,
+        "languages": [
+          "Python",
+          "Jupyter Notebook",
+          "Makefile",
+          "Dockerfile",
+          "Shell"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-02-24T07:47:19Z"
+      }
+    },
+    {
+      "id": "hub-eval-obs",
+      "title": "Hub \u2014 eval-and-observability",
+      "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/eval-and-observability",
+      "courses": [
+        7,
+        9
+      ],
+      "url_match": [
+        "hamel.dev",
+        "eval"
+      ],
+      "title_match": [
+        "eval",
+        "observability"
+      ],
+      "level": "intermediate",
+      "description": "Reference layout for eval runners + tracing hooks.",
+      "local": {
+        "clone": "git clone https://github.com/patchy631/ai-engineering-hub.git",
+        "setup": [
+          "cd ai-engineering-hub/eval-and-observability",
+          "pip install -r requirements.txt"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": ""
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/eval-and-observability",
+        "full_name": "patchy631/ai-engineering-hub",
+        "stars": 37519,
+        "size_kb": 287392,
+        "languages": [
+          "Jupyter Notebook",
+          "Python",
+          "TypeScript",
+          "CSS",
+          "HTML",
+          "Shell",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-10T21:32:11Z"
+      }
+    },
+    {
+      "id": "langfuse",
+      "title": "Langfuse \u2014 LLM observability",
+      "url": "https://github.com/langfuse/langfuse",
+      "courses": [
+        9
+      ],
+      "url_match": [
+        "langfuse"
+      ],
+      "title_match": [
+        "langfuse",
+        "trace",
+        "observability"
+      ],
+      "level": "intermediate",
+      "description": "Traces, scores, and datasets\u2014Course 9 policy + trace prove artifact.",
+      "local": {
+        "clone": "git clone https://github.com/langfuse/langfuse.git",
+        "setup": [
+          "cd langfuse",
+          "docker compose up -d  # see README",
+          "pip install langfuse"
+        ],
+        "env": [
+          "LANGFUSE_PUBLIC_KEY=",
+          "LANGFUSE_SECRET_KEY=",
+          "LANGFUSE_HOST=http://localhost:3000"
+        ],
+        "portfolio_note": "Capture run_id screenshot for prove tab."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/langfuse/langfuse",
+        "full_name": "langfuse/langfuse",
+        "stars": 34544,
+        "size_kb": 227856,
+        "languages": [
+          "TypeScript",
+          "JavaScript",
+          "Shell",
+          "Rust",
+          "CSS",
+          "Python",
+          "PLpgSQL",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T18:11:56Z"
+      }
+    },
+    {
+      "id": "openlineage",
+      "title": "OpenLineage \u2014 lineage events",
+      "url": "https://github.com/OpenLineage/OpenLineage",
+      "courses": [
+        12
+      ],
+      "url_match": [
+        "openlineage"
+      ],
+      "title_match": [
+        "lineage",
+        "openlineage"
+      ],
+      "level": "intermediate",
+      "description": "JSON event spec for pipeline lineage v1.0 prove sample.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/OpenLineage/OpenLineage.git",
+        "setup": [
+          "cd OpenLineage",
+          "ls spec/OpenLineage.json"
+        ],
+        "env": [],
+        "portfolio_note": "Commit one sanitized RUN event JSON under examples/lineage/"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/OpenLineage/OpenLineage",
+        "full_name": "OpenLineage/OpenLineage",
+        "stars": 2656,
+        "size_kb": 82225,
+        "languages": [
+          "Java",
+          "Python",
+          "MDX",
+          "Rust",
+          "Go",
+          "Shell",
+          "TypeScript",
+          "PLpgSQL"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T14:26:11Z"
+      }
+    },
+    {
+      "id": "opa",
+      "title": "Open Policy Agent",
+      "url": "https://github.com/open-policy-agent/opa",
+      "courses": [
+        9
+      ],
+      "url_match": [
+        "openpolicyagent",
+        "opa"
+      ],
+      "title_match": [
+        "opa",
+        "policy"
+      ],
+      "level": "intermediate",
+      "description": "Policy tests for tool/auth gates in Month 9.",
+      "local": {
+        "clone": "git clone --depth 1 https://github.com/open-policy-agent/opa.git",
+        "setup": [
+          "brew install opa 2>/dev/null || docker run openpolicyagent/opa version",
+          "opa test policies/"
+        ],
+        "env": [],
+        "portfolio_note": "policies/ + opa test in CI"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/open-policy-agent/opa",
+        "full_name": "open-policy-agent/opa",
+        "stars": 12231,
+        "size_kb": 3645149,
+        "languages": [
+          "Go",
+          "C",
+          "C++",
+          "Open Policy Agent",
+          "Shell",
+          "Makefile",
+          "JavaScript",
+          "Dockerfile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T04:56:38Z"
+      }
+    },
+    {
+      "id": "smolagents",
+      "title": "Hugging Face smolagents",
+      "url": "https://github.com/huggingface/smolagents",
+      "courses": [
+        2,
+        13
+      ],
+      "url_match": [
+        "huggingface.co/learn/agents"
+      ],
+      "title_match": [
+        "smol",
+        "code agent"
+      ],
+      "level": "intermediate",
+      "description": "Minimal code-executing agents\u2014optional frontier comparison.",
+      "local": {
+        "clone": "git clone https://github.com/huggingface/smolagents.git",
+        "setup": [
+          "cd smolagents",
+          "pip install -e .",
+          "pytest -q --maxfail=1 -x"
+        ],
+        "env": [
+          "HF_TOKEN=",
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Document why/why not vs LangGraph in README."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/huggingface/smolagents",
+        "full_name": "huggingface/smolagents",
+        "stars": 29309,
+        "size_kb": 7421,
+        "languages": [
+          "Python",
+          "Makefile"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-08-25T18:36:00Z"
+      }
+    },
+    {
+      "id": "karpathy-nanoGPT",
+      "title": "nanoGPT (educational LM)",
+      "url": "https://github.com/karpathy/nanoGPT",
+      "courses": [
+        0,
+        1
+      ],
+      "url_match": [
+        "karpathy",
+        "youtube.com/watch?v=zjkbmfhnj_g",
+        "7xtgnnlpymi"
+      ],
+      "title_match": [
+        "karpathy",
+        "gpt",
+        "llm"
+      ],
+      "level": "advanced",
+      "description": "Minimal GPT training code\u2014optional depth after Karpathy videos; not required for prove.",
+      "local": {
+        "clone": "git clone https://github.com/karpathy/nanoGPT.git",
+        "setup": [
+          "cd nanoGPT",
+          "pip install torch numpy transformers datasets tiktoken wandb tqdm",
+          "python train.py --help"
+        ],
+        "env": [],
+        "portfolio_note": "Time-box; inference-first track does not require training runs."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/karpathy/nanoGPT",
+        "full_name": "karpathy/nanoGPT",
+        "stars": 63059,
+        "size_kb": 981,
+        "languages": [
+          "Python"
+        ],
+        "default_branch": "master",
+        "pushed_at": "2025-11-12T19:52:34Z"
+      }
+    },
+    {
+      "id": "unsloth",
+      "title": "Unsloth \u2014 efficient fine-tuning",
+      "url": "https://github.com/unslothai/unsloth",
+      "courses": [
+        13,
+        14
+      ],
+      "url_match": [
+        "unsloth"
+      ],
+      "title_match": [
+        "unsloth",
+        "finetun"
+      ],
+      "level": "advanced",
+      "description": "Fast LoRA/QLoRA fine-tuning notebooks\u2014frontier month optional depth.",
+      "local": {
+        "clone": "git clone https://github.com/unslothai/unsloth.git",
+        "setup": [
+          "cd unsloth",
+          "pip install unsloth",
+          "python -c \"import unsloth; print('ok')\""
+        ],
+        "env": [
+          "HF_TOKEN="
+        ],
+        "portfolio_note": "README: bottleneck + metric if you adopt; else document deferral."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/unslothai/unsloth",
+        "full_name": "unslothai/unsloth",
+        "stars": 76110,
+        "size_kb": 349839,
+        "languages": [
+          "Python",
+          "TypeScript",
+          "Shell",
+          "Rust",
+          "PowerShell",
+          "JavaScript",
+          "CSS",
+          "Jinja"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-13T19:45:35Z"
+      }
+    },
+    {
+      "id": "nemo-guardrails",
+      "title": "NVIDIA NeMo Guardrails",
+      "url": "https://github.com/NVIDIA-NeMo/Guardrails",
+      "courses": [
+        14
+      ],
+      "url_match": [
+        "guardrails",
+        "nemo"
+      ],
+      "title_match": [
+        "guardrails",
+        "nemo"
+      ],
+      "level": "intermediate",
+      "description": "Policy rails for LLM apps\u2014compare with OPA approach from Month 9.",
+      "local": {
+        "clone": "git clone https://github.com/NVIDIA-NeMo/Guardrails.git",
+        "setup": [
+          "cd Guardrails",
+          "pip install nemoguardrails",
+          "nemoguardrails --help"
+        ],
+        "env": [
+          "OPENAI_API_KEY="
+        ],
+        "portfolio_note": "Optional rail config under policies/guardrails/"
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/NVIDIA-NeMo/Guardrails",
+        "full_name": "NVIDIA-NeMo/Guardrails",
+        "stars": 7112,
+        "size_kb": 152314,
+        "languages": [
+          "Python",
+          "JavaScript",
+          "Shell",
+          "Makefile",
+          "Dockerfile",
+          "YARA",
+          "Procfile",
+          "CSS"
+        ],
+        "default_branch": "develop",
+        "pushed_at": "2026-09-11T21:41:47Z"
+      }
+    },
+    {
+      "id": "e2b",
+      "title": "E2B \u2014 code interpreter sandboxes",
+      "url": "https://github.com/e2b-dev/E2B",
+      "courses": [
+        14
+      ],
+      "url_match": [
+        "e2b.dev",
+        "e2b"
+      ],
+      "title_match": [
+        "e2b"
+      ],
+      "level": "intermediate",
+      "description": "Hosted sandboxes for code-executing agents\u2014evaluate vs local Docker.",
+      "local": {
+        "clone": "git clone https://github.com/e2b-dev/E2B.git",
+        "setup": [
+          "cd E2B",
+          "npm install 2>/dev/null || pip install e2b",
+          "e2b --help 2>/dev/null || true"
+        ],
+        "env": [
+          "E2B_API_KEY="
+        ],
+        "portfolio_note": "Document security boundary if you enable code execution."
+      },
+      "github_validation": {
+        "ok": true,
+        "reason": "ok",
+        "url": "https://github.com/e2b-dev/E2B",
+        "full_name": "e2b-dev/E2B",
+        "stars": 13777,
+        "size_kb": 129036,
+        "languages": [
+          "Python",
+          "TypeScript",
+          "Dockerfile",
+          "Makefile",
+          "Handlebars",
+          "Shell",
+          "JavaScript"
+        ],
+        "default_branch": "main",
+        "pushed_at": "2026-09-12T16:23:01Z"
+      }
+    }
+  ]
+}

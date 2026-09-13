@@ -431,7 +431,15 @@ export default function Inspector({
                       {r.level ? `${r.level.toUpperCase()}` : "RESOURCE"}
                     </span>
                     <span style={{ fontSize: "0.65rem", color: "var(--muted)", background: "var(--surface-active)", padding: "0.15rem 0.4rem", borderRadius: "4px" }}>
-                      {r.type === "video" ? "📺 Video" : r.type === "paper" ? "📄 Paper" : "📘 Guide"}
+                      {r.type === "video"
+                        ? "📺 Video"
+                        : r.type === "paper"
+                          ? "📄 Paper"
+                          : r.type === "implementation"
+                            ? "🔧 Implementation"
+                            : r.type === "repo"
+                              ? "📦 Repo"
+                              : "📘 Guide"}
                     </span>
                   </div>
 

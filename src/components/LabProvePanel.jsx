@@ -6,6 +6,7 @@ import {
   Download,
   ExternalLink,
   Factory,
+  ListOrdered,
   ShieldCheck,
   Square,
 } from "lucide-react";
@@ -38,6 +39,7 @@ export default function LabProvePanel({
   const courseId = lesson.course;
   const provePack = courseRef.prove_pack || {};
   const realWorld = courseRef.real_world || {};
+  const labPlan = lesson.lab_plan || null;
   const acceptance = provePack.acceptance || [];
   const progress = requiredChecklistProgress(acceptance, proveChecklistMap, courseId);
 
@@ -91,6 +93,126 @@ export default function LabProvePanel({
           auto-grade.
         </p>
       </div>
+
+      {labPlan?.steps?.length > 0 && (
+        <section className="lab-prove-section" aria-labelledby="lab-impl-plan-heading">
+          <h4 id="lab-impl-plan-heading" className="lab-prove-section-title">
+            <ListOrdered size={16} aria-hidden />
+            {labPlan.title || "Implementation plan"}
+          </h4>
+          {labPlan.done_when && (
+            <p className="lab-prove-muted">
+              <strong>Done when:</strong> {labPlan.done_when}
+            </p>
+          )}
+          <ol className="lab-prove-impl-steps">
+            {labPlan.steps.map((step) => (
+              <li key={step.id || step.title} className="lab-prove-impl-step">
+                <span className="lab-prove-impl-step-title">{step.title}</span>
+                {step.detail && <p className="lab-prove-body">{step.detail}</p>}
+                {step.bullets?.length > 0 && (
+                  <ul className="lab-prove-impl-bullets">
+                    {step.bullets.map((line, i) => (
+                      <li key={i}>{line}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ol>
+          {labPlan.implementation_links?.length > 0 && (
+            <div className="lab-prove-impl-links">
+              <p className="lab-prove-muted">
+                <strong>Reference implementations</strong> (also under More resources):
+              </p>
+              <ul className="lab-prove-impl-link-list">
+                {labPlan.implementation_links.map((link) => (
+                  <li key={link.url}>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="learning-resource-link"
+                    >
+                      <ExternalLink size={14} />
+                      {link.title}
+                    </a>
+                    {link.description && (
+                      <span className="lab-prove-muted"> — {link.description}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {labPlan.local_setup?.steps?.length > 0 && (
+            <div className="lab-prove-local-setup">
+              <p className="lab-prove-muted">
+                <strong>Local workspace</strong> ({labPlan.local_setup.workspace || "~/ai-systems-lab"})
+              </p>
+              {labPlan.local_setup.prerequisites?.length > 0 && (
+                <p className="lab-prove-body">
+                  Prerequisites: {labPlan.local_setup.prerequisites.join(" · ")}
+                </p>
+              )}
+              {labPlan.local_setup.reference_url && (
+                <p className="lab-prove-muted">
+                  Closest reference repo:{" "}
+                  <a
+                    href={labPlan.local_setup.reference_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="learning-resource-link inline"
+                  >
+                    {labPlan.local_setup.reference_repo || "Open repo"}
+                  </a>
+                </p>
+              )}
+              <ol className="lab-prove-local-steps">
+                {labPlan.local_setup.steps.map((line, i) => (
+                  <li key={i}>
+                    <code className="lab-prove-cmd lab-prove-local-line">{line}</code>
+                  </li>
+                ))}
+              </ol>
+              {labPlan.local_setup.env_vars?.length > 0 && (
+                <details className="prove-pack-example">
+                  <summary>Environment variables (.env)</summary>
+                  <pre>{labPlan.local_setup.env_vars.join("\n")}</pre>
+                </details>
+              )}
+              {labPlan.local_setup.portfolio_note && (
+                <p className="lab-prove-muted">{labPlan.local_setup.portfolio_note}</p>
+              )}
+            </div>
+          )}
+
+          <button
+            type="button"
+            className="filter-btn"
+            onClick={() =>
+              handleCopy(
+                [
+                  labPlan.title || "Implementation plan",
+                  labPlan.done_when ? `Done when: ${labPlan.done_when}` : "",
+                  "",
+                  ...labPlan.steps.flatMap((step) => [
+                    step.title,
+                    step.detail || "",
+                    ...(step.bullets || []).map((b) => `- ${b}`),
+                    "",
+                  ]),
+                ]
+                  .filter(Boolean)
+                  .join("\n"),
+              )
+            }
+          >
+            <ClipboardCopy size={12} />
+            Copy implementation plan
+          </button>
+        </section>
+      )}
 
       {realWorld.summary && (
         <section className="lab-prove-section" aria-labelledby="lab-real-world-heading">
