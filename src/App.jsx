@@ -3,7 +3,7 @@ import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google";
 import { resolveGoogleClientId } from "./utils/googleAuth";
 import { readJsonStorage } from "./utils/localStorage";
 import confetti from "canvas-confetti";
-import { loadCurriculum } from "./services/curriculumLoader";
+import { invalidateCurriculumCache, loadCurriculum } from "./services/curriculumLoader";
 import { CurriculumError, CurriculumLoading } from "./components/CurriculumShell";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -98,6 +98,7 @@ export default function App() {
   }, []);
 
   const reloadCurriculum = useCallback(() => {
+    invalidateCurriculumCache();
     setCurriculumError(null);
     setCurriculumReady(false);
     loadCurriculum()

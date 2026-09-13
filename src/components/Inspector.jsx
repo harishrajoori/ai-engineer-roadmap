@@ -12,6 +12,7 @@ import {
   Key
 } from "lucide-react";
 import { generateAiResponse, AVAILABLE_MODELS } from "../services/aiService";
+import { getLessonResources } from "../utils/lessonResources";
 
 function MentorChatPanel({
   lesson,
@@ -217,6 +218,8 @@ export default function Inspector({
     return `👋 ${hi}! I am your Staff AI Systems Mentor. Ask about this topic, bottlenecks, or architecture tradeoffs.`;
   }, [userProfile]);
 
+  const displayResources = useMemo(() => getLessonResources(lesson), [lesson]);
+
   if (!lesson) return null;
 
   const toggleRevealPrompt = (idx) => {
@@ -330,10 +333,12 @@ export default function Inspector({
               Beginner → advanced links for this topic. Primary lecture stays under the Lecture tab.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              {(lesson.resources || []).length === 0 && (
-                <p style={{ fontSize: "0.78rem", color: "var(--muted)" }}>No enriched resource stack — use the primary link in Overview.</p>
+              {displayResources.length === 0 && (
+                <p style={{ fontSize: "0.78rem", color: "var(--muted)" }}>
+                  No links for this item yet — check Build/Prove steps or the syllabus markdown.
+                </p>
               )}
-              {(lesson.resources || []).map((r, idx) => (
+              {displayResources.map((r, idx) => (
                 <div key={idx} className="resource-card">
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                     <span className={`level-badge level-${r.level || "beginner"}`}>

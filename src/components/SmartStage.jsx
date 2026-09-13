@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { youtubeIdFromUrl, isLikelyYoutubeId } from "../utils/youtube";
 import { buildDefaultLessonMarkdown } from "../utils/lessonContent";
+import { getLessonResources } from "../utils/lessonResources";
 
 const DEFAULT_RESOURCES = [
   {
@@ -107,8 +108,9 @@ export default function SmartStage({
     if (!lesson) {
       return DEFAULT_RESOURCES.map((r) => resourceToBlock(r, ""));
     }
-    const raw = lesson.resources?.length ? lesson.resources : DEFAULT_RESOURCES;
-    return raw.map((r) => resourceToBlock(r, primaryVideoId));
+    const raw = getLessonResources(lesson);
+    const stack = raw.length ? raw : DEFAULT_RESOURCES;
+    return stack.map((r) => resourceToBlock(r, primaryVideoId));
   }, [lesson, primaryVideoId]);
 
   const supplementalResources = useMemo(() => {
@@ -146,7 +148,6 @@ export default function SmartStage({
   const externalPlatform =
     lesson.url &&
     (lesson.open_how?.includes("DL.AI") ||
-      lesson.open_how?.includes("Coursera") ||
       lesson.open_how?.includes("Browser") ||
       (!showPrimaryEmbed && lesson.type === "Video"));
 
@@ -262,8 +263,8 @@ export default function SmartStage({
               <div>
                 <div className="learning-external-title">Open on {lesson.open_how || "external platform"}</div>
                 <div className="learning-external-sub">
-                  Coursera and DeepLearning.AI are not embeddable here — open in a new tab, then mark complete when this
-                  topic&apos;s objective is met.
+                  Some external courses and docs are not embeddable here — open in a new tab, then mark complete when
+                  this topic&apos;s objective is met.
                 </div>
               </div>
               <ExternalLink size={18} />

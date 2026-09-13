@@ -159,7 +159,12 @@ def apply_url_fixes(lessons: list[dict]) -> list[dict]:
 def merge_enrichment(base_lessons: list[dict], by_order: dict[int, dict]) -> list[dict]:
     for row in base_lessons:
         old = by_order.get(row["order"], {})
+        old_url = (old.get("url") or "").strip()
+        new_url = (row.get("url") or "").strip()
+        syllabus_changed = old_url != new_url or (old.get("lesson") or "") != (row.get("lesson") or "")
         for key in ENRICH_FIELDS:
+            if key == "resources" and syllabus_changed:
+                continue
             if key in old and old[key]:
                 row[key] = old[key]
         if not row.get("youtube_id"):
@@ -218,12 +223,12 @@ def embed_url(url: str) -> str:
 
 
 def spine_lessons() -> list[dict]:
-    """Open Video Masterclass block at top of track (not under a Course heading)."""
+    """Free program spine at top of track (parallel with Courses 1–2)."""
     rows = [
         (
-            "Generative AI with Large Language Models",
-            "https://www.coursera.org/learn/generative-ai-with-llms",
-            "~16 h",
+            "Karpathy — Deep Dive into LLMs",
+            "https://www.youtube.com/watch?v=7xTGNNLPyMI",
+            "~3 h",
             1,
         ),
         (
@@ -232,21 +237,15 @@ def spine_lessons() -> list[dict]:
             "2–3 h",
             2,
         ),
-        (
-            "Generative AI Engineering with LLMs specialization (cherry-pick)",
-            "https://www.coursera.org/specializations/generative-ai-engineering-with-llms",
-            "optional",
-            2,
-        ),
     ]
     out: list[dict] = []
     for i, (title, url, dur, maps_to) in enumerate(rows, start=1):
-        optional = "cherry-pick" in title
+        optional = False
         out.append(
             {
                 "order": i,
                 "course": maps_to,
-                "course_title": f"Open Video Spine → Course {maps_to}",
+                "course_title": f"Free program spine → Course {maps_to}",
                 "month": MONTH_BY_COURSE.get(str(maps_to), ""),
                 "section": "video_spine",
                 "type": "Video",
@@ -305,9 +304,48 @@ def annotate_shared_urls(lessons: list[dict]) -> None:
             )
 
 
+def resource_type_for(lesson_type: str, url: str) -> str:
+    if "arxiv.org" in url:
+        return "paper"
+    if lesson_type == "Video" or "youtube.com" in url or "youtu.be" in url:
+        return "video"
+    return "guide"
+
+
+_PRIMARY_RESOURCE_DESC = "Main link for this topic from the learning track."
+
+
+def ensure_primary_resource(row: dict) -> None:
+    """Guarantee at least one resource card (primary syllabus URL) for the studio UI."""
+    url = (row.get("url") or "").strip()
+    resources = [
+        r
+        for r in (row.get("resources") or [])
+        if "coursera.org" not in (r.get("url") or "")
+        and not (
+            (r.get("description") or "") == _PRIMARY_RESOURCE_DESC
+            and (r.get("url") or "").strip() != url
+        )
+    ]
+    if url.startswith("http") and "coursera.org" not in url:
+        if not any((r.get("url") or "").strip() == url for r in resources):
+            resources.insert(
+                0,
+                {
+                    "title": row.get("lesson") or "Primary syllabus link",
+                    "url": url,
+                    "type": resource_type_for(row.get("type", ""), url),
+                    "level": "beginner",
+                    "description": "Main link for this topic from the learning track.",
+                },
+            )
+    row["resources"] = resources
+
+
 def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]]) -> list[dict]:
     annotate_shared_urls(lessons)
     for row in lessons:
+        ensure_primary_resource(row)
         row["section_label"] = section_label(row.get("section") or "")
         ckey = str(row.get("course", ""))
         outcomes = course_outcomes.get(ckey, [])
@@ -338,7 +376,7 @@ def parse_track(text: str) -> list[dict]:
         if line.startswith("### Open Video") or "Video (required" in line or "Video / DL.AI" in line:
             section = "video"
             continue
-        if line.startswith("**Watch"):
+        if line.startswith("**Watch") or line.startswith("**DL.AI"):
             section = "watch"
             continue
         if line.startswith("**Read") or line.startswith("**Watch / read"):
@@ -400,6 +438,9 @@ def parse_track(text: str) -> list[dict]:
                 else:
                     title = re.sub(r"\*\*([^*]+)\*\*", r"\1", body)
                     url = ""
+
+        if url and "coursera.org" in url:
+            continue
 
         sec_key = section.lower()
         lesson_type = SECTION_TO_TYPE.get(sec_key, "Read")

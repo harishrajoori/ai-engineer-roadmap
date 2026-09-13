@@ -4,6 +4,11 @@
 
 let cached = null;
 
+/** Clear in-memory cache (e.g. after `npm run curriculum` or Retry). */
+export function invalidateCurriculumCache() {
+  cached = null;
+}
+
 function buildCoursesRefFromLessons(lessons) {
   const ref = {};
   for (const les of lessons) {
@@ -35,7 +40,8 @@ export async function loadCurriculum() {
     return cached;
   }
 
-  const res = await fetch(`${import.meta.env.BASE_URL}data/lessons.json`);
+  const jsonUrl = `${import.meta.env.BASE_URL}data/lessons.json`;
+  const res = await fetch(jsonUrl, { cache: import.meta.env.DEV ? "no-store" : "default" });
   if (!res.ok) {
     throw new Error(`Failed to load curriculum (${res.status}). Run npm run curriculum and rebuild.`);
   }

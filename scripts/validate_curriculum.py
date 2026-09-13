@@ -144,7 +144,7 @@ def validate_app_data(lessons: list[dict]) -> list[str]:
             has_vid = bool(les.get("youtube_id")) or "youtube.com" in url or "youtu.be" in url
             external_ok = any(
                 x in url or x in open_how
-                for x in ("deeplearning.ai", "coursera.org", "DL.AI", "Coursera", "Embed / YouTube")
+                for x in ("deeplearning.ai", "DL.AI", "Embed / YouTube", "Browser")
             )
             if not has_vid and not external_ok:
                 errors.append(f"Video lesson missing play target: order={les.get('order')} {les.get('lesson')}")

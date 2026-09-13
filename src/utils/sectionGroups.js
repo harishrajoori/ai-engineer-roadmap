@@ -14,7 +14,7 @@ export const SECTION_ORDER = [
 ];
 
 const LABELS = {
-  video_spine: "Coursera / DL.AI spine",
+  video_spine: "Free program spine",
   watch: "Watch",
   read: "Read",
   build: "Build",

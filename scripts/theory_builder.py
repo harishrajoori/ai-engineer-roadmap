@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 SECTION_DISPLAY: dict[str, str] = {
-    "video_spine": "Coursera / DL.AI spine",
+    "video_spine": "Free program spine",
     "watch": "Watch",
     "read": "Read",
     "build": "Build",
@@ -135,16 +135,20 @@ def build_theory_summary(
 
 def _topic_blurb(ltype: str, title: str, url: str) -> str:
     if ltype == "Video":
+        if "deeplearning.ai/short-courses" in url:
+            return (
+                f"This is a **DeepLearning.AI short course** (~1–3 h of video in the browser). "
+                f"Complete the modules that match **{title}**, then mark this topic done — not the entire DL.AI catalog."
+            )
+        if "deeplearning.ai/courses" in url:
+            return (
+                f"This is a **course hub** (many modules — not one long video). Time-box the units you need for "
+                f"**{title}**; pair with Karpathy or Applied LLMs rather than trying to finish everything."
+            )
         if "deeplearning.ai" in url:
             return (
-                f"This item is a **DeepLearning.AI short course** or video. Complete it in the browser, "
-                f"then return here to mark progress. Long-form videos may cover more than one checkbox — "
-                f"use the timestamps and syllabus headings that match **{title}**."
-            )
-        if "coursera.org" in url:
-            return (
-                f"This item is on **Coursera** (free audit / Plus). Work through the modules that map to "
-                f"**{title}**; you do not need every optional lecture in the specialization."
+                f"Open **{title}** in the browser. It is not a single embeddable lecture — use the syllabus headings "
+                f"that match this checkbox."
             )
         return (
             f"Watch with a notebook: for **{title}**, capture architecture diagrams, failure modes, "

@@ -4,7 +4,7 @@
 > 1. **Local studio:** `npm install` → `./serve.sh` (or `npm run dev`) → http://localhost:8765 — YouTube embeds, progress, AI mentor (BYOK keys).  
 > 2. **After editing this file:** `npm run curriculum` → refreshes `data/lessons.json` and `public/data/lessons.json` (studio loads at runtime).  
 > 3. **Strategy & depth:** [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) (§1–16 strategy, §17+ module reference & appendices).  
-> 4. **Coursera spine:** Opens in the Coursera app (not embeddable).  
+> 4. **External courses:** DeepLearning.AI short courses and docs open in the browser (free).  
 > 5. **Validate links:** `npm run validate` (run before release).
 
 | | |
@@ -39,13 +39,12 @@
 | 14 | Frontier + portfolio | M14 Nov 2027 | 8–12 | Posts + resume refresh |
 | 15 | Interviews & offers | M15 Dec 2027 | 10–20 | Offer or feedback notes |
 
-### Coursera Plus spine (parallel with Courses 1–2)
+### Free spine (parallel with Courses 1–2)
 
-- [ ] [Generative AI with Large Language Models](https://www.coursera.org/learn/generative-ai-with-llms) (~16 h) — **Course 1**
+- [ ] [Karpathy — Deep Dive into LLMs](https://www.youtube.com/watch?v=7xTGNNLPyMI) (~3 h video) — **Course 1**
 - [ ] [AI Agents in LangGraph](https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/) (~2–3 h) — **Course 2**
-- [ ] Optional: [Generative AI Engineering with LLMs specialization](https://www.coursera.org/specializations/generative-ai-engineering-with-llms) — cherry-pick only; **do not** finish all 7 if capstone slips.
 
-**Udemy:** not required.
+**Paid MOOCs (Coursera, Udemy, etc.):** not required for this track.
 
 ---
 
@@ -136,15 +135,14 @@
 ### What you'll learn
 
 - LLM lifecycle, limits, and interview-ready mental models
-- Coursera **Gen AI with LLMs** (full or weeks 1–2 time-boxed)
+- Free **DL.AI / YouTube** LLM foundations (time-boxed)
 - LiteLLM cost logging and CLI hardening
 
 ### Syllabus
 
-**Coursera (required spine)**
+**Watch / DL.AI**
 
-- [ ] [Generative AI with Large Language Models](https://www.coursera.org/learn/generative-ai-with-llms) · ~16 h
-- [ ] [DL.AI course landing](https://www.deeplearning.ai/courses/generative-ai-with-llms) · same content
+- [ ] [DL.AI — Generative AI with LLMs (course hub)](https://www.deeplearning.ai/courses/generative-ai-with-llms/) · time-box modules
 
 **Watch**
 
@@ -190,7 +188,7 @@
 
 ### Syllabus
 
-**Coursera / DL.AI**
+**DL.AI & docs**
 
 - [ ] [AI Agents in LangGraph](https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/) · 2–3 h
 - [ ] [LangChain Academy — LangGraph modules](https://academy.langchain.com/) · 4–8 h
