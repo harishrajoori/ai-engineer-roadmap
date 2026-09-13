@@ -24,6 +24,7 @@
   --modal-backdrop: rgba(0, 0, 0, 0.8);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.45);
   --code-bg: #050811;
+  --code-fg: #e2e8f0;
   --tag-bg: rgba(255, 255, 255, 0.05);
 }
 
@@ -50,7 +51,8 @@ html[data-theme="light"] {
   --header-bg: rgba(255, 255, 255, 0.92);
   --modal-backdrop: rgba(15, 23, 42, 0.6);
   --shadow-card: 0 6px 24px rgba(15, 23, 42, 0.08);
-  --code-bg: #0f172a;
+  --code-bg: #f1f5f9;
+  --code-fg: #0f172a;
   --tag-bg: rgba(15, 23, 42, 0.05);
 }
 
@@ -2257,10 +2259,13 @@ header {
 }
 .lab-prove-cmd {
   flex: 1;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
   font-size: 0.75rem;
   padding: 0.45rem 0.6rem;
   border-radius: 6px;
   background: var(--code-bg);
+  color: var(--code-fg);
+  border: 1px solid var(--border-subtle);
   overflow-x: auto;
 }
 .lab-prove-readme-details {
