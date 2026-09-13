@@ -14,7 +14,21 @@
       "required": "Yes",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 2,
@@ -29,7 +43,20 @@
       "required": "Yes",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 3,
@@ -44,7 +71,20 @@
       "required": "No",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 7,
@@ -59,7 +99,21 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/zjkBMFhNj_g",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 8,
@@ -74,7 +128,21 @@
       "required": "Yes",
       "open_how": "DL.AI browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 9,
@@ -89,7 +157,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 10,
@@ -104,7 +186,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 11,
@@ -119,7 +215,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 12,
@@ -134,7 +244,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 13,
@@ -149,7 +273,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 14,
@@ -164,7 +302,21 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 15,
@@ -179,7 +331,21 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "course_prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
     },
     {
       "order": 16,
@@ -194,7 +360,21 @@
       "required": "Yes",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 17,
@@ -209,7 +389,21 @@
       "required": "Yes",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 18,
@@ -224,7 +418,21 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/7xTGNNLPyMI",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 19,
@@ -239,7 +447,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 20,
@@ -254,7 +476,21 @@
       "required": "No",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 21,
@@ -269,7 +505,21 @@
       "required": "No",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 22,
@@ -284,7 +534,21 @@
       "required": "No",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 23,
@@ -299,7 +563,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 24,
@@ -314,7 +592,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 25,
@@ -329,7 +621,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 26,
@@ -344,7 +650,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 27,
@@ -359,7 +679,21 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 28,
@@ -374,7 +708,21 @@
       "required": "No",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 29,
@@ -389,7 +737,21 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 30,
@@ -404,7 +766,21 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "course_prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
     },
     {
       "order": 31,
@@ -419,7 +795,20 @@
       "required": "Yes",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 32,
@@ -434,7 +823,20 @@
       "required": "Yes",
       "open_how": "Coursera app",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 33,
@@ -449,7 +851,20 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/4GiqzUHD5AA",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 34,
@@ -464,7 +879,20 @@
       "required": "Yes",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 35,
@@ -479,7 +907,20 @@
       "required": "Yes",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 36,
@@ -494,7 +935,20 @@
       "required": "No",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 37,
@@ -509,7 +963,20 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 38,
@@ -524,7 +991,20 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 39,
@@ -539,7 +1019,20 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 40,
@@ -554,7 +1047,20 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 41,
@@ -569,7 +1075,20 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "course_prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
     },
     {
       "order": 42,
@@ -584,7 +1103,15 @@
       "required": "Yes",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 43,
@@ -599,7 +1126,15 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/LZAGlCqmhZQ",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 44,
@@ -614,7 +1149,15 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/BM39OouLNsM",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 45,
@@ -629,7 +1172,15 @@
       "required": "No",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 46,
@@ -644,7 +1195,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 47,
@@ -659,7 +1218,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 48,
@@ -674,7 +1241,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 49,
@@ -689,7 +1264,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 50,
@@ -704,7 +1287,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 51,
@@ -719,7 +1310,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 52,
@@ -734,7 +1333,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 53,
@@ -749,7 +1356,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 54,
@@ -764,7 +1379,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "course_prompts": []
     },
     {
       "order": 55,
@@ -779,7 +1402,16 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/ZgNJMWipirk",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 56,
@@ -794,7 +1426,16 @@
       "required": "No",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 57,
@@ -809,7 +1450,16 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 58,
@@ -824,7 +1474,16 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 59,
@@ -839,7 +1498,16 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 60,
@@ -854,7 +1522,16 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 61,
@@ -869,7 +1546,16 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 62,
@@ -884,7 +1570,16 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 63,
@@ -899,7 +1594,16 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "course_prompts": []
     },
     {
       "order": 64,
@@ -914,7 +1618,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "course_prompts": []
     },
     {
       "order": 65,
@@ -929,7 +1641,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "course_prompts": []
     },
     {
       "order": 66,
@@ -944,7 +1664,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "course_prompts": []
     },
     {
       "order": 67,
@@ -959,7 +1687,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "course_prompts": []
     },
     {
       "order": 68,
@@ -974,7 +1710,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "course_prompts": []
     },
     {
       "order": 69,
@@ -989,7 +1733,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "course_prompts": []
     },
     {
       "order": 70,
@@ -1004,7 +1756,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "course_prompts": []
     },
     {
       "order": 71,
@@ -1019,7 +1779,15 @@
       "required": "No",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "course_prompts": []
     },
     {
       "order": 72,
@@ -1034,7 +1802,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "course_prompts": []
     },
     {
       "order": 73,
@@ -1049,7 +1825,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "course_prompts": []
     },
     {
       "order": 74,
@@ -1064,7 +1848,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "course_prompts": []
     },
     {
       "order": 75,
@@ -1079,7 +1871,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "course_prompts": []
     },
     {
       "order": 76,
@@ -1094,7 +1894,17 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/bB56BaQIBm4",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 77,
@@ -1109,7 +1919,17 @@
       "required": "No",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 78,
@@ -1124,7 +1944,17 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 79,
@@ -1139,7 +1969,17 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 80,
@@ -1154,7 +1994,17 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 81,
@@ -1169,7 +2019,17 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 82,
@@ -1184,7 +2044,17 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 83,
@@ -1199,7 +2069,17 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 84,
@@ -1214,7 +2094,17 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "course_prompts": []
     },
     {
       "order": 85,
@@ -1229,7 +2119,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Baseline file committed; PR diffs metrics",
+        "Secrets in CI: API keys via GitHub secrets",
+        "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+        "Fail messages: which case regressed"
+      ],
+      "course_prompts": []
     },
     {
       "order": 86,
@@ -1244,7 +2141,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Baseline file committed; PR diffs metrics",
+        "Secrets in CI: API keys via GitHub secrets",
+        "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+        "Fail messages: which case regressed"
+      ],
+      "course_prompts": []
     },
     {
       "order": 87,
@@ -1259,7 +2163,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Baseline file committed; PR diffs metrics",
+        "Secrets in CI: API keys via GitHub secrets",
+        "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+        "Fail messages: which case regressed"
+      ],
+      "course_prompts": []
     },
     {
       "order": 88,
@@ -1274,7 +2185,14 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Baseline file committed; PR diffs metrics",
+        "Secrets in CI: API keys via GitHub secrets",
+        "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+        "Fail messages: which case regressed"
+      ],
+      "course_prompts": []
     },
     {
       "order": 89,
@@ -1289,7 +2207,14 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Baseline file committed; PR diffs metrics",
+        "Secrets in CI: API keys via GitHub secrets",
+        "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+        "Fail messages: which case regressed"
+      ],
+      "course_prompts": []
     },
     {
       "order": 90,
@@ -1304,7 +2229,15 @@
       "required": "Yes",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/4FFspU4riHk",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 91,
@@ -1319,7 +2252,15 @@
       "required": "No",
       "open_how": "Embed",
       "embed_url": "https://www.youtube.com/embed/4GiqzUHD5AA",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 92,
@@ -1334,7 +2275,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 93,
@@ -1349,7 +2298,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 94,
@@ -1364,7 +2321,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 95,
@@ -1379,7 +2344,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 96,
@@ -1394,7 +2367,15 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 97,
@@ -1409,7 +2390,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 98,
@@ -1424,7 +2413,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 99,
@@ -1439,7 +2436,15 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "course_prompts": []
     },
     {
       "order": 100,
@@ -1454,7 +2459,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 101,
@@ -1469,7 +2476,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 102,
@@ -1484,7 +2493,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 103,
@@ -1499,7 +2510,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 104,
@@ -1514,7 +2527,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 105,
@@ -1529,7 +2544,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 106,
@@ -1544,7 +2561,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 107,
@@ -1559,7 +2578,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 108,
@@ -1574,7 +2595,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 109,
@@ -1589,7 +2612,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 110,
@@ -1604,7 +2629,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 111,
@@ -1619,7 +2646,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 112,
@@ -1634,7 +2663,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 113,
@@ -1649,7 +2680,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 114,
@@ -1664,7 +2697,9 @@
       "required": "Yes",
       "open_how": "DL.AI browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 115,
@@ -1679,7 +2714,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 116,
@@ -1694,7 +2731,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 117,
@@ -1709,7 +2748,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 118,
@@ -1724,7 +2765,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 119,
@@ -1739,7 +2782,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 120,
@@ -1754,7 +2799,14 @@
       "required": "Yes",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 121,
@@ -1769,7 +2821,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 122,
@@ -1784,7 +2843,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 123,
@@ -1799,7 +2865,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 124,
@@ -1814,7 +2887,14 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 125,
@@ -1829,7 +2909,14 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 126,
@@ -1844,7 +2931,14 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "course_prompts": []
     },
     {
       "order": 127,
@@ -1859,7 +2953,13 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OpenLineage job/run/dataset model",
+        "Emit on: chunk id, model call id, row id",
+        "Threat model: injection via retrieved docs, tool escalation"
+      ],
+      "course_prompts": []
     },
     {
       "order": 128,
@@ -1874,7 +2974,13 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OpenLineage job/run/dataset model",
+        "Emit on: chunk id, model call id, row id",
+        "Threat model: injection via retrieved docs, tool escalation"
+      ],
+      "course_prompts": []
     },
     {
       "order": 129,
@@ -1889,7 +2995,13 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OpenLineage job/run/dataset model",
+        "Emit on: chunk id, model call id, row id",
+        "Threat model: injection via retrieved docs, tool escalation"
+      ],
+      "course_prompts": []
     },
     {
       "order": 130,
@@ -1904,7 +3016,13 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OpenLineage job/run/dataset model",
+        "Emit on: chunk id, model call id, row id",
+        "Threat model: injection via retrieved docs, tool escalation"
+      ],
+      "course_prompts": []
     },
     {
       "order": 131,
@@ -1919,7 +3037,13 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [
+        "OpenLineage job/run/dataset model",
+        "Emit on: chunk id, model call id, row id",
+        "Threat model: injection via retrieved docs, tool escalation"
+      ],
+      "course_prompts": []
     },
     {
       "order": 132,
@@ -1934,7 +3058,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 133,
@@ -1949,7 +3075,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 134,
@@ -1964,7 +3092,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 135,
@@ -1979,7 +3109,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 136,
@@ -1994,7 +3126,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 137,
@@ -2009,7 +3143,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 138,
@@ -2024,7 +3160,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 139,
@@ -2039,7 +3177,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 140,
@@ -2054,7 +3194,9 @@
       "required": "No",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 141,
@@ -2069,7 +3211,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 142,
@@ -2084,7 +3228,9 @@
       "required": "Yes",
       "open_how": "YouTube",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 143,
@@ -2099,7 +3245,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 144,
@@ -2114,7 +3262,9 @@
       "required": "Yes",
       "open_how": "Browser",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 145,
@@ -2129,7 +3279,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 146,
@@ -2144,7 +3296,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 147,
@@ -2159,7 +3313,9 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     },
     {
       "order": 148,
@@ -2174,7 +3330,159 @@
       "required": "Yes",
       "open_how": "Checkbox",
       "embed_url": "",
-      "status": "Not started"
+      "status": "Not started",
+      "course_concepts": [],
+      "course_prompts": []
     }
-  ]
+  ],
+  "reference_by_course": {
+    "0": {
+      "concepts": [
+        "Agentic SDLC: Cursor rules, typing, pytest before \u201cvibe\u201d commits",
+        "LLMs as untrusted kernels; schemas as contracts",
+        "Instructor `response_model`, validation errors as control flow",
+        "LiteLLM: model string, fallbacks, timeouts",
+        "Golden set: input log snippet \u2192 expected Pydantic JSON",
+        "Invariants beyond JSON Schema (balances, sums, ranges)",
+        "Threat model: prompt injection on log fields, log exfiltration"
+      ],
+      "prompts": [
+        "How do you separate **schema validity** from **semantic correctness**?",
+        "What do you log when an extraction fails after max retries?",
+        ""
+      ]
+    },
+    "1": {
+      "concepts": [
+        "Transformer stack at high level: embeddings, attention, decoder-only inference",
+        "Training vs inference; context window; knowledge cutoff",
+        "Sampling: temperature, top-p; when to use low temperature for extraction",
+        "Tokenization and cost estimation",
+        "Hallucination modes: fabrication vs omission vs formatting",
+        "Structured output strategies: tool JSON, Instructor, outlines/constrained decoding",
+        "Gateway pattern: single entry for models, budgets, logging"
+      ],
+      "prompts": [
+        "Explain attention in one minute for a data engineer audience.",
+        "When would you **not** use an LLM in a pipeline?",
+        ""
+      ]
+    },
+    "2": {
+      "concepts": [
+        "State graph: nodes as pure-ish steps, edges as routing",
+        "Checkpointing: resume after crash; thread id",
+        "`interrupt()` and human-in-the-loop patterns",
+        "Subgraphs vs monolith; when to use Send/API",
+        "Comparison: ReAct loop, LangChain AgentExecutor, LangGraph",
+        "Papers (skim): ReAct, Toolformer \u2014 see Appendix F"
+      ],
+      "prompts": [
+        "Draw your reconciler graph on a whiteboard: nodes, edges, failure paths.",
+        "How do you test a non-deterministic node?",
+        ""
+      ]
+    },
+    "3": {
+      "concepts": [
+        "MCP: resources vs tools vs prompts",
+        "Transport: stdio vs SSE; security boundaries",
+        "Tool schema versioning; breaking changes",
+        "Audit log design for compliance interviews",
+        "Mapping to \u201cinternal API platform\u201d narrative (CARL, Cube)"
+      ],
+      "prompts": []
+    },
+    "4": {
+      "concepts": [
+        "Embeddings: bi-encoder, cosine similarity",
+        "BM25 / sparse retrieval; when lexical beats dense",
+        "RRF fusion formula and parameter sensitivity",
+        "Chunking interaction: recall vs precision",
+        "Agent tool: `search_corpus(query) -> citations`",
+        "Evaluation: recall@k, MRR; labeled q/a set"
+      ],
+      "prompts": []
+    },
+    "5": {
+      "concepts": [
+        "Layout-aware parsing vs naive `pypdf` text",
+        "Tables, headers, footnotes in financial docs",
+        "Chunk boundaries and overlap; metadata for lineage",
+        "LlamaParse vs self-hosted Docling tradeoffs",
+        "`chunks.jsonl` contract for downstream index"
+      ],
+      "prompts": []
+    },
+    "6": {
+      "concepts": [
+        "Property graph vs RDF; when graphs help reconciliation",
+        "GraphRAG vs simple vector RAG",
+        "Validator pattern: \u201cno deploy if dependency cycle\u201d",
+        "Cypher basics: match, where, return",
+        "Scope: **one** validator, not full GraphRAG product"
+      ],
+      "prompts": []
+    },
+    "7": {
+      "concepts": [
+        "Golden set schema: `input`, `expected`, `tags`, `tier`",
+        "Tier 1: JSON/schema 100%",
+        "Tier 2: field-level F1 / exact match",
+        "Tier 3: LLM-judge / faithfulness (use sparingly)",
+        "Ragas metrics: context precision, faithfulness",
+        "DeepEval: pytest integration",
+        "Version golden set in git; review PRs that change labels"
+      ],
+      "prompts": []
+    },
+    "8": {
+      "concepts": [
+        "Baseline file committed; PR diffs metrics",
+        "Secrets in CI: API keys via GitHub secrets",
+        "Flaky evals: fixed seeds, cache LLM responses for CI optional",
+        "Fail messages: which case regressed"
+      ],
+      "prompts": []
+    },
+    "9": {
+      "concepts": [
+        "OPA: allow/deny on `input.tool`, `input.role`",
+        "Test Rego with `opa test`",
+        "Langfuse traces: spans for LLM, tools, graph nodes",
+        "Correlate `run_id` across LiteLLM + LangGraph",
+        "Redaction before screenshotting traces"
+      ],
+      "prompts": []
+    },
+    "10": {
+      "concepts": [],
+      "prompts": []
+    },
+    "11": {
+      "concepts": [
+        "Twelve-factor for agents: config, logs, stateless API",
+        "Sidecar vs separate LiteLLM deployment",
+        "Health checks: API, worker, vector DB",
+        "`docs/adding-a-tool.md`: schema, auth, eval case required"
+      ],
+      "prompts": []
+    },
+    "12": {
+      "concepts": [
+        "OpenLineage job/run/dataset model",
+        "Emit on: chunk id, model call id, row id",
+        "Threat model: injection via retrieved docs, tool escalation"
+      ],
+      "prompts": []
+    },
+    "13": {
+      "concepts": [],
+      "prompts": []
+    },
+    "15": {
+      "concepts": [],
+      "prompts": []
+    }
+  }
 }
