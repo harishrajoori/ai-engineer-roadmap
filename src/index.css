@@ -338,6 +338,217 @@ header {
   padding: 1rem 1rem 0.75rem;
   border-bottom: 1px solid var(--border);
 }
+.syllabus-course-map-btn {
+  width: 100%;
+  margin-top: 0.65rem;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.syllabus-course-map-btn:hover,
+.syllabus-course-map-btn.active {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.45);
+}
+.course-overview-stage .course-overview-assignment {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-top: 0.75rem;
+}
+.course-overview-block {
+  margin: 1.25rem 0;
+  padding: 0 0.25rem;
+}
+.course-overview-block h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+.course-overview-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.theory-path-banner {
+  font-size: 0.8rem;
+  color: var(--muted);
+  padding: 0.55rem 0.75rem;
+  margin-bottom: 0.65rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-alt);
+  line-height: 1.45;
+}
+
+.theory-path-link {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  font-size: inherit;
+}
+
+.theory-level-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.theory-level-pill {
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.theory-level-pill.active {
+  border-color: var(--accent);
+  color: var(--text);
+  background: rgba(99, 102, 241, 0.12);
+}
+
+.theory-level-pill:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.course-enrichment-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--bg-alt);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.course-primer-body {
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.25rem;
+}
+
+.glossary-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+
+.glossary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.glossary-table th,
+.glossary-table td {
+  border: 1px solid var(--border-subtle);
+  padding: 0.45rem 0.55rem;
+  vertical-align: top;
+  text-align: left;
+}
+
+.glossary-table th {
+  background: var(--bg-alt);
+  font-weight: 600;
+}
+
+.glossary-de {
+  color: var(--muted);
+}
+
+.prove-pack-example {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+}
+
+.prove-pack-example pre {
+  margin-top: 0.35rem;
+  padding: 0.65rem;
+  border-radius: 6px;
+  background: var(--bg-alt);
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.inline-cmd {
+  display: inline-block;
+  margin: 0.15rem 0.35rem 0.15rem 0;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  background: var(--bg-alt);
+  font-size: 0.72rem;
+}
+
+.course-overview-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+.course-overview-section h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 1rem 0 0.35rem;
+}
+.course-overview-topic-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.course-overview-topic-btn {
+  width: 100%;
+  text-align: left;
+  padding: 0.45rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-size: 0.82rem;
+  cursor: pointer;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.course-overview-topic-btn:hover {
+  background: var(--surface-hover);
+}
+.course-overview-merge-note {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--muted);
+  padding-left: 0.5rem;
+  margin-bottom: 0.25rem;
+}
 .syllabus-course-title {
   font-size: 0.92rem;
   font-weight: 700;

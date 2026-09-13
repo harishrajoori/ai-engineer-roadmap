@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -18,6 +18,12 @@ import {
 import { youtubeIdFromUrl, isLikelyYoutubeId } from "../utils/youtube";
 import { buildDefaultLessonMarkdown } from "../utils/lessonContent";
 import { getLessonResources } from "../utils/lessonResources";
+import {
+  loadTheoryLevelPreference,
+  markdownForTheoryLevel,
+  saveTheoryLevelPreference,
+  THEORY_LEVELS,
+} from "../utils/theoryLevelPreference";
 
 const DEFAULT_RESOURCES = [
   {
@@ -53,11 +59,8 @@ function defaultTabForLesson(lesson) {
   if (!lesson) {
     return "overview";
   }
-  if (lesson.type === "Video") {
-    return "lecture";
-  }
-  if (lesson.type === "Prove" || lesson.type === "Build") {
-    return "lab";
+  if (lesson.type === "Prove") {
+    return "overview";
   }
   return "overview";
 }
@@ -76,6 +79,7 @@ export default function SmartStage({
   onSaveVideoOverride,
   onOpenRegenerateModal,
   regeneratedContent,
+  regenerationMeta = null,
   proveUrl = "",
   onSaveProveUrl
 }) {
@@ -103,6 +107,11 @@ export default function SmartStage({
   const showPrimaryEmbed = Boolean(primaryVideoId && lesson?.type === "Video");
 
   const [activeTab, setActiveTab] = useState(() => defaultTabForLesson(lesson));
+  const [theoryLevel, setTheoryLevel] = useState(() => loadTheoryLevelPreference());
+
+  useEffect(() => {
+    setActiveTab(defaultTabForLesson(lesson));
+  }, [lesson?.order]);
 
   const resources = useMemo(() => {
     if (!lesson) {
@@ -129,17 +138,17 @@ export default function SmartStage({
   }, [resources, lesson, primaryVideoId]);
 
   const theoryMarkdown = useMemo(() => {
-    if (regeneratedContent) {
-      return regeneratedContent;
-    }
-    if (lesson?.content) {
-      return lesson.content;
-    }
-    if (lesson?.theory_summary) {
-      return lesson.theory_summary;
+    const fromLevels = markdownForTheoryLevel(lesson, theoryLevel, regeneratedContent);
+    if (fromLevels) {
+      return fromLevels;
     }
     return buildDefaultLessonMarkdown(lesson, courseRef);
-  }, [lesson, courseRef, regeneratedContent]);
+  }, [lesson, courseRef, regeneratedContent, theoryLevel]);
+
+  const handleTheoryLevel = (levelId) => {
+    setTheoryLevel(levelId);
+    saveTheoryLevelPreference(levelId);
+  };
 
   if (!lesson) {
     return null;
@@ -198,7 +207,7 @@ export default function SmartStage({
           onClick={() => setActiveTab("overview")}
         >
           <BookOpen size={17} />
-          Overview
+          Theory
         </button>
         <button
           type="button"
@@ -231,12 +240,41 @@ export default function SmartStage({
 
       {activeTab === "overview" && (
         <div className="learning-tab-panel animation-fade-in">
+          <div className="theory-path-banner">
+            <span>
+              <strong>Suggested path:</strong> pick a level below → read theory → then open{" "}
+              <button type="button" className="theory-path-link" onClick={() => setActiveTab("lecture")}>
+                Lecture
+              </button>{" "}
+              when ready.
+            </span>
+          </div>
+          {!regeneratedContent && lesson.theory_levels && (
+            <div className="theory-level-pills" role="group" aria-label="Theory depth">
+              {THEORY_LEVELS.map((lvl) => (
+                <button
+                  key={lvl.id}
+                  type="button"
+                  className={`theory-level-pill ${theoryLevel === lvl.id ? "active" : ""}`}
+                  title={lvl.hint}
+                  onClick={() => handleTheoryLevel(lvl.id)}
+                >
+                  {lvl.label}
+                </button>
+              ))}
+            </div>
+          )}
           {lesson.coverage_note && (
             <div className="learning-coverage-callout">{lesson.coverage_note}</div>
           )}
           <div className="markdown-theory prose-learning">
             {regeneratedContent && (
-              <p className="learning-ai-banner">AI-regenerated view — compare with curriculum sources</p>
+              <p className="learning-ai-banner">
+                AI-regenerated view
+                {regenerationMeta?.model ? ` · ${regenerationMeta.model}` : ""}
+                {regenerationMeta?.lens ? ` · ${regenerationMeta.lens} lens` : ""}
+                {" — compare with curriculum sources"}
+              </p>
             )}
             <ReactMarkdown remarkPlugins={[remarkGfm, remarkMath]} rehypePlugins={[rehypeKatex]}>
               {theoryMarkdown}
@@ -393,7 +431,7 @@ export default function SmartStage({
         <button
           type="button"
           className={`completion-btn ${isCompleted ? "completed" : ""}`}
-          onClick={() => onToggleComplete(lesson.order)}
+          onClick={() => onToggleComplete(lesson)}
         >
           <CheckCircle2 size={18} />
           {isCompleted ? "Completed" : "Mark complete"}

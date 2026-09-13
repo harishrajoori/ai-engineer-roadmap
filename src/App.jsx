@@ -9,17 +9,26 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import LessonFeed from "./components/LessonFeed";
 import SmartStage from "./components/SmartStage";
+import CourseStage from "./components/CourseStage";
 import Inspector from "./components/Inspector";
+import { lessonsForSyllabusDisplay, ordersForTopicToggle } from "./utils/syllabusDisplay";
 import SettingsModal from "./components/SettingsModal";
 import RegenerateModal from "./components/RegenerateModal";
 import MobileLearningBar from "./components/MobileLearningBar";
 import { computeStreakDays, loadStudyDays, recordStudyDay, saveStudyDays } from "./utils/studyStreak";
+import {
+  fetchTheoryRegenerationsFromCloud,
+  flattenRegenerationsForBackup,
+  importRegenerationsFromBackup,
+  loadTheoryRegenerations,
+  regenerationMarkdown,
+  saveTheoryRegeneration,
+} from "./utils/theoryRegenerationStore";
 
 const PROGRESS_KEY = "ai_hub_react_progress";
 const NOTES_KEY = "ai_hub_react_notes";
 const PROVE_KEY = "ai_hub_react_prove";
 const OVERRIDES_KEY = "ai_hub_react_video_overrides";
-const REGEN_KEY = "ai_hub_react_regenerations";
 const KEYS_KEY = "ai_hub_react_api_keys";
 const MODEL_KEY = "ai_hub_react_preferred_model";
 const THEME_KEY = "ai_hub_react_theme";
@@ -30,7 +39,9 @@ export default function App() {
   const [notesMap, setNotesMap] = useState(() => readJsonStorage(NOTES_KEY, {}));
   const [proveMap, setProveMap] = useState(() => readJsonStorage(PROVE_KEY, {}));
   const [videoOverrides, setVideoOverrides] = useState(() => readJsonStorage(OVERRIDES_KEY, {}));
-  const [regenerations, setRegenerations] = useState(() => readJsonStorage(REGEN_KEY, {}));
+  const [regenerations, setRegenerations] = useState(() =>
+    loadTheoryRegenerations(readJsonStorage(USER_KEY, null))
+  );
   const [apiKeys, setApiKeys] = useState(() => readJsonStorage(KEYS_KEY, {}));
   const [preferredModel, setPreferredModel] = useState(() => localStorage.getItem(MODEL_KEY) || "gemini-2.5-flash");
   const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || "dark");
@@ -39,6 +50,8 @@ export default function App() {
 
   const [lessonsData, setLessonsData] = useState([]);
   const [coursesRefData, setCoursesRefData] = useState({});
+  const [programPrimerMarkdown, setProgramPrimerMarkdown] = useState("");
+  const [glossary, setGlossary] = useState([]);
   const [curriculumReady, setCurriculumReady] = useState(false);
   const [curriculumError, setCurriculumError] = useState(null);
 
@@ -49,6 +62,7 @@ export default function App() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isRegenOpen, setIsRegenOpen] = useState(false);
   const [mobilePanel, setMobilePanel] = useState(null);
+  const [courseOverviewMode, setCourseOverviewMode] = useState(false);
   const stageRef = useRef(null);
 
   useEffect(() => {
@@ -69,9 +83,6 @@ export default function App() {
     localStorage.setItem(OVERRIDES_KEY, JSON.stringify(videoOverrides));
   }, [videoOverrides]);
   useEffect(() => {
-    localStorage.setItem(REGEN_KEY, JSON.stringify(regenerations));
-  }, [regenerations]);
-  useEffect(() => {
     localStorage.setItem(KEYS_KEY, JSON.stringify(apiKeys));
   }, [apiKeys]);
   useEffect(() => {
@@ -85,9 +96,11 @@ export default function App() {
     }
   }, [userProfile]);
 
-  const applyCurriculum = useCallback(({ lessons, coursesRef }) => {
+  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, glossary: terms }) => {
     setLessonsData(lessons);
     setCoursesRefData(coursesRef);
+    setProgramPrimerMarkdown(primer || "");
+    setGlossary(terms || []);
     setActiveLessonOrder((prev) => {
       if (lessons.some((l) => l.order === prev)) {
         return prev;
@@ -150,6 +163,11 @@ export default function App() {
     [activeCourse]
   );
 
+  const displayCourseLessons = useMemo(
+    () => lessonsForSyllabusDisplay(courseLessons),
+    [courseLessons]
+  );
+
   const activeLesson = useMemo(
     () =>
       lessonsData.find((l) => l.order === activeLessonOrder) || courseLessons[0] || lessonsData[0],
@@ -162,23 +180,26 @@ export default function App() {
   };
 
   const courseProgressPct = useMemo(() => {
-    if (!courseLessons.length) {
+    if (!displayCourseLessons.length) {
       return 0;
     }
-    const done = courseLessons.filter((l) => progressMap[l.order]).length;
-    return Math.round((done / courseLessons.length) * 100);
-  }, [courseLessons, progressMap]);
+    const done = displayCourseLessons.filter((l) => {
+      const keys = ordersForTopicToggle(l);
+      return keys.some((order) => progressMap[order]);
+    }).length;
+    return Math.round((done / displayCourseLessons.length) * 100);
+  }, [displayCourseLessons, progressMap]);
 
   const lessonNav = useMemo(() => {
-    const idx = courseLessons.findIndex((l) => l.order === activeLesson?.order);
+    const idx = displayCourseLessons.findIndex((l) => l.order === activeLesson?.order);
     return {
       idx,
       hasPrev: idx > 0,
-      hasNext: idx >= 0 && idx < courseLessons.length - 1,
-      prev: idx > 0 ? courseLessons[idx - 1] : null,
-      next: idx >= 0 && idx < courseLessons.length - 1 ? courseLessons[idx + 1] : null
+      hasNext: idx >= 0 && idx < displayCourseLessons.length - 1,
+      prev: idx > 0 ? displayCourseLessons[idx - 1] : null,
+      next: idx >= 0 && idx < displayCourseLessons.length - 1 ? displayCourseLessons[idx + 1] : null
     };
-  }, [courseLessons, activeLesson]);
+  }, [displayCourseLessons, activeLesson]);
 
   const totalCount = lessonsData.length;
   const completedCount = lessonsData.filter((l) => progressMap[l.order]).length;
@@ -197,9 +218,15 @@ export default function App() {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  const handleGoogleLogin = (decodedProfile) => {
+  const handleGoogleLogin = (decodedProfile, idToken = null) => {
     if (decodedProfile?.name) {
       setUserProfile(decodedProfile);
+      setRegenerations(loadTheoryRegenerations(decodedProfile));
+      void fetchTheoryRegenerationsFromCloud(decodedProfile, idToken).then((merged) => {
+        if (merged) {
+          setRegenerations(merged);
+        }
+      });
       confetti({ particleCount: 50, spread: 60 });
     }
   };
@@ -213,27 +240,44 @@ export default function App() {
       }
     }
     setUserProfile(null);
+    setRegenerations(loadTheoryRegenerations(null));
   };
 
   const handleSelectCourse = (cNum) => {
     setActiveCourseNum(cNum);
-    const targetCourse = courses.find((c) => c.course === cNum);
-    if (targetCourse?.lessons.length) {
-      setActiveLessonOrder(targetCourse.lessons[0].order);
-    }
+    setCourseOverviewMode(true);
     setMobilePanel(null);
+    scrollStageTop();
+  };
+
+  const handleOpenCourseOverview = () => {
+    setCourseOverviewMode(true);
     scrollStageTop();
   };
 
   const handleSelectLesson = (order) => {
     setActiveLessonOrder(order);
+    setCourseOverviewMode(false);
     setMobilePanel(null);
     scrollStageTop();
   };
 
-  const handleToggleComplete = (order) => {
+  const handleToggleComplete = (lessonOrOrder) => {
+    const orders =
+      typeof lessonOrOrder === "object" && lessonOrOrder !== null
+        ? ordersForTopicToggle(lessonOrOrder)
+        : [lessonOrOrder];
+    const primary = orders[0];
     setProgressMap((prev) => {
-      const next = !prev[order];
+      const next = !prev[primary];
+      const patch = { ...prev };
+      for (const order of orders) {
+        if (next) {
+          patch[order] = true;
+        } else {
+          delete patch[order];
+        }
+      }
       if (next) {
         confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         setStudyDays((days) => {
@@ -242,7 +286,7 @@ export default function App() {
           return updated;
         });
       }
-      return { ...prev, [order]: next };
+      return patch;
     });
   };
 
@@ -258,8 +302,9 @@ export default function App() {
     setVideoOverrides((prev) => ({ ...prev, [order]: ytId }));
   };
 
-  const handleSaveRegeneration = (order, content) => {
-    setRegenerations((prev) => ({ ...prev, [order]: content }));
+  const handleSaveRegeneration = (order, content, meta = {}) => {
+    const next = saveTheoryRegeneration(userProfile, order, content, meta);
+    setRegenerations(next);
   };
 
   const handleExportBackup = () => {
@@ -270,7 +315,8 @@ export default function App() {
       notes: notesMap,
       proveUrls: proveMap,
       videoOverrides,
-      regenerations,
+      regenerations: flattenRegenerationsForBackup(regenerations),
+      theory_regenerations: regenerations,
       studyDays,
       preferredModel
     };
@@ -283,6 +329,10 @@ export default function App() {
   };
 
   const handleImportBackup = (data) => {
+    const profileForImport = data.user || userProfile;
+    if (data.user) {
+      setUserProfile(data.user);
+    }
     if (data.progress) {
       setProgressMap(data.progress);
     }
@@ -295,11 +345,10 @@ export default function App() {
     if (data.videoOverrides) {
       setVideoOverrides(data.videoOverrides);
     }
-    if (data.regenerations) {
-      setRegenerations(data.regenerations);
-    }
-    if (data.user) {
-      setUserProfile(data.user);
+    if (data.theory_regenerations) {
+      setRegenerations(importRegenerationsFromBackup(profileForImport, data.theory_regenerations));
+    } else if (data.regenerations) {
+      setRegenerations(importRegenerationsFromBackup(profileForImport, data.regenerations));
     }
     if (data.studyDays) {
       setStudyDays(data.studyDays);
@@ -344,6 +393,8 @@ export default function App() {
             courseProgressPct={courseProgressPct}
             lessons={courseLessons}
             activeLessonOrder={activeLessonOrder}
+            courseOverviewMode={courseOverviewMode}
+            onOpenCourseOverview={handleOpenCourseOverview}
             onSelectLesson={handleSelectLesson}
             onToggleComplete={handleToggleComplete}
             progressMap={progressMap}
@@ -353,6 +404,15 @@ export default function App() {
         </aside>
 
         <main className="stage" ref={stageRef}>
+          {courseOverviewMode ? (
+            <CourseStage
+              course={activeCourse}
+              courseRef={activeCourseRef}
+              onSelectLesson={handleSelectLesson}
+              programPrimerMarkdown={programPrimerMarkdown}
+              glossary={glossary}
+            />
+          ) : (
           <SmartStage
             key={activeLesson?.order}
             lesson={activeLesson}
@@ -367,14 +427,16 @@ export default function App() {
             videoOverrides={videoOverrides}
             onSaveVideoOverride={handleSaveVideoOverride}
             onOpenRegenerateModal={() => setIsRegenOpen(true)}
-            regeneratedContent={regenerations[activeLesson?.order]}
+            regeneratedContent={regenerationMarkdown(regenerations, activeLesson?.order)}
+            regenerationMeta={regenerations[String(activeLesson?.order)] || regenerations[activeLesson?.order]}
             proveUrl={proveMap[activeLesson?.order] || ""}
             onSaveProveUrl={handleSaveProveUrl}
           />
+          )}
         </main>
 
         <Inspector
-          lesson={activeLesson}
+          lesson={courseOverviewMode ? null : activeLesson}
           courseRef={activeCourseRef}
           notes={notesMap}
           onSaveNotes={handleSaveNotes}

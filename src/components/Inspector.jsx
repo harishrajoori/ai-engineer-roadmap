@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import {
-  BookOpen,
   Bot,
   FileText,
   HelpCircle,
@@ -209,7 +208,7 @@ export default function Inspector({
   apiKeys = {},
   userProfile = null
 }) {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("mentor");
   const [revealedPrompts, setRevealedPrompts] = useState({});
 
   const mentorGreeting = useMemo(() => {
@@ -220,7 +219,18 @@ export default function Inspector({
 
   const displayResources = useMemo(() => getLessonResources(lesson), [lesson]);
 
-  if (!lesson) return null;
+  if (!lesson) {
+    return (
+      <aside className="inspector-panel">
+        <div className="inspector-content" style={{ padding: "1rem" }}>
+          <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.5 }}>
+            Select a topic from the syllabus, or use <strong>Course overview</strong> in the middle column. The Mentor,
+            Notes, and Resources tabs apply to the active topic.
+          </p>
+        </div>
+      </aside>
+    );
+  }
 
   const toggleRevealPrompt = (idx) => {
     setRevealedPrompts((prev) => ({ ...prev, [idx]: !prev[idx] }));
@@ -230,14 +240,6 @@ export default function Inspector({
     <aside className="inspector-panel">
       {/* Tab Navigation Header */}
       <div className="inspector-tabs">
-        <button
-          className={`tab-btn ${activeTab === "overview" ? "active" : ""}`}
-          onClick={() => setActiveTab("overview")}
-        >
-          <BookOpen size={13} />
-          <span>Overview</span>
-        </button>
-
         <button
           className={`tab-btn ${activeTab === "resources" ? "active" : ""}`}
           onClick={() => setActiveTab("resources")}
@@ -278,52 +280,6 @@ export default function Inspector({
           <span>Blueprint</span>
         </button>
       </div>
-
-      {/* Tab 1: Overview */}
-      {activeTab === "overview" && (
-        <div className="inspector-content">
-          <div className="inspector-section">
-            <div className="section-title">Active Topic</div>
-            <h2 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text)", lineHeight: 1.3 }}>
-              {lesson.lesson}
-            </h2>
-            <div style={{ display: "flex", gap: "0.4rem", alignItems: "center", marginTop: "0.35rem" }}>
-              <span className={`badge badge-${lesson.type || "Do"}`}>{lesson.type}</span>
-              <span style={{ fontSize: "0.72rem", color: "var(--muted)" }}>
-                {lesson.required === "Yes" ? "⭐ Required" : "Optional"}
-              </span>
-            </div>
-          </div>
-
-          <div className="inspector-section">
-            <div className="section-title">Timeline & Metadata</div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", fontSize: "0.78rem" }}>
-              <div style={{ background: "var(--bg-alt)", padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)" }}>
-                <span style={{ color: "var(--muted)" }}>Module:</span>
-                <div style={{ fontWeight: 600, marginTop: "0.15rem", color: "var(--text)" }}>Course {lesson.course}</div>
-              </div>
-              <div style={{ background: "var(--bg-alt)", padding: "0.5rem", borderRadius: "6px", border: "1px solid var(--border)" }}>
-                <span style={{ color: "var(--muted)" }}>Target:</span>
-                <div style={{ fontWeight: 600, marginTop: "0.15rem", color: "var(--text)" }}>{lesson.month}</div>
-              </div>
-            </div>
-          </div>
-
-          {lesson.coverage_note && (
-            <div className="inspector-section">
-              <div className="section-title">Shared resource note</div>
-              <p style={{ fontSize: "0.78rem", color: "var(--muted)", lineHeight: 1.5 }}>{lesson.coverage_note}</p>
-            </div>
-          )}
-
-          {lesson.section_label && (
-            <div className="inspector-section">
-              <div className="section-title">Syllabus block</div>
-              <p style={{ fontSize: "0.82rem", fontWeight: 600 }}>{lesson.section_label}</p>
-            </div>
-          )}
-        </div>
-      )}
 
       {activeTab === "resources" && (
         <div className="inspector-content">

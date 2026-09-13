@@ -8,7 +8,15 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
+from curriculum_enrichment import (
+    concept_map_for_course,
+    glossary_entries,
+    load_program_primer_markdown,
+    prove_pack_for_course,
+)
+from enrichment_utils import index_lessons_by_key, lesson_stable_key, sanitize_lesson_enrichment
 from theory_builder import build_theory_summary, section_label
+from topic_theory_levels import attach_theory_levels
 
 _SCRIPTS_DIR = Path(__file__).resolve().parent
 REPO_ROOT = _SCRIPTS_DIR.parent
@@ -36,9 +44,6 @@ URL_FIXES: dict[str, str] = {
 }
 
 ENRICH_FIELDS = (
-    "course_concepts",
-    "course_prompts",
-    "youtube_id",
     "resources",
     "digest",
     "content",
@@ -48,22 +53,8 @@ ENRICH_FIELDS = (
 
 COURSE_RE = re.compile(r"^## Course (\d+) — (.+)$")
 MONTH_BY_COURSE = {
-    "0": "Pre Oct 2026",
-    "1": "M1 Oct 2026",
-    "2": "M2 Nov 2026",
-    "3": "M3 Dec 2026",
-    "4": "M4 Jan 2027",
-    "5": "M5 Feb 2027",
-    "6": "M6 Mar 2027",
-    "7": "M7 Apr 2027",
-    "8": "M8 May 2027",
-    "9": "M9 Jun 2027",
-    "10": "M10 Jul 2027",
-    "11": "M11 Aug 2027",
-    "12": "M12 Sep 2027",
-    "13": "M13 Oct 2027",
-    "14": "M14 Nov 2027",
-    "15": "M15 Dec 2027",
+    "0": "Foundation week",
+    **{str(i): f"Month {i}" for i in range(1, 16)},
 }
 
 SECTION_TO_TYPE = {
@@ -156,49 +147,153 @@ def apply_url_fixes(lessons: list[dict]) -> list[dict]:
     return lessons
 
 
-def merge_enrichment(base_lessons: list[dict], by_order: dict[int, dict]) -> list[dict]:
+def load_existing_enrichment(path: Path) -> tuple[dict[int, dict], dict[str, dict]]:
+    by_order = parse_existing_lessons_json(path)
+    if not by_order:
+        by_order = parse_existing_lessons_js(LESSONS_JS_PATH)
+    by_key = index_lessons_by_key(list(by_order.values()))
+    return by_order, by_key
+
+
+def merge_enrichment(
+    base_lessons: list[dict],
+    by_order: dict[int, dict],
+    by_key: dict[str, dict],
+) -> list[dict]:
     for row in base_lessons:
-        old = by_order.get(row["order"], {})
-        old_url = (old.get("url") or "").strip()
-        new_url = (row.get("url") or "").strip()
-        syllabus_changed = old_url != new_url or (old.get("lesson") or "") != (row.get("lesson") or "")
-        for key in ENRICH_FIELDS:
-            if key == "resources" and syllabus_changed:
-                continue
-            if key in old and old[key]:
-                row[key] = old[key]
-        if not row.get("youtube_id"):
-            yid = youtube_id_only(row.get("url", ""))
-            if yid:
-                row["youtube_id"] = yid
+        key = lesson_stable_key(row)
+        old = by_key.get(key)
+        if not old:
+            candidate = by_order.get(int(row["order"]), {})
+            if candidate and lesson_stable_key(candidate) == key:
+                old = candidate
+        if old:
+            old_url = (old.get("url") or "").strip()
+            new_url = (row.get("url") or "").strip()
+            syllabus_changed = old_url != new_url or (old.get("lesson") or "") != (row.get("lesson") or "")
+            for enrich_key in ENRICH_FIELDS:
+                if enrich_key == "resources" and syllabus_changed:
+                    continue
+                if enrich_key in old and old[enrich_key]:
+                    row[enrich_key] = old[enrich_key]
+        sanitize_lesson_enrichment(row, youtube_id_only)
     return base_lessons
 
 
-def build_courses_ref(lessons: list[dict]) -> dict:
-    ref: dict[str, dict] = {}
-    for les in lessons:
-        key = str(les["course"])
-        concepts = list(les.get("course_concepts") or [])
-        prompts = [p for p in (les.get("course_prompts") or []) if p and str(p).strip()]
-        if key not in ref:
-            ref[key] = {
-                "name": les.get("course_title", f"Course {les['course']}"),
-                "concepts": concepts[:10],
-                "prompts": prompts[:6],
+COURSE_META_FIELD = re.compile(r"\|\s\*\*(Duration|Graded assignment)\*\*\s\|\s([^|]+?)\s*\|")
+
+
+def parse_course_meta(text: str) -> dict[str, dict]:
+    meta: dict[str, dict] = {}
+    current: str | None = None
+    for raw in text.splitlines():
+        line = raw.strip()
+        m_course = COURSE_RE.match(line)
+        if m_course:
+            current = m_course.group(1)
+            meta[current] = {
+                "name": m_course.group(2).strip(),
+                "duration": "",
+                "assignment": "",
             }
             continue
-        if concepts and not ref[key]["concepts"]:
-            ref[key]["concepts"] = concepts[:10]
-            ref[key]["prompts"] = prompts[:6]
-            ref[key]["name"] = les.get("course_title", ref[key]["name"])
+        if not current or not line.startswith("|"):
+            continue
+        fm = COURSE_META_FIELD.match(line)
+        if not fm:
+            continue
+        label = fm.group(1).strip().lower()
+        value = fm.group(2).strip()
+        if label == "duration":
+            meta[current]["duration"] = value
+        elif "assignment" in label:
+            meta[current]["assignment"] = value
+    return meta
+
+
+def build_course_summary_markdown(
+    course_key: str,
+    course_lessons: list[dict],
+    outcomes: list[str],
+    meta: dict,
+) -> str:
+    lines: list[str] = []
+    lines.append("This course is one module in the 2027 AI Systems Engineer track. Use the topic list below as your checklist; each topic opens a full study guide in the center panel.")
+    lines.append("")
+    if meta.get("duration"):
+        lines.append(f"**Schedule:** {meta['duration']}")
+    if meta.get("assignment"):
+        lines.append(f"**Graded prove gate:** {meta['assignment']}")
+    lines.append("")
+    if outcomes:
+        lines.append("**Outcomes** (from the syllabus):")
+        for o in outcomes[:8]:
+            lines.append(f"- {o}")
+        lines.append("")
+    lines.append("**Sources by topic** — follow links in order; optional items are safe to skip when time-boxed.")
+    by_section: dict[str, list[dict]] = defaultdict(list)
+    for les in sorted(course_lessons, key=lambda x: int(x["order"])):
+        by_section[section_label(les.get("section") or "")].append(les)
+    for sec, items in by_section.items():
+        lines.append(f"#### {sec}")
+        for les in items:
+            title = les.get("lesson") or "Topic"
+            typ = les.get("type") or "Read"
+            dur = (les.get("duration") or "").strip()
+            url = (les.get("url") or "").strip()
+            extra = f" · {dur}" if dur else ""
+            if typ == "Prove" and les.get("prove_criteria"):
+                title = f"Prove: {les['prove_criteria']}"
+            if url.startswith("http"):
+                lines.append(f"- **{typ}** — [{title}]({url}){extra}")
+            else:
+                lines.append(f"- **{typ}** — {title}{extra}")
+        lines.append("")
+    return "\n".join(lines).strip()
+
+
+def build_courses_ref(
+    lessons: list[dict],
+    course_outcomes: dict[str, list[str]],
+    course_meta: dict[str, dict],
+) -> dict:
+    ref: dict[str, dict] = {}
+    by_course: dict[str, list[dict]] = defaultdict(list)
+    for les in lessons:
+        by_course[str(les["course"])].append(les)
+
+    for key, course_lessons in by_course.items():
+        meta = course_meta.get(key, {})
+        sample = course_lessons[0]
+        outcomes = course_outcomes.get(key, [])
+        ref[key] = {
+            "name": meta.get("name") or sample.get("course_title", f"Course {key}"),
+            "duration": meta.get("duration", ""),
+            "assignment": meta.get("assignment", ""),
+            "outcomes": outcomes[:12],
+            "concepts": outcomes[:8],
+            "prompts": [],
+            "concept_map": concept_map_for_course(key),
+            "prove_pack": prove_pack_for_course(key),
+            "summary_markdown": build_course_summary_markdown(
+                key, course_lessons, outcomes, meta
+            ),
+        }
     return ref
 
 
-def write_curriculum_payload(lessons: list[dict], track_rel: str) -> dict:
+def write_curriculum_payload(
+    lessons: list[dict],
+    track_rel: str,
+    course_outcomes: dict[str, list[str]],
+    course_meta: dict[str, dict],
+) -> dict:
     return {
         "generated_from": track_rel,
+        "program_primer_markdown": load_program_primer_markdown(),
+        "glossary": glossary_entries(),
         "lessons": lessons,
-        "courses_ref": build_courses_ref(lessons),
+        "courses_ref": build_courses_ref(lessons, course_outcomes, course_meta),
     }
 
 
@@ -223,42 +318,8 @@ def embed_url(url: str) -> str:
 
 
 def spine_lessons() -> list[dict]:
-    """Free program spine at top of track (parallel with Courses 1–2)."""
-    rows = [
-        (
-            "Karpathy — Deep Dive into LLMs",
-            "https://www.youtube.com/watch?v=7xTGNNLPyMI",
-            "~3 h",
-            1,
-        ),
-        (
-            "AI Agents in LangGraph",
-            "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/",
-            "2–3 h",
-            2,
-        ),
-    ]
-    out: list[dict] = []
-    for i, (title, url, dur, maps_to) in enumerate(rows, start=1):
-        optional = False
-        out.append(
-            {
-                "order": i,
-                "course": maps_to,
-                "course_title": f"Free program spine → Course {maps_to}",
-                "month": MONTH_BY_COURSE.get(str(maps_to), ""),
-                "section": "video_spine",
-                "type": "Video",
-                "lesson": title,
-                "url": url,
-                "duration": dur,
-                "required": "No" if optional else "Yes",
-                "open_how": open_mode(url, "Video"),
-                "embed_url": "",
-                "status": "Not started",
-            }
-        )
-    return out
+    """Spine rows duplicated course syllabus URLs — kept empty; see track Free spine + per-course Watch."""
+    return []
 
 
 def parse_course_outcomes(text: str) -> dict[str, list[str]]:
@@ -283,6 +344,54 @@ def parse_course_outcomes(text: str) -> dict[str, list[str]]:
         if in_outcomes and current_course and line.startswith("- "):
             outcomes[current_course].append(line[2:].strip())
     return outcomes
+
+
+def attach_related_topics(lessons: list[dict]) -> None:
+    by_url: dict[str, list[dict]] = defaultdict(list)
+    for row in lessons:
+        url = (row.get("url") or "").strip()
+        if url.startswith("http"):
+            by_url[url].append(row)
+    for row in lessons:
+        url = (row.get("url") or "").strip()
+        siblings = [s for s in by_url.get(url, []) if int(s["order"]) != int(row["order"])]
+        if not siblings:
+            continue
+        row["related_topics"] = [
+            {
+                "order": int(s["order"]),
+                "course": int(s["course"]),
+                "lesson": s.get("lesson"),
+                "section_label": section_label(s.get("section") or ""),
+            }
+            for s in sorted(siblings, key=lambda x: int(x["order"]))[:10]
+        ]
+
+
+def merge_related_into_resources(row: dict) -> None:
+    """Add sibling syllabus angles (same URL) as alternate resource cards."""
+    resources = list(row.get("resources") or [])
+    primary = (row.get("url") or "").strip()
+    if not primary.startswith("http"):
+        return
+    for rel in row.get("related_topics") or []:
+        title = rel.get("lesson") or "Related syllabus item"
+        desc = (
+            f"Same source — syllabus angle: {rel.get('section_label', 'syllabus')} "
+            f"(topic #{rel.get('order')})."
+        )
+        if any(r.get("title") == title and (r.get("url") or "").strip() == primary for r in resources):
+            continue
+        resources.append(
+            {
+                "title": title,
+                "url": primary,
+                "type": resource_type_for(row.get("type", ""), primary),
+                "level": "intermediate",
+                "description": desc,
+            }
+        )
+    row["resources"] = resources
 
 
 def annotate_shared_urls(lessons: list[dict]) -> None:
@@ -344,16 +453,21 @@ def ensure_primary_resource(row: dict) -> None:
 
 def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]]) -> list[dict]:
     annotate_shared_urls(lessons)
+    attach_related_topics(lessons)
     for row in lessons:
         ensure_primary_resource(row)
+        merge_related_into_resources(row)
         row["section_label"] = section_label(row.get("section") or "")
         ckey = str(row.get("course", ""))
         outcomes = course_outcomes.get(ckey, [])
         note = row.get("coverage_note")
+        row["_course_outcomes"] = outcomes
         if row.get("content"):
-            row["theory_summary"] = row["content"]
+            attach_theory_levels(row, outcomes, note, row["content"])
         else:
-            row["theory_summary"] = build_theory_summary(row, outcomes, note)
+            intermediate = build_theory_summary(row, outcomes, note)
+            attach_theory_levels(row, outcomes, note, intermediate)
+        row.pop("_course_outcomes", None)
     return lessons
 
 
@@ -466,8 +580,9 @@ def parse_track(text: str) -> list[dict]:
         }
         if section.lower() == "prove" and prove_criteria:
             row["prove_criteria"] = prove_criteria
-            if not url:
-                row["lesson"] = "Prove gate"
+            row["lesson"] = f"Prove: {prove_criteria}"
+        elif section.lower() == "prove" and not url:
+            row["lesson"] = row.get("lesson") or "Prove gate"
         lessons.append(row)
 
     return lessons
@@ -483,23 +598,17 @@ def main() -> None:
 
     text = TRACK.read_text(encoding="utf-8")
     course_outcomes = parse_course_outcomes(text)
-    lessons = spine_lessons()
-    parsed = parse_track(text)
-    base = len(lessons)
-    for row in parsed:
-        row["order"] += base
-    lessons.extend(parsed)
+    course_meta = parse_course_meta(text)
+    lessons = spine_lessons() + parse_track(text)
 
     json_path = OUT_DIR / "lessons.json"
-    existing = parse_existing_lessons_json(json_path)
-    if not existing:
-        existing = parse_existing_lessons_js(LESSONS_JS_PATH)
-    lessons = merge_enrichment(lessons, existing)
+    by_order, by_key = load_existing_enrichment(json_path)
+    lessons = merge_enrichment(lessons, by_order, by_key)
     lessons = apply_url_fixes(lessons)
     lessons = finalize_lessons(lessons, course_outcomes)
 
     track_rel = str(TRACK.relative_to(REPO_ROOT))
-    payload = write_curriculum_payload(lessons, track_rel)
+    payload = write_curriculum_payload(lessons, track_rel, course_outcomes, course_meta)
     encoded = json.dumps(payload, indent=2, ensure_ascii=False)
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)

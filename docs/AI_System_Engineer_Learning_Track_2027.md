@@ -10,9 +10,9 @@
 | | |
 | --- | --- |
 | **Strategy, capstone, deep topics** | [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) |
-| **Candidate** | Harish Rajoori — Staff/Lead Data Platform → AI Platform |
-| **Job target** | Senior / Staff AI Systems Engineer — **2027** hiring |
-| **Runway** | Oct 2026 → Dec 2027 · **10–15 h/week** (20+ h sprint weeks only) |
+| **Audience** | Engineers learning AI systems & platform engineering (self-paced, open curriculum) |
+| **Outcome** | Portfolio-ready AI platform skills (gateway, agents, evals, deploy) |
+| **Pace** | ~15 months at **10–15 h/week** (adjust to your schedule) |
 | **Links validated** | 13 Sep 2026 — `npm run validate` (docs + lesson resources) |
 | **Curriculum data** | `data/lessons.json` · `public/data/lessons.json` · React studio |
 
@@ -22,22 +22,22 @@
 
 | # | Course | When | Hours | You earn (Prove) |
 | --- | --- | --- | --- | --- |
-| 0 | Boot: structured extraction | Pre 5 Oct 2026 | 14–28 | Public GitHub reconciler |
-| 1 | LLM foundations & deterministic I/O | M1 Oct 2026 | 12–18 | Release `v0.2` + metrics |
-| 2 | Agent orchestration (LangGraph) | M2 Nov 2026 | 12–18 | HITL demo in README |
-| 3 | Tools & MCP | M3 Dec 2026 | 12–16 | MCP server + audit log |
-| 4 | Hybrid retrieval | M4 Jan 2027 | 10–14 | Hybrid benchmark table |
-| 5 | Document parsing & chunks | M5 Feb 2027 | 10–14 | `chunks.jsonl` + schema |
-| 6 | Graph & GraphRAG slice | M6 Mar 2027 | 10–14 | Validator test + query |
-| 7 | Evaluation harness | M7 Apr 2027 | 10–14 | Golden set ≥30 cases |
-| 8 | Eval CI/CD gates | M8 May 2027 | 8–12 | CI blocks regression |
-| 9 | Policy + observability | M9 Jun 2027 | 10–14 | Trace + policy test |
-| 10 | Capstone integration | M10 Jul 2027 | 16–24 | Git tag `alpha` + caching proof |
-| 11 | Deploy & platform UX | M11 Aug 2027 | 12–16 | Deploy screenshot + tool doc |
-| 12 | Lineage & hardening | M12 Sep 2027 | 8–12 | Tag `v1.0` + lineage sample |
-| 13 | Frontier (pick 1–2) | M13 Oct 2027 | 8–16 | README “why we added X” |
-| 14 | Frontier + portfolio | M14 Nov 2027 | 8–12 | Posts + resume refresh |
-| 15 | Interviews & offers | M15 Dec 2027 | 10–20 | Offer or feedback notes |
+| 0 | Boot: structured extraction | Foundation week | 14–28 | Public GitHub reconciler |
+| 1 | LLM foundations & deterministic I/O | Month 1 | 12–18 | Release `v0.2` + metrics |
+| 2 | Agent orchestration (LangGraph) | Month 2 | 12–18 | HITL demo in README |
+| 3 | Tools & MCP | Month 3 | 12–16 | MCP server + audit log |
+| 4 | Hybrid retrieval | Month 4 | 10–14 | Hybrid benchmark table |
+| 5 | Document parsing & chunks | Month 5 | 10–14 | `chunks.jsonl` + schema |
+| 6 | Graph & GraphRAG slice | Month 6 | 10–14 | Validator test + query |
+| 7 | Evaluation harness | Month 7 | 10–14 | Golden set ≥30 cases |
+| 8 | Eval CI/CD gates | Month 8 | 8–12 | CI blocks regression |
+| 9 | Policy + observability | Month 9 | 10–14 | Trace + policy test |
+| 10 | Capstone integration | Month 10 | 16–24 | Git tag `alpha` + caching proof |
+| 11 | Deploy & platform UX | Month 11 | 12–16 | Deploy screenshot + tool doc |
+| 12 | Lineage & hardening | Month 12 | 8–12 | Tag `v1.0` + lineage sample |
+| 13 | Frontier (pick 1–2) | Month 13 | 8–16 | README “why we added X” |
+| 14 | Frontier + portfolio | Month 14 | 8–12 | Posts + resume refresh |
+| 15 | Interviews & offers | Month 15 | 10–20 | Offer or feedback notes |
 
 ### Free spine (parallel with Courses 1–2)
 
@@ -73,7 +73,7 @@
 
 ---
 
-## Course 0 — Boot sprint (7 days before 5 Oct 2026)
+## Course 0 — Boot sprint (7-day intensive)
 
 | | |
 | --- | --- |
@@ -125,7 +125,7 @@
 
 ---
 
-## Course 1 — M1 (Oct 2026): LLM foundations & structured extraction
+## Course 1 — Month 1: LLM foundations & structured extraction
 
 | | |
 | --- | --- |
@@ -173,7 +173,7 @@
 
 ---
 
-## Course 2 — M2 (Nov 2026): LangGraph & agent state machines
+## Course 2 — Month 2: LangGraph & agent state machines
 
 | | |
 | --- | --- |
@@ -218,7 +218,7 @@
 
 ---
 
-## Course 3 — M3 (Dec 2026): MCP & secure tool surfaces
+## Course 3 — Month 3: MCP & secure tool surfaces
 
 | | |
 | --- | --- |
@@ -262,7 +262,7 @@
 
 ---
 
-## Course 4 — M4 (Jan 2027): Hybrid retrieval
+## Course 4 — Month 4: Hybrid retrieval
 
 | | |
 | --- | --- |
@@ -302,7 +302,7 @@
 
 ---
 
-## Course 5 — M5 (Feb 2027): Document parsing at scale
+## Course 5 — Month 5: Document parsing at scale
 
 | | |
 | --- | --- |
@@ -337,7 +337,7 @@
 
 ---
 
-## Course 6 — M6 (Mar 2027): Graph & GraphRAG slice
+## Course 6 — Month 6: Graph & GraphRAG slice
 
 | | |
 | --- | --- |
@@ -348,7 +348,7 @@
 
 - Entity/relation modeling for ops or reconciliation
 - One validator query (deps / compatibility)
-- Graph checks before execution (CARL conftest analogy)
+- Graph checks before execution (policy test / conftest analogy)
 
 ### Syllabus
 
@@ -374,7 +374,7 @@
 
 ---
 
-## Course 7 — M7 (Apr 2027): Evaluation harness
+## Course 7 — Month 7: Evaluation harness
 
 | | |
 | --- | --- |
@@ -413,7 +413,7 @@
 
 ---
 
-## Course 8 — M8 (May 2027): Eval CI/CD gates
+## Course 8 — Month 8: Eval CI/CD gates
 
 | | |
 | --- | --- |
@@ -445,7 +445,7 @@
 
 ---
 
-## Course 9 — M9 (Jun 2027): Policy (OPA) + tracing
+## Course 9 — Month 9: Policy (OPA) + tracing
 
 | | |
 | --- | --- |
@@ -486,7 +486,7 @@
 
 ---
 
-## Course 10 — M10 (Jul 2027): Capstone integration alpha
+## Course 10 — Month 10: Capstone integration alpha
 
 | | |
 | --- | --- |
@@ -545,7 +545,7 @@
 
 ---
 
-## Course 11 — M11 (Aug 2027): Deploy & platform UX
+## Course 11 — Month 11: Deploy & platform UX
 
 | | |
 | --- | --- |
@@ -582,7 +582,7 @@
 
 ---
 
-## Course 12 — M12 (Sep 2027): Lineage & hardening
+## Course 12 — Month 12: Lineage & hardening
 
 | | |
 | --- | --- |
@@ -615,12 +615,18 @@
 
 ---
 
-## Course 13 — M13 (Oct 2027): Frontier deep dive (pick 1–2)
+## Course 13 — Month 13: Frontier deep dive (pick 1–2)
 
 | | |
 | --- | --- |
 | **Duration** | ~2 weeks |
 | **Graded assignment** | README “why we added X” |
+
+### What you'll learn
+
+- How to pick and time-box one frontier track (inference, DSPy, caching, or semantic cache)
+- How to wire a local or gateway-backed experiment with before/after metrics
+- How to document bottleneck, metric, and “why we added X” for staff review
 
 ### Pick one or two tracks
 
@@ -637,12 +643,18 @@
 
 ---
 
-## Course 14 — M14 (Nov 2027): Frontier + portfolio
+## Course 14 — Month 14: Frontier + portfolio
 
 | | |
 | --- | --- |
 | **Duration** | ~2 weeks |
 | **Graded assignment** | 1–2 posts + resume refresh |
+
+### What you'll learn
+
+- LoRA/QLoRA and guardrails at a production-skimming depth (when to adopt vs defer)
+- Sandboxed agent tooling (E2B) and optional math refresh for interview depth
+- Portfolio narrative: posts + resume aligned to harness, evals, and lineage story
 
 ### Syllabus
 
@@ -653,11 +665,11 @@
 
 **Prove**
 
-- [ ] Posts + resume (Plan §14)
+- [ ] Posts + resume refresh (see Master Plan §14)
 
 ---
 
-## Course 15 — M15 (Dec 2027): Interviews & offers
+## Course 15 — Month 15: Interviews & offers
 
 | | |
 | --- | --- |
@@ -679,7 +691,7 @@
 
 - [ ] [Applied LLMs in Production](https://applied-llms.org/)
 - [ ] [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)
-- [ ] Interview positioning — Plan §14–§15 (sibling page `AI_System_Engineer_plan_2027.md`)
+- [ ] Interview positioning — Master Plan §14–§15 (resume & narrative)
 
 **Do**
 

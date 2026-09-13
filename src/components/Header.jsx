@@ -21,8 +21,8 @@ export default function Header({
       <a href="#" className="brand">
         <div className="brand-logo">AI</div>
         <div className="brand-text">
-          <div className="brand-title">AI System Engineer Hub</div>
-          <div className="brand-subtitle">Staff / Principal Engineering Mastery</div>
+          <div className="brand-title">AI Systems Engineer Studio</div>
+          <div className="brand-subtitle">Open curriculum · Theory-first learning</div>
         </div>
       </a>
 
@@ -111,7 +111,7 @@ export default function Header({
           <span>Backup</span>
         </button>
 
-        <button type="button" className="filter-btn" onClick={onOpenSettings} title="API Keys, Model & Hub Configuration">
+        <button type="button" className="filter-btn" onClick={onOpenSettings} title="API keys, model, and studio settings">
           <Settings size={14} />
           <span>Settings</span>
         </button>

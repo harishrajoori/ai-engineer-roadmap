@@ -13,6 +13,14 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+_SCRIPTS = REPO_ROOT / "scripts"
+import sys
+
+if str(_SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS))
+
+from enrichment_utils import digest_matches_lesson  # noqa: E402
+from topic_hints import get_topic_hint  # noqa: E402
 DOCS = REPO_ROOT / "docs"
 TRACK = DOCS / "AI_System_Engineer_Learning_Track_2027.md"
 LESSONS_JSON = REPO_ROOT / "data" / "lessons.json"
@@ -162,6 +170,64 @@ def validate_app_data(lessons: list[dict]) -> list[str]:
     return errors
 
 
+def _youtube_id_from_url(url: str) -> str:
+    m = re.search(
+        r"(?:youtube\.com/watch\?v=|youtu\.be/|youtube\.com/embed/)([A-Za-z0-9_-]{11})",
+        url or "",
+    )
+    return m.group(1) if m else ""
+
+
+def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
+    """Warnings for mis-merged digest / duplicate YouTube ids."""
+    warnings: list[str] = []
+    yid_orders: dict[str, list[int]] = {}
+
+    for les in lessons:
+        order = les.get("order")
+        digest = les.get("digest")
+        if digest and not digest_matches_lesson(les, digest):
+            warnings.append(
+                f"digest title mismatch (order={order}): "
+                f"lesson={les.get('lesson')!r} digest={digest.get('title')!r}"
+            )
+        url = (les.get("url") or "").strip()
+        yid = les.get("youtube_id") or ""
+        if yid:
+            yid_orders.setdefault(yid, []).append(int(order))
+        if yid and "youtube" in url:
+            expected = _youtube_id_from_url(url)
+            if expected and expected != yid:
+                warnings.append(f"youtube_id drift order={order}: stored={yid} url={expected}")
+
+    for yid, orders in yid_orders.items():
+        if len(orders) > 4:
+            warnings.append(f"youtube_id {yid} attached to {len(orders)} lessons (orders {orders[:8]}…)")
+
+    missing_theory = sum(1 for les in lessons if not (les.get("theory_summary") or "").strip())
+    if missing_theory:
+        warnings.append(f"{missing_theory} lessons missing theory_summary")
+
+    thin_hints = 0
+    for les in lessons:
+        h = get_topic_hint(les)
+        if not (h.get("one_liner") or "").strip() or len(h.get("concepts") or []) < 1:
+            thin_hints += 1
+    if thin_hints:
+        warnings.append(f"{thin_hints} lessons with thin topic hints (should be 0)")
+
+    missing_levels = sum(
+        1
+        for les in lessons
+        if not les.get("theory_levels", {}).get("beginner")
+        or not les.get("theory_levels", {}).get("advanced")
+    )
+    if missing_levels:
+        warnings.append(f"{missing_levels} lessons missing theory_levels beginner/advanced")
+
+    return warnings
+
+
 def validate_track_vs_lessons(lessons: list[dict]) -> list[str]:
     warnings: list[str] = []
     track_urls = track_checkbox_urls()
@@ -208,6 +274,7 @@ def main() -> int:
     lessons = load_lessons()
     failures.extend(validate_app_data(lessons))
     warnings.extend(validate_track_vs_lessons(lessons))
+    warnings.extend(validate_enrichment_quality(lessons))
 
     rel_dead = []
     for path in DOCS.glob("*.md"):

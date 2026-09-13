@@ -1,87 +1,54 @@
-# AI Systems Engineer: 15-Month Migration & Learning Platform (2027 Target)
+# AI Systems Engineer Learning Studio
 
-> **Live Command Hub (GitHub Pages):** [https://harishrajoori.github.io/ai-engineer-roadmap/](https://harishrajoori.github.io/ai-engineer-roadmap/)  
-> **Target Level:** Staff / Principal AI System Engineer (2026–2027)
+Open, self-paced **15-course** curriculum for production LLM systems: structured extraction, agents, MCP, RAG, evals, policy, deploy, and capstone prove gates. Includes a **React learning studio** (theory-first, beginner/intermediate/advanced levels, progress, optional BYOK AI mentor).
 
-An enterprise-grade curriculum and interactive tracking platform designed for transitioning from **Staff Data Platform Engineering** to **Senior/Staff AI Systems & AI Platform Engineering** (2026–2027 target).
+## Quickstart
 
----
-
-## 🏗️ Architecture & Mental Model
-
-```
-[Unstructured Logs / Docs / Telemetry]
-                  │
-                  ▼
-  [Deterministic Gateway & Router (LiteLLM)] ──► [Prompt & Semantic Caching]
-                  │
-                  ▼
-  [Structured Extraction & Invariant Checks] ──► (Instructor + Pydantic)
-                  │
-                  ▼
-  [Cyclic State Orchestration (LangGraph)]   ──► [HITL interrupt() on validation failure]
-                  │
-                  ▼
-  [Governed Tool Plane (FastMCP / OPA Gate)] ──► [Scoped Read-only / Rego Policy Check]
-                  │
-                  ▼
-  [Storage & Lineage (Postgres / OpenLineage)]
-```
-
----
-
-## ⚡ Quickstart
-
-### 1. Launch the Local Studio (React + Vite)
 ```bash
 npm install
-npm run dev
-# or ./serve.sh
+./serve.sh          # http://localhost:8765
+# or: npm run dev
 ```
-Open **[http://localhost:8765](http://localhost:8765)** in your browser for the cinema-mode lecture player, multi-agent AI mentor (Gemini 3.x / Groq / OpenRouter), interactive notes scratchpad, and live code architecture lab.
 
-Optional: copy `.env.example` → `.env` and set `VITE_GOOGLE_CLIENT_ID`, or paste the same Web Client ID in **Settings** for Google sign-in.
+After editing the track markdown:
 
-### 2. Refresh curriculum from markdown
-Edit `docs/AI_System_Engineer_Learning_Track_2027.md`, then:
 ```bash
-npm run curriculum
+npm run curriculum  # regenerates data/lessons.json + public/data/lessons.json
+npm run validate:ci
 ```
-This updates `data/lessons.json` and `public/data/lessons.json` (served at runtime; preserves enriched fields like `resources`, `digest`, and `content` when lesson `order` ids match).
 
-### 3. Validate (docs links + app data)
-```bash
-npm run validate
-```
-Checks HTTP links in `docs/` and lesson resources, relative doc paths, and React curriculum wiring (`validate:app` + `validate:links`).
+## Docs
 
-### 4. Build for Production
+| File | Role |
+| --- | --- |
+| [`docs/AI_System_Engineer_Learning_Track_2027.md`](docs/AI_System_Engineer_Learning_Track_2027.md) | Syllabus source (Courses 0–15) |
+| [`docs/AI_System_Engineer_Master_Plan.md`](docs/AI_System_Engineer_Master_Plan.md) | Depth, capstone §13, ethics, §17 module reference |
+| [`docs/AI_for_Data_Engineers_Primer.md`](docs/AI_for_Data_Engineers_Primer.md) | Onboarding for data/platform engineers |
+
+## Studio features
+
+- **Theory → Lecture → Lab** flow per topic
+- **Beginner / Intermediate / Advanced** explanations (curriculum-generated)
+- Course overview: concept map, glossary, prove acceptance rubric
+- Local progress + optional Google sign-in for saved AI regenerations
+- No paid MOOC required — free docs and videos linked from the track
+
+## Deploy (static)
+
 ```bash
 npm run build
-```
-Generates universal production assets in `dist/` which are automatically deployed to GitHub Pages on each push to `main`. CI runs lint + validate before build.
-
----
-
-## 📁 Repository Structure
-
-```
-├── src/
-│   ├── components/       # SmartStage, LessonFeed, Inspector, Sidebar, Header, Modals
-│   ├── services/         # Multi-provider AI service (Gemini 3.x/2.0/1.5, Groq, OpenRouter)
-│   ├── data/             # Bundled lesson data (145 curriculum items + blueprints)
-│   ├── App.jsx           # Root reactive state manager with local storage & confetti
-│   └── index.css         # Dark cyberpunk / obsidian glassmorphism design tokens
-├── scripts/              # `generate_lessons.py` (run via `npm run curriculum`)
-├── docs/                 # Learning track (curriculum) + Master Plan (strategy & §17 depth)
-├── data/                 # Generated `lessons.json` (curriculum snapshot)
-├── public/               # Static assets and production build preview
-└── .github/workflows/    # Automated GitHub Actions Pages deployment
+# Publish dist/ to any static host (GitHub Pages, S3, etc.)
 ```
 
----
+Set `VITE_GOOGLE_CLIENT_ID` for Sign in with Google (see `.env.example`).
 
-## 🛡️ IP & Data Privacy Protocol
-- All code exercises and capstone platforms run on **100% synthetic telemetry or public datasets**.
-- Zero dependency on proprietary employer data or client PII.
-- Client-side Bring-Your-Own-Key (BYOK) architecture: AI keys and progress stay 100% in browser `localStorage`.
+## Architecture (capstone spine)
+
+```
+Logs / docs → LiteLLM gateway → Instructor/Pydantic extraction
+  → LangGraph + HITL → MCP tools + OPA → RAG + eval CI → deploy + lineage
+```
+
+## License
+
+Curriculum and app code as defined in this repository; external links are third-party resources.

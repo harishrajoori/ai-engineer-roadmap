@@ -106,6 +106,10 @@ export default function SettingsModal({
                 <GoogleSignInButton enabled={googleOAuthEnabled} onSuccess={onGoogleLogin} />
               )}
             </div>
+            <p style={{ fontSize: "0.72rem", color: "var(--muted)", margin: 0, lineHeight: 1.45 }}>
+              Regenerated theory pages are saved per Google account on this browser. Optional cloud sync: set{" "}
+              <code style={{ fontSize: "0.7rem" }}>VITE_THEORY_SYNC_URL</code> when building the app.
+            </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.5rem" }}>
               <label style={{ fontSize: "0.78rem", fontWeight: 600, color: "var(--text)" }}>

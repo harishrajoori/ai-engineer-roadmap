@@ -6,11 +6,12 @@ import { jwtDecode } from "jwt-decode";
 export function profileFromGoogleCredential(credential) {
   const decoded = jwtDecode(credential);
   return {
+    sub: decoded.sub || "",
     name: decoded.name || "",
     email: decoded.email || "",
     given_name: decoded.given_name || "",
     picture: decoded.picture || "",
-    avatar: decoded.picture || ""
+    avatar: decoded.picture || "",
   };
 }
 

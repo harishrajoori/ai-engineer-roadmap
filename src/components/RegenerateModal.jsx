@@ -28,12 +28,37 @@ export default function RegenerateModal({
       code: "Convert this lesson into a concrete, runnable, heavily commented Python/PyTorch/LangGraph code template with unit tests demonstrating the architecture."
     };
 
-    const prompt = `Lesson: "${lesson.lesson}" (Course ${lesson.course}: ${lesson.course_title}).
-Existing Digest & Concepts: ${JSON.stringify(lesson.digest || {})}
+    const digestSnippet =
+      lesson.digest && lesson.digest.title
+        ? JSON.stringify(
+            {
+              title: lesson.digest.title,
+              takeaways: (lesson.digest.takeaways || []).slice(0, 5),
+              rules: (lesson.digest.rules || []).slice(0, 4),
+              pitfalls: (lesson.digest.pitfalls || []).slice(0, 4),
+            },
+            null,
+            2
+          )
+        : "(no curated digest — rely on curriculum theory below)";
+
+    const prompt = `Topic: "${lesson.lesson}" (Course ${lesson.course}: ${lesson.course_title}).
+Activity: ${lesson.type || "Read"} · Section: ${lesson.section || "syllabus"}
+Primary URL: ${lesson.url || "n/a"}
+Prove criteria: ${lesson.prove_criteria || "n/a"}
+
+Curriculum theory (authoritative baseline — extend, do not contradict):
+---
+${(lesson.theory_summary || "").slice(0, 12000)}
+---
+
+Optional digest (use only if it clearly matches this topic):
+${digestSnippet}
 
 Task: ${lensPrompts[lens]}
 
-Format output in clean, beautiful Markdown with clear section headers, bullet lists, and code blocks where applicable.`;
+Format output in excellent Markdown: start with a one-line summary, use ## headers, tables where helpful, bullet lists, and fenced code blocks only when the lens is code-focused. Do not mention Coursera.`;
+
 
     try {
       const response = await generateAiResponse({
@@ -43,7 +68,7 @@ Format output in clean, beautiful Markdown with clear section headers, bullet li
         keys: apiKeys
       });
 
-      onSaveRegeneration(lesson.order, response);
+      onSaveRegeneration(lesson.order, response, { model: selectedModel, lens });
       onClose();
     } catch (err) {
       setErrorMsg(err.message || 'Failed to generate page rewrite. Please check API keys.');
@@ -67,7 +92,7 @@ Format output in clean, beautiful Markdown with clear section headers, bullet li
 
         <div className="modal-body">
           <p style={{ fontSize: '0.82rem', color: 'var(--muted)' }}>
-            Choose an AI model and learning lens to rewrite <strong>{lesson.lesson}</strong> into your custom visual learning view.
+            Choose a model and lens to generate an alternate explanation for <strong>{lesson.lesson}</strong> (saved to your account on this device).
           </p>
 
           {/* Model Selection */}

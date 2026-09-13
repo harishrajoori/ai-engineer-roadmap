@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { CheckCircle2, Circle, PlayCircle, BookOpen, PenTool, ShieldCheck, Filter } from "lucide-react";
 import { groupLessonsBySection } from "../utils/sectionGroups";
+import { formatTopicTitle, isTopicComplete, lessonsForSyllabusDisplay } from "../utils/syllabusDisplay";
 
 export default function LessonFeed({
   courseTitle,
@@ -12,23 +13,27 @@ export default function LessonFeed({
   onToggleComplete,
   progressMap = {},
   typeFilter = "all",
-  onSetTypeFilter
+  onSetTypeFilter,
+  courseOverviewMode = false,
+  onOpenCourseOverview
 }) {
+  const displayLessons = useMemo(() => lessonsForSyllabusDisplay(lessons), [lessons]);
+
   const typeOptions = useMemo(() => {
-    const types = new Set(lessons.map((l) => l.type));
+    const types = new Set(displayLessons.map((l) => l.type));
     return ["all", ...Array.from(types).sort()];
-  }, [lessons]);
+  }, [displayLessons]);
 
   const filteredLessons = useMemo(() => {
     if (typeFilter === "all") {
-      return lessons;
+      return displayLessons;
     }
-    return lessons.filter((l) => l.type === typeFilter);
-  }, [lessons, typeFilter]);
+    return displayLessons.filter((l) => l.type === typeFilter);
+  }, [displayLessons, typeFilter]);
 
   const sectionGroups = useMemo(() => groupLessonsBySection(filteredLessons), [filteredLessons]);
 
-  const completedInView = filteredLessons.filter((l) => progressMap[l.order]).length;
+  const completedInView = filteredLessons.filter((l) => isTopicComplete(progressMap, l)).length;
 
   const getIcon = (type) => {
     if (type === "Video") {
@@ -46,9 +51,9 @@ export default function LessonFeed({
     return <Circle size={14} className="topic-icon" />;
   };
 
-  const handleToggleComplete = (e, order) => {
+  const handleToggleComplete = (e, lesson) => {
     e.stopPropagation();
-    onToggleComplete?.(order);
+    onToggleComplete?.(lesson);
   };
 
   return (
@@ -58,6 +63,15 @@ export default function LessonFeed({
           <h2 className="syllabus-course-title">{courseTitle}</h2>
           {courseMonth && <span className="syllabus-course-month">{courseMonth}</span>}
         </div>
+        {onOpenCourseOverview && (
+          <button
+            type="button"
+            className={`syllabus-course-map-btn ${courseOverviewMode ? "active" : ""}`}
+            onClick={onOpenCourseOverview}
+          >
+            Course overview & topic map
+          </button>
+        )}
         <div className="syllabus-progress-block">
           <div className="syllabus-progress-track">
             <div className="syllabus-progress-fill" style={{ width: `${courseProgressPct}%` }} />
@@ -93,8 +107,8 @@ export default function LessonFeed({
               {group.lessons.map((lesson) => {
                 acc.index += 1;
                 const displayIndex = acc.index;
-                const isCompleted = !!progressMap[lesson.order];
-                const isActive = activeLessonOrder === lesson.order;
+                const isCompleted = isTopicComplete(progressMap, lesson);
+                const isActive = !courseOverviewMode && activeLessonOrder === lesson.order;
 
                 return (
                   <div
@@ -113,7 +127,7 @@ export default function LessonFeed({
                   <button
                     type="button"
                     className="syllabus-topic-check"
-                    onClick={(e) => handleToggleComplete(e, lesson.order)}
+                    onClick={(e) => handleToggleComplete(e, lesson)}
                     aria-label={isCompleted ? "Mark incomplete" : "Mark complete"}
                   >
                     {isCompleted ? (
@@ -123,13 +137,15 @@ export default function LessonFeed({
                     )}
                   </button>
                   <div className="syllabus-topic-body">
-                    <div className="syllabus-topic-name">{lesson.lesson}</div>
+                    <div className="syllabus-topic-name">{lesson.display_title || formatTopicTitle(lesson)}</div>
                     <div className="syllabus-topic-meta">
                       {getIcon(lesson.type)}
-                      <span>{lesson.type}</span>
+                      <span>#{lesson.order}</span>
                       <span className="syllabus-topic-dot">·</span>
-                      <span>{lesson.duration || "~15m"}</span>
-                      {lesson.coverage_note && <span className="syllabus-shared" title="Shared URL">↗ shared</span>}
+                      <span>{lesson.section_label || lesson.section}</span>
+                      {(lesson.coverage_note || lesson.merge_note) && (
+                        <span className="syllabus-shared" title="Shared or merged URL">↗ shared</span>
+                      )}
                       {lesson.required === "Yes" && <span className="syllabus-required">Required</span>}
                     </div>
                   </div>

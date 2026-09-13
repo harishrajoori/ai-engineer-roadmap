@@ -15,7 +15,7 @@ export default function GoogleSignInButton({ onSuccess, enabled, hint }) {
     <GoogleLogin
       onSuccess={(response) => {
         if (response?.credential) {
-          onSuccess(profileFromGoogleCredential(response.credential));
+          onSuccess(profileFromGoogleCredential(response.credential), response.credential);
         }
       }}
       onError={() => {

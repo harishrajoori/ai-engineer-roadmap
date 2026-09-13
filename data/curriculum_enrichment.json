@@ -1,0 +1,398 @@
+{
+  "glossary": [
+    {
+      "id": "token",
+      "term": "Token",
+      "definition": "A chunk of text the model reads or generates; billing and context limits are counted in tokens.",
+      "de_analogy": "Like rows or bytes processed—your cost and SLA driver."
+    },
+    {
+      "id": "context_window",
+      "term": "Context window",
+      "definition": "Maximum tokens the model can consider in one request (prompt + completion).",
+      "de_analogy": "Like a max batch size—overflow means truncate, summarize, or chunk."
+    },
+    {
+      "id": "inference",
+      "term": "Inference",
+      "definition": "Running a trained model to produce outputs (not training).",
+      "de_analogy": "Running a scoring job in prod vs retraining the model."
+    },
+    {
+      "id": "hallucination",
+      "term": "Hallucination",
+      "definition": "Model output that looks plausible but is factually wrong or unsupported.",
+      "de_analogy": "Bad join or null handling that still returns a row—never trust without validation."
+    },
+    {
+      "id": "structured_output",
+      "term": "Structured output",
+      "definition": "Forcing LLM responses into a schema (JSON/Pydantic) instead of free text.",
+      "de_analogy": "Contract-first API response types and schema enforcement."
+    },
+    {
+      "id": "pydantic",
+      "term": "Pydantic",
+      "definition": "Python library for data validation and settings using type hints.",
+      "de_analogy": "Runtime schema checks like Great Expectations on a single record."
+    },
+    {
+      "id": "instructor",
+      "term": "Instructor",
+      "definition": "Library that pairs LLM calls with Pydantic models and retries on validation failure.",
+      "de_analogy": "Retry loop around a flaky API until the payload passes JSON schema."
+    },
+    {
+      "id": "litellm",
+      "term": "LiteLLM",
+      "definition": "Gateway that routes requests to many model providers with one API.",
+      "de_analogy": "API gateway + provider failover for model endpoints."
+    },
+    {
+      "id": "gateway",
+      "term": "LLM gateway",
+      "definition": "Central entry for models: auth, routing, budgets, logging, fallbacks.",
+      "de_analogy": "Kong/Apigee-style layer before downstream services."
+    },
+    {
+      "id": "golden_set",
+      "term": "Golden set",
+      "definition": "Fixed labeled examples (input → expected output) used to score changes.",
+      "de_analogy": "Fixture tables in dbt tests or regression datasets."
+    },
+    {
+      "id": "eval_harness",
+      "term": "Eval harness",
+      "definition": "Scripts/CI that run the golden set and report metrics on every change.",
+      "de_analogy": "pytest + data diff job in CI."
+    },
+    {
+      "id": "invariant",
+      "term": "Invariant",
+      "definition": "Business rule beyond JSON shape (e.g. balances sum to zero).",
+      "de_analogy": "Custom SQL tests or domain constraints."
+    },
+    {
+      "id": "ttft",
+      "term": "TTFT",
+      "definition": "Time to first token—latency until the model starts streaming output.",
+      "de_analogy": "Time-to-first-byte on an API response."
+    },
+    {
+      "id": "rag",
+      "term": "RAG",
+      "definition": "Retrieval-augmented generation: fetch relevant docs, then answer with the model.",
+      "de_analogy": "Join to a reference table before computing a metric."
+    },
+    {
+      "id": "embedding",
+      "term": "Embedding",
+      "definition": "Vector representation of text used for similarity search.",
+      "de_analogy": "Feature vector for fuzzy matching instead of exact keys."
+    },
+    {
+      "id": "langgraph",
+      "term": "LangGraph",
+      "definition": "Framework for agent workflows as graphs with state and checkpoints.",
+      "de_analogy": "Airflow DAG with per-run state and human approval nodes."
+    },
+    {
+      "id": "checkpoint",
+      "term": "Checkpoint",
+      "definition": "Persisted graph state so a run can resume after failure or interrupt.",
+      "de_analogy": "Idempotent checkpoint in Spark/Flink or workflow saga state."
+    },
+    {
+      "id": "hitl",
+      "term": "HITL",
+      "definition": "Human-in-the-loop: pause automation for review before continuing.",
+      "de_analogy": "Manual approval step in a pipeline."
+    },
+    {
+      "id": "agent",
+      "term": "Agent",
+      "definition": "System that plans steps and calls tools; not just one LLM prompt.",
+      "de_analogy": "Orchestrated micro-jobs with side effects—not a single SQL statement."
+    },
+    {
+      "id": "mcp",
+      "term": "MCP",
+      "definition": "Model Context Protocol—standard way to expose tools and resources to models.",
+      "de_analogy": "Internal tool catalog + OpenAPI for agents."
+    },
+    {
+      "id": "tool_schema",
+      "term": "Tool schema",
+      "definition": "JSON schema describing parameters an agent tool accepts.",
+      "de_analogy": "API request body contract."
+    },
+    {
+      "id": "audit_log",
+      "term": "Audit log",
+      "definition": "Append-only record of who invoked which tool with what outcome.",
+      "de_analogy": "CloudTrail / data access logs for compliance."
+    },
+    {
+      "id": "regression",
+      "term": "Eval regression",
+      "definition": "Metric got worse vs baseline on the golden set after a change.",
+      "de_analogy": "CI test failure on main metrics."
+    },
+    {
+      "id": "fallback",
+      "term": "Model fallback",
+      "definition": "Secondary model or provider used when the primary fails or is slow.",
+      "de_analogy": "Secondary region or read replica failover."
+    },
+    {
+      "id": "sampling",
+      "term": "Sampling",
+      "definition": "How the model picks the next token (temperature, top-p).",
+      "de_analogy": "Random seed / tie-break policy—lower temperature = more deterministic."
+    },
+    {
+      "id": "attention",
+      "term": "Attention",
+      "definition": "Mechanism for the model to weigh which input tokens matter for each output token.",
+      "de_analogy": "Weighted join keys—without math depth, just “focus mechanism.”"
+    }
+  ],
+  "concept_maps": {
+    "0": [
+      "Agentic SDLC: typing, pytest, small commits",
+      "LLMs as untrusted kernels; schemas as contracts",
+      "Instructor + Pydantic retries",
+      "LiteLLM fallbacks and timeouts",
+      "Golden set: input log → expected JSON",
+      "Invariants beyond JSON Schema",
+      "Threat model: injection on log fields"
+    ],
+    "1": [
+      "Transformer stack at a high level",
+      "Context window and token cost",
+      "Sampling and extraction temperature",
+      "Hallucination modes",
+      "Structured output strategies",
+      "Gateway: LiteLLM logging and budgets"
+    ],
+    "2": [
+      "State graphs: nodes, edges, routing",
+      "Checkpointing and thread id",
+      "interrupt() and HITL",
+      "LangGraph vs AgentExecutor tradeoffs"
+    ],
+    "3": [
+      "MCP resources vs tools vs prompts",
+      "stdio vs SSE transport",
+      "Tool schema versioning",
+      "Audit log for compliance narrative"
+    ],
+    "4": [
+      "Dense vs sparse retrieval",
+      "RRF hybrid fusion",
+      "Chunking vs recall",
+      "recall@k and labeled Q/A eval"
+    ],
+    "5": [
+      "Layout-aware parsing",
+      "Chunk boundaries and metadata",
+      "chunks.jsonl contract"
+    ],
+    "6": [
+      "When graphs help reconciliation",
+      "One validator query—not full GraphRAG product",
+      "Cypher basics"
+    ],
+    "7": [
+      "Golden set schema and tiers",
+      "Ragas / DeepEval integration",
+      "Version labels in git"
+    ],
+    "8": [
+      "Baseline metrics in repo",
+      "CI secrets and flaky eval controls",
+      "Actionable regression messages"
+    ],
+    "9": [
+      "OPA allow/deny on tools",
+      "Langfuse traces and run_id correlation",
+      "Redaction before sharing traces"
+    ],
+    "10": [
+      "Eight capstone layers integrated",
+      "Prompt caching evidence table",
+      "OpenAPI surface for tools"
+    ],
+    "11": [
+      "Twelve-factor agents",
+      "Health checks and LiteLLM sidecar",
+      "docs/adding-a-tool.md pattern"
+    ],
+    "12": [
+      "OpenLineage emit on model/chunk ids",
+      "Threat model: retrieval injection"
+    ],
+    "13": [
+      "Pick one frontier track (vLLM, DSPy, cache)",
+      "Before/after metric in README"
+    ],
+    "14": [
+      "LoRA/QLoRA skim",
+      "Guardrails and sandbox tooling",
+      "Portfolio posts + resume"
+    ],
+    "15": [
+      "Four story bank narratives",
+      "System design drills",
+      "Live capstone demo script"
+    ]
+  },
+  "prove_packs": {
+    "0": {
+      "title": "Boot sprint prove",
+      "acceptance": [
+        { "criterion": "Public GitHub repository (synthetic or public data only)", "required": true },
+        { "criterion": "README states data source and limitations", "required": true },
+        { "criterion": "Golden-set metric (e.g. valid JSON % ≥ target you set)", "required": true },
+        { "criterion": "`pytest` passes on golden tests", "required": true },
+        { "criterion": "Threat model section (prompt injection on log fields)", "required": false }
+      ],
+      "readme_example": "| Metric | Value |\n| --- | --- |\n| Golden valid JSON % | 92% (n=50) |\n| Primary model | gemini-… |\n| Fallback | gpt-4o-mini |",
+      "commands": ["pytest tests/test_golden.py -q", "python scripts/score.py"]
+    },
+    "1": {
+      "title": "v0.2 release prove",
+      "acceptance": [
+        { "criterion": "Git tag or release `v0.2`", "required": true },
+        { "criterion": "README table: model, tokens, latency, USD per request", "required": true },
+        { "criterion": "LiteLLM router or proxy in repo", "required": true }
+      ],
+      "readme_example": "| Request | Model | Latency ms | Tokens | USD |\n| --- | --- | --- | --- | --- |",
+      "commands": ["your-cli extract --sample data/golden/001.json"]
+    },
+    "2": {
+      "title": "LangGraph HITL prove",
+      "acceptance": [
+        { "criterion": "README demo: validation fail → interrupt → resume", "required": true },
+        { "criterion": "Checkpointer (SQLite or Postgres) configured", "required": true }
+      ],
+      "readme_example": "Include GIF or numbered steps with expected log lines.",
+      "commands": ["python -m reconciler_agent.demo_hitl"]
+    },
+    "3": {
+      "title": "MCP server prove",
+      "acceptance": [
+        { "criterion": "MCP server repo path documented", "required": true },
+        { "criterion": "Audit log sample (tool, timestamp, outcome)", "required": true }
+      ],
+      "readme_example": "```json\n{\"tool\": \"search_logs\", \"status\": \"ok\"}\n```",
+      "commands": []
+    },
+    "4": {
+      "title": "Hybrid retrieval prove",
+      "acceptance": [
+        { "criterion": "Benchmark table: dense vs hybrid vs baseline", "required": true },
+        { "criterion": "Labeled Q/A set cited in README", "required": true }
+      ],
+      "readme_example": "| Method | recall@5 |\n| --- | --- |",
+      "commands": ["python scripts/benchmark_retrieval.py"]
+    },
+    "5": {
+      "title": "Chunks contract prove",
+      "acceptance": [
+        { "criterion": "`chunks.jsonl` committed or linked release artifact", "required": true },
+        { "criterion": "Schema documented (id, text, metadata)", "required": true }
+      ],
+      "readme_example": "One example line of JSONL in README.",
+      "commands": []
+    },
+    "6": {
+      "title": "Graph validator prove",
+      "acceptance": [
+        { "criterion": "One Cypher validator test in CI", "required": true },
+        { "criterion": "Example failing + passing graph in docs", "required": true }
+      ],
+      "readme_example": "",
+      "commands": ["pytest tests/test_graph_validator.py"]
+    },
+    "7": {
+      "title": "Eval harness prove",
+      "acceptance": [
+        { "criterion": "Golden set ≥ 30 cases in git", "required": true },
+        { "criterion": "Tier 1/2 metrics documented", "required": true }
+      ],
+      "readme_example": "| Tier | Metric | Value |",
+      "commands": ["pytest tests/test_eval.py"]
+    },
+    "8": {
+      "title": "CI eval gate prove",
+      "acceptance": [
+        { "criterion": "CI workflow fails on regression", "required": true },
+        { "criterion": "Baseline file committed", "required": true }
+      ],
+      "readme_example": "Link to green/red CI run screenshot.",
+      "commands": []
+    },
+    "9": {
+      "title": "Policy + trace prove",
+      "acceptance": [
+        { "criterion": "OPA test or policy unit test", "required": true },
+        { "criterion": "Langfuse/OTel trace screenshot with run_id", "required": true }
+      ],
+      "readme_example": "",
+      "commands": ["opa test policies/"]
+    },
+    "10": {
+      "title": "Capstone alpha prove",
+      "acceptance": [
+        { "criterion": "Git tag `alpha`", "required": true },
+        { "criterion": "Prompt caching before/after table", "required": true }
+      ],
+      "readme_example": "| Run | TTFT ms | Cached tokens |",
+      "commands": []
+    },
+    "11": {
+      "title": "Deploy prove",
+      "acceptance": [
+        { "criterion": "Deploy screenshot or URL", "required": true },
+        { "criterion": "`docs/adding-a-tool.md` exists", "required": true }
+      ],
+      "readme_example": "",
+      "commands": []
+    },
+    "12": {
+      "title": "Lineage v1.0 prove",
+      "acceptance": [
+        { "criterion": "Tag `v1.0`", "required": true },
+        { "criterion": "Sample OpenLineage JSON in repo", "required": true }
+      ],
+      "readme_example": "",
+      "commands": []
+    },
+    "13": {
+      "title": "Frontier prove",
+      "acceptance": [
+        { "criterion": "README “why we added X” with bottleneck + metric", "required": true }
+      ],
+      "readme_example": "## Frontier: semantic cache\nBottleneck: …\nMetric: …",
+      "commands": []
+    },
+    "14": {
+      "title": "Portfolio prove",
+      "acceptance": [
+        { "criterion": "1–2 public posts linked", "required": true },
+        { "criterion": "Resume bullet updated", "required": true }
+      ],
+      "readme_example": "",
+      "commands": []
+    },
+    "15": {
+      "title": "Interview prove",
+      "acceptance": [
+        { "criterion": "Offer letter or structured interview feedback notes", "required": true }
+      ],
+      "readme_example": "Private notes OK in backup JSON—not required in public repo.",
+      "commands": []
+    }
+  }
+}

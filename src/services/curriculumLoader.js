@@ -53,7 +53,12 @@ export async function loadCurriculum() {
   }
 
   const coursesRef = data.courses_ref || buildCoursesRefFromLessons(lessons);
-  cached = { lessons, coursesRef };
+  cached = {
+    lessons,
+    coursesRef,
+    programPrimerMarkdown: data.program_primer_markdown || "",
+    glossary: Array.isArray(data.glossary) ? data.glossary : [],
+  };
   return cached;
 }
 

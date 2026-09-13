@@ -1,44 +1,40 @@
-# AI Systems Engineer: 15-Month Career Migration Blueprint (2027 Target)
+# AI Systems Engineer: Reference & Depth Guide
 
-**Document version:** Revised September 2026  
-**Candidate context:** Harish Rajoori — Staff/Lead Data Platform Engineer (B.Tech EEE, JNTU Hyderabad; 10+ years production systems)
+**Document version:** Revised for public studio (September 2026)
 
 | Field | Value |
 | --- | --- |
-| **Target role** | Senior / Staff **AI Systems** or **AI Platform** Engineer |
-| **Target hiring window** | **2027** (pipeline Q2 2027; heavy interviews Q3–Q4 2027) |
-| **Runway** | **Oct 2026 → Dec 2027** (~15 months) |
-| **Employment anchor** | Mindera India Pvt Ltd — client **2K** (joining **5 Oct 2026**) |
-| **Prior role** | Lead Data Engineer, Warner Bros. Discovery (Jun 2026 – Sep 2026) |
-| **Comp aspiration (tier A outcome)** | Remote US/EU contracts **$120k–$150k+** / **₹1 Cr+** — plausible at Staff platform level with strong portfolio; not guaranteed on first 2027 offer |
-| **Foundation base** | Lakehouse, streaming, semantic layers, reconciliation, IaC, CI eval gates |
+| **Purpose** | Strategy, capstone architecture, ethics, career positioning, and **§17 module depth** for the open learning studio |
+| **Companion** | Daily checklist: [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) (Courses 0–15) |
+| **Audience** | Data/platform engineers, backend engineers, and developers building **production LLM systems** |
+| **Pace** | ~15 months at 10–15 h/week (self-paced) |
+| **Foundation skills** | Python, git, APIs, data pipelines, testing, basic cloud |
 
-**Core strategy:** Keep income and production scale via 2K (telemetry, Kafka/streaming, data quality). Build **governed agent platform** skills in parallel on **OSS + synthetic/public data**, and on **client work only where policy allows**. Treat LLMs as **untrusted compute kernels**; your moat is deterministic infrastructure around them.
+**Core strategy:** Build a **governed agent platform** capstone on **OSS + synthetic/public data**. Treat LLMs as **untrusted compute kernels**; invest in contracts, evals, orchestration, tool surfaces (MCP), policy, and observability.
 
-**Daily learning:** Run the **React studio** (`npm run dev` / `./serve.sh`) — curriculum from **[`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md)** (Courses 0–15, Prove gates). **Strategy, capstone, ethics, resume, and module depth** are in **this file** (§1–16 + **§17 appendices**).
+**Daily learning:** Run the **React studio** (`npm run dev` / `./serve.sh`) — curriculum from the **learning track**. Use **this file** for depth, interview prompts, and appendices.
 
 ---
 
-## 1. Executive Summary & Strategic Reality
+ & Strategic Reality
 
 ### Timeline anchors (fact-checked)
 
-* **Today:** September 2026.
-* **Pre-start window:** ~3 weeks before **5 Oct 2026** — enough for a **7-day extraction sprint**, not for senior AI platform qualification.
-* **Learning runway:** **15 months** (Oct 2026 – Dec 2027) to reach interview-ready **AI platform** depth for **2027** roles.
+* **Studio model:** Self-paced; dates in course titles are labels, not deadlines.
+* **Learning runway:** ~15 months of structured courses and prove gates.
 * **Market note:** By 2027, frameworks will churn; **orchestration, contracts, evals, MCP-style tool surfaces, and audit** will matter more than any single library name. Frontier topics in Section 5 remain valuable as **Phase 5 (H2 2027)** depth and interview differentiation.
 
 ### Scopes
 
 | Scope | What success looks like |
 | --- | --- |
-| **7 days (pre–Oct 5)** | Shipped OSS repo: structured log/telemetry reconciler (Instructor + Pydantic + LiteLLM + pytest). Upgraded agentic SDLC (Cursor rules, local eval habits). |
+| **7-day boot (Course 0)** | Shipped OSS repo: structured reconciler (Instructor + Pydantic + LiteLLM + pytest). |
 | **15 months** | One **platform-shaped** capstone (or internal equivalent) with orchestration, MCP/tools, eval CI, tracing, policy gate. Resume + LinkedIn show **LLM systems**, not courses. |
 | **2027 job search** | Credible answer to: *“What LLM/agent system did you own, and how did you prove it was safe?”* |
 
-### The 2K advantage
+### The data-platform advantage
 
-Roughly **80% of enterprise AI** is still data infrastructure: streaming ingestion, schema enforcement, DQ, indexing, lineage, cost controls. 2K-scale telemetry is a **validation sandbox** for extraction, anomaly workflows, and retrieval—**after** you confirm **data classification, PII, and LLM vendor policy** (see Section 11).
+Roughly **80% of enterprise AI** is still data infrastructure: streaming ingestion, schema enforcement, DQ, indexing, lineage, and cost controls. Your existing pipeline skills are the right foundation for extraction, anomaly workflows, and retrieval—**after** you confirm **data classification, PII, and LLM vendor policy** (see Section 11).
 
 ### Non-goals for this runway (Year 1–1.25)
 
@@ -82,7 +78,7 @@ Use **Mobius Research Lab** and **Juniper Square–style reconciliation** roles 
 ### Key enterprise requirements (synthesized from multiple JD families)
 
 1. **Output validation & schema enforcement:** Messy documents/logs → strict typed records and warehouse tables; separate **schema validity** from **semantic correctness**.
-2. **Deterministic invariant checks:** Balance equations, checksums, reconciliation rules **before** writes (your WBD/Trainline background).
+2. **Deterministic invariant checks:** Balance equations, checksums, reconciliation rules **before** writes (reconciliation and data-quality background).
 3. **Continuous AI evals & CI/CD gates:** Regression on golden sets; track cost, latency, extraction quality in PRs.
 4. **Stateful orchestration & HITL:** Cyclic graphs, checkpointing, `interrupt()` for human approval.
 5. **Gateway routing & fallbacks:** Multi-provider proxy, rate limits, budgets (LiteLLM-class patterns).
@@ -138,7 +134,7 @@ Before writing code, understand the systems wall that caused each historical gen
 
 ## 4. Translate Existing Platform Work (Credibility Bridge)
 
-Map prior work to AI platform language (use in CV, interviews, and internal 2K proposals):
+Map prior work to AI platform language (use in CV, interviews, and internal platform proposals):
 
 | Existing artifact / experience | AI systems narrative |
 | --- | --- |
@@ -234,7 +230,7 @@ Add new **required** study links to the track; add **optional depth** links to *
 
 ---
 
-## 8. The 7-Day Sprint (Before 5 Oct 2026)
+## 8. The 7-Day Boot Sprint (Course 0)
 
 Full day-by-day **Watch / Read / Build** links: **Learning Track → Course 0**.
 
@@ -249,7 +245,7 @@ Summary: OSS `production-log-reconciler` on **synthetic/public** data only; Inst
 | PHASE 1 (Oct–Dec 2026): Structured determinism, schemas & agent flow   |
 | - Karpathy foundations + DeepLearning.AI (LangGraph, Pydantic)         |
 | - Instructor + Pydantic + LangGraph baselines + LiteLLM (P0)           |
-| - 2K: Learn data contracts; map one AI-adjacent problem (policy-safe)  |
+| - Learn data contracts; map one AI-adjacent problem (policy-safe)  |
 | - Deliverable: OSS reconciler v1 + LangGraph hello with checkpoint     |
 +-------------------------------------------------------------------------+
                                     │
@@ -259,7 +255,7 @@ Summary: OSS `production-log-reconciler` on **synthetic/public** data only; Inst
 | - FastMCP or official MCP SDK; read-only scoped tools + audit log      |
 | - Qdrant or pgvector + BM25 hybrid (RRF)                               |
 | - Docling or LlamaParse on public docs                                 |
-| - 2K/synthetic: telemetry or ops doc ingestion pipeline                |
+| - Synthetic/public: telemetry or ops doc ingestion pipeline                |
 +-------------------------------------------------------------------------+
                                     │
                                     ▼
@@ -315,15 +311,15 @@ Per-month **video + text links**: see **Learning Track** courses **M1–M15** (s
 
 ---
 
-## 11. Ethics, IP & Client Data (2K / Mindera)
+## 11. Ethics, IP & Employer Data
 
 | Rule | Action |
 | --- | --- |
 | **Client data** | No production telemetry, PII, or unreleased game data in public repos or external LLMs without **written** approval. |
 | **OSS** | Synthetic generators, public datasets, or anonymized patterns only. |
 | **Work samples** | Internal demos under NDA: describe outcomes in interviews without leaking identifiers. |
-| **Employer IP** | Clarify with Mindera what side OSS and learning projects are allowed to publish. |
-| **Secrets** | Same discipline as CARL/WBD: never commit tokens; use Secrets Manager / env locally. |
+| **Employer IP** | Clarify with your employer what side OSS and learning projects you may publish. |
+| **Secrets** | Never commit tokens; use Secrets Manager or local env only. |
 
 ---
 
@@ -366,7 +362,7 @@ Production-grade **open-source** system (financial **or** game-telemetry ops—*
 ### Fix before outreach
 
 * Align title: **Staff / Lead Data Platform Engineer** transitioning to **AI Platform**.
-* WBD tenure **Jun 2026 – Sep 2026** is accurate; explain briefly as strategic move to Mindera/2K remote engagement.
+
 * Add **2027 bullets only when true** (OSS URLs, metrics).
 
 ### Bullets to earn by mid–late 2027
@@ -572,7 +568,7 @@ Granular concept maps, interview prompts, optional shelf, and appendices A–F. 
 - Transport: stdio vs SSE; security boundaries
 - Tool schema versioning; breaking changes
 - Audit log design for compliance interviews
-- Mapping to “internal API platform” narrative (CARL, Cube)
+- Mapping to “internal API platform” narrative (API catalogs, semantic layers)
 
 ## Watch / read
 
@@ -854,7 +850,7 @@ Course 14: Unsloth, PEFT, NeMo Guardrails, E2B, Karpathy Zero to Hero playlist.
 
 ## Story bank (prepare 4 narratives)
 
-1. Reconciliation / invariants (WBD, Trainline, CARL)
+1. Reconciliation / invariants (prior data platform work)
 2. Orchestration failure + recovery (checkpoint, retry)
 3. Policy deny + audit (OPA/MCP)
 4. Eval caught regression before merge

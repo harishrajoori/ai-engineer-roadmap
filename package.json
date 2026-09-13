@@ -12,7 +12,8 @@
     "validate:app": "node scripts/validate_app.mjs",
     "validate:links": "python3 scripts/validate_curriculum.py",
     "validate": "npm run validate:app && npm run validate:links",
-    "validate:ci": "npm run validate:app && python3 scripts/validate_curriculum.py --skip-http"
+    "validate:ci": "npm run validate:app && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/audit_public_content.py",
+    "audit:public": "python3 scripts/audit_public_content.py"
   },
   "dependencies": {
     "@react-oauth/google": "^0.13.5",

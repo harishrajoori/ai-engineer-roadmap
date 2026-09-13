@@ -49,8 +49,28 @@ if (!COURSES_REF_DATA || typeof COURSES_REF_DATA !== "object") {
   for (const c of courseNums) {
     if (!COURSES_REF_DATA[c]) {
       checks.push(`courses_ref missing course ${c}`);
+    } else {
+      const ref = COURSES_REF_DATA[c];
+      if (!Array.isArray(ref.prove_pack?.acceptance) || ref.prove_pack.acceptance.length < 1) {
+        checks.push(`courses_ref[${c}] missing prove_pack.acceptance`);
+      }
     }
   }
+}
+
+if (!data.program_primer_markdown || data.program_primer_markdown.length < 200) {
+  checks.push("program_primer_markdown missing or too short — run npm run curriculum");
+}
+if (!Array.isArray(data.glossary) || data.glossary.length < 10) {
+  checks.push("glossary missing or too small in lessons.json");
+}
+const sample = LESSONS_DATA[0];
+if (!sample.theory_summary?.includes("Study guide (five layers)")) {
+  checks.push("theory_summary missing five-layer study guide — run npm run curriculum");
+}
+const levels = sample.theory_levels;
+if (!levels?.beginner?.includes("Beginner path") || !levels?.advanced?.includes("Advanced path")) {
+  checks.push("theory_levels missing beginner/advanced — run npm run curriculum");
 }
 
 const loaderPath = path.join(root, "src/services/curriculumLoader.js");
