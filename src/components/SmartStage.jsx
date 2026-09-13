@@ -49,8 +49,8 @@ export default function SmartStage({ lesson, isCompleted, onToggleComplete, allL
         </div>
       </div>
 
-            {/* 2. Text-First Theory / Architecture (Markdown) */}
-      {lesson.content ? (
+      {/* 2. Text-First Theory / Architecture (Markdown) */}
+      {lesson.content && (
         <div className="markdown-theory mb-10 prose prose-invert max-w-none bg-slate-900/40 border border-slate-800/60 p-8 rounded-2xl shadow-xl">
           <ReactMarkdown 
             remarkPlugins={[remarkGfm, remarkMath]} 
@@ -59,13 +59,30 @@ export default function SmartStage({ lesson, isCompleted, onToggleComplete, allL
             {lesson.content}
           </ReactMarkdown>
         </div>
-      ) : (
-        <div className="markdown-theory mb-10 p-6 bg-slate-900/20 border border-slate-800/40 rounded-xl text-slate-400 italic text-center">
-          <Lightbulb className="inline-block mb-2 text-slate-500" size={24} />
-          <p>Detailed architectural theory is currently being drafted for this topic.</p>
-          <p className="text-sm mt-1">Please refer to the interactive lecture below in the meantime.</p>
+      )}
+
+      {/* 3. Native YouTube Video Player */}
+      <div className="video-section mb-10">
+        <h2 className="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
+          <PlayCircle size={18} className="text-blue-400"/> Interactive Lecture
+        </h2>
+        <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-2xl bg-black border border-slate-700/50">
+          <iframe 
+            width="100%" 
+            height="100%" 
+            src={activeEmbedUrl} 
+            title={activeVideo.title}
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowFullScreen>
+          </iframe>
         </div>
-      )}</h2>
+      </div>
+
+      {/* 4. Multi-Video Playlist Selector */}
+      {videos.length > 1 && (
+        <div className="playlist-section mb-10">
+          <h2 className="text-lg font-bold text-slate-200 mb-4">Masterclass Lectures ({videos.length})</h2>
           <div className="playlist-grid grid grid-cols-1 md:grid-cols-2 gap-4">
             {videos.map((vid, idx) => {
               const isActive = activeVideoIndex === idx;
