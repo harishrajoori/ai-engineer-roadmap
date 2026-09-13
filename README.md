@@ -27,7 +27,8 @@ Free external docs and short courses (DeepLearning.AI, Microsoft/Google open cur
 **Requirements:** Node.js 20+, Python 3 (for curriculum scripts), `npm`.
 
 ```bash
-git clone https://github.com/harishrajoori/ai-engineer-roadmap.git
+# GitHub → Code → copy the HTTPS clone URL for this repository
+git clone <repository-url>
 cd ai-engineer-roadmap
 npm install
 ./serve.sh          # http://localhost:8765
