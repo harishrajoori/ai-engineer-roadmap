@@ -16,6 +16,7 @@ export default function SettingsModal({
   onGoogleLogout,
   runtimeStudioConfig = {},
   onGoogleAuthError,
+  googleAuthError = "",
   onExportBackup,
   onImportBackup
 }) {

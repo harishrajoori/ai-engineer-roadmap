@@ -83,7 +83,18 @@ Keep your explanations precise, highly technical, systems-focused, and pragmatic
           {messages.map((m, idx) => (
             <div key={idx} className={`chat-bubble ${m.role === "user" ? "chat-bubble-user" : "chat-bubble-ai"}`}>
               <div style={{ whiteSpace: "pre-wrap" }}>{m.text}</div>
-              {m.role === "ai" && idx > 0 && (
+              {m.role === "ai" && m.text.includes("API Notice") && onOpenSettings && (
+                <button
+                  type="button"
+                  className="filter-btn"
+                  style={{ fontSize: "0.72rem", padding: "0.35rem 0.6rem", marginTop: "0.5rem" }}
+                  onClick={onOpenSettings}
+                >
+                  <Key size={11} />
+                  <span>Open Settings</span>
+                </button>
+              )}
+              {m.role === "ai" && idx > 0 && !m.text.includes("API Notice") && (
                 <button
                   className="filter-btn"
                   style={{ fontSize: "0.68rem", padding: "0.2rem 0.45rem", marginTop: "0.5rem" }}

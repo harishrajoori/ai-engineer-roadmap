@@ -710,6 +710,7 @@ export default function App() {
         onGoogleLogin={handleGoogleLogin}
         onGoogleLogout={handleGoogleLogout}
         onGoogleAuthError={handleGoogleAuthError}
+        googleAuthError={googleAuthError}
         runtimeStudioConfig={runtimeStudioConfig}
         onExportBackup={handleExportBackup}
         onImportBackup={handleImportBackup}
