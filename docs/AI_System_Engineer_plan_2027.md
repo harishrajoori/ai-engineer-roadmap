@@ -15,7 +15,7 @@
 
 **Core strategy:** Keep income and production scale via 2K (telemetry, Kafka/streaming, data quality). Build **governed agent platform** skills in parallel on **OSS + synthetic/public data**, and on **client work only where policy allows**. Treat LLMs as **untrusted compute kernels**; your moat is deterministic infrastructure around them.
 
-**Daily learning (Notion / mobile):** Import **[`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md)** as your **Interactive Learning Hub & Curriculum** — checkbox syllabi, Prove gates, Courses 0–15. **Deep topics, appendices, and optional shelf:** **[`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md)**. This plan file keeps strategy, market context, capstone §13, ethics, and resume.
+**Daily learning (Local Hub / mobile):** Import **[`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md)** as your **Interactive Learning Hub & Curriculum** — checkbox syllabi, Prove gates, Courses 0–15. **Deep topics, appendices, and optional shelf:** **[`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md)**. This plan file keeps strategy, market context, capstone §13, ethics, and resume.
 
 ---
 
@@ -168,17 +168,17 @@ Use this to avoid tutorial paralysis. **P0** must appear in capstone or work sam
 
 ## 6. Learning curriculum (canonical)
 
-**Two-file curriculum (import both into Notion):**
+**Two-file curriculum:**
 
 | File | Use |
 | --- | --- |
 | [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) | **Daily driver** — Modular Courses 0–15, checkbox syllabi, Prove gates |
 | [`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md) | **Depth** — concept maps, interview prompts, hub/CampusX tables, appendices A–F |
-| [`ai-learning-hub/`](./ai-learning-hub/) | **Notion CSVs** + local Learning Hub (`serve.sh`, `NOTION_SETUP.md`) |
+| [`ai-learning-hub/`](./ai-learning-hub/) | **Local Learning Hub** (`serve.sh`) |
 
 **Foundational Video Spines:** Andrej Karpathy (Zero to Hero, NanoGPT), DeepLearning.AI Open Academy, and Stanford CS224N.
 
-Do not maintain a third parallel resource list; add new links to the Reference (and mirror required items in the Notion track).
+Do not maintain a third parallel resource list; add new links to the Reference (and mirror required items in the track).
 
 ---
 
@@ -186,7 +186,7 @@ Do not maintain a third parallel resource list; add new links to the Reference (
 
 **Schedule:** Explore deeply **after** P0 harness ships (typically **Oct–Dec 2027**). Re-evaluate against current market before investing months in any one item.
 
-**Watch / read / build links:** Notion track **Courses 13–14**; Reference **Appendix D**.
+**Watch / read / build links:** Learning track **Courses 13–14**; Reference **Appendix D**.
 
 1. **DSPy (Stanford NLP) — Compiling Instead of Prompting:**
    * **Concept:** Compile declarative signatures into prompts/few-shots against a metric instead of manual prompt crafting.
@@ -400,4 +400,4 @@ Scheduled links: **Reference → Appendix D**.
 
 ---
 
-*Original plan file: `AI_System_Engineer_plan.md` — superseded for timeline (2027 target). **Notion curriculum:** [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md). **Detailed reference:** [`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md).*
+*Original plan file: `AI_System_Engineer_plan.md` — superseded for timeline (2027 target). **Curriculum:** [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md). **Detailed reference:** [`AI_System_Engineer_Learning_Track_2027_REFERENCE.md`](./AI_System_Engineer_Learning_Track_2027_REFERENCE.md).*

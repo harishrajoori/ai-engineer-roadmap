@@ -1,10 +1,10 @@
 # AI Systems Engineer — Detailed Module Reference (2027)
 
-**Purpose:** Self-study depth behind the Notion-friendly track [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md). Use this on laptop when you want granular topics, optional resources, code-lab indexes, and interview prep — not on mobile day-to-day.
+**Purpose:** Self-study depth behind the Learning track [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md). Use this on laptop when you want granular topics, optional resources, code-lab indexes, and interview prep — not on mobile day-to-day.
 
 | Document | Role |
 | --- | --- |
-| **Learning Track (Notion)** | Open Video / Docs-style checklists, Prove gates, import-ready |
+| **Learning Track** | Open Video / Docs-style checklists, Prove gates, import-ready |
 | **This file** | Exhaustive topics, appendices, optional shelf |
 | **Plan 2027** | Strategy, ethics §11, capstone §13, resume §14–15 |
 
@@ -522,7 +522,7 @@ Clone-and-diff only — not primary video curriculum.
 
 # Appendix E — Link validation log
 
-URLs in the **Notion track** and this reference were checked with HTTP `GET` on **13 Sep 2026** (status **200** or redirect to 200). Re-validate after major edits.
+URLs in the **Learning track** and this reference were checked with HTTP `GET` on **13 Sep 2026** (status **200** or redirect to 200). Re-validate after major edits.
 
 If a link breaks: use the official doc root from the same domain in the course Read list.
 
@@ -530,7 +530,7 @@ If a link breaks: use the official doc root from the same domain in the course R
 
 # Appendix F — Supplementary shelf (@meghana.ai PDF index)
 
-Canonical destinations for the 37-item **AI Learning Resources** PDF (`~/Downloads/ai-learning-resources.pdf`). PDF uses fragile `t.co` links — prefer these URLs in Notion.
+Canonical destinations for the 37-item **AI Learning Resources** PDF (`~/Downloads/ai-learning-resources.pdf`). PDF uses fragile `t.co` links — prefer these URLs.
 
 ## Videos (8)
 

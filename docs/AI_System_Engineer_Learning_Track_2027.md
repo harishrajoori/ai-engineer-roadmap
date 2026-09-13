@@ -1,10 +1,9 @@
 # AI Systems Engineer Professional Certificate (2027)
 
 > **One-place setup (do this once)**  
-> 1. **Notion:** Import `ai-learning-hub/notion_lessons.csv` + `notion_course_progress.csv` → lesson DB + course board. Full steps: **`ai-learning-hub/NOTION_SETUP.md`**.  
 > 2. **Local “course app”:** Run `ai-learning-hub/serve.sh` → open http://127.0.0.1:8765 for **YouTube embeds** + progress (browser storage).  
 > 3. **Markdown siblings:** Import `AI_System_Engineer_plan_2027.md` + `AI_System_Engineer_Learning_Track_2027_REFERENCE.md`; link Plan §13 with `@`.  
-> 4. **Open Video / Docs:** Spine courses open in the **Open Video / Docs app** (cannot embed in Notion).  
+> 4. **Open Video / Docs:** Spine courses open in the **Open Video / Docs app** .  
 > 5. After editing this track, run `python3 ai-learning-hub/generate_lessons.py` to refresh CSV/HTML.
 
 | | |
@@ -15,7 +14,7 @@
 | **Job target** | Senior / Staff AI Systems Engineer — **2027** hiring |
 | **Runway** | Oct 2026 → Dec 2027 · **10–15 h/week** (20+ h sprint weeks only) |
 | **Links validated** | 13 Sep 2026 (HTTP 200) — see Reference Appendix E |
-| **Lesson DB + local hub** | `ai-learning-hub/notion_lessons.csv` · `ai-learning-hub/index.html` |
+| **Lesson DB + local hub** | `src/data/lessonsData.js` · `index.html` |
 
 ---
 
@@ -497,7 +496,7 @@
 - One-command local demo (`docker compose up`)
 - Cost/TTFT optimization via prompt caching (interview story)
 
-> **Notion:** Link capstone full spec via `@AI_System_Engineer_plan_2027` → **§13 Capstone**. Checklist below is self-contained if the Plan page is not linked.
+> **Capstone:** Link capstone full spec via `AI_System_Engineer_plan_2027.md` → **§13 Capstone**. Checklist below is self-contained if the Plan page is not linked.
 
 ### Capstone checklist (Plan §13)
 
@@ -702,4 +701,4 @@
 
 ---
 
-*Daily driver for Notion. Last curriculum sync: Sep 2026.*
+*Daily driver. Last curriculum sync: Sep 2026.*
