@@ -1,8 +1,8 @@
-export const GEMINI_FALLBACK_CHAIN = ["gemini-3.6-flash", "gemini-3.6-flash", "gemini-1.5-pro"];
+export const GEMINI_FALLBACK_CHAIN = ["gemini-3.6-flash", "gemini-2.5-flash", "gemini-1.5-pro"];
 
 export const AVAILABLE_MODELS = [
   { id: "gemini-3.6-flash", name: "Gemini 3.6 Flash", provider: "Google", badge: "Latest", icon: "⚡" },
-  { id: "gemini-3.6-flash", name: "Gemini 3.6 Flash", provider: "Google", badge: "Stable", icon: "✨" },
+  { id: "gemini-2.5-flash", name: "Gemini 2.5 Flash", provider: "Google", badge: "Stable", icon: "✨" },
   { id: "gemini-1.5-pro", name: "Gemini 1.5 Pro", provider: "Google", badge: "Deep Reasoning", icon: "🧠" },
   { id: "groq-llama-3.3-70b-versatile", name: "Groq Llama 3.3 70B", provider: "Groq", badge: "Ultra Low Latency", icon: "🚀" },
   { id: "groq-mixtral-8x7b-32768", name: "Groq Mixtral 8x7B", provider: "Groq", badge: "32k Context", icon: "⚡" },
@@ -18,6 +18,7 @@ const DEFAULT_GEMINI_MODEL = "gemini-3.6-flash";
 export function normalizePreferredModel(modelId) {
   const id = (modelId || "").trim();
   const retired = new Set([
+    "gemini-2.0-flash",
     "gemini-3.6-pro",
     "gemini-3.7-flash",
     "gemini-3.8-flash",
