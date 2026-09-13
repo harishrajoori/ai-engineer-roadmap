@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Systems Engineer 2027 — Platform Command Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070A11;
+      --bg-alt: #0C101B;
+      --sidebar: #090D17;
+      --surface: #111827;
+      --surface-card: #141E33;
+      --surface-hover: #1A2744;
+      --text: #F8FAFC;
+      --text-sub: #CBD5E1;
+      --muted: #8493A8;
+      --accent: #6366F1;
+      --accent-light: #818CF8;
+      --accent-glow: rgba(99, 102, 241, 0.3);
+      --accent-grad: linear-gradient(135deg, #6366F1 0%, #A855F7 50%, #06B6D4 100%);
+      --done: #10B981;
+      --done-bg: rgba(16, 185, 129, 0.12);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(99, 102, 241, 0.6);
+      --glass: rgba(17, 24, 39, 0.75);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Top Command Header */
+    header.hub-header {
+      background: var(--sidebar);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      z-index: 20;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: var(--accent-grad);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #fff;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+    .brand-title h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .brand-title p {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .stat-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .stat-pill .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .stat-pill.done-stat .dot {
+      background: var(--done);
+      box-shadow: 0 0 8px var(--done);
+    }
+    .progress-track {
+      width: 140px;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-grad);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+    
+    /* Layout Container */
+    .app-layout {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 310px 1fr 380px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    /* Left Sidebar: Phases & Courses */
+    aside.course-sidebar {
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 1rem 1.25rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .course-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 0.85rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .phase-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #64748B;
+      padding: 0.85rem 0.6rem 0.35rem;
+    }
+    button.course-card {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-sub);
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    button.course-card:hover {
+      background: var(--surface);
+      color: #fff;
+    }
+    button.course-card.active {
+      background: var(--surface-card);
+      border-color: rgba(99, 102, 241, 0.4);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: 0 4px 16px -2px rgba(0,0,0,0.4), inset 0 0 12px rgba(99, 102, 241, 0.1);
+    }
+    .course-icon {
+      font-size: 1.1rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    button.course-card.active .course-icon {
+      background: rgba(99, 102, 241, 0.2);
+    }
+    .course-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .course-name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.8rem;
+    }
+    .course-meta-sub {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+    .course-badge-pill {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    button.course-card.active .course-badge-pill {
+      background: rgba(99, 102, 241, 0.25);
+      color: var(--accent-light);
+    }
+    
+    /* Main Content Area */
+    main.hub-main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--bg);
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+    
+    /* Media Stage (Top of Main) */
+    .media-stage {
+      background: #000;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      max-height: 380px;
+    }
+    .media-stage iframe {
+      width: 100%;
+      height: 100%;
+      max-height: 340px;
+      aspect-ratio: 16/9;
+      border: 0;
+    }
+    .empty-stage {
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      max-width: 480px;
+    }
+    .empty-stage-icon {
+      font-size: 2.5rem;
+      filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.4));
+    }
+    .empty-stage h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .empty-stage p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .stage-launch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent-grad);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 0.55rem 1.15rem;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      box-shadow: 0 4px 16px var(--accent-glow);
+      transition: transform 0.15s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .stage-launch-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Filter Bar */
+    .filter-bar {
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .filter-chips {
+      display: flex;
+      gap: 0.35rem;
+      overflow-x: auto;
+    }
+    .chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .chip:hover, .chip.active {
+      background: var(--surface-hover);
+      border-color: rgba(99, 102, 241, 0.5);
+      color: #fff;
+    }
+    .chip.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--accent);
+      color: var(--accent-light);
+    }
+    .search-wrap {
+      flex: 1;
+      min-width: 150px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.8rem;
+      padding: 0.4rem 0.75rem 0.4rem 2rem;
+      border-radius: 999px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color 0.15s ease;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    
+    /* Lesson List Feed */
+    .lesson-feed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .lesson-item:hover {
+      background: var(--surface-card);
+      border-color: rgba(255,255,255,0.14);
+      transform: translateY(-1px);
+    }
+    .lesson-item.selected {
+      border-color: var(--accent);
+      background: var(--surface-card);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.18);
+    }
+    .lesson-item.done {
+      background: rgba(16, 185, 129, 0.04);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+    .lesson-item.done .lesson-title {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+    
+    .checkbox-custom {
+      width: 1.15rem;
+      height: 1.15rem;
+      border-radius: 5px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+    .lesson-item.done .checkbox-custom {
+      background: var(--done);
+      border-color: var(--done);
+    }
+    .checkbox-custom::after {
+      content: "✓";
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      display: none;
+    }
+    .lesson-item.done .checkbox-custom::after {
+      display: block;
+    }
+    
+    .lesson-body {
+      flex: 1;
+      min-width: 0;
+    }
+    .lesson-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    .lesson-subtitle {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    /* Type Badges */
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+    .badge-Video { background: rgba(236, 72, 153, 0.15); color: #F472B6; border: 1px solid rgba(236, 72, 153, 0.35); }
+    .badge-Coursera { background: rgba(59, 130, 246, 0.15); color: #60A5FA; border: 1px solid rgba(59, 130, 246, 0.35); }
+    .badge-Read { background: rgba(139, 92, 246, 0.15); color: #C084FC; border: 1px solid rgba(139, 92, 246, 0.35); }
+    .badge-Build { background: rgba(245, 158, 11, 0.15); color: #FBBF24; border: 1px solid rgba(245, 158, 11, 0.35); }
+    .badge-Prove { background: rgba(16, 185, 129, 0.15); color: #34D399; border: 1px solid rgba(16, 185, 129, 0.35); }
+    .badge-Capstone { background: rgba(249, 115, 22, 0.15); color: #FB923C; border: 1px solid rgba(249, 115, 22, 0.35); }
+    .badge-Frontier { background: rgba(6, 182, 212, 0.15); color: #22D3EE; border: 1px solid rgba(6, 182, 212, 0.35); }
+    .badge-Do, .badge-Syllabus { background: rgba(148, 163, 184, 0.15); color: #CBD5E1; border: 1px solid rgba(148, 163, 184, 0.35); }
+    
+    /* Right Pane: Inspector, Notes & Prove Hub */
+    aside.inspector-pane {
+      background: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .inspector-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+    .tab-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.8rem 0.5rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text);
+    }
+    .tab-btn.active {
+      color: #fff;
+      border-bottom-color: var(--accent);
+      background: rgba(99, 102, 241, 0.05);
+    }
+    
+    .inspector-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .inspector-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .section-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+    .lesson-meta-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+    }
+    .meta-row .label {
+      color: var(--muted);
+    }
+    .meta-row .val {
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+    
+    .notes-textarea {
+      width: 100%;
+      height: 180px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      padding: 0.85rem;
+      resize: vertical;
+      outline: none;
+      line-height: 1.45;
+    }
+    .notes-textarea:focus {
+      border-color: var(--accent);
+    }
+    
+    .prove-box {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .prove-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
+      font-family: inherit;
+    }
+    
+    @media (max-width: 1100px) {
+      .app-layout { grid-template-columns: 260px 1fr; }
+      aside.inspector-pane { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hub Header -->
+  <header class="hub-header">
+    <div class="brand-group">
+      <div class="brand-logo">AI</div>
+      <div class="brand-title">
+        <h1>AI Systems Engineer 2027</h1>
+        <p>Staff AI Platform Engineer Certification Runway</p>
+      </div>
+    </div>
+    
+    <div class="stats-bar">
+      <div class="stat-pill">
+        <span class="dot"></span>
+        <span id="stat-active-phase">Phase 1 · Foundations</span>
+      </div>
+      <div class="stat-pill done-stat">
+        <span class="dot"></span>
+        <span id="stat-progress-text">0 / 145 Done (0%)</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="global-progress-bar"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hub App Grid -->
+  <div class="app-layout">
+    
+    <!-- Left: Course Navigator -->
+    <aside class="course-sidebar">
+      <div class="sidebar-header">Curriculum & Roadmap</div>
+      <div class="course-scroll" id="course-nav"></div>
+    </aside>
+
+    <!-- Center: Main Stage & Lesson Feed -->
+    <main class="hub-main">
+      
+      <!-- Top Media Player / Launcher -->
+      <div class="media-stage" id="media-stage">
+        <div class="empty-stage" id="empty-stage-prompt">
+          <div class="empty-stage-icon">⚡</div>
+          <h3>Select a Lesson to Begin</h3>
+          <p>Choose any lesson from the feed below to watch embedded lectures, launch deep links, or verify implementation checkpoints.</p>
+        </div>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="filter-bar">
+        <div class="filter-chips">
+          <button class="chip active" data-type="" onclick="setTypeFilter('', this)">All</button>
+          <button class="chip" data-type="Video" onclick="setTypeFilter('Video', this)">📺 Video</button>
+          <button class="chip" data-type="Coursera" onclick="setTypeFilter('Coursera', this)">🎓 Coursera</button>
+          <button class="chip" data-type="Read" onclick="setTypeFilter('Read', this)">📖 Read</button>
+          <button class="chip" data-type="Build" onclick="setTypeFilter('Build', this)">🛠️ Build</button>
+          <button class="chip" data-type="Prove" onclick="setTypeFilter('Prove', this)">🏆 Prove</button>
+          <button class="chip" data-type="Frontier" onclick="setTypeFilter('Frontier', this)">⚡ Frontier</button>
+        </div>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="search" class="search-input" id="search-input" placeholder="Filter lessons (or press /)..." />
+        </div>
+      </div>
+
+      <!-- Lesson Card Feed -->
+      <div class="lesson-feed" id="lesson-feed"></div>
+    </main>
+
+    <!-- Right: Inspector, Notes & Proof Hub -->
+    <aside class="inspector-pane">
+      <div class="inspector-tabs">
+        <button class="tab-btn active" onclick="setTab('overview', this)">Overview</button>
+        <button class="tab-btn" onclick="setTab('notes', this)">Scratchpad</button>
+        <button class="tab-btn" onclick="setTab('prove', this)">Prove Gate</button>
+      </div>
+
+      <div class="inspector-content" id="tab-overview">
+        <div class="inspector-section">
+          <div class="section-title">Active Lesson</div>
+          <h2 id="insp-title" style="font-size:0.95rem;font-weight:700;line-height:1.4">Select a lesson</h2>
+          <div id="insp-tags" style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap"></div>
+        </div>
+
+        <div class="inspector-section">
+          <div class="section-title">Context & Attributes</div>
+          <div class="lesson-meta-card">
+            <div class="meta-row">
+              <span class="label">Course</span>
+              <span class="val" id="insp-course">—</span>
+            </div>
+            <div class="meta-row">
+              <span class="label">Target Month</span>
+              <span class="val" id="insp-month">—</span>
+            </div>
+            <div class="meta-row">
+              <span class="label">Runtime / Effort</span>
+              <span class="val" id="insp-duration">—</span>
+            </div>
+            <div class="meta-row">
+              <span class="label">Launch Target</span>
+              <span class="val" id="insp-mode">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="inspector-section" id="insp-actions" style="display:flex;flex-direction:column;gap:0.5rem">
+          <!-- Dynamic Action Buttons -->
+        </div>
+      </div>
+
+      <div class="inspector-content" id="tab-notes" style="display:none">
+        <div class="inspector-section">
+          <div class="section-title">Persistent Study Notes</div>
+          <p style="font-size:0.75rem;color:var(--muted)">Notes are saved automatically in your browser for this specific lesson.</p>
+          <textarea class="notes-textarea" id="notes-textarea" placeholder="Record key architectural takeaways, trade-offs, or code snippets..."></textarea>
+        </div>
+      </div>
+
+      <div class="inspector-content" id="tab-prove" style="display:none">
+        <div class="inspector-section">
+          <div class="section-title">Prove Gate Evidence</div>
+          <div class="prove-box">
+            <h4 style="font-size:0.85rem;font-weight:700;color:var(--done)">🏆 Verifiable Evidence</h4>
+            <p style="font-size:0.75rem;color:var(--text-sub)">Paste your GitHub Repo, PR link, or metric artifact score:</p>
+            <input type="url" class="prove-input" id="prove-url-input" placeholder="https://github.com/your-username/repo..." />
+            <button class="stage-launch-btn" style="width:100%;justify-content:center" onclick="saveProveUrl()">Save Gate Proof</button>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+  <script>
+    const LESSONS = [{"order": 1, "course": 1, "course_title": "Coursera spine → Course 1", "month": "M1 Oct 2026", "section": "coursera_spine", "type": "Coursera", "lesson": "Generative AI with Large Language Models", "url": "https://www.coursera.org/learn/generative-ai-with-llms", "duration": "~16 h", "required": "Yes", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 2, "course": 2, "course_title": "Coursera spine → Course 2", "month": "M2 Nov 2026", "section": "coursera_spine", "type": "Coursera", "lesson": "AI Agents in LangGraph", "url": "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/", "duration": "2–3 h", "required": "Yes", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 3, "course": 2, "course_title": "Coursera spine → Course 2", "month": "M2 Nov 2026", "section": "coursera_spine", "type": "Coursera", "lesson": "Generative AI Engineering with LLMs specialization (cherry-pick)", "url": "https://www.coursera.org/specializations/generative-ai-engineering-with-llms", "duration": "optional", "required": "No", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 7, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "watch", "type": "Video", "lesson": "Karpathy — Intro to LLMs", "url": "https://www.youtube.com/watch?v=zjkBMFhNj_g", "duration": "~1 h", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/zjkBMFhNj_g", "status": "Not started"}, {"order": 8, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "watch", "type": "Video", "lesson": "DeepLearning.AI — Pydantic for LLM Workflows", "url": "https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/", "duration": "~1 h", "required": "Yes", "open_how": "DL.AI browser", "embed_url": "", "status": "Not started"}, {"order": 9, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "read", "type": "Read", "lesson": "Instructor — quick start", "url": "https://python.useinstructor.com/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 10, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "read", "type": "Read", "lesson": "Pydantic V2 docs", "url": "https://docs.pydantic.dev/latest/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 11, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "read", "type": "Read", "lesson": "LiteLLM — reliable completions / fallbacks", "url": "https://docs.litellm.ai/docs/completion/reliable_completions", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 12, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "read", "type": "Read", "lesson": "Hamel — evals intro", "url": "https://hamel.dev/blog/posts/evals/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 13, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "read", "type": "Read", "lesson": "Applied LLMs in Production", "url": "https://applied-llms.org/", "duration": "skim structure", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 14, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "build", "type": "Build", "lesson": "Repo: `production-log-reconciler` or `telemetry-log-reconciler` · synthetic/public data only", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 15, "course": 0, "course_title": "Boot sprint (7 days before 5 Oct 2026)", "month": "Pre Oct 2026", "section": "prove", "type": "Prove", "lesson": "Paste GitHub URL + README golden-set metric", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 16, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "coursera", "type": "Coursera", "lesson": "Generative AI with Large Language Models", "url": "https://www.coursera.org/learn/generative-ai-with-llms", "duration": "~16 h", "required": "Yes", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 17, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "coursera", "type": "Coursera", "lesson": "DL.AI course landing", "url": "https://www.deeplearning.ai/courses/generative-ai-with-llms", "duration": "same content", "required": "Yes", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 18, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "watch", "type": "Video", "lesson": "Karpathy — Deep Dive into LLMs", "url": "https://www.youtube.com/watch?v=7xTGNNLPyMI", "duration": "~3 h", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/7xTGNNLPyMI", "status": "Not started"}, {"order": 19, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "watch", "type": "Video", "lesson": "3Blue1Brown — neural networks / attention", "url": "https://www.3blue1brown.com/topics/neural-networks", "duration": "2–4 h", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 20, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "watch", "type": "Video", "lesson": "*(optional)* StatQuest video index · search attention / embedding", "url": "https://statquest.org/video-index/", "duration": "", "required": "No", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 21, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "watch", "type": "Video", "lesson": "*(optional)* DeepLearning.AI YouTube", "url": "https://www.youtube.com/@DeepLearningAI", "duration": "", "required": "No", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 22, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "watch", "type": "Video", "lesson": "*(optional)* Karpathy channel", "url": "https://www.youtube.com/c/AndrejKarpathy", "duration": "", "required": "No", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 23, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "read", "type": "Read", "lesson": "Applied LLMs — 3+ sections", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 24, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "read", "type": "Read", "lesson": "Instructor — patterns & retries", "url": "https://python.useinstructor.com/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 25, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "read", "type": "Read", "lesson": "LiteLLM docs hub", "url": "https://docs.litellm.ai/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 26, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "read", "type": "Read", "lesson": "Chip Huyen — blog", "url": "https://chiphuyen.com/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 27, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "read", "type": "Read", "lesson": "AI Engineering book repo", "url": "https://github.com/chiphuyen/aie-book", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 28, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "read", "type": "Read", "lesson": "*(optional)* Outlines — constrained decoding", "url": "https://github.com/dottxt-ai/outlines", "duration": "", "required": "No", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 29, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "build", "type": "Build", "lesson": "Tag `v0.2`; LiteLLM router + per-request cost log", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 30, "course": 1, "course_title": "M1 (Oct 2026): LLM foundations & structured extraction", "month": "M1 Oct 2026", "section": "prove", "type": "Prove", "lesson": "Release `v0.2` link + README metrics", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 31, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "coursera", "type": "Coursera", "lesson": "AI Agents in LangGraph", "url": "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/", "duration": "2–3 h", "required": "Yes", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 32, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "coursera", "type": "Coursera", "lesson": "LangChain Academy — LangGraph modules", "url": "https://academy.langchain.com/", "duration": "4–8 h", "required": "Yes", "open_how": "Coursera app", "embed_url": "", "status": "Not started"}, {"order": 33, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "watch", "type": "Video", "lesson": "LangChain — Context Engineering for Agents", "url": "https://www.youtube.com/watch?v=4GiqzUHD5AA", "duration": "~1 h", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/4GiqzUHD5AA", "status": "Not started"}, {"order": 34, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "watch", "type": "Video", "lesson": "Dave Ebbelaar — LangGraph production", "url": "https://www.youtube.com/@daveebbelaar", "duration": "pick 1–2", "required": "Yes", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 35, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "watch", "type": "Video", "lesson": "Berkeley RDI — compound AI / agents", "url": "https://www.youtube.com/@BerkeleyRDI", "duration": "1 lecture", "required": "Yes", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 36, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "watch", "type": "Video", "lesson": "*(optional)* LangChain YouTube", "url": "https://www.youtube.com/@LangChain", "duration": "", "required": "No", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 37, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "read", "type": "Read", "lesson": "Anthropic — Building Effective Agents", "url": "https://www.anthropic.com/engineering/building-effective-agents", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 38, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "read", "type": "Read", "lesson": "LangGraph documentation", "url": "https://langchain-ai.github.io/langgraph/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 39, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "read", "type": "Read", "lesson": "Applied LLMs — agents / orchestration", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 40, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "build", "type": "Build", "lesson": "Package `reconciler-agent`: LangGraph + SQLite/Postgres checkpoints", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 41, "course": 2, "course_title": "M2 (Nov 2026): LangGraph & agent state machines", "month": "M2 Nov 2026", "section": "prove", "type": "Prove", "lesson": "README demo: validation fail → `interrupt()` HITL", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 42, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "watch", "type": "Video", "lesson": "Daily Dose of DS — MCP topics", "url": "https://www.youtube.com/@dailydoseofds", "duration": "1–2 videos", "required": "Yes", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 43, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "watch", "type": "Video", "lesson": "Multi-agent MCP + FastAPI", "url": "https://www.youtube.com/watch?v=LZAGlCqmhZQ", "duration": "~2 h", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/LZAGlCqmhZQ", "status": "Not started"}, {"order": 44, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "watch", "type": "Video", "lesson": "Multi-agent MCP + HITL architecture", "url": "https://www.youtube.com/watch?v=BM39OouLNsM", "duration": "long", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/BM39OouLNsM", "status": "Not started"}, {"order": 45, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "watch", "type": "Video", "lesson": "*(optional)* CampusX MCP episode — LangGraph playlist", "url": "https://www.youtube.com/playlist?list=PLKnIA16_RmvYsvB8qkUQuJmJNuiCUJFPL", "duration": "", "required": "No", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 46, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "read", "type": "Read", "lesson": "MCP introduction", "url": "https://modelcontextprotocol.io/introduction", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 47, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "read", "type": "Read", "lesson": "MCP specification / docs", "url": "https://modelcontextprotocol.io/docs", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 48, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "read", "type": "Read", "lesson": "MCP Illustrated Guidebook", "url": "https://mcp.dailydoseofds.com", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 49, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "read", "type": "Read", "lesson": "FastMCP (Python)", "url": "https://github.com/jlowin/fastmcp", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 50, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "read", "type": "Read", "lesson": "Hub roadmap — MCP section", "url": "https://github.com/patchy631/ai-engineering-hub/blob/main/ai-engineering-roadmap/README.md", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 51, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "read", "type": "Read", "lesson": "JSON Schema", "url": "https://json-schema.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 52, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "build", "type": "Build", "lesson": "Tools: `lookup_schema`, `query_golden_set`, `run_readonly_sql` (sqlite)", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 53, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "build", "type": "Build", "lesson": "Audit fields: `user_id`, `tool`, `args_hash`, `timestamp`", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 54, "course": 3, "course_title": "M3 (Dec 2026): MCP & secure tool surfaces", "month": "M3 Dec 2026", "section": "prove", "type": "Prove", "lesson": "README + redacted Cursor/Claude MCP snippet", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 55, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "watch", "type": "Video", "lesson": "Document Chat RAG walkthrough", "url": "https://www.youtube.com/watch?v=ZgNJMWipirk", "duration": "~45 m", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/ZgNJMWipirk", "status": "Not started"}, {"order": 56, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "watch", "type": "Video", "lesson": "*(optional)* CampusX Advanced RAG outline · hybrid modules", "url": "https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265", "duration": "", "required": "No", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 57, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "read", "type": "Read", "lesson": "Qdrant documentation", "url": "https://qdrant.tech/documentation/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 58, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "read", "type": "Read", "lesson": "Qdrant — hybrid queries", "url": "https://qdrant.tech/documentation/concepts/hybrid-queries/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 59, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "read", "type": "Read", "lesson": "pgvector", "url": "https://github.com/pgvector/pgvector", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 60, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "read", "type": "Read", "lesson": "Applied LLMs — retrieval", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 61, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "build", "type": "Build", "lesson": "Public corpus (10-K sample, ops markdown, or synthetic runbooks)", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 62, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "build", "type": "Build", "lesson": "README: dense-only vs hybrid metrics", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 63, "course": 4, "course_title": "M4 (Jan 2027): Hybrid retrieval", "month": "M4 Jan 2027", "section": "prove", "type": "Prove", "lesson": "Committed benchmark table", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 64, "course": 5, "course_title": "M5 (Feb 2027): Document parsing at scale", "month": "M5 Feb 2027", "section": "watch", "type": "Video", "lesson": "Docling (IBM)", "url": "https://github.com/DS4SD/docling", "duration": "README / release demos", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 65, "course": 5, "course_title": "M5 (Feb 2027): Document parsing at scale", "month": "M5 Feb 2027", "section": "watch", "type": "Video", "lesson": "Docling documentation", "url": "https://github.com/DS4SD/docling#documentation", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 66, "course": 5, "course_title": "M5 (Feb 2027): Document parsing at scale", "month": "M5 Feb 2027", "section": "watch", "type": "Video", "lesson": "LlamaParse getting started", "url": "https://docs.cloud.llamaindex.ai/llamaparse/getting_started", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 67, "course": 5, "course_title": "M5 (Feb 2027): Document parsing at scale", "month": "M5 Feb 2027", "section": "watch", "type": "Video", "lesson": "Chip Huyen — data for LLM systems", "url": "https://chiphuyen.com/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 68, "course": 5, "course_title": "M5 (Feb 2027): Document parsing at scale", "month": "M5 Feb 2027", "section": "build", "type": "Build", "lesson": "`chunks.jsonl` with `source_page`, `doc_id`, `chunk_id`", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 69, "course": 5, "course_title": "M5 (Feb 2027): Document parsing at scale", "month": "M5 Feb 2027", "section": "prove", "type": "Prove", "lesson": "Sample file + documented schema", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 70, "course": 6, "course_title": "M6 (Mar 2027): Graph & GraphRAG slice", "month": "M6 Mar 2027", "section": "watch", "type": "Video", "lesson": "Neo4j GraphAcademy", "url": "https://graphacademy.neo4j.com/", "duration": "4–8 h", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 71, "course": 6, "course_title": "M6 (Mar 2027): Graph & GraphRAG slice", "month": "M6 Mar 2027", "section": "watch", "type": "Video", "lesson": "*(optional)* CampusX Graph RAG modules", "url": "https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265", "duration": "", "required": "No", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 72, "course": 6, "course_title": "M6 (Mar 2027): Graph & GraphRAG slice", "month": "M6 Mar 2027", "section": "read", "type": "Read", "lesson": "Microsoft GraphRAG", "url": "https://github.com/microsoft/graphrag", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 73, "course": 6, "course_title": "M6 (Mar 2027): Graph & GraphRAG slice", "month": "M6 Mar 2027", "section": "read", "type": "Read", "lesson": "Neo4j Cypher manual", "url": "https://neo4j.com/docs/cypher-manual/current/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 74, "course": 6, "course_title": "M6 (Mar 2027): Graph & GraphRAG slice", "month": "M6 Mar 2027", "section": "build", "type": "Build", "lesson": "Lightweight graph from M5 corpus; validator rejects invalid states", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 75, "course": 6, "course_title": "M6 (Mar 2027): Graph & GraphRAG slice", "month": "M6 Mar 2027", "section": "prove", "type": "Prove", "lesson": "Test case that fails validation", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 76, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "watch", "type": "Video", "lesson": "RAG Evaluation (Ragas context)", "url": "https://www.youtube.com/watch?v=bB56BaQIBm4", "duration": "~1 h", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/bB56BaQIBm4", "status": "Not started"}, {"order": 77, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "watch", "type": "Video", "lesson": "*(optional)* CampusX RAGAS module — Advanced RAG outline", "url": "https://learnwith.campusx.in/courses/Advanced-RAG-69d8037290a183fe36833265", "duration": "", "required": "No", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 78, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "read", "type": "Read", "lesson": "Hamel — evals", "url": "https://hamel.dev/blog/posts/evals/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 79, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "read", "type": "Read", "lesson": "Applied LLMs — evaluation", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 80, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "read", "type": "Read", "lesson": "DeepEval getting started", "url": "https://docs.confident-ai.com/docs/getting-started", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 81, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "read", "type": "Read", "lesson": "Ragas — install", "url": "https://docs.ragas.io/en/stable/getstarted/install/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 82, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "read", "type": "Read", "lesson": "Ragas — metrics", "url": "https://docs.ragas.io/en/stable/concepts/metrics/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 83, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "build", "type": "Build", "lesson": "`evals/golden.jsonl`, `python -m evals.run` → JSON report", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 84, "course": 7, "course_title": "M7 (Apr 2027): Evaluation harness", "month": "M7 Apr 2027", "section": "prove", "type": "Prove", "lesson": "Golden set committed + summary metrics", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 85, "course": 8, "course_title": "M8 (May 2027): Eval CI/CD gates", "month": "M8 May 2027", "section": "read", "type": "Read", "lesson": "Hamel — articles index", "url": "https://hamel.dev/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 86, "course": 8, "course_title": "M8 (May 2027): Eval CI/CD gates", "month": "M8 May 2027", "section": "read", "type": "Read", "lesson": "DeepEval — CI/CD", "url": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 87, "course": 8, "course_title": "M8 (May 2027): Eval CI/CD gates", "month": "M8 May 2027", "section": "read", "type": "Read", "lesson": "Applied LLMs — testing / monitoring", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 88, "course": 8, "course_title": "M8 (May 2027): Eval CI/CD gates", "month": "M8 May 2027", "section": "build", "type": "Build", "lesson": "`.github/workflows/evals.yml`, `evals/baseline.json`", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 89, "course": 8, "course_title": "M8 (May 2027): Eval CI/CD gates", "month": "M8 May 2027", "section": "prove", "type": "Prove", "lesson": "CI regression screenshot", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 90, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "watch", "type": "Video", "lesson": "LangSmith crash course", "url": "https://www.youtube.com/watch?v=4FFspU4riHk", "duration": "map concepts to Langfuse · ~2 h", "required": "Yes", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/4FFspU4riHk", "status": "Not started"}, {"order": 91, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "watch", "type": "Video", "lesson": "*(optional)* Context Engineering for Agents · ~1 h", "url": "https://www.youtube.com/watch?v=4GiqzUHD5AA", "duration": "", "required": "No", "open_how": "Embed", "embed_url": "https://www.youtube.com/embed/4GiqzUHD5AA", "status": "Not started"}, {"order": 92, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "read", "type": "Read", "lesson": "Open Policy Agent docs", "url": "https://www.openpolicyagent.org/docs/latest/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 93, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "read", "type": "Read", "lesson": "Langfuse docs", "url": "https://langfuse.com/docs", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 94, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "read", "type": "Read", "lesson": "Langfuse — tracing", "url": "https://langfuse.com/docs/tracing", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 95, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "read", "type": "Read", "lesson": "OpenTelemetry — Python", "url": "https://opentelemetry.io/docs/languages/python/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 96, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "read", "type": "Read", "lesson": "LiteLLM — Langfuse integration", "url": "https://docs.litellm.ai/docs/observability/langfuse_integration", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 97, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "build", "type": "Build", "lesson": "Rego: block `write_*` for role `analyst`", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 98, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "build", "type": "Build", "lesson": "Langfuse wired to LangGraph + LiteLLM", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 99, "course": 9, "course_title": "M9 (Jun 2027): Policy (OPA) + tracing", "month": "M9 Jun 2027", "section": "prove", "type": "Prove", "lesson": "Trace screenshot + policy test output", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 100, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Ingestion: Docling or LlamaParse on public/synthetic docs", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 101, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Gateway: LiteLLM proxy + failover; prompt caching on static prefixes", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 102, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Extraction: Instructor + Pydantic + validation retries", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 103, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Invariants & lineage: root validators; chunk → model → row events", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 104, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Policy: OPA before write tools", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 105, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "LangGraph: pass → stage write; fail → `interrupt()` HITL", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 106, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Eval CI: GitHub Actions + tiered metrics", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 107, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "Telemetry: Langfuse or OTel per run", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 108, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "capstone checklist", "type": "Capstone", "lesson": "*(optional Phase 5)* E2B, semantic cache, NeMo — document as Phase 2 if deferred", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 109, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "practical gate", "type": "Capstone", "lesson": "Static prefix identified (schemas, tools, policy, few-shots)", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 110, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "practical gate", "type": "Capstone", "lesson": "Anthropic prompt caching", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 111, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "practical gate", "type": "Capstone", "lesson": "LiteLLM prompt caching", "url": "https://docs.litellm.ai/docs/completion/prompt_caching", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 112, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "practical gate", "type": "Capstone", "lesson": "README table: TTFT + cached vs uncached tokens (≥10 requests, same workload)", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 113, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "practical gate", "type": "Capstone", "lesson": "One-sentence interview line on cost/latency without behavior change", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 114, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "watch", "type": "Video", "lesson": "AI Agents in LangGraph", "url": "https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/", "duration": "revisit as needed", "required": "Yes", "open_how": "DL.AI browser", "embed_url": "", "status": "Not started"}, {"order": 115, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "read", "type": "Read", "lesson": "OpenAPI 3", "url": "https://swagger.io/specification/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 116, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "read", "type": "Read", "lesson": "JSON Schema", "url": "https://json-schema.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 117, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "read", "type": "Read", "lesson": "Instructor", "url": "https://python.useinstructor.com/", "duration": "[LiteLLM](https://docs.litellm.ai/)", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 118, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "build", "type": "Build", "lesson": "Ingest → gateway (caching on) → extract → validate → LangGraph → stage DB", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 119, "course": 10, "course_title": "M10 (Jul 2027): Capstone integration alpha", "month": "M10 Jul 2027", "section": "prove", "type": "Prove", "lesson": "`alpha` tag + 5-minute demo script + caching section in README", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 120, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "watch", "type": "Video", "lesson": "Kubernetes Community", "url": "https://www.youtube.com/c/kubernetescommunity", "duration": "pick relevant talks", "required": "Yes", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 121, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "read", "type": "Read", "lesson": "Kubernetes — Deployments", "url": "https://kubernetes.io/docs/concepts/workloads/controllers/deployment/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 122, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "read", "type": "Read", "lesson": "Helm quickstart", "url": "https://helm.sh/docs/intro/quickstart/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 123, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "read", "type": "Read", "lesson": "Argo CD — getting started", "url": "https://argo-cd.readthedocs.io/en/stable/getting_started/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 124, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "read", "type": "Read", "lesson": "LiteLLM proxy server", "url": "https://docs.litellm.ai/docs/simple_proxy", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 125, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "build", "type": "Build", "lesson": "Helm chart or compose", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 126, "course": 11, "course_title": "M11 (Aug 2027): Deploy & platform UX", "month": "M11 Aug 2027", "section": "prove", "type": "Prove", "lesson": "`kubectl get pods` or compose screenshot + doc link", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 127, "course": 12, "course_title": "M12 (Sep 2027): Lineage & hardening", "month": "M12 Sep 2027", "section": "watch", "type": "Video", "lesson": "OpenLineage project", "url": "https://www.openlineage.io/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 128, "course": 12, "course_title": "M12 (Sep 2027): Lineage & hardening", "month": "M12 Sep 2027", "section": "read", "type": "Read", "lesson": "OpenLineage documentation", "url": "https://openlineage.io/docs", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 129, "course": 12, "course_title": "M12 (Sep 2027): Lineage & hardening", "month": "M12 Sep 2027", "section": "read", "type": "Read", "lesson": "Applied LLMs — production pitfalls", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 130, "course": 12, "course_title": "M12 (Sep 2027): Lineage & hardening", "month": "M12 Sep 2027", "section": "build", "type": "Build", "lesson": "Sample lineage JSON in repo", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 131, "course": 12, "course_title": "M12 (Sep 2027): Lineage & hardening", "month": "M12 Sep 2027", "section": "prove", "type": "Prove", "lesson": "`v1.0` tag + lineage artifact", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 132, "course": 13, "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)", "month": "M13 Oct 2027", "section": "pick one or two tracks", "type": "Frontier", "lesson": "**vLLM** — docs · local model behind LiteLLM", "url": "https://docs.vllm.ai/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 133, "course": 13, "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)", "month": "M13 Oct 2027", "section": "pick one or two tracks", "type": "Frontier", "lesson": "**DSPy** — GitHub · one compiled extractor metric", "url": "https://github.com/stanfordnlp/dspy", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 134, "course": 13, "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)", "month": "M13 Oct 2027", "section": "pick one or two tracks", "type": "Frontier", "lesson": "**Prefix caching** — Anthropic · TTFT before/after", "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 135, "course": 13, "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)", "month": "M13 Oct 2027", "section": "pick one or two tracks", "type": "Frontier", "lesson": "**Semantic cache** — GPTCache · optional gateway layer", "url": "https://github.com/zilliztech/gptcache", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 136, "course": 13, "course_title": "M13 (Oct 2027): Frontier deep dive (pick 1–2)", "month": "M13 Oct 2027", "section": "prove", "type": "Prove", "lesson": "README section with bottleneck + metric", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 137, "course": 14, "course_title": "M14 (Nov 2027): Frontier + portfolio", "month": "M14 Nov 2027", "section": "syllabus", "type": "Read", "lesson": "Unsloth", "url": "https://github.com/unslothai/unsloth", "duration": "[HF PEFT](https://huggingface.co/docs/peft/index) · LoRA/QLoRA skim", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 138, "course": 14, "course_title": "M14 (Nov 2027): Frontier + portfolio", "month": "M14 Nov 2027", "section": "syllabus", "type": "Read", "lesson": "NeMo Guardrails", "url": "https://github.com/NVIDIA/NeMo-Guardrails", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 139, "course": 14, "course_title": "M14 (Nov 2027): Frontier + portfolio", "month": "M14 Nov 2027", "section": "syllabus", "type": "Read", "lesson": "E2B docs", "url": "https://e2b.dev/docs", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 140, "course": 14, "course_title": "M14 (Nov 2027): Frontier + portfolio", "month": "M14 Nov 2027", "section": "syllabus", "type": "Read", "lesson": "*(optional)* Karpathy Zero to Hero", "url": "https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ", "duration": "", "required": "No", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 141, "course": 14, "course_title": "M14 (Nov 2027): Frontier + portfolio", "month": "M14 Nov 2027", "section": "prove", "type": "Prove", "lesson": "Posts + resume (Plan §14)", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 142, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "watch", "type": "Video", "lesson": "AI Engineer conference channel", "url": "https://www.youtube.com/@ai.engineer", "duration": "pick 3–5 talks", "required": "Yes", "open_how": "YouTube", "embed_url": "", "status": "Not started"}, {"order": 143, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "read", "type": "Read", "lesson": "Applied LLMs in Production", "url": "https://applied-llms.org/", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 144, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "read", "type": "Read", "lesson": "Anthropic — Building Effective Agents", "url": "https://www.anthropic.com/engineering/building-effective-agents", "duration": "", "required": "Yes", "open_how": "Browser", "embed_url": "", "status": "Not started"}, {"order": 145, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "read", "type": "Read", "lesson": "Interview positioning — Plan §14–§15 (sibling page `AI_System_Engineer_plan_2027.md`)", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 146, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "do", "type": "Do", "lesson": "3–5 quality applications/week", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 147, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "do", "type": "Do", "lesson": "Mock system design: orchestration control plane", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}, {"order": 148, "course": 15, "course_title": "M15 (Dec 2027): Interviews & offers", "month": "M15 Dec 2027", "section": "prove", "type": "Prove", "lesson": "Offer or feedback notes", "url": "", "duration": "", "required": "Yes", "open_how": "Checkbox", "embed_url": "", "status": "Not started"}];
+    const STORAGE_KEY = "ai-sys-eng-2027-progress";
+    const NOTES_KEY = "ai-sys-eng-2027-notes";
+    const PROVE_KEY = "ai-sys-eng-2027-prove";
+
+    let progress = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    let notes = JSON.parse(localStorage.getItem(NOTES_KEY) || "{}");
+    let proveUrls = JSON.parse(localStorage.getItem(PROVE_KEY) || "{}");
+
+    let currentCourse = 0;
+    let selectedOrder = null;
+    let activeTypeFilter = "";
+    let activeSearch = "";
+
+    const COURSE_EMOJIS = [
+      "⚡", "🧠", "🕸️", "🔌", "🔍", "📄", "🕸️", "🧪", 
+      "🚦", "🛡️", "🏗️", "🚢", "📜", "🚀", "💼", "🎯"
+    ];
+
+    const COURSE_PHASES = {
+      0: "Pre-Start (Pre-Oct 2026)",
+      1: "Phase 1: Determinism & Agents",
+      2: "Phase 1: Determinism & Agents",
+      3: "Phase 1: Determinism & Agents",
+      4: "Phase 2: Retrieval & Parsing",
+      5: "Phase 2: Retrieval & Parsing",
+      6: "Phase 2: Retrieval & Parsing",
+      7: "Phase 3: Evals & Security",
+      8: "Phase 3: Evals & Security",
+      9: "Phase 3: Evals & Security",
+      10: "Phase 4: Capstone Platform",
+      11: "Phase 4: Capstone Platform",
+      12: "Phase 4: Capstone Platform",
+      13: "Phase 5: Frontier & Hiring",
+      14: "Phase 5: Frontier & Hiring",
+      15: "Phase 5: Frontier & Hiring"
+    };
+
+    function saveProgress() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      updateGlobalStats();
+      renderCourseSidebar();
+    }
+
+    function updateGlobalStats() {
+      const total = LESSONS.length;
+      const done = LESSONS.filter(l => progress[l.order]).length;
+      const pct = total ? Math.round((done / total) * 100) : 0;
+      
+      const bar = document.getElementById("global-progress-bar");
+      const text = document.getElementById("stat-progress-text");
+      const phase = document.getElementById("stat-active-phase");
+
+      if (bar) bar.style.width = pct + "%";
+      if (text) text.textContent = `${done} / ${total} Done (${pct}%)`;
+      if (phase) phase.textContent = COURSE_PHASES[currentCourse] || "AI Systems Track";
+    }
+
+    function renderCourseSidebar() {
+      const nav = document.getElementById("course-nav");
+      const courses = [...new Set(LESSONS.map(l => l.course))].sort((a,b) => a-b);
+      nav.innerHTML = "";
+
+      let lastPhase = "";
+      courses.forEach(c => {
+        const phase = COURSE_PHASES[c] || "";
+        if (phase !== lastPhase) {
+          const pEl = document.createElement("div");
+          pEl.className = "phase-label";
+          pEl.textContent = phase;
+          nav.appendChild(pEl);
+          lastPhase = phase;
+        }
+
+        const courseLessons = LESSONS.filter(l => l.course === c);
+        const doneCount = courseLessons.filter(l => progress[l.order]).length;
+        const sample = courseLessons[0] || {};
+        
+        const btn = document.createElement("button");
+        btn.className = "course-card" + (c === currentCourse ? " active" : "");
+        const emoji = COURSE_EMOJIS[c] || "📚";
+        
+        btn.innerHTML = `
+          <div class="course-icon">${emoji}</div>
+          <div class="course-info">
+            <div class="course-name">Course ${c}</div>
+            <div class="course-meta-sub">${sample.month || ""}</div>
+          </div>
+          <div class="course-badge-pill">${doneCount}/${courseLessons.length}</div>
+        `;
+
+        btn.onclick = () => {
+          currentCourse = c;
+          renderCourseSidebar();
+          renderLessonFeed();
+          updateGlobalStats();
+        };
+        nav.appendChild(btn);
+      });
+    }
+
+    function filteredLessons() {
+      return LESSONS.filter(l => {
+        if (l.course !== currentCourse) return false;
+        if (activeTypeFilter && l.type !== activeTypeFilter) return false;
+        if (activeSearch && !l.lesson.toLowerCase().includes(activeSearch)) return false;
+        return true;
+      });
+    }
+
+    function renderMediaStage(lesson) {
+      const stage = document.getElementById("media-stage");
+      if (!lesson) {
+        stage.innerHTML = `
+          <div class="empty-stage">
+            <div class="empty-stage-icon">⚡</div>
+            <h3>Select a Lesson</h3>
+            <p>Select any item below to view lectures or execute tasks.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (lesson.embed_url) {
+        stage.innerHTML = `<iframe allowfullscreen src="${lesson.embed_url}"></iframe>`;
+      } else if (lesson.url) {
+        stage.innerHTML = `
+          <div class="empty-stage">
+            <div class="empty-stage-icon">🔗</div>
+            <h3>${lesson.lesson}</h3>
+            <p style="color:var(--muted)">Target: ${lesson.open_how} · ${lesson.duration || "Self-paced"}</p>
+            <a href="${lesson.url}" target="_blank" rel="noopener" class="stage-launch-btn">↗ Launch Resource in ${lesson.open_how}</a>
+          </div>
+        `;
+      } else {
+        stage.innerHTML = `
+          <div class="empty-stage">
+            <div class="empty-stage-icon">🛠️</div>
+            <h3>${lesson.lesson}</h3>
+            <p>Hands-on repository milestone. Test and verify invariants locally.</p>
+            <button class="stage-launch-btn" onclick="toggleComplete(${lesson.order})">
+              ${progress[lesson.order] ? "↩ Mark Incomplete" : "✓ Mark Done"}
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function renderInspector(lesson) {
+      if (!lesson) return;
+      document.getElementById("insp-title").textContent = lesson.lesson;
+      
+      const badgeClass = "badge-" + (lesson.type || "Do");
+      document.getElementById("insp-tags").innerHTML = `
+        <span class="badge ${badgeClass}">${lesson.type}</span>
+        <span style="font-size:0.72rem;color:var(--muted)">${lesson.required === "Yes" ? "⭐ Required" : "Optional"}</span>
+      `;
+
+      document.getElementById("insp-course").textContent = lesson.course_title || `Course ${lesson.course}`;
+      document.getElementById("insp-month").textContent = lesson.month || "—";
+      document.getElementById("insp-duration").textContent = lesson.duration || "Flexible";
+      document.getElementById("insp-mode").textContent = lesson.open_how || "Browser";
+
+      const actions = document.getElementById("insp-actions");
+      actions.innerHTML = `
+        ${lesson.url ? `<a href="${lesson.url}" target="_blank" rel="noopener" class="stage-launch-btn" style="justify-content:center">↗ Open External Link</a>` : ""}
+        <button class="stage-launch-btn" style="background:var(--surface);border:1px solid var(--border);color:var(--text);justify-content:center" onclick="toggleComplete(${lesson.order})">
+          ${progress[lesson.order] ? "↩ Mark Incomplete" : "✓ Mark Complete"}
+        </button>
+      `;
+
+      // Load notes
+      const noteField = document.getElementById("notes-textarea");
+      noteField.value = notes[lesson.order] || "";
+      noteField.oninput = (e) => {
+        notes[lesson.order] = e.target.value;
+        localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+      };
+
+      // Load prove URL
+      const proveField = document.getElementById("prove-url-input");
+      proveField.value = proveUrls[lesson.order] || "";
+    }
+
+    function saveProveUrl() {
+      if (!selectedOrder) return;
+      const proveField = document.getElementById("prove-url-input");
+      proveUrls[selectedOrder] = proveField.value;
+      localStorage.setItem(PROVE_KEY, JSON.stringify(proveUrls));
+      alert("Prove gate saved!");
+    }
+
+    function toggleComplete(order) {
+      progress[order] = !progress[order];
+      saveProgress();
+      renderLessonFeed();
+      const cur = LESSONS.find(l => l.order === order);
+      if (cur) {
+        renderMediaStage(cur);
+        renderInspector(cur);
+      }
+    }
+
+    function renderLessonFeed() {
+      const feed = document.getElementById("lesson-feed");
+      feed.innerHTML = "";
+      const list = filteredLessons();
+
+      if (list.length === 0) {
+        feed.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--muted);font-size:0.85rem">No lessons found matching your filter criteria.</div>`;
+        return;
+      }
+
+      list.forEach(lesson => {
+        const isDone = !!progress[lesson.order];
+        const isSelected = selectedOrder === lesson.order;
+        const card = document.createElement("div");
+        card.className = "lesson-item" + (isSelected ? " selected" : "") + (isDone ? " done" : "");
+
+        const badgeClass = "badge-" + (lesson.type || "Do");
+        card.innerHTML = `
+          <div class="checkbox-custom" onclick="event.stopPropagation(); toggleComplete(${lesson.order})"></div>
+          <div class="lesson-body">
+            <div class="lesson-title">${lesson.lesson}</div>
+            <div class="lesson-subtitle">
+              <span>${lesson.duration || lesson.open_how}</span>
+              ${lesson.required === "Yes" ? '<span style="color:var(--accent-light)">• Required</span>' : ""}
+            </div>
+          </div>
+          <span class="badge ${badgeClass}">${lesson.type}</span>
+        `;
+
+        card.onclick = () => {
+          selectedOrder = lesson.order;
+          renderMediaStage(lesson);
+          renderInspector(lesson);
+          renderLessonFeed();
+        };
+        feed.appendChild(card);
+      });
+    }
+
+    function setTypeFilter(type, btn) {
+      activeTypeFilter = type;
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderLessonFeed();
+    }
+
+    function setTab(tabId, btn) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      
+      document.getElementById("tab-overview").style.display = tabId === "overview" ? "flex" : "none";
+      document.getElementById("tab-notes").style.display = tabId === "notes" ? "flex" : "none";
+      document.getElementById("tab-prove").style.display = tabId === "prove" ? "flex" : "none";
+    }
+
+    // Search and Keyboard Hotkeys
+    document.getElementById("search-input").oninput = (e) => {
+      activeSearch = e.target.value.toLowerCase();
+      renderLessonFeed();
+    };
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "/" && document.activeElement.tagName !== "TEXTAREA" && document.activeElement.tagName !== "INPUT") {
+        e.preventDefault();
+        document.getElementById("search-input").focus();
+      }
+    });
+
+    // Initialize
+    renderCourseSidebar();
+    updateGlobalStats();
+    renderLessonFeed();
+    
+    // Select first lesson by default
+    const first = LESSONS.find(l => l.course === currentCourse);
+    if (first) {
+      selectedOrder = first.order;
+      renderMediaStage(first);
+      renderInspector(first);
+      renderLessonFeed();
+    }
+  </script>
+</body>
+</html>
