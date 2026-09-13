@@ -13,7 +13,9 @@ from curriculum_enrichment import (
     glossary_entries,
     load_program_primer_markdown,
     prove_pack_for_course,
+    real_world_for_course,
 )
+from walkthrough_content import PROGRAM_WALKTHROUGH, walkthrough_for_course
 from enrichment_utils import index_lessons_by_key, lesson_stable_key, sanitize_lesson_enrichment
 from theory_builder import build_theory_summary, section_label
 from topic_theory_levels import attach_theory_levels
@@ -266,6 +268,10 @@ def build_courses_ref(
         meta = course_meta.get(key, {})
         sample = course_lessons[0]
         outcomes = course_outcomes.get(key, [])
+        entry_order = next(
+            (int(les["order"]) for les in course_lessons if les.get("is_start_here")),
+            int(course_lessons[0]["order"]) if course_lessons else 0,
+        )
         ref[key] = {
             "name": meta.get("name") or sample.get("course_title", f"Course {key}"),
             "duration": meta.get("duration", ""),
@@ -275,6 +281,9 @@ def build_courses_ref(
             "prompts": [],
             "concept_map": concept_map_for_course(key),
             "prove_pack": prove_pack_for_course(key),
+            "real_world": real_world_for_course(key),
+            "walkthrough": walkthrough_for_course(key),
+            "entry_lesson_order": entry_order,
             "summary_markdown": build_course_summary_markdown(
                 key, course_lessons, outcomes, meta
             ),
@@ -291,6 +300,7 @@ def write_curriculum_payload(
     return {
         "generated_from": track_rel,
         "program_primer_markdown": load_program_primer_markdown(),
+        "program_walkthrough": PROGRAM_WALKTHROUGH,
         "glossary": glossary_entries(),
         "lessons": lessons,
         "courses_ref": build_courses_ref(lessons, course_outcomes, course_meta),
@@ -451,9 +461,33 @@ def ensure_primary_resource(row: dict) -> None:
     row["resources"] = resources
 
 
+def _pick_entry_order(rows: list[dict]) -> int:
+    sorted_rows = sorted(rows, key=lambda r: int(r["order"]))
+
+    def optional(r: dict) -> bool:
+        return "(optional)" in (r.get("lesson") or "").lower()
+
+    for typ in ("Video", "Read", "Build", "Prove", "Capstone", "Frontier", "Do"):
+        for row in sorted_rows:
+            if row.get("type") == typ and row.get("required") == "Yes" and not optional(row):
+                return int(row["order"])
+    return int(sorted_rows[0]["order"]) if sorted_rows else 0
+
+
+def _mark_start_here(lessons: list[dict]) -> None:
+    by_course: dict[int, list[dict]] = defaultdict(list)
+    for row in lessons:
+        by_course[int(row["course"])].append(row)
+    for rows in by_course.values():
+        entry = _pick_entry_order(rows)
+        for row in rows:
+            row["is_start_here"] = int(row["order"]) == entry
+
+
 def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]]) -> list[dict]:
     annotate_shared_urls(lessons)
     attach_related_topics(lessons)
+    _mark_start_here(lessons)
     for row in lessons:
         ensure_primary_resource(row)
         merge_related_into_resources(row)

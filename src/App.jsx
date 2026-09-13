@@ -10,6 +10,7 @@ import Sidebar from "./components/Sidebar";
 import LessonFeed from "./components/LessonFeed";
 import SmartStage from "./components/SmartStage";
 import CourseStage from "./components/CourseStage";
+import HomeStage from "./components/HomeStage";
 import Inspector from "./components/Inspector";
 import { lessonsForSyllabusDisplay, ordersForTopicToggle } from "./utils/syllabusDisplay";
 import SettingsModal from "./components/SettingsModal";
@@ -51,6 +52,7 @@ export default function App() {
   const [lessonsData, setLessonsData] = useState([]);
   const [coursesRefData, setCoursesRefData] = useState({});
   const [programPrimerMarkdown, setProgramPrimerMarkdown] = useState("");
+  const [programWalkthrough, setProgramWalkthrough] = useState({});
   const [glossary, setGlossary] = useState([]);
   const [curriculumReady, setCurriculumReady] = useState(false);
   const [curriculumError, setCurriculumError] = useState(null);
@@ -63,6 +65,10 @@ export default function App() {
   const [isRegenOpen, setIsRegenOpen] = useState(false);
   const [mobilePanel, setMobilePanel] = useState(null);
   const [courseOverviewMode, setCourseOverviewMode] = useState(false);
+  const [isHomeView, setIsHomeView] = useState(() => {
+    const progress = readJsonStorage(PROGRESS_KEY, {});
+    return Object.keys(progress).length === 0;
+  });
   const stageRef = useRef(null);
 
   useEffect(() => {
@@ -96,10 +102,11 @@ export default function App() {
     }
   }, [userProfile]);
 
-  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, glossary: terms }) => {
+  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, programWalkthrough: walkthrough, glossary: terms }) => {
     setLessonsData(lessons);
     setCoursesRefData(coursesRef);
     setProgramPrimerMarkdown(primer || "");
+    setProgramWalkthrough(walkthrough || {});
     setGlossary(terms || []);
     setActiveLessonOrder((prev) => {
       if (lessons.some((l) => l.order === prev)) {
@@ -243,7 +250,78 @@ export default function App() {
     setRegenerations(loadTheoryRegenerations(null));
   };
 
+  const leaveHomeView = useCallback(() => {
+    setIsHomeView(false);
+  }, []);
+
+  const handleGoHome = useCallback(() => {
+    setIsHomeView(true);
+    setMobilePanel(null);
+    scrollStageTop();
+  }, [scrollStageTop]);
+
+  const handleStartFoundation = useCallback(() => {
+    leaveHomeView();
+    setActiveCourseNum(0);
+    setCourseOverviewMode(true);
+    setMobilePanel(null);
+    scrollStageTop();
+  }, [leaveHomeView, scrollStageTop]);
+
+  const handleOpenCourseFromHome = useCallback(
+    (cNum) => {
+      leaveHomeView();
+      setActiveCourseNum(cNum);
+      setCourseOverviewMode(true);
+      setMobilePanel(null);
+      scrollStageTop();
+    },
+    [leaveHomeView, scrollStageTop]
+  );
+
+  const firstStepLesson = useMemo(() => {
+    const course0 = lessonsData.filter((l) => l.course === 0);
+    return (
+      course0.find((l) => l.is_start_here) ||
+      course0.slice().sort((a, b) => a.order - b.order)[0] ||
+      null
+    );
+  }, [lessonsData]);
+
+  const resumeLesson = useMemo(() => {
+    if (!lessonsData.length) {
+      return null;
+    }
+    const next = lessonsData.find((l) => !progressMap[l.order]);
+    return next || lessonsData[lessonsData.length - 1];
+  }, [lessonsData, progressMap]);
+
+  const handleBeginStepOne = useCallback(() => {
+    if (!firstStepLesson) {
+      return;
+    }
+    leaveHomeView();
+    setActiveCourseNum(0);
+    setActiveLessonOrder(firstStepLesson.order);
+    setCourseOverviewMode(false);
+    setMobilePanel(null);
+    scrollStageTop();
+  }, [firstStepLesson, leaveHomeView, scrollStageTop]);
+
+  const handleContinueFromHome = useCallback(() => {
+    if (!resumeLesson) {
+      return;
+    }
+    leaveHomeView();
+    setActiveCourseNum(resumeLesson.course);
+    setActiveLessonOrder(resumeLesson.order);
+    setCourseOverviewMode(false);
+    setMobilePanel(null);
+    scrollStageTop();
+  }, [leaveHomeView, resumeLesson, scrollStageTop]);
+
   const handleSelectCourse = (cNum) => {
+    leaveHomeView();
     setActiveCourseNum(cNum);
     setCourseOverviewMode(true);
     setMobilePanel(null);
@@ -256,6 +334,7 @@ export default function App() {
   };
 
   const handleSelectLesson = (order) => {
+    leaveHomeView();
     setActiveLessonOrder(order);
     setCourseOverviewMode(false);
     setMobilePanel(null);
@@ -374,9 +453,12 @@ export default function App() {
         googleOAuthEnabled={googleOAuthEnabled}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onExportBackup={handleExportBackup}
+        onGoHome={handleGoHome}
       />
 
-      <div className={`app-container ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""}`}>
+      <div
+        className={`app-container ${isHomeView ? "home-view" : ""} ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""}`}
+      >
         <Sidebar
           courses={courses}
           activeCourseNum={activeCourseNum}
@@ -395,6 +477,7 @@ export default function App() {
             activeLessonOrder={activeLessonOrder}
             courseOverviewMode={courseOverviewMode}
             onOpenCourseOverview={handleOpenCourseOverview}
+            entryLessonOrder={activeCourseRef.entry_lesson_order}
             onSelectLesson={handleSelectLesson}
             onToggleComplete={handleToggleComplete}
             progressMap={progressMap}
@@ -404,7 +487,21 @@ export default function App() {
         </aside>
 
         <main className="stage" ref={stageRef}>
-          {courseOverviewMode ? (
+          {isHomeView ? (
+            <HomeStage
+              courses={courses}
+              coursesRef={coursesRefData}
+              totalCount={totalCount}
+              completedCount={completedCount}
+              progressPct={progressPct}
+              programWalkthrough={programWalkthrough}
+              onBeginStepOne={handleBeginStepOne}
+              onOpenCourseOverview={handleStartFoundation}
+              onOpenCourse={handleOpenCourseFromHome}
+              onContinueLesson={resumeLesson ? handleContinueFromHome : undefined}
+              resumeLabel={resumeLesson ? resumeLesson.lesson : ""}
+            />
+          ) : courseOverviewMode ? (
             <CourseStage
               course={activeCourse}
               courseRef={activeCourseRef}
@@ -436,7 +533,7 @@ export default function App() {
         </main>
 
         <Inspector
-          lesson={courseOverviewMode ? null : activeLesson}
+          lesson={isHomeView || courseOverviewMode ? null : activeLesson}
           courseRef={activeCourseRef}
           notes={notesMap}
           onSaveNotes={handleSaveNotes}

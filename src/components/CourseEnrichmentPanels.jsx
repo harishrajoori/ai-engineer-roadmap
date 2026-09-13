@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { BookMarked, ChevronDown, ChevronRight, ClipboardCheck, Map } from "lucide-react";
+import {
+  BookMarked,
+  ChevronDown,
+  ChevronRight,
+  ClipboardCheck,
+  Factory,
+  Map,
+  TriangleAlert,
+} from "lucide-react";
 
 /**
- * DE primer, glossary, concept map, and prove rubric for course overview.
+ * Real-world DE practice, primer, glossary, concept map, and prove rubric.
  */
 export default function CourseEnrichmentPanels({
   courseNum,
@@ -14,11 +22,96 @@ export default function CourseEnrichmentPanels({
 }) {
   const [primerOpen, setPrimerOpen] = useState(courseNum === 0);
   const [glossaryOpen, setGlossaryOpen] = useState(false);
+  const [realWorldOpen, setRealWorldOpen] = useState(false);
   const conceptMap = courseRef?.concept_map || [];
   const provePack = courseRef?.prove_pack || {};
+  const realWorld = courseRef?.real_world || {};
+  const hasRealWorld = Boolean(realWorld.summary);
 
   return (
     <>
+      {hasRealWorld && (
+        <section className="course-overview-block real-world-block">
+          <button
+            type="button"
+            className="course-enrichment-toggle"
+            onClick={() => setRealWorldOpen((o) => !o)}
+            aria-expanded={realWorldOpen}
+          >
+            {realWorldOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+            <Factory size={18} />
+            <span>Later: how this shows up in data jobs (optional)</span>
+          </button>
+          {realWorldOpen && (
+            <>
+          <p className="real-world-summary">{realWorld.summary}</p>
+
+          {realWorld.where_it_applies?.length > 0 && (
+            <div className="real-world-grid">
+              {realWorld.where_it_applies.map((row) => (
+                <article key={row.area} className="real-world-card">
+                  <h3>{row.area}</h3>
+                  <p className="real-world-example">
+                    <strong>Example:</strong> {row.example}
+                  </p>
+                  <p className="real-world-build">
+                    <strong>You build:</strong> {row.you_build}
+                  </p>
+                  {row.skills_from_course?.length > 0 && (
+                    <p className="real-world-skills">
+                      <strong>From this course:</strong> {row.skills_from_course.join(" · ")}
+                    </p>
+                  )}
+                </article>
+              ))}
+            </div>
+          )}
+
+          {realWorld.practice_ladder?.length > 0 && (
+            <div className="practice-ladder">
+              <h3>Practice ladder (do in order)</h3>
+              <ol className="practice-ladder-list">
+                {realWorld.practice_ladder.map((step) => (
+                  <li key={step.step ?? step.name}>
+                    <span className="practice-ladder-step">{step.name}</span>
+                    <p>{step.action}</p>
+                    <p className="practice-ladder-exit">
+                      <strong>Exit:</strong> {step.exit}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+
+          {realWorld.week_at_work && (
+            <p className="real-world-week">
+              <strong>This month at work:</strong> {realWorld.week_at_work}
+            </p>
+          )}
+          {realWorld.maps_to_prove && (
+            <p className="real-world-prove-link">
+              <strong>Maps to prove gate:</strong> {realWorld.maps_to_prove}
+            </p>
+          )}
+          {realWorld.anti_patterns?.length > 0 && (
+            <div className="real-world-anti">
+              <h3>
+                <TriangleAlert size={16} aria-hidden />
+                Anti-patterns
+              </h3>
+              <ul className="course-overview-list">
+                {realWorld.anti_patterns.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+            </>
+          )}
+        </section>
+      )}
+
       {courseNum === 0 && programPrimerMarkdown && (
         <section className="course-overview-block course-primer-block">
           <button
@@ -29,7 +122,7 @@ export default function CourseEnrichmentPanels({
           >
             {primerOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
             <BookMarked size={18} />
-            <span>Start here — AI for data engineers</span>
+            <span>Full program primer (read once)</span>
           </button>
           {primerOpen && (
             <div className="markdown-theory prose-learning course-primer-body">

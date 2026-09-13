@@ -15,7 +15,8 @@ export default function LessonFeed({
   typeFilter = "all",
   onSetTypeFilter,
   courseOverviewMode = false,
-  onOpenCourseOverview
+  onOpenCourseOverview,
+  entryLessonOrder = null,
 }) {
   const displayLessons = useMemo(() => lessonsForSyllabusDisplay(lessons), [lessons]);
 
@@ -69,7 +70,7 @@ export default function LessonFeed({
             className={`syllabus-course-map-btn ${courseOverviewMode ? "active" : ""}`}
             onClick={onOpenCourseOverview}
           >
-            Course overview & topic map
+            How to take this course (walkthrough)
           </button>
         )}
         <div className="syllabus-progress-block">
@@ -109,6 +110,8 @@ export default function LessonFeed({
                 const displayIndex = acc.index;
                 const isCompleted = isTopicComplete(progressMap, lesson);
                 const isActive = !courseOverviewMode && activeLessonOrder === lesson.order;
+                const isStartHere =
+                  lesson.is_start_here || (entryLessonOrder != null && lesson.order === entryLessonOrder);
 
                 return (
                   <div
@@ -136,8 +139,11 @@ export default function LessonFeed({
                       <Circle size={18} className="syllabus-check-open" />
                     )}
                   </button>
-                  <div className="syllabus-topic-body">
-                    <div className="syllabus-topic-name">{lesson.display_title || formatTopicTitle(lesson)}</div>
+                    <div className="syllabus-topic-body">
+                      <div className="syllabus-topic-name">
+                        {isStartHere && <span className="topic-start-badge syllabus-start-badge">START</span>}
+                        {lesson.display_title || formatTopicTitle(lesson)}
+                      </div>
                     <div className="syllabus-topic-meta">
                       {getIcon(lesson.type)}
                       <span>#{lesson.order}</span>

@@ -242,11 +242,11 @@ export default function SmartStage({
         <div className="learning-tab-panel animation-fade-in">
           <div className="theory-path-banner">
             <span>
-              <strong>Suggested path:</strong> pick a level below → read theory → then open{" "}
+              <strong>New to AI?</strong> Use <strong>Beginner</strong> below → read this page → then{" "}
               <button type="button" className="theory-path-link" onClick={() => setActiveTab("lecture")}>
                 Lecture
-              </button>{" "}
-              when ready.
+              </button>
+              . Move to Intermediate only when Beginner feels easy on this topic.
             </span>
           </div>
           {!regeneratedContent && lesson.theory_levels && (

@@ -21,6 +21,7 @@ if str(_SCRIPTS) not in sys.path:
 
 from enrichment_utils import digest_matches_lesson  # noqa: E402
 from topic_hints import get_topic_hint  # noqa: E402
+from topic_handbook.entries import HANDBOOK_BY_ORDER  # noqa: E402
 DOCS = REPO_ROOT / "docs"
 TRACK = DOCS / "AI_System_Engineer_Learning_Track_2027.md"
 LESSONS_JSON = REPO_ROOT / "data" / "lessons.json"
@@ -216,6 +217,21 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
     if thin_hints:
         warnings.append(f"{thin_hints} lessons with thin topic hints (should be 0)")
 
+    orders = {int(les["order"]) for les in lessons if les.get("order") is not None}
+    handbook_orders = set(HANDBOOK_BY_ORDER.keys())
+    missing_handbook = sorted(orders - handbook_orders)
+    if missing_handbook:
+        warnings.append(
+            f"{len(missing_handbook)} lessons missing topic_handbook entry (orders {missing_handbook[:8]}…)"
+        )
+    shallow_handbook = 0
+    for oid in orders & handbook_orders:
+        row = HANDBOOK_BY_ORDER[oid]
+        if not (row.get("intermediate_deep_dive") or "").strip() or not (row.get("advanced_extra") or "").strip():
+            shallow_handbook += 1
+    if shallow_handbook:
+        warnings.append(f"{shallow_handbook} handbook rows missing intermediate_deep_dive or advanced_extra")
+
     missing_levels = sum(
         1
         for les in lessons
@@ -224,6 +240,23 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
     )
     if missing_levels:
         warnings.append(f"{missing_levels} lessons missing theory_levels beginner/advanced")
+
+    shallow_advanced = 0
+    advanced_shorter_than_beginner = 0
+    for les in lessons:
+        levels = les.get("theory_levels") or {}
+        adv = (levels.get("advanced") or "").strip()
+        beg = (levels.get("beginner") or "").strip()
+        if len(adv) < 1600:
+            shallow_advanced += 1
+        if adv and beg and len(adv) < len(beg):
+            advanced_shorter_than_beginner += 1
+    if shallow_advanced:
+        warnings.append(f"{shallow_advanced} lessons with advanced theory < 1600 chars (target richer platform depth)")
+    if advanced_shorter_than_beginner:
+        warnings.append(
+            f"{advanced_shorter_than_beginner} lessons where advanced is shorter than beginner (inverted depth)"
+        )
 
     return warnings
 

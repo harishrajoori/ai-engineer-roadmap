@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "oxlint src scripts",
     "preview": "vite preview",
-    "curriculum": "python3 scripts/generate_lessons.py",
+    "curriculum": "python3 scripts/merge_topic_handbook.py && python3 scripts/generate_lessons.py",
     "validate:app": "node scripts/validate_app.mjs",
     "validate:links": "python3 scripts/validate_curriculum.py",
     "validate": "npm run validate:app && npm run validate:links",

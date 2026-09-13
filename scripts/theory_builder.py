@@ -80,6 +80,22 @@ def build_theory_summary(
 
     hint = get_topic_hint(lesson)
     _append_five_layer_study_guide(lines, hint, glossary_by_id())
+    if hint.get("intermediate_deep_dive"):
+        lines.append("## Deep dive (this topic)")
+        lines.append("")
+        lines.append(hint["intermediate_deep_dive"])
+        lines.append("")
+    if hint.get("mental_model"):
+        lines.append("## Mental model")
+        lines.append("")
+        lines.append(hint["mental_model"])
+        lines.append("")
+    if hint.get("failure_modes"):
+        lines.append("## Watch for failures")
+        lines.append("")
+        for fm in hint["failure_modes"]:
+            lines.append(f"- {fm}")
+        lines.append("")
     if ltype == "Prove" or lesson.get("prove_criteria"):
         _append_prove_acceptance(lines, prove_pack_for_course(course or ""), lesson.get("prove_criteria"))
 
@@ -141,12 +157,13 @@ def build_theory_summary(
         )
         lines.append("")
 
-    staff = STAFF_LENS.get(ltype, STAFF_LENS["Read"])
-    lines.append("## Staff / platform engineer lens")
-    lines.append("")
-    for s in staff:
-        lines.append(f"- {s}")
-    lines.append("")
+    if not hint.get("intermediate_deep_dive"):
+        staff = STAFF_LENS.get(ltype, STAFF_LENS["Read"])
+        lines.append("## Staff / platform engineer lens")
+        lines.append("")
+        for s in staff:
+            lines.append(f"- {s}")
+        lines.append("")
 
     lines.append("## Step-by-step (time-boxed)")
     lines.append("")

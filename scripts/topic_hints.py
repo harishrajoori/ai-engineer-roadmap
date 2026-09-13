@@ -7,6 +7,7 @@ from typing import Any
 
 from dynamic_topic_hints import complete_hint
 from enrichment_utils import normalize_lesson_title
+from topic_handbook import merge_handbook_into_hint
 
 # Keys: normalized URL (lowercase, no trailing slash) or "type:Video" / "course:0|type:Read"
 _HINTS: dict[str, dict[str, Any]] = {
@@ -17,6 +18,17 @@ _HINTS: dict[str, dict[str, Any]] = {
         "watch_for": ["How text becomes tokens", "What the model sees at inference time", "Limits of memorization vs reasoning"],
         "capstone_action": "In README, add 3 bullets: one failure mode, one thing you would log, one test you would add.",
         "done_when": "You can explain to a data engineer what an LLM is without saying “AI magic.”",
+        "beginner_extra": (
+            "An LLM does not “look up” your warehouse. It predicts the next piece of text from patterns "
+            "learned during training. That is why it can sound right and still be wrong—like a bad join "
+            "that returns a plausible row."
+        ),
+        "advanced_extra": (
+            "Platform framing after this video: inference is a **stateless, rate-limited API** with "
+            "unbounded tail latency. Your extraction service should set max tokens, timeout, and "
+            "post-validate every response. Pretraining vs fine-tuning vs prompting: you will almost "
+            "always ship **prompt + schema** first; defer training until golden-set metrics plateau."
+        ),
     },
     "https://www.youtube.com/watch?v=7xtgnnlpymi": {
         "one_liner": "Deep dive into transformers, KV cache, and how chat models run in production.",
@@ -169,4 +181,5 @@ def _lookup_override(lesson: dict) -> dict[str, Any]:
 
 def get_topic_hint(lesson: dict) -> dict[str, Any]:
     override = _lookup_override(lesson)
-    return complete_hint(lesson, override)
+    hint = complete_hint(lesson, override)
+    return merge_handbook_into_hint(lesson, hint)

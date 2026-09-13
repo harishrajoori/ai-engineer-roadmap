@@ -57,6 +57,7 @@ export async function loadCurriculum() {
     lessons,
     coursesRef,
     programPrimerMarkdown: data.program_primer_markdown || "",
+    programWalkthrough: data.program_walkthrough || {},
     glossary: Array.isArray(data.glossary) ? data.glossary : [],
   };
   return cached;

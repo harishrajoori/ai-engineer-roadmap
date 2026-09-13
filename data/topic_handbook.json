@@ -1,0 +1,2731 @@
+{
+  "1": {
+    "one_liner": "Karpathy explains LLMs as next-token predictors: training vs inference, why they sound confident when wrong, and what a context window really means.",
+    "why_now": "Every later topic assumes you know the model is not a database—you validate outputs like bad rows in a pipeline.",
+    "mental_model": "LLM = stateless text function with a max input size; your platform owns schemas, retries, and tests around it.",
+    "beginner_extra": "When Karpathy talks about tokens, think **columns in a wide string**: the model only sees a limited window at once. When he talks about hallucination, think **synthetic rows** that pass a vibe check but fail a join to ground truth.",
+    "intermediate_deep_dive": "Use this video to draw a one-page diagram: **training** (offline, expensive, not your job in this track) vs **inference** (online API calls you pay per token). Note three production knobs you will reuse in Course 1: max tokens, temperature, and timeout. After watching, write a README section ‘What we trust the model for’ vs ‘What we always validate’—that becomes your team policy seed.",
+    "advanced_extra": "Platform framing: treat inference as a **multi-tenant, rate-limited dependency** with fat-tailed latency. Capacity planning starts with tokens-per-record distributions on your golden set, not GPU specs. Security: prompt injection is input validation; never concatenate untrusted log lines into system prompts without sanitization boundaries. For interviews, articulate pretrain/finetune/prompt/RAG as a **cost ladder**—you default to prompt+schema until evals prove you need the next rung.",
+    "watch_for": [
+      "Training vs inference—what runs in your AWS bill monthly",
+      "Context window as a hard limit (truncation policy)",
+      "Why scale changes capability but not the need for verification",
+      "Sampling / temperature as a stability lever for extraction"
+    ],
+    "failure_modes": [
+      "Treating model prose as ground truth without schema validation",
+      "Unbounded prompts on large logs → cost spikes and timeouts",
+      "No logging of prompt hash + model version for incident replay"
+    ],
+    "interview_prompts": [
+      "Explain LLMs to a data engineer without saying ‘AI magic.’",
+      "Where would you enforce max context for log extraction?",
+      "How do you detect and respond to a provider outage?"
+    ],
+    "capstone_action": "README: 3 bullets—failure mode, log field, test you will add.",
+    "done_when": "You can sketch input → model → validated JSON on one diagram."
+  },
+  "2": {
+    "one_liner": "Hands-on Pydantic patterns so LLM outputs become typed records you can unit test like warehouse rows.",
+    "why_now": "Immediately after the mental model video—you need a concrete contract between messy text and your reconciler code.",
+    "mental_model": "Pydantic model = table DDL for one API response; validation errors are rejected rows.",
+    "beginner_extra": "The course shows models, validators, and retries. You do not need every Pydantic feature—copy the **smallest** model that matches your log event schema and grow fields only when the golden set proves you need them.",
+    "intermediate_deep_dive": "Map each lesson exercise to your `LogEvent` (or similar): required fields, optional metadata, enums for severity. Decide **fail closed** on unknown keys vs strip unknowns—default fail closed for finance-adjacent logs. Pair the course with Instructor (next reads): Pydantic defines shape; Instructor enforces shape against live model output.",
+    "advanced_extra": "Schema evolution: version models (`LogEventV1`) and migrate with shadow validation before flipping prod. Custom validators belong at the boundary; do not sprinkle business rules inside prompt text only. Measure **validation error taxonomy** (missing field vs wrong enum vs semantic wrong amount) separately in metrics—retries help syntax, not semantics. Interview: compare Pydantic validation to Great Expectations / JSON Schema in a CDC stream.",
+    "watch_for": [
+      "Defining nested models for real log shapes",
+      "When the course retries vs when you fix the prompt",
+      "Optional vs required fields tradeoffs"
+    ],
+    "failure_modes": [
+      "Coercing invalid types silently (`.model_construct` abuse)",
+      "Huge nested models that explode token usage in tool schemas",
+      "No version field on extracted records"
+    ],
+    "interview_prompts": [
+      "How do you migrate a Pydantic model without breaking consumers?",
+      "When is a repair prompt better than a third retry?"
+    ],
+    "capstone_action": "Mirror one course pattern in `extract()` with explicit `ValidationError` handling.",
+    "done_when": "Golden set shows valid JSON % and you can explain each field’s business meaning."
+  },
+  "3": {
+    "one_liner": "Instructor wraps chat completions so responses must parse into your Pydantic models, with retries on validation failure.",
+    "why_now": "This is the adapter between probabilistic text and deterministic Python objects in your boot-week repo.",
+    "mental_model": "Instructor = typed client SDK over an untrusted HTTP API.",
+    "beginner_extra": "Start with the quick start: one model, one function, one golden example. Retries are not free—each retry is another billed call.",
+    "intermediate_deep_dive": "Read retries and partial validation sections with your golden set open. Define `max_retries`, backoff, and a **repair** system message template. Log every attempt with `attempt`, `model`, and validation error class.",
+    "advanced_extra": "Wrap Instructor calls in a **budgeted** function: max dollars per record, circuit breaker on error rate. For multi-record batches, prefer row-level extraction over giant array JSON—easier to retry partial failures. Compare Instructor to Outlines/constrained decoding: Instructor is faster to ship; constrained decoding when latency and guarantee matter at scale.",
+    "read_sections": [
+      "Quick start",
+      "Retries",
+      "Validators",
+      "Partial validation"
+    ],
+    "failure_modes": [
+      "Infinite retries on semantic errors",
+      "Logging raw prompts containing PII",
+      "Same temperature on repair as on first pass (often too creative)"
+    ],
+    "interview_prompts": [
+      "Design an extraction API with idempotency keys.",
+      "How do you test Instructor integrations without flaky CI?"
+    ],
+    "capstone_action": "Implement `extract(record) -> LogEvent` with capped retries and structured logs.",
+    "done_when": "`scripts/score.py` reports valid % you trust on labeled data."
+  },
+  "4": {
+    "one_liner": "Pydantic V2 is the reference for validators, model validators, and settings—your schema source of truth.",
+    "why_now": "Instructor inherits Pydantic semantics; misunderstandings here become silent data bugs downstream.",
+    "mental_model": "Docs = DDL + CHECK constraints for Python objects.",
+    "beginner_extra": "Focus on Models, Field(), and `@model_validator`—skip exotic serialization until you need it.",
+    "intermediate_deep_dive": "Implement cross-field rules (e.g., end_time after start_time) in validators, not prompts. Document error messages—they become operator runbooks when extraction fails in prod.",
+    "advanced_extra": "Use discriminated unions when log types differ materially. Performance: validate at boundary once; avoid re-parsing dicts in inner loops. For compliance, keep audit trail of schema hash in each extracted record.",
+    "read_sections": [
+      "Models",
+      "Validators",
+      "Model validators",
+      "Serialization"
+    ],
+    "failure_modes": [
+      "Validator logic only in prompts",
+      "Breaking changes without version bump"
+    ],
+    "interview_prompts": [
+      "Field validator vs model validator—when to use which?"
+    ],
+    "capstone_action": "Add one `@model_validator` for a business invariant on your event model.",
+    "done_when": "Invalid golden rows fail with readable errors in CI."
+  },
+  "5": {
+    "one_liner": "LiteLLM reliable completions: fallbacks, timeouts, and routing when a provider throttles or errors.",
+    "why_now": "Boot week preview of Course 1 gateway—your extractor should not fail closed on a single 429.",
+    "mental_model": "Fallback chain = multi-source ingestion with priority list.",
+    "beginner_extra": "Read fallbacks as ‘if primary warehouse is down, read replica’—same idea for models.",
+    "intermediate_deep_dive": "Configure primary + fallback models; log `model_used` per request. Set aggressive timeouts for batch jobs vs interactive CLI.",
+    "advanced_extra": "Alert when fallback rate > baseline—often quality regression. Keep fallback models on comparable schema contracts; do not fork prompts per model without eval diff.",
+    "read_sections": [
+      "Reliable completions",
+      "Fallbacks",
+      "Timeouts",
+      "Router"
+    ],
+    "failure_modes": [
+      "Silent model switch without audit",
+      "Unbounded fallback spend"
+    ],
+    "interview_prompts": [
+      "How do you test failover without production incidents?"
+    ],
+    "capstone_action": "Wire fallback in dev; document in README with a forced failure test.",
+    "done_when": "You can demo primary failure → fallback success with logs."
+  },
+  "6": {
+    "one_liner": "Hamel’s evals essay: golden sets, metric tiers, and why launch without regression tests fails.",
+    "why_now": "Sets the quality culture before you scale features in later courses.",
+    "mental_model": "Golden set = labeled fixture table for a non-deterministic UDF.",
+    "beginner_extra": "You are building pytest for prompts—not chasing a single accuracy number on day one.",
+    "intermediate_deep_dive": "Create `data/golden/` with diverse failure types: malformed logs, ambiguous amounts, injection-ish strings. Label both **schema** and **semantic** correctness where possible.",
+    "advanced_extra": "Tier metrics: L0 schema pass, L1 field accuracy, L2 business KPI. Block releases on L0/L1; investigate L2 with humans. Store golden set in git; review label changes like code.",
+    "read_sections": [
+      "Why evals",
+      "Golden sets",
+      "Error analysis",
+      "What not to do"
+    ],
+    "failure_modes": [
+      "10-example toy set",
+      "Labels without reviewer agreement"
+    ],
+    "interview_prompts": [
+      "How big should a golden set be before v1 launch?"
+    ],
+    "capstone_action": "Commit ≥10 labeled examples and a scorer script output.",
+    "done_when": "You can explain what would block a release on your project."
+  },
+  "7": {
+    "one_liner": "Applied LLMs handbook—production patterns for gateways, RAG, agents, and evals (read as a map, not a novel).",
+    "why_now": "Gives vocabulary for architecture reviews you will repeat monthly; first pass in boot week, deeper passes later.",
+    "mental_model": "Handbook = internal RFC index for LLM platforms.",
+    "beginner_extra": "Skim the table of contents; read only sections named on your syllabus line for this course.",
+    "intermediate_deep_dive": "For Course 0, focus on extraction + validation + observability chapters. Write one ADR: pattern adopted (e.g., schema-first extraction), pattern deferred (e.g., fine-tuning).",
+    "advanced_extra": "Cross-reference handbook patterns with your repo: where is gateway, where is eval harness, where is human review. Use handbook language in design docs so staff engineers recognize tradeoffs quickly.",
+    "read_sections": [
+      "Structured outputs",
+      "Evaluation",
+      "Observability",
+      "Failure modes"
+    ],
+    "failure_modes": [
+      "Reading cover-to-cover without shipping",
+      "Quoting patterns without metrics"
+    ],
+    "interview_prompts": [
+      "Name one handbook pattern you adopted and one you rejected—why?"
+    ],
+    "capstone_action": "README ADR snippet: adopted vs deferred pattern with rationale.",
+    "done_when": "You can cite one concrete idea from the handbook in a design sentence."
+  },
+  "8": {
+    "one_liner": "Create the capstone repo: production-log-reconciler (or telemetry-log-reconciler) with README, golden folder, and extract stub.",
+    "why_now": "All later courses attach to this repo—treat it like a platform monorepo, not homework.",
+    "mental_model": "Repo = mini data product: ingest → extract → validate → score.",
+    "beginner_extra": "Public GitHub is fine; use synthetic or public sample logs only—no employer data.",
+    "intermediate_deep_dive": "Scaffold: `src/`, `data/golden/`, `scripts/score.py`, Makefile or `uv run`, CI placeholder. README must explain how to run score locally in <5 commands.",
+    "advanced_extra": "Add CODEOWNERS-style clarity: what is in scope for boot week vs later tags. Pre-commit for ruff/format; pin dependencies; document Python version.",
+    "failure_modes": [
+      "Secrets in repo",
+      "No reproducible install story"
+    ],
+    "interview_prompts": [
+      "Walk through repo layout like a system design whiteboard."
+    ],
+    "capstone_action": "Initialize repo; first commit with README + golden folder + stub extract.",
+    "done_when": "Clone → install → score runs (even if 0% valid)."
+  },
+  "9": {
+    "one_liner": "Prove boot week: public GitHub URL plus README metric from golden-set scoring.",
+    "why_now": "Teaches evidence-based completion—same bar as production change tickets.",
+    "mental_model": "Prove = link + metric a stranger can verify in 10 minutes.",
+    "beginner_extra": "Paste the repo URL in Lab & Prove; ensure README shows the valid JSON percentage.",
+    "intermediate_deep_dive": "README table: command, sample output, valid %, date. Optional: badge or screenshot of scorer output.",
+    "advanced_extra": "Add CONTRIBUTING with how to add golden rows—signals platform maturity in interviews.",
+    "failure_modes": [
+      "Private repo without access",
+      "Metric without reproducible command"
+    ],
+    "interview_prompts": [
+      "How would an interviewer verify your boot week claim live?"
+    ],
+    "capstone_action": "Publish URL; ensure README golden-set metric is current.",
+    "done_when": "Course 0 acceptance table satisfied; link saved in studio."
+  },
+  "10": {
+    "one_liner": "DL.AI Generative AI with LLMs course hub—modular videos on transformers, training, and deployment (time-boxed).",
+    "why_now": "Month 1 deepens foundations before you wire LiteLLM; do not attempt the entire specialization.",
+    "mental_model": "Course hub = playlist you curate against syllabus headings only.",
+    "beginner_extra": "Pick modules on tokens, fine-tuning vs prompting, and deployment—skip research-heavy units unless optional.",
+    "intermediate_deep_dive": "Align each module you watch to a README note: new term defined, new risk for your extractor. Pair with Karpathy deep dive (next topic) for inference-centric view.",
+    "advanced_extra": "Document which modules you skipped and why—interviewers prefer honest scope to fake completion. Relate transformer intuition to cost: longer contexts in prompts directly map to gateway bills.",
+    "watch_for": [
+      "Tokenization",
+      "Fine-tuning vs prompting",
+      "Deployment constraints"
+    ],
+    "failure_modes": [
+      "Trying to finish all modules",
+      "Notes without connection to repo"
+    ],
+    "interview_prompts": [
+      "When would you fine-tune vs RAG vs prompt-only?"
+    ],
+    "capstone_action": "README ‘Month 1 notes’ with 5 terms tied to your gateway design.",
+    "done_when": "You can explain one module’s idea without reading slides."
+  },
+  "11": {
+    "one_liner": "Karpathy deep dive: transformers, KV cache, and inference mechanics that explain latency and cost.",
+    "why_now": "Connects Course 1 gateway metrics (TTFT, tokens) to what the stack is actually doing.",
+    "mental_model": "Attention = pairwise context mixing; KV cache = amortizing work across generated tokens.",
+    "beginner_extra": "You do not need to derive math—capture what grows with sequence length and batch size.",
+    "intermediate_deep_dive": "While watching, build a table: knob → effect on latency/cost (context length, batch, model size). Apply to your logging use case: prefer short JSON outputs.",
+    "advanced_extra": "Discuss speculative decoding / caching only as future optimizations—document baseline first. For self-hosted path (Month 13), this video is the prerequisite to reading vLLM docs.",
+    "watch_for": [
+      "Transformer block",
+      "KV cache intuition",
+      "Sampling parameters"
+    ],
+    "failure_modes": [
+      "Optimizing GPUs before golden-set quality plateaus"
+    ],
+    "interview_prompts": [
+      "Why does TTFT spike with long prompts?"
+    ],
+    "capstone_action": "Log prompt/completion tokens for one CLI call with interpretation.",
+    "done_when": "One paragraph relates P99 latency to token volume."
+  },
+  "12": {
+    "one_liner": "3Blue1Brown visual intuition for neural nets and attention—optional math depth for embeddings later.",
+    "why_now": "Helps when Month 4–5 discuss vectors and attention-based retrieval.",
+    "mental_model": "Neural net = composed functions; attention = soft lookup over positions.",
+    "beginner_extra": "Watch the attention episode if linear algebra is rusty; otherwise skim and return before RAG month.",
+    "intermediate_deep_dive": "Pause on attention visuals—relate to ‘which chunk of document mattered’ in RAG explanations.",
+    "advanced_extra": "Use this to explain embedding models to stakeholders without claiming embeddings equal meaning.",
+    "watch_for": [
+      "Layer stacking",
+      "Attention as weighted sum",
+      "Training vs inference split"
+    ],
+    "failure_modes": [
+      "Confusing intuition with implementation details in interviews"
+    ],
+    "interview_prompts": [
+      "Explain attention to a PM in one minute."
+    ],
+    "capstone_action": "Note one diagram you will reuse in a future RAG README.",
+    "done_when": "You can point to what an embedding model approximates."
+  },
+  "13": {
+    "one_liner": "StatQuest index—search for attention/embeddings when you want gentler statistics framing (optional).",
+    "why_now": "Optional supplement; use only if 3Blue1Brown or DL.AI modules felt too fast.",
+    "mental_model": "StatQuest = glossary in video form.",
+    "beginner_extra": "Search the site for ‘attention’ or ‘embeddings’; watch one video, not the whole index.",
+    "intermediate_deep_dive": "Pick one video aligned with your weakest concept from Month 1 notes.",
+    "advanced_extra": "Skip if time-boxed—optional means optional unless evals show knowledge gaps.",
+    "watch_for": [
+      "Clear definitions",
+      "Visual intuition"
+    ],
+    "failure_modes": [
+      "Substituting optional videos for prove gates"
+    ],
+    "interview_prompts": [
+      "Which optional resource actually changed a design decision?"
+    ],
+    "capstone_action": "If used: one README bullet citing the StatQuest concept.",
+    "done_when": "You can skip guilt-free if Month 1 prove passed."
+  },
+  "14": {
+    "one_liner": "DeepLearning.AI YouTube channel hub—browse only topics referenced elsewhere in Month 1.",
+    "why_now": "Optional discovery; avoid rabbit holes.",
+    "mental_model": "Channel = library, syllabus = reading list.",
+    "beginner_extra": "Subscribe if helpful; do not binge—return when a specific technique is named in build tasks.",
+    "intermediate_deep_dive": "If you watch anything, log title + 3 bullets tied to capstone.",
+    "advanced_extra": "Treat as conference talks backlog for Month 15 interview prep.",
+    "watch_for": [
+      "Production-focused titles",
+      "Short courses overlapping syllabus"
+    ],
+    "failure_modes": [
+      "40 hours of video zero repo commits"
+    ],
+    "interview_prompts": [
+      "How do you time-box learning resources?"
+    ],
+    "capstone_action": "Only if watched: link one video in README notes.",
+    "done_when": "Optional topic may be marked done without viewing if required topics complete."
+  },
+  "15": {
+    "one_liner": "Karpathy YouTube channel—long-form essays on software 2.0 and LLM engineering (optional).",
+    "why_now": "Optional culture/context; primary required Karpathy items are the intro and deep dive topics.",
+    "mental_model": "Essays = senior engineer perspective pieces.",
+    "beginner_extra": "Read/watch one essay if curious about career direction—not required for prove.",
+    "intermediate_deep_dive": "If engaged, compare essay themes to your capstone architecture choices.",
+    "advanced_extra": "Use for narrative in portfolio posts—how you think about systems, not trivia.",
+    "watch_for": [
+      "Engineering mindset",
+      "Data flywheels"
+    ],
+    "failure_modes": [
+      "Consuming content instead of shipping v0.2"
+    ],
+    "interview_prompts": [
+      "What Karpathy idea influenced your repo design?"
+    ],
+    "capstone_action": "Optional README reflection (3 sentences max).",
+    "done_when": "Skip allowed when v0.2 prove is on track."
+  },
+  "16": {
+    "one_liner": "Applied LLMs second pass—read 3+ sections focused on gateways, extraction, and monitoring for Month 1.",
+    "why_now": "Revisit with gateway context; first pass was boot-week breadth.",
+    "mental_model": "Second read = highlight what changes now that LiteLLM exists in repo.",
+    "beginner_extra": "Pick three section titles from the handbook TOC that mention cost, logging, or validation.",
+    "intermediate_deep_dive": "Annotate margins: each section → one change in your v0.2 PR (config, log field, test).",
+    "advanced_extra": "Write a short comparison table: handbook recommendation vs your current implementation vs gap.",
+    "read_sections": [
+      "Gateway patterns",
+      "Structured outputs",
+      "Monitoring"
+    ],
+    "failure_modes": [
+      "Duplicate notes from Course 0 without new insights"
+    ],
+    "interview_prompts": [
+      "What changed in your architecture after the second Applied LLMs pass?"
+    ],
+    "capstone_action": "Three ADR bullets in README for Month 1.",
+    "done_when": "Each bullet links to a merged PR or config file."
+  },
+  "17": {
+    "one_liner": "Instructor patterns and retries—Month 1 angle: production extraction functions and error taxonomy.",
+    "why_now": "You already read quick start; now standardize patterns across services behind LiteLLM.",
+    "mental_model": "Shared library module `extraction.py` used by CLI and later agents.",
+    "beginner_extra": "Focus on retries, partial parsing, and consistent exception types.",
+    "intermediate_deep_dive": "Refactor boot-week extract into a module with injectable client (LiteLLM). Unit-test validation paths without calling the network.",
+    "advanced_extra": "Expose metrics: `validation_error_type` counter, `retry_count` histogram. Document idempotency for batch replays.",
+    "read_sections": [
+      "Retries",
+      "Validators",
+      "Hooks"
+    ],
+    "failure_modes": [
+      "Copy-paste extract logic per script"
+    ],
+    "interview_prompts": [
+      "How do you structure LLM client code in a monorepo?"
+    ],
+    "capstone_action": "Refactor extract behind one module; tests for validation failures.",
+    "done_when": "CI runs unit tests without API keys."
+  },
+  "18": {
+    "one_liner": "LiteLLM docs hub—proxy, routing, logging integrations for your Month 1 gateway.",
+    "why_now": "Central place to configure models, keys, and observability hooks used all year.",
+    "mental_model": "LiteLLM = ODBC for LLMs: one connection string, many backends.",
+    "beginner_extra": "Start with completion API + proxy overview; defer exotic providers until needed.",
+    "intermediate_deep_dive": "Stand up proxy or embedded router; standardize env vars; per-request metadata (`job_id`).",
+    "advanced_extra": "Plan HA: multiple proxy replicas, secret rotation, budget caps per team. Integrate Langfuse in Course 9—leave hooks now.",
+    "read_sections": [
+      "Proxy server",
+      "Routing",
+      "Logging",
+      "Fallbacks"
+    ],
+    "failure_modes": [
+      "API keys in each script",
+      "No request id in logs"
+    ],
+    "interview_prompts": [
+      "Design a multi-tenant LLM gateway."
+    ],
+    "capstone_action": "Tag v0.2 with router config + cost log sample in README.",
+    "done_when": "README table shows model, tokens, latency, cost for sample requests."
+  },
+  "19": {
+    "one_liner": "Chip Huyen’s blog—production ML/LLM systems essays bridging data and serving.",
+    "why_now": "Frames how data quality and serving interact—natural for data engineers.",
+    "mental_model": "Blog = case studies in operationalizing models.",
+    "beginner_extra": "Read 2–3 posts on data loops, monitoring, or deployment—not the entire archive.",
+    "intermediate_deep_dive": "Pick one post; extract a checklist you add to repo OPERATIONS.md.",
+    "advanced_extra": "Connect post themes to OpenLineage/evals later—data flywheel narrative for interviews.",
+    "read_sections": [
+      "Posts on LLM apps",
+      "Data distribution shift",
+      "Monitoring"
+    ],
+    "failure_modes": [
+      "Reading without operationalizing any checklist item"
+    ],
+    "interview_prompts": [
+      "How does data drift show up in LLM apps?"
+    ],
+    "capstone_action": "One checklist item implemented or ticketed in README.",
+    "done_when": "You can summarize one post’s thesis in two sentences."
+  },
+  "20": {
+    "one_liner": "AI Engineering book repo—companion code and references for Chip Huyen’s textbook themes.",
+    "why_now": "Optional depth alongside blog; skim code examples matching gateway/eval topics.",
+    "mental_model": "Repo = worked examples to steal patterns from.",
+    "beginner_extra": "Clone optional; browse folders on serving and monitoring only if time.",
+    "intermediate_deep_dive": "If used, port one small pattern (config, logging) into capstone with attribution.",
+    "advanced_extra": "Compare book architecture diagrams to your repo—gap analysis for portfolio.",
+    "read_sections": [
+      "Serving",
+      "Monitoring",
+      "Data pipelines"
+    ],
+    "failure_modes": [
+      "Forking entire book repo into capstone"
+    ],
+    "interview_prompts": [
+      "Which book pattern did you adopt vs ignore?"
+    ],
+    "capstone_action": "Optional: link to upstream pattern you mirrored.",
+    "done_when": "Optional—skip if blog + v0.2 suffice."
+  },
+  "21": {
+    "one_liner": "Outlines library—constrained decoding for guaranteed JSON/schema adherence (optional advanced).",
+    "why_now": "Alternative to retry-heavy Instructor when you need stricter guarantees or lower latency.",
+    "mental_model": "Outlines = compile schema into generation constraints.",
+    "beginner_extra": "Only explore after Instructor baseline works; compare valid % and latency.",
+    "intermediate_deep_dive": "Spike: one golden subset with Outlines vs Instructor; document tradeoff table.",
+    "advanced_extra": "When to adopt: high-volume extraction with strict JSON grammar. When to defer: rapid schema churn or small volumes where retries are cheaper than engineering.",
+    "read_sections": [
+      "Getting started",
+      "JSON schema",
+      "Models supported"
+    ],
+    "failure_modes": [
+      "Adopting constrained decoding before basic evals exist"
+    ],
+    "interview_prompts": [
+      "Compare retry-based validation vs constrained decoding."
+    ],
+    "capstone_action": "Optional spike branch with benchmark notes in README.",
+    "done_when": "Decision documented: adopt / defer with metric."
+  },
+  "22": {
+    "one_liner": "Build v0.2: LiteLLM router plus per-request cost and latency logging.",
+    "why_now": "Month 1 core deliverable—every later observability story hangs off this.",
+    "mental_model": "Gateway log row = fact table for FinOps and debugging.",
+    "beginner_extra": "Tag `v0.2` on GitHub when README metrics table is truthful.",
+    "intermediate_deep_dive": "Fields: timestamp, model, prompt_tokens, completion_tokens, latency_ms, estimated_cost, request_id. CLI and library paths both emit the same schema.",
+    "advanced_extra": "Add redaction middleware for prompts/responses in logs. SLO: P95 latency budget per record on golden set.",
+    "failure_modes": [
+      "Logging costs without token counts",
+      "Different log schemas per entrypoint"
+    ],
+    "interview_prompts": [
+      "How do you attribute LLM spend to a team or job?"
+    ],
+    "capstone_action": "Merge v0.2; README metrics from real runs.",
+    "done_when": "Release link + table in README."
+  },
+  "23": {
+    "one_liner": "Prove Month 1: published v0.2 release with README cost/latency metrics.",
+    "why_now": "Demonstrates operable gateway—not just code on a branch.",
+    "mental_model": "Release tag = deployable artifact for reviewers.",
+    "beginner_extra": "Paste release URL in Lab & Prove.",
+    "intermediate_deep_dive": "Verify a friend can run one command and see a log row.",
+    "advanced_extra": "Attach sample log JSON (redacted) as artifact in repo docs.",
+    "failure_modes": [
+      "Metrics from hand-waved numbers"
+    ],
+    "interview_prompts": [
+      "Walk through your v0.2 demo in 5 minutes."
+    ],
+    "capstone_action": "Publish release; update studio prove link.",
+    "done_when": "Course 1 acceptance satisfied."
+  },
+  "24": {
+    "one_liner": "DL.AI short course: AI Agents in LangGraph—graphs, state, and tool loops for your reconciler agent.",
+    "why_now": "Month 2 shifts from single-shot extraction to multi-step workflows with pause/resume.",
+    "mental_model": "LangGraph = Airflow with LLM nodes and human approval tasks.",
+    "beginner_extra": "Complete course labs; map each lab node type to a step in your reconciler.",
+    "intermediate_deep_dive": "Design graph: ingest → extract → validate → branch pass/fail → optional HITL. Keep state payload small and versioned.",
+    "advanced_extra": "Define checkpoint retention and PII policy in state store. Load-test interrupt/resume paths—common demo breakages under concurrency.",
+    "watch_for": [
+      "State schema",
+      "Tool nodes",
+      "Conditional edges"
+    ],
+    "failure_modes": [
+      "Giant state blobs",
+      "No timeout on tool calls"
+    ],
+    "interview_prompts": [
+      "LangGraph vs plain scripts—when to adopt?"
+    ],
+    "capstone_action": "Sketch graph diagram in README before coding.",
+    "done_when": "You can name each node and its input/output types."
+  },
+  "25": {
+    "one_liner": "LangChain Academy—LangGraph modules for hands-on graph patterns beyond the short course.",
+    "why_now": "Deepens persistence, subgraphs, and testing patterns for production graphs.",
+    "mental_model": "Academy = interactive labs; syllabus names which modules matter.",
+    "beginner_extra": "Time-box to modules on persistence and human-in-the-loop if listed on your line.",
+    "intermediate_deep_dive": "Complete exercises; copy patterns into `reconciler-agent` package structure.",
+    "advanced_extra": "Compare Academy patterns to Anthropic agents essay—converge on your house style.",
+    "watch_for": [
+      "Checkpointers",
+      "Breakpoints",
+      "Testing graphs"
+    ],
+    "failure_modes": [
+      "Starting new tutorial repos instead of capstone package"
+    ],
+    "interview_prompts": [
+      "How do you test a LangGraph workflow?"
+    ],
+    "capstone_action": "Port one academy pattern into capstone with test.",
+    "done_when": "Graph unit test runs in CI (mocked LLM)."
+  },
+  "26": {
+    "one_liner": "LangChain talk on context engineering for agents—what goes in the window besides the user question.",
+    "why_now": "Agents fail more from bad context assembly than from weak models.",
+    "mental_model": "Context = curated join of tools, memory, docs, and policies—not raw dump.",
+    "beginner_extra": "Watch for sections on tool results formatting and trimming long histories.",
+    "intermediate_deep_dive": "Define context budget per node: max tokens for tool outputs, summarization policy, stale tool result eviction.",
+    "advanced_extra": "Measure context bloat: log tokens per node; alert when tool outputs dominate prompt. Relate to Month 10 prompt caching—stable prefixes for schemas/tools.",
+    "watch_for": [
+      "Tool message shaping",
+      "Memory vs retrieval",
+      "Failure recovery"
+    ],
+    "failure_modes": [
+      "Stuffing entire tool JSON into every turn"
+    ],
+    "interview_prompts": [
+      "How do you prevent context window overflow in agents?"
+    ],
+    "capstone_action": "Implement trimming/summarization on one hot path.",
+    "done_when": "Logged token count drops on a fixed scenario."
+  },
+  "27": {
+    "one_liner": "Dave Ebbelaar LangGraph production videos—practical deployment and debugging agent graphs.",
+    "why_now": "Bridges tutorial graphs to how teams run them daily.",
+    "mental_model": "YouTube = war stories; steal checklists, not code verbatim.",
+    "beginner_extra": "Watch one production-focused episode; note debugging tactics.",
+    "intermediate_deep_dive": "Add a TROUBLESHOOTING.md section mirroring video advice.",
+    "advanced_extra": "Instrument graph with step timings; compare to video recommendations.",
+    "watch_for": [
+      "Local vs prod checkpointers",
+      "Error handling",
+      "Logging"
+    ],
+    "failure_modes": [
+      "Copying demo SQLite checkpointer to prod without plan"
+    ],
+    "interview_prompts": [
+      "How do you debug a stuck agent run?"
+    ],
+    "capstone_action": "Document debug steps with run id and checkpoint id.",
+    "done_when": "You can replay a failed run from checkpoint."
+  },
+  "28": {
+    "one_liner": "Berkeley RDI compound AI systems—multiple models/tools orchestrated for reliability.",
+    "why_now": "Frames why monolithic ‘one big prompt’ loses to specialized steps—matches your pipeline architecture.",
+    "mental_model": "Compound AI = microservices for cognition.",
+    "beginner_extra": "Focus on talks mentioning routing, verification, and retrieval—not research benchmarks.",
+    "intermediate_deep_dive": "Map compound AI diagram labels to your reconciler components.",
+    "advanced_extra": "Argue which steps deserve separate models vs one generalist with tools.",
+    "watch_for": [
+      "Verifier models",
+      "Retrieval stages",
+      "System diagrams"
+    ],
+    "failure_modes": [
+      "Adding models without eval per stage"
+    ],
+    "interview_prompts": [
+      "Design a compound system for log reconciliation."
+    ],
+    "capstone_action": "README diagram with labeled components and data flows.",
+    "done_when": "Each component has an owner test or metric."
+  },
+  "29": {
+    "one_liner": "LangChain YouTube channel—optional updates on LangGraph features and recipes.",
+    "why_now": "Optional; use when stuck on a specific API change.",
+    "mental_model": "Release notes in video form.",
+    "beginner_extra": "Search channel for your error message or feature name only.",
+    "intermediate_deep_dive": "If watched, link issue + video that unblocked you in DEVLOG.",
+    "advanced_extra": "Prefer primary docs for contracts; videos for intuition.",
+    "watch_for": [
+      "Migration guides",
+      "Breaking changes"
+    ],
+    "failure_modes": [
+      "Tutorial hell across multiple agent frameworks"
+    ],
+    "interview_prompts": [
+      "How do you choose learning sources under time pressure?"
+    ],
+    "capstone_action": "Optional note in DEVLOG.",
+    "done_when": "May skip if graph prove is progressing."
+  },
+  "30": {
+    "one_liner": "Anthropic — Building Effective Agents: patterns for reliable agentic workflows without over-autonomy.",
+    "why_now": "Canonical essay before you wire tools and MCP—defines when graphs beat agents.",
+    "mental_model": "Agents = loops; often you want workflows with explicit gates.",
+    "beginner_extra": "Read for ‘build the simplest thing’ and tool-use discipline.",
+    "intermediate_deep_dive": "List which syllabus steps are workflows vs agent loops in your design doc. Add human approval on high-risk branches.",
+    "advanced_extra": "Map essay anti-patterns to lint rules: e.g., ban unbounded tool loops, require eval on tool outputs. Interview story: how you prevented runaway autonomy.",
+    "read_sections": [
+      "Workflows vs agents",
+      "Tool use",
+      "Evaluations"
+    ],
+    "failure_modes": [
+      "Autonomous agent with write tools and no policy"
+    ],
+    "interview_prompts": [
+      "When would you refuse to ship an ‘agent’?"
+    ],
+    "capstone_action": "ADR: workflow vs agent for reconciler; cite essay.",
+    "done_when": "Design doc references at least two essay principles."
+  },
+  "31": {
+    "one_liner": "LangGraph official docs—graphs, checkpointers, interrupts, and streaming for your reconciler-agent package.",
+    "why_now": "Reference while implementing Month 2 build; short course gives intuition, docs give API truth.",
+    "mental_model": "Docs = contract for state transitions and persistence.",
+    "beginner_extra": "Read Concepts + Persistence before copying StackOverflow snippets.",
+    "intermediate_deep_dive": "Implement SQLite or Postgres checkpointer; document migration path to prod store.",
+    "advanced_extra": "Plan horizontal scaling: single-writer checkpoints, idempotent nodes, saga compensation on tool failure.",
+    "read_sections": [
+      "Concepts",
+      "Persistence",
+      "Interrupts",
+      "Streaming"
+    ],
+    "failure_modes": [
+      "Non-idempotent nodes on retry",
+      "Storing secrets in graph state"
+    ],
+    "interview_prompts": [
+      "How do checkpoints interact with idempotency keys?"
+    ],
+    "capstone_action": "Package `reconciler-agent` with documented checkpointer choice.",
+    "done_when": "Graph resumes after simulated worker crash."
+  },
+  "32": {
+    "one_liner": "Applied LLMs pass on agents/orchestration—align handbook patterns with your LangGraph design.",
+    "why_now": "Third handbook pass; focus agent chapters now that graphs are real code.",
+    "mental_model": "Crosswalk essay + handbook + your README diagram.",
+    "beginner_extra": "Read agent/orchestration sections only; skip unrelated chapters.",
+    "intermediate_deep_dive": "Update ADR with one handbook pattern you implemented vs deferred.",
+    "advanced_extra": "Define SLAs for HITL steps and escalation when interrupts age out.",
+    "read_sections": [
+      "Agents",
+      "Orchestration",
+      "Human oversight"
+    ],
+    "failure_modes": [
+      "Documentation drift from actual graph"
+    ],
+    "interview_prompts": [
+      "Describe your HITL path end-to-end."
+    ],
+    "capstone_action": "Sync README diagram with handbook terminology.",
+    "done_when": "Diagram matches code entrypoints."
+  },
+  "33": {
+    "one_liner": "Build reconciler-agent: LangGraph workflow with SQLite/Postgres checkpointer and validation branch.",
+    "why_now": "Month 2 core integration—extraction graph replaces one-off scripts.",
+    "mental_model": "Graph = orchestration layer; extraction module unchanged underneath.",
+    "beginner_extra": "Smallest graph that calls existing `extract()` then validates.",
+    "intermediate_deep_dive": "Nodes as pure functions; explicit state schema; tests with mocked LLM.",
+    "advanced_extra": "Emit OpenTelemetry spans per node; propagate trace id into LiteLLM metadata.",
+    "failure_modes": [
+      "Business logic inside prompt-only",
+      "No version on state schema"
+    ],
+    "interview_prompts": [
+      "Show how you tested a branching graph."
+    ],
+    "capstone_action": "Merge package with README run instructions.",
+    "done_when": "CI tests graph without network."
+  },
+  "34": {
+    "one_liner": "Prove Month 2: README demo of validation fail → interrupt() → human fix → resume.",
+    "why_now": "Shows operable human-in-the-loop—not a slide deck.",
+    "mental_model": "GIF or numbered steps = acceptance test for agents.",
+    "beginner_extra": "Record terminal or write step-by-step with expected prompts.",
+    "intermediate_deep_dive": "Include run id, checkpoint id, and how operator edits state safely.",
+    "advanced_extra": "Redact PII in demo data; document authorization for who may resume.",
+    "failure_modes": [
+      "Demo only works on your laptop magic env"
+    ],
+    "interview_prompts": [
+      "Walk through HITL demo in interview."
+    ],
+    "capstone_action": "Publish demo section; link in Lab & Prove.",
+    "done_when": "Reviewer can reproduce HITL flow."
+  },
+  "35": {
+    "one_liner": "Daily Dose of DS MCP playlist—practical Model Context Protocol explainers and examples.",
+    "why_now": "Month 3 introduces tools; MCP is how clients discover and call them safely.",
+    "mental_model": "MCP = gRPC/REST catalog for agent tools with schemas.",
+    "beginner_extra": "Watch MCP overview episodes before reading spec—build vocabulary.",
+    "intermediate_deep_dive": "Note security themes: auth, scope, audit—map to your tool list.",
+    "advanced_extra": "Compare MCP to bespoke REST tool adapters—when standardization wins.",
+    "watch_for": [
+      "Server vs client roles",
+      "Tool schemas",
+      "Transport options"
+    ],
+    "failure_modes": [
+      "Exposing admin tools without auth"
+    ],
+    "interview_prompts": [
+      "How is MCP different from arbitrary HTTP tools?"
+    ],
+    "capstone_action": "List planned tools with risk tier in README.",
+    "done_when": "You can draw client ↔ MCP server ↔ tool diagram."
+  },
+  "36": {
+    "one_liner": "Multi-agent MCP + FastAPI video—wiring agents to MCP servers in a service architecture.",
+    "why_now": "Shows how your future MCP server sits beside the reconciler API.",
+    "mental_model": "FastAPI = edge; MCP = tool plane.",
+    "beginner_extra": "Focus on process boundaries, not copying entire repo.",
+    "intermediate_deep_dive": "Sketch deploy diagram: agent, MCP server, DB, gateway.",
+    "advanced_extra": "mTLS or token auth between agent and MCP; rate limits per tool.",
+    "watch_for": [
+      "Service layout",
+      "Tool registration",
+      "Error propagation"
+    ],
+    "failure_modes": [
+      "Monolith mixing UI, agent, and tools in one process"
+    ],
+    "interview_prompts": [
+      "Where would you put auth for tool calls?"
+    ],
+    "capstone_action": "Update architecture diagram with MCP service box.",
+    "done_when": "Diagram shows network boundaries."
+  },
+  "37": {
+    "one_liner": "Multi-agent MCP + HITL architecture—human gates when tool or model output is unsafe.",
+    "why_now": "Combines Month 2 interrupts with Month 3 tools—realistic enterprise shape.",
+    "mental_model": "HITL on tool args before execution for write-class tools.",
+    "beginner_extra": "Watch for approval UX patterns—not just diagrams.",
+    "intermediate_deep_dive": "Define which tools require human approval vs auto-run.",
+    "advanced_extra": "Audit log ties user id to approved arg hash; replay protection.",
+    "watch_for": [
+      "Approval queues",
+      "Role separation",
+      "Audit trails"
+    ],
+    "failure_modes": [
+      "HITL only on final answer, not tool calls"
+    ],
+    "interview_prompts": [
+      "Design approval for a write tool."
+    ],
+    "capstone_action": "Policy table: tool → auto / HITL / banned.",
+    "done_when": "Table reviewed and committed."
+  },
+  "38": {
+    "one_liner": "Optional CampusX LangGraph/MCP playlist episode—extra walkthrough if Month 3 feels abstract.",
+    "why_now": "Optional reinforcement only.",
+    "mental_model": "Supplement, not substitute for spec + build.",
+    "beginner_extra": "One episode max unless blocked.",
+    "intermediate_deep_dive": "If used, note one trick that saved time in MCP server code.",
+    "advanced_extra": "Prefer primary MCP spec for security decisions.",
+    "watch_for": [
+      "MCP server setup"
+    ],
+    "failure_modes": [
+      "Playlist replaces prove gate"
+    ],
+    "interview_prompts": [
+      "How do you validate optional resources helped?"
+    ],
+    "capstone_action": "Optional DEVLOG entry.",
+    "done_when": "Skip allowed if MCP build progressing."
+  },
+  "39": {
+    "one_liner": "MCP introduction—roles of hosts, clients, servers, tools, resources, and prompts.",
+    "why_now": "Foundation doc before you implement FastMCP server.",
+    "mental_model": "MCP standardizes tool discovery like OpenAPI for agents.",
+    "beginner_extra": "Read introduction + tools chapters; draw your server on paper.",
+    "intermediate_deep_dive": "Map each planned capstone tool to MCP tool schema with JSON Schema types.",
+    "advanced_extra": "Threat model: tool poisoning, confused deputy, credential forwarding.",
+    "read_sections": [
+      "Introduction",
+      "Tools",
+      "Resources",
+      "Security"
+    ],
+    "failure_modes": [
+      "Tools without input validation"
+    ],
+    "interview_prompts": [
+      "Explain MCP components in one diagram."
+    ],
+    "capstone_action": "Draft tool schemas in repo before coding.",
+    "done_when": "Schemas reviewed for least privilege."
+  },
+  "40": {
+    "one_liner": "MCP specification/docs—normative details for transports, capabilities, and versioning.",
+    "why_now": "When intro is clear, spec resolves arguments about behavior.",
+    "mental_model": "Spec = RFC; implementations may differ—test yours.",
+    "beginner_extra": "Skim TOC; deep-read sections matching your transport (stdio vs HTTP).",
+    "intermediate_deep_dive": "Document which spec version you target; pin SDK versions accordingly.",
+    "advanced_extra": "Plan version negotiation and backward-compatible tool schema changes.",
+    "read_sections": [
+      "Transports",
+      "Lifecycle",
+      "Tool definitions"
+    ],
+    "failure_modes": [
+      "Assuming Claude Desktop behavior equals your server"
+    ],
+    "interview_prompts": [
+      "How would you version a breaking tool schema change?"
+    ],
+    "capstone_action": "SPEC_VERSION note in MCP server README.",
+    "done_when": "Server declares capabilities explicitly."
+  },
+  "41": {
+    "one_liner": "MCP Illustrated Guidebook—visual explanations complementing the spec.",
+    "why_now": "Helps if spec language is dense; pair with hands-on FastMCP.",
+    "mental_model": "Picture book for protocol flows.",
+    "beginner_extra": "Use for sequence diagrams of tool calls.",
+    "intermediate_deep_dive": "Redraw one diagram with your actual tool names.",
+    "advanced_extra": "Use diagrams in onboarding doc for teammates.",
+    "read_sections": [
+      "Tool call flow",
+      "Server setup"
+    ],
+    "failure_modes": [
+      "Illustrations without matching implementation"
+    ],
+    "interview_prompts": [
+      "Whiteboard an MCP tool call sequence."
+    ],
+    "capstone_action": "Add sequence diagram to docs/",
+    "done_when": "Diagram matches implemented server."
+  },
+  "42": {
+    "one_liner": "FastMCP—Pythonic MCP server framework to ship tools quickly with type hints.",
+    "why_now": "Implementation path for Month 3 build milestone.",
+    "mental_model": "FastMCP = FastAPI ergonomics for MCP tools.",
+    "beginner_extra": "Start from template; one tool end-to-end before adding many.",
+    "intermediate_deep_dive": "Structure repo: `mcp_server/` package, tests, docker-compose optional.",
+    "advanced_extra": "Separate read-only vs write tools into different servers or policies.",
+    "read_sections": [
+      "Quickstart",
+      "Tools",
+      "Testing"
+    ],
+    "failure_modes": [
+      "God-object server with 20 tools day one"
+    ],
+    "interview_prompts": [
+      "How do you test MCP tools in CI?"
+    ],
+    "capstone_action": "Scaffold FastMCP server with health check.",
+    "done_when": "Local client can list tools."
+  },
+  "43": {
+    "one_liner": "AI Engineering Hub roadmap MCP section—community patterns and example layouts.",
+    "why_now": "Orientation for how others structure MCP repos—not gospel.",
+    "mental_model": "Hub = Pinterest for repo layouts.",
+    "beginner_extra": "Skim MCP section; steal folder naming only if it fits.",
+    "intermediate_deep_dive": "Compare hub example to your audit/logging requirements.",
+    "advanced_extra": "Document divergences from hub template with reasons.",
+    "read_sections": [
+      "MCP examples"
+    ],
+    "failure_modes": [
+      "Copy-paste without security review"
+    ],
+    "interview_prompts": [
+      "How do you evaluate third-party agent templates?"
+    ],
+    "capstone_action": "README credits and divergence notes.",
+    "done_when": "You know why your layout differs."
+  },
+  "44": {
+    "one_liner": "JSON Schema—language-agnostic contracts for tool inputs/outputs and MCP tool definitions.",
+    "why_now": "Shared vocabulary between MCP, OpenAPI later, and Pydantic models.",
+    "mental_model": "JSON Schema = Avro/Protobuf for JSON documents.",
+    "beginner_extra": "Read basics: types, required, enums, $ref.",
+    "intermediate_deep_dive": "Generate or hand-write schemas for each tool; validate in tests.",
+    "advanced_extra": "Schema registry in repo with compatibility checks on PR.",
+    "read_sections": [
+      "Understanding JSON Schema",
+      "Reference"
+    ],
+    "failure_modes": [
+      "Loose `object` types everywhere"
+    ],
+    "interview_prompts": [
+      "How do JSON Schema and Pydantic relate?"
+    ],
+    "capstone_action": "Commit schemas alongside tools.",
+    "done_when": "Invalid args fail before tool executes."
+  },
+  "45": {
+    "one_liner": "Build tools: lookup_schema, query_golden_set, run_readonly_query (allow-listed, safe).",
+    "why_now": "First real MCP tools—read-only, auditable, least privilege.",
+    "mental_model": "Tools = parameterized stored procedures with guardrails.",
+    "beginner_extra": "Implement one tool completely before adding others.",
+    "intermediate_deep_dive": "Enforce row limits, timeouts, and static allow-list of tables/collections.",
+    "advanced_extra": "OPA policy preview for Month 9—block patterns in SQL strings.",
+    "failure_modes": [
+      "Arbitrary SQL tool",
+      "No timeouts on DB calls"
+    ],
+    "interview_prompts": [
+      "Design a safe read-only warehouse tool."
+    ],
+    "capstone_action": "Three tools with tests and schema.",
+    "done_when": "Agent demo calls each tool successfully."
+  },
+  "46": {
+    "one_liner": "Build audit fields on every tool call: user_id, tool, args_hash, timestamp.",
+    "why_now": "Auditability is the prove differentiator for MCP month.",
+    "mental_model": "Audit log = fact table for agent actions (like query audit in warehouses).",
+    "beginner_extra": "Append-only JSON lines or DB table—pick one, document retention.",
+    "intermediate_deep_dive": "Hash args after redacting secrets; never store raw API keys.",
+    "advanced_extra": "Ship sample SIEM query or SQL to detect anomalous tool volume.",
+    "failure_modes": [
+      "Logging full payloads with PII",
+      "Mutable audit tables"
+    ],
+    "interview_prompts": [
+      "What would you log for compliance on agent tools?"
+    ],
+    "capstone_action": "Audit logger integrated; sample redacted line in README.",
+    "done_when": "Every tool call produces one audit row."
+  },
+  "47": {
+    "one_liner": "Prove Month 3: README plus redacted MCP client snippet showing tool call + audit line.",
+    "why_now": "Evidence that MCP is integrated, not theoretical.",
+    "mental_model": "Snippet = integration test narrative for reviewers.",
+    "beginner_extra": "Redact tokens and PII; use synthetic data.",
+    "intermediate_deep_dive": "Include steps: start server, list tools, invoke, show audit entry.",
+    "advanced_extra": "Optional: short screen recording link.",
+    "failure_modes": [
+      "Secrets in snippet",
+      "Audit not shown"
+    ],
+    "interview_prompts": [
+      "Demo MCP in 3 minutes."
+    ],
+    "capstone_action": "Publish prove section; studio link.",
+    "done_when": "Course 3 acceptance met."
+  },
+  "48": {
+    "one_liner": "Document Chat RAG walkthrough—end-to-end retrieval augmented generation on a doc corpus.",
+    "why_now": "Month 4 introduces search-before-generate for your reconciler knowledge base.",
+    "mental_model": "RAG = join docs to question, then ask model with context.",
+    "beginner_extra": "Watch once; note chunking, embedding, retrieval, generation order.",
+    "intermediate_deep_dive": "Reproduce pipeline stages on your public corpus with named metrics.",
+    "advanced_extra": "Compare video stack to your Qdrant/pgvector choice with ADR.",
+    "watch_for": [
+      "Chunking",
+      "Embedding model",
+      "Retrieval k",
+      "Answer grounding"
+    ],
+    "failure_modes": [
+      "Skipping retrieval quality measurement"
+    ],
+    "interview_prompts": [
+      "Where does RAG fail even with good models?"
+    ],
+    "capstone_action": "Pipeline diagram in README for Month 4.",
+    "done_when": "You can name each stage’s inputs/outputs."
+  },
+  "49": {
+    "one_liner": "Optional CampusX Advanced RAG outline—hybrid retrieval modules if dense search stalls.",
+    "why_now": "Optional when recall@k is low on keyword-heavy queries.",
+    "mental_model": "Hybrid = BM25 + vectors like SQL + search index.",
+    "beginner_extra": "Only if benchmark table shows dense-only weakness.",
+    "intermediate_deep_dive": "Complete hybrid module; rerun benchmark subset.",
+    "advanced_extra": "Document when hybrid added cost without recall gain—honest negative results.",
+    "watch_for": [
+      "BM25 + dense fusion",
+      "Reranking"
+    ],
+    "failure_modes": [
+      "Adding hybrid before baseline dense metrics"
+    ],
+    "interview_prompts": [
+      "When is hybrid search worth operational complexity?"
+    ],
+    "capstone_action": "Optional benchmark appendix.",
+    "done_when": "Decision recorded with numbers."
+  },
+  "50": {
+    "one_liner": "Qdrant docs—vector database operations, filtering, and hybrid queries for RAG.",
+    "why_now": "Primary retrieval store option for capstone benchmarks.",
+    "mental_model": "Qdrant = specialized index for embeddings + metadata filters.",
+    "beginner_extra": "Follow quickstart locally with docker.",
+    "intermediate_deep_dive": "Define collection schema mirroring chunk metadata from Month 5.",
+    "advanced_extra": "Capacity plan: vector size, HNSW params, replication for prod sketch.",
+    "read_sections": [
+      "Quickstart",
+      "Filtering",
+      "Hybrid queries"
+    ],
+    "failure_modes": [
+      "No metadata filters on tenant/doc_id"
+    ],
+    "interview_prompts": [
+      "Why Qdrant vs pgvector for your use case?"
+    ],
+    "capstone_action": "Index sample chunks; query script in repo.",
+    "done_when": "Script returns top-k with scores logged."
+  },
+  "51": {
+    "one_liner": "Qdrant hybrid queries—combine dense vectors with sparse signals for better recall.",
+    "why_now": "Implements optional hybrid strategy from syllabus benchmark.",
+    "mental_model": "Hybrid query = weighted union of retrieval signals.",
+    "beginner_extra": "Read after dense baseline works.",
+    "intermediate_deep_dive": "Tune weights on labeled question set; document in benchmark table.",
+    "advanced_extra": "Monitor query latency vs recall tradeoff; set SLO per query class.",
+    "read_sections": [
+      "Hybrid queries",
+      "Sparse vectors"
+    ],
+    "failure_modes": [
+      "Default weights without evaluation"
+    ],
+    "interview_prompts": [
+      "Explain fusion strategies at high level."
+    ],
+    "capstone_action": "Hybrid column in benchmark README table.",
+    "done_when": "Table shows dense vs hybrid on same questions."
+  },
+  "52": {
+    "one_liner": "pgvector—Postgres extension for embeddings when you want OLTP + vectors together.",
+    "why_now": "Alternative retrieval store—familiar ops for data engineers.",
+    "mental_model": "pgvector = one database for metadata and vectors.",
+    "beginner_extra": "Spike if you already run Postgres for app state.",
+    "intermediate_deep_dive": "Compare recall/latency vs Qdrant on same chunks—honest ADR.",
+    "advanced_extra": "Index maintenance, vacuum, and memory tuning notes for interviews.",
+    "read_sections": [
+      "Installation",
+      "Indexing",
+      "Querying"
+    ],
+    "failure_modes": [
+      "Full table scan at scale without index"
+    ],
+    "interview_prompts": [
+      "When is pgvector enough vs dedicated vector DB?"
+    ],
+    "capstone_action": "Optional second store benchmark or ADR why not.",
+    "done_when": "Storage choice documented with metrics."
+  },
+  "53": {
+    "one_liner": "Applied LLMs retrieval chapters—production RAG pitfalls and architecture patterns.",
+    "why_now": "Fourth handbook pass focused on retrieval month.",
+    "mental_model": "Handbook retrieval section = design review checklist.",
+    "beginner_extra": "Read retrieval/RAG sections; skip unrelated chapters.",
+    "intermediate_deep_dive": "Checklist: chunking, embedding model version, eval questions, injection defenses.",
+    "advanced_extra": "Map handbook anti-patterns to tests in eval harness (Month 7).",
+    "read_sections": [
+      "Retrieval",
+      "RAG",
+      "Evaluation"
+    ],
+    "failure_modes": [
+      "Treating RAG as ‘add vector DB and done’"
+    ],
+    "interview_prompts": [
+      "Top three RAG production failures?"
+    ],
+    "capstone_action": "RAG checklist in docs with tick marks.",
+    "done_when": "Each item has owner file/test."
+  },
+  "54": {
+    "one_liner": "Build public corpus for RAG—10-K sample, ops markdown, or synthetic docs with license clarity.",
+    "why_now": "Retrieval quality is data quality—same as bronze layer curation.",
+    "mental_model": "Corpus = source dataset with lineage and license metadata.",
+    "beginner_extra": "Use only public/synthetic data; document provenance in README.",
+    "intermediate_deep_dive": "Directory layout: raw/, normalized/, manifest.json with doc ids.",
+    "advanced_extra": "Version corpus; evals pin corpus hash for reproducibility.",
+    "failure_modes": [
+      "Scraped content without license",
+      "PII in corpus"
+    ],
+    "interview_prompts": [
+      "How do you version training/eval corpora?"
+    ],
+    "capstone_action": "Commit corpus + manifest.",
+    "done_when": "Manifest lists sources and dates."
+  },
+  "55": {
+    "one_liner": "Build README benchmark: dense-only vs hybrid metrics on labeled questions.",
+    "why_now": "Prove Month 4 with numbers—not vibes.",
+    "mental_model": "Benchmark table = experiment results you would show in a design review.",
+    "beginner_extra": "≥10 labeled questions with expected supporting doc ids.",
+    "intermediate_deep_dive": "Metrics: recall@k, MRR, or human labeled hit rate—pick one, define it.",
+    "advanced_extra": "Confidence intervals or note dataset size limitations honestly.",
+    "failure_modes": [
+      "Cherry-picked questions only"
+    ],
+    "interview_prompts": [
+      "Interpret a recall@5 regression."
+    ],
+    "capstone_action": "Committed markdown table in README.",
+    "done_when": "Table reproducible via script."
+  },
+  "56": {
+    "one_liner": "Prove Month 4: committed benchmark table in repo.",
+    "why_now": "Closes retrieval month with evidence.",
+    "mental_model": "Prove = table + script command in README.",
+    "beginner_extra": "Link in Lab & Prove.",
+    "intermediate_deep_dive": "Reviewer reruns benchmark script and sees similar numbers.",
+    "advanced_extra": "Attach failure cases where retrieval missed—shows maturity.",
+    "failure_modes": [
+      "Hand-edited metrics"
+    ],
+    "interview_prompts": [
+      "Discuss one retrieval failure from your table."
+    ],
+    "capstone_action": "Publish prove link.",
+    "done_when": "Course 4 acceptance satisfied."
+  },
+  "57": {
+    "one_liner": "Docling (IBM)—document parsing pipeline for PDFs and office formats into structured content.",
+    "why_now": "Month 5 chunking starts with high-quality parse, not naive text strip.",
+    "mental_model": "Docling = ETL from documents to structured blocks.",
+    "beginner_extra": "Run on one sample PDF; inspect output structure.",
+    "intermediate_deep_dive": "Choose parse path for your corpus formats; document limitations.",
+    "advanced_extra": "Batch parsing jobs with idempotent doc ids and error quarantine folder.",
+    "watch_for": [
+      "Layout preservation",
+      "Table handling",
+      "Export formats"
+    ],
+    "failure_modes": [
+      "Parser upgrades changing chunk hashes silently"
+    ],
+    "interview_prompts": [
+      "How do you regression-test document parsers?"
+    ],
+    "capstone_action": "Parser script with sample input/output in repo.",
+    "done_when": "One doc parses reproducibly."
+  },
+  "58": {
+    "one_liner": "Docling documentation—configuration, models, and export options for production parsing.",
+    "why_now": "Turns GitHub README spikes into repeatable pipeline config.",
+    "mental_model": "Docs = operator guide for parse jobs.",
+    "beginner_extra": "Read installation + usage for your OS/Sail equivalent.",
+    "intermediate_deep_dive": "Pin model versions; log parser version in chunk metadata.",
+    "advanced_extra": "SLA for parse failures; dead-letter queue for corrupt PDFs.",
+    "read_sections": [
+      "Installation",
+      "Usage",
+      "Export"
+    ],
+    "failure_modes": [
+      "Non-deterministic parses without version pins"
+    ],
+    "interview_prompts": [
+      "What metadata do you attach to each chunk?"
+    ],
+    "capstone_action": "CONFIG.md for parser settings.",
+    "done_when": "Chunks include parser_version field."
+  },
+  "59": {
+    "one_liner": "LlamaParse getting started—managed parsing alternative/complement to Docling.",
+    "why_now": "Compare build-vs-buy for parsing when Docling struggles on messy PDFs.",
+    "mental_model": "LlamaParse = SaaS bronze loader for documents.",
+    "beginner_extra": "Trial on one hard PDF; compare chunk quality to Docling.",
+    "intermediate_deep_dive": "ADR: when to route to LlamaParse vs local Docling.",
+    "advanced_extra": "Cost model per page; data residency and API key handling.",
+    "watch_for": [
+      "API workflow",
+      "Output format",
+      "Rate limits"
+    ],
+    "failure_modes": [
+      "Sending confidential docs to third party"
+    ],
+    "interview_prompts": [
+      "Build vs buy for document parsing?"
+    ],
+    "capstone_action": "Comparison notes in docs/parsing.md.",
+    "done_when": "Decision documented with example doc."
+  },
+  "60": {
+    "one_liner": "Chip Huyen on data for LLM systems—how data quality drives RAG and eval outcomes.",
+    "why_now": "Connects DE strengths to chunking and labeling work this month.",
+    "mental_model": "Data card for corpus: schema, drift, ownership.",
+    "beginner_extra": "Read one essay on data loops; list 3 data quality checks for chunks.",
+    "intermediate_deep_dive": "Implement checks: empty chunks, duplicate hashes, missing page numbers.",
+    "advanced_extra": "Lineage from raw doc → chunks.jsonl fields for Month 12 preview.",
+    "read_sections": [
+      "Data-centric LLM posts"
+    ],
+    "failure_modes": [
+      "Chunking without validation tests"
+    ],
+    "interview_prompts": [
+      "How is RAG data lineage different from warehouse lineage?"
+    ],
+    "capstone_action": "Data quality tests on chunks.jsonl.",
+    "done_when": "CI fails on bad chunk rows."
+  },
+  "61": {
+    "one_liner": "Build chunks.jsonl with source_page, doc_id, chunk_id, and text fields.",
+    "why_now": "Canonical retrieval input for Months 4–7 evals.",
+    "mental_model": "chunks.jsonl = bronze table for semantic search.",
+    "beginner_extra": "Schema in README; sample file committed.",
+    "intermediate_deep_dive": "Stable chunking function with tests; idempotent rebuild from raw docs.",
+    "advanced_extra": "Partition by doc_id; compaction job for orphaned chunks after reparse.",
+    "failure_modes": [
+      "Random chunk boundaries breaking tables",
+      "No doc_id foreign key"
+    ],
+    "interview_prompts": [
+      "Design chunk schema for auditability."
+    ],
+    "capstone_action": "Generate chunks.jsonl from corpus.",
+    "done_when": "Schema validated in CI."
+  },
+  "62": {
+    "one_liner": "Prove Month 5: sample chunks file plus documented schema in README.",
+    "why_now": "Shows parsing/chunking pipeline exists.",
+    "mental_model": "Prove = file + schema + generate command.",
+    "beginner_extra": "Link in studio.",
+    "intermediate_deep_dive": "Reviewer runs generate script and diffs sample hash optionally.",
+    "advanced_extra": "Include row count and avg chunk length stats.",
+    "failure_modes": [
+      "Huge binary blobs in git—use LFS or samples"
+    ],
+    "interview_prompts": [
+      "Walk through chunk pipeline."
+    ],
+    "capstone_action": "Publish prove artifacts.",
+    "done_when": "Course 5 acceptance met."
+  },
+  "63": {
+    "one_liner": "Neo4j GraphAcademy—graph fundamentals for relationship validation slice in Month 6.",
+    "why_now": "Lightweight graph rules—not building Neo4j as primary store.",
+    "mental_model": "Graph = constraint checker on entities extracted from corpus.",
+    "beginner_extra": "Complete intro modules; learn nodes, relationships, Cypher basics.",
+    "intermediate_deep_dive": "Model tiny graph matching your domain (doc, chunk, entity).",
+    "advanced_extra": "When graph validation fails, surface human-readable explanation to agent.",
+    "watch_for": [
+      "Cypher MATCH patterns",
+      "Constraints"
+    ],
+    "failure_modes": [
+      "Enterprise Neo4j ops scope creep"
+    ],
+    "interview_prompts": [
+      "Graph vs relational for validation rules?"
+    ],
+    "capstone_action": "Graph schema diagram in docs.",
+    "done_when": "You can write one MATCH query."
+  },
+  "64": {
+    "one_liner": "Optional CampusX Graph RAG modules—only if pursuing GraphRAG beyond validator scope.",
+    "why_now": "Optional; syllabus allows skip if validator prove passes.",
+    "mental_model": "GraphRAG = advanced retrieval—not required for course prove.",
+    "beginner_extra": "Skip unless interested; do not block Month 6 build.",
+    "intermediate_deep_dive": "If taken, note one idea borrowed for validator messages.",
+    "advanced_extra": "Separate experimental branch from main capstone.",
+    "watch_for": [
+      "Community detection",
+      "Graph retrieval"
+    ],
+    "failure_modes": [
+      "Month-long GraphRAG detour"
+    ],
+    "interview_prompts": [
+      "When is GraphRAG overkill?"
+    ],
+    "capstone_action": "Optional notes only.",
+    "done_when": "Validator prove independent of this video."
+  },
+  "65": {
+    "one_liner": "Microsoft GraphRAG repo—reference architecture for graph-based retrieval (read selectively).",
+    "why_now": "Understand hype vs your scoped validator use case.",
+    "mental_model": "GraphRAG pipeline = expensive; you borrow ideas, not whole stack.",
+    "beginner_extra": "Read README architecture diagram only unless opting into frontier work.",
+    "intermediate_deep_dive": "List components you are NOT building and why.",
+    "advanced_extra": "If experimenting, measure cost vs flat RAG on same question set.",
+    "read_sections": [
+      "README",
+      "Indexing pipeline overview"
+    ],
+    "failure_modes": [
+      "Adopting GraphRAG without eval uplift proof"
+    ],
+    "interview_prompts": [
+      "Contrast GraphRAG with your validator graph."
+    ],
+    "capstone_action": "SCOPE.md boundaries for Month 6.",
+    "done_when": "Scope doc committed."
+  },
+  "66": {
+    "one_liner": "Neo4j Cypher manual—query language for validation rules and test fixtures.",
+    "why_now": "Write rules that reject invalid entity relationships in CI.",
+    "mental_model": "Cypher tests = dbt tests on a graph projection.",
+    "beginner_extra": "Focus on MATCH/WHERE/RETURN patterns used in your tests.",
+    "intermediate_deep_dive": "Parameterize queries; avoid injection via user-provided strings.",
+    "advanced_extra": "Version graph projections; rebuild from chunks when upstream changes.",
+    "read_sections": [
+      "MATCH",
+      "WHERE",
+      "Constraints"
+    ],
+    "failure_modes": [
+      "Embedding Cypher as string concatenation from LLM output"
+    ],
+    "interview_prompts": [
+      "Write a Cypher rule for a business invariant."
+    ],
+    "capstone_action": "cypher/ folder with rule queries.",
+    "done_when": "Tests execute rules against sample graph."
+  },
+  "67": {
+    "one_liner": "Build lightweight graph from Month 5 corpus; validator rejects invalid relationships.",
+    "why_now": "Month 6 integration—quality gate before answers propagate.",
+    "mental_model": "Validator = constraint job after extraction/retrieval.",
+    "beginner_extra": "Smallest graph: entities you already extract + one relationship type.",
+    "intermediate_deep_dive": "Fail closed: invalid graph → agent error path with explanation.",
+    "advanced_extra": "Metrics: validation_failure_rate by rule id.",
+    "failure_modes": [
+      "Validator only logs warnings",
+      "Graph stale vs chunks"
+    ],
+    "interview_prompts": [
+      "Where in pipeline does graph validation run?"
+    ],
+    "capstone_action": "Validator module + sample failing case.",
+    "done_when": "CI test expects failure on bad relationship."
+  },
+  "68": {
+    "one_liner": "Prove Month 6: test case demonstrating validation failure on bad graph data.",
+    "why_now": "Shows guardrail works—not only happy path.",
+    "mental_model": "Negative test = prove for safety systems.",
+    "beginner_extra": "Commit test + expected error message.",
+    "intermediate_deep_dive": "Document operator steps when validation fails in agent flow.",
+    "advanced_extra": "Link failure to HITL resume from Month 2.",
+    "failure_modes": [
+      "Only positive tests"
+    ],
+    "interview_prompts": [
+      "Demo a validation failure."
+    ],
+    "capstone_action": "Prove link with test name cited.",
+    "done_when": "Course 6 acceptance met."
+  },
+  "69": {
+    "one_liner": "RAG evaluation video (Ragas context)—how to measure retrieval and generation quality.",
+    "why_now": "Month 7 begins systematic eval harness beyond schema pass rate.",
+    "mental_model": "RAG eval = join retrieval metrics + answer faithfulness metrics.",
+    "beginner_extra": "Watch for metric definitions, not tool marketing.",
+    "intermediate_deep_dive": "Pick 2 metrics you will implement in `evals/run`.",
+    "advanced_extra": "Human eval for metrics that automation misjudges—sampled audit.",
+    "watch_for": [
+      "Faithfulness",
+      "Context precision",
+      "Pipeline diagram"
+    ],
+    "failure_modes": [
+      "Optimizing vanity metrics"
+    ],
+    "interview_prompts": [
+      "Which RAG metric would you gate CI on first?"
+    ],
+    "capstone_action": "Metric selection doc before coding.",
+    "done_when": "Two metrics named with thresholds."
+  },
+  "70": {
+    "one_liner": "Optional CampusX RAGAS module—hands-on Ragas if video alone is insufficient.",
+    "why_now": "Optional lab for Ragas APIs.",
+    "mental_model": "Supplement to official Ragas docs.",
+    "beginner_extra": "Take only if stuck implementing metrics.",
+    "intermediate_deep_dive": "Complete one exercise; port to your golden set format.",
+    "advanced_extra": "Prefer pinning ragas version in CI for reproducibility.",
+    "watch_for": [
+      "Dataset format",
+      "Metric APIs"
+    ],
+    "failure_modes": [
+      "Course video replaces reading Ragas docs"
+    ],
+    "interview_prompts": [
+      "How do you debug a failing faithfulness score?"
+    ],
+    "capstone_action": "Optional DEVLOG.",
+    "done_when": "Skip if eval script already runs."
+  },
+  "71": {
+    "one_liner": "Hamel evals (Month 7)—deepen golden-set design and error analysis before CI gates.",
+    "why_now": "Second Hamel pass; you now have RAG and chunks to label meaningfully.",
+    "mental_model": "Error analysis spreadsheet drives what to label next.",
+    "beginner_extra": "Re-read golden set + error analysis sections with your failures open.",
+    "intermediate_deep_dive": "Bucket failures: retrieval, extraction, generation, policy; label 10 per bucket.",
+    "advanced_extra": "Publish labeling guide so future contributors agree on ambiguous cases.",
+    "read_sections": [
+      "Golden sets",
+      "Error analysis",
+      "Launch criteria"
+    ],
+    "failure_modes": [
+      "Single-number accuracy worship"
+    ],
+    "interview_prompts": [
+      "How do you prioritize labeling budget?"
+    ],
+    "capstone_action": "ERROR_ANALYSIS.md with buckets and counts.",
+    "done_when": "≥30 golden rows committed with guidelines."
+  },
+  "72": {
+    "one_liner": "Applied LLMs evaluation chapters—production testing and monitoring loops.",
+    "why_now": "Handbook pass aligning eval harness with staff-level monitoring story.",
+    "mental_model": "Eval harness + online monitors = batch + streaming DQ.",
+    "beginner_extra": "Read evaluation/monitoring sections.",
+    "intermediate_deep_dive": "Map handbook monitoring advice to Langfuse hooks (Month 9).",
+    "advanced_extra": "Define canary releases: shadow traffic comparing metrics pre/post prompt change.",
+    "read_sections": [
+      "Evaluation",
+      "Monitoring",
+      "Continuous improvement"
+    ],
+    "failure_modes": [
+      "Offline evals only, no production signals"
+    ],
+    "interview_prompts": [
+      "Offline vs online eval—what breaks if you only have one?"
+    ],
+    "capstone_action": "Monitoring checklist in docs/evals.md.",
+    "done_when": "Checklist items mapped to future work or implemented."
+  },
+  "73": {
+    "one_liner": "DeepEval getting started—pytest-style LLM evaluations for local and CI runs.",
+    "why_now": "Primary library option for automated metrics in Month 7–8.",
+    "mental_model": "DeepEval = pytest for model outputs.",
+    "beginner_extra": "Install; run hello-world metric on one golden row.",
+    "intermediate_deep_dive": "Structure `evals/` package with datasets and thresholds.",
+    "advanced_extra": "Cache model calls in CI with recorded fixtures to reduce cost/flake.",
+    "read_sections": [
+      "Getting started",
+      "Metrics",
+      "Datasets"
+    ],
+    "failure_modes": [
+      "Flaky CI calling live APIs without mocks"
+    ],
+    "interview_prompts": [
+      "How do you keep LLM eval CI deterministic?"
+    ],
+    "capstone_action": "DeepEval metric on subset of golden set.",
+    "done_when": "Local run prints JSON summary."
+  },
+  "74": {
+    "one_liner": "Ragas install docs—framework for RAG-specific metrics (faithfulness, context precision).",
+    "why_now": "Complements DeepEval for retrieval-heavy failures.",
+    "mental_model": "Ragas = Great Expectations for RAG pipelines.",
+    "beginner_extra": "Follow install guide; pin versions in requirements/uv.",
+    "intermediate_deep_dive": "Convert golden set to Ragas dataset format.",
+    "advanced_extra": "Document when Ragas disagrees with human labels—calibration notes.",
+    "read_sections": [
+      "Install",
+      "Quickstart"
+    ],
+    "failure_modes": [
+      "Running Ragas without reference contexts"
+    ],
+    "interview_prompts": [
+      "Explain faithfulness vs answer correctness."
+    ],
+    "capstone_action": "Ragas wired in eval runner optional path.",
+    "done_when": "One Ragas metric runs on ≥5 examples."
+  },
+  "75": {
+    "one_liner": "Ragas metrics reference—choose metrics aligned with your failure buckets.",
+    "why_now": "Avoid metric soup—pick metrics tied to error analysis.",
+    "mental_model": "Each metric = one hypothesis about system quality.",
+    "beginner_extra": "Read definitions before enabling all metrics in CI.",
+    "intermediate_deep_dive": "Tier 1: schema + retrieval hit; Tier 2: faithfulness; Tier 3: business KPIs.",
+    "advanced_extra": "Composite gate with explicit weights documented in ADR.",
+    "read_sections": [
+      "Metrics overview",
+      "Faithfulness",
+      "Context precision"
+    ],
+    "failure_modes": [
+      "10 metrics, none actionable"
+    ],
+    "interview_prompts": [
+      "Which metric caught your last regression?"
+    ],
+    "capstone_action": "METRICS.md with tier table.",
+    "done_when": "Tiers linked to CI config."
+  },
+  "76": {
+    "one_liner": "Build evals/golden.jsonl and python -m evals.run producing JSON report.",
+    "why_now": "Month 7 core—repeatable quality score for every PR touching prompts/retrieval.",
+    "mental_model": "evals.run = dbt test for LLM stack.",
+    "beginner_extra": "≥30 labeled rows; script exits non-zero on threshold breach.",
+    "intermediate_deep_dive": "Report includes per-metric breakdown and worst examples path.",
+    "advanced_extra": "Store historical reports in artifacts/ for trend charts.",
+    "failure_modes": [
+      "Golden set too easy",
+      "Non-deterministic runs without seeds"
+    ],
+    "interview_prompts": [
+      "Show eval report from a real PR."
+    ],
+    "capstone_action": "Merge eval package + sample report in README.",
+    "done_when": "`evals.run` documented and working."
+  },
+  "77": {
+    "one_liner": "Prove Month 7: golden set committed plus summary metrics in README or CI artifact.",
+    "why_now": "Demonstrates eval culture before blocking merges in Month 8.",
+    "mental_model": "Prove = git history shows golden labels + latest scores.",
+    "beginner_extra": "Studio link to commit or CI run.",
+    "intermediate_deep_dive": "Reviewer reruns evals and compares to published summary.",
+    "advanced_extra": "Include worst 3 examples and planned fixes.",
+    "failure_modes": [
+      "Metrics screenshot without reproducible command"
+    ],
+    "interview_prompts": [
+      "How big is your golden set and why?"
+    ],
+    "capstone_action": "Publish prove evidence.",
+    "done_when": "Course 7 acceptance met."
+  },
+  "78": {
+    "one_liner": "Hamel articles index—ongoing essays on evals, product, and LLM ops (Month 8 curated read).",
+    "why_now": "Stay current on eval anti-patterns while wiring CI.",
+    "mental_model": "Hamel = staff engineer newsletter for LLM quality.",
+    "beginner_extra": "Pick 2 articles on CI or error analysis from index.",
+    "intermediate_deep_dive": "One article → one change in `.github/workflows/evals.yml`.",
+    "advanced_extra": "Subscribe mentally: revisit index when evals feel stale.",
+    "read_sections": [
+      "Evals",
+      "CI",
+      "Product"
+    ],
+    "failure_modes": [
+      "Reading without changing CI"
+    ],
+    "interview_prompts": [
+      "Recent eval insight you applied?"
+    ],
+    "capstone_action": "DEVLOG entry citing article + PR.",
+    "done_when": "PR references article decision."
+  },
+  "79": {
+    "one_liner": "DeepEval CI/CD guide—run evals on pull requests with thresholds and baselines.",
+    "why_now": "Month 8 turns eval harness into merge gate.",
+    "mental_model": "baseline.json = golden master for metrics.",
+    "beginner_extra": "Follow end-to-end CI doc; start with one metric gate.",
+    "intermediate_deep_dive": "Store baseline; fail PR on regression beyond epsilon.",
+    "advanced_extra": "Fork PR workflows: smoke on every PR, full eval nightly to control cost.",
+    "read_sections": [
+      "CI/CD",
+      "Baseline",
+      "GitHub Actions"
+    ],
+    "failure_modes": [
+      "CI always calls expensive models",
+      "No baseline update process"
+    ],
+    "interview_prompts": [
+      "How do you update eval baselines safely?"
+    ],
+    "capstone_action": "evals.yml with failing test demo branch.",
+    "done_when": "CI fails on intentional bad prompt."
+  },
+  "80": {
+    "one_liner": "Applied LLMs testing/monitoring—align handbook with your CI and future Langfuse traces.",
+    "why_now": "Connects offline CI to online monitoring story for interviews.",
+    "mental_model": "Testing pyramid for LLM apps.",
+    "beginner_extra": "Read testing + monitoring sections.",
+    "intermediate_deep_dive": "Diagram unit vs eval vs canary in docs.",
+    "advanced_extra": "Define alert when online metric diverges from offline eval.",
+    "read_sections": [
+      "Testing",
+      "Monitoring"
+    ],
+    "failure_modes": [
+      "CI green but production quality unknown"
+    ],
+    "interview_prompts": [
+      "Describe your LLM testing pyramid."
+    ],
+    "capstone_action": "Testing pyramid diagram committed.",
+    "done_when": "Each layer has example in repo."
+  },
+  "81": {
+    "one_liner": "Build .github/workflows/evals.yml and evals/baseline.json for regression detection.",
+    "why_now": "Month 8 deliverable—quality gate like dbt tests on PR.",
+    "mental_model": "baseline.json = committed expected metric ranges.",
+    "beginner_extra": "Workflow runs on PR; uses secrets for API keys in CI only.",
+    "intermediate_deep_dive": "Document how to refresh baseline with team review.",
+    "advanced_extra": "Comment bot posts metric diff on PR.",
+    "failure_modes": [
+      "Skipping CI on docs-only changes that affect prompts"
+    ],
+    "interview_prompts": [
+      "Show CI blocking a bad change."
+    ],
+    "capstone_action": "Merge workflow + baseline.",
+    "done_when": "Screenshot or link of failed run."
+  },
+  "82": {
+    "one_liner": "Prove Month 8: CI regression screenshot or link showing eval failure on bad prompt.",
+    "why_now": "Evidence that gate works—not theoretical YAML.",
+    "mental_model": "Failed CI run = trust artifact.",
+    "beginner_extra": "Redacted screenshot acceptable.",
+    "intermediate_deep_dive": "Include PR link and which metric regressed.",
+    "advanced_extra": "Postmortem template for eval regressions.",
+    "failure_modes": [
+      "Fake failure without reproducible branch"
+    ],
+    "interview_prompts": [
+      "Tell story of catching a regression pre-merge."
+    ],
+    "capstone_action": "Studio prove link.",
+    "done_when": "Course 8 acceptance met."
+  },
+  "83": {
+    "one_liner": "LangSmith crash course—tracing chains/agents for debugging (concepts apply to Langfuse path too).",
+    "why_now": "Month 9 observability—see inside multi-step runs.",
+    "mental_model": "Trace = distributed trace for LLM steps.",
+    "beginner_extra": "Watch for span hierarchy and replay debugging.",
+    "intermediate_deep_dive": "Map concepts to Langfuse integration you will build.",
+    "advanced_extra": "Compare vendor lock-in vs OpenTelemetry export strategy.",
+    "watch_for": [
+      "Runs vs traces",
+      "Datasets",
+      "Evaluators in UI"
+    ],
+    "failure_modes": [
+      "Tracing PII payloads"
+    ],
+    "interview_prompts": [
+      "Debug a failed agent run using traces."
+    ],
+    "capstone_action": "TRACE.md glossary of span names you will use.",
+    "done_when": "Span naming convention documented."
+  },
+  "84": {
+    "one_liner": "Optional Context Engineering for Agents (~1h)—revisit if Month 9 traces show context bloat.",
+    "why_now": "Optional remediation when token/cost traces spike.",
+    "mental_model": "Same video as Month 2—new lens with trace data.",
+    "beginner_extra": "Only if Langfuse shows oversized tool messages.",
+    "intermediate_deep_dive": "Implement one trimming fix; measure token delta.",
+    "advanced_extra": "Relate to prompt caching checklist in Month 10.",
+    "watch_for": [
+      "Context trimming",
+      "Tool output limits"
+    ],
+    "failure_modes": [
+      "Re-watching without code change"
+    ],
+    "interview_prompts": [
+      "Prove context fix with metrics."
+    ],
+    "capstone_action": "Optional PR reducing tokens/run.",
+    "done_when": "Skip if traces already healthy."
+  },
+  "85": {
+    "one_liner": "Open Policy Agent docs—policy-as-code to allow/deny tool and write operations.",
+    "why_now": "Month 9 policy layer before agents get write tools in capstone.",
+    "mental_model": "Rego policies = row-level security for tools.",
+    "beginner_extra": "Read intro + policy language basics.",
+    "intermediate_deep_dive": "Policy tests with `opa test` in CI.",
+    "advanced_extra": "Separate policy bundle per environment; signed bundles for prod.",
+    "read_sections": [
+      "Introduction",
+      "Policy language",
+      "Testing"
+    ],
+    "failure_modes": [
+      "Policies only in prompts"
+    ],
+    "interview_prompts": [
+      "OPA vs application-level checks?"
+    ],
+    "capstone_action": "policies/ folder with README.",
+    "done_when": "opa test passes locally."
+  },
+  "86": {
+    "one_liner": "Langfuse docs—LLM observability product overview (traces, scores, datasets).",
+    "why_now": "Chosen trace sink for capstone alongside LiteLLM.",
+    "mental_model": "Langfuse = DataDog for LLM spans.",
+    "beginner_extra": "Skim docs; create project and API keys in dev only.",
+    "intermediate_deep_dive": "Define what metadata every trace must include.",
+    "advanced_extra": "Data retention and PII scrubbing configuration documented.",
+    "read_sections": [
+      "Get started",
+      "Tracing",
+      "Scores"
+    ],
+    "failure_modes": [
+      "Logging secrets in trace metadata"
+    ],
+    "interview_prompts": [
+      "What do you store per trace vs per span?"
+    ],
+    "capstone_action": "Dev Langfuse project wired in config.",
+    "done_when": "Test trace appears in UI."
+  },
+  "87": {
+    "one_liner": "Langfuse tracing—instrument LangGraph nodes and LiteLLM calls with consistent run ids.",
+    "why_now": "Implementation guide for Month 9 build.",
+    "mental_model": "run_id correlates gateway log, graph checkpoint, trace UI.",
+    "beginner_extra": "Follow tracing quickstart for Python.",
+    "intermediate_deep_dive": "Propagate trace context through MCP tool calls where possible.",
+    "advanced_extra": "SLO dashboard: P95 end-to-end agent latency from traces.",
+    "read_sections": [
+      "Tracing",
+      "SDK",
+      "Integrations"
+    ],
+    "failure_modes": [
+      "Broken parent/child span links"
+    ],
+    "interview_prompts": [
+      "Correlate LiteLLM cost log to Langfuse trace."
+    ],
+    "capstone_action": "Instrumentation PR with sample trace screenshot.",
+    "done_when": "One full run visible end-to-end."
+  },
+  "88": {
+    "one_liner": "OpenTelemetry Python docs—vendor-neutral tracing if you outgrow single SaaS.",
+    "why_now": "Understand escape hatch from Langfuse-only instrumentation.",
+    "mental_model": "OTel = portable trace IDs across tools.",
+    "beginner_extra": "Read concepts: tracer, span, exporter.",
+    "intermediate_deep_dive": "Optional: export OTel to Langfuse or collector.",
+    "advanced_extra": "Unified observability story for platform interviews.",
+    "read_sections": [
+      "Python getting started",
+      "Instrumentation"
+    ],
+    "failure_modes": [
+      "Double instrumentation overhead unmeasured"
+    ],
+    "interview_prompts": [
+      "Langfuse vs OTel—when both?"
+    ],
+    "capstone_action": "Note OTel strategy in OBSERVABILITY.md.",
+    "done_when": "Strategy doc committed."
+  },
+  "89": {
+    "one_liner": "LiteLLM Langfuse integration—single hook to log all gateway completions to traces.",
+    "why_now": "Wires Month 1 gateway to Month 9 traces with minimal code.",
+    "mental_model": "Integration = automatic span per completion.",
+    "beginner_extra": "Follow integration doc; verify one completion creates span.",
+    "intermediate_deep_dive": "Include custom metadata: job_id, course_tag, model_fallback flag.",
+    "advanced_extra": "Cost fields in trace metadata for FinOps dashboards.",
+    "read_sections": [
+      "Langfuse integration",
+      "Callbacks"
+    ],
+    "failure_modes": [
+      "Double logging LiteLLM + manual spans inconsistently"
+    ],
+    "interview_prompts": [
+      "Show integration config snippet redacted."
+    ],
+    "capstone_action": "Enable integration in proxy config.",
+    "done_when": "Gateway calls appear in Langfuse."
+  },
+  "90": {
+    "one_liner": "Build Rego policy blocking write_* tools for role analyst.",
+    "why_now": "Concrete policy proving OPA is not theoretical.",
+    "mental_model": "Role → allowed tool name patterns.",
+    "beginner_extra": "Start with one deny rule + unit test.",
+    "intermediate_deep_dive": "Integrate policy check in MCP server before tool execution.",
+    "advanced_extra": "Audit denied attempts separately from allowed.",
+    "failure_modes": [
+      "Policy bypass via renamed tools"
+    ],
+    "interview_prompts": [
+      "Enforce policy at which layer?"
+    ],
+    "capstone_action": "Policy + test + integration point.",
+    "done_when": "Test shows analyst blocked from write tool."
+  },
+  "91": {
+    "one_liner": "Build Langfuse wired to LangGraph + LiteLLM for unified traces.",
+    "why_now": "Month 9 integration milestone.",
+    "mental_model": "One run_id from CLI through graph, gateway, tools.",
+    "beginner_extra": "Follow TRACE.md conventions.",
+    "intermediate_deep_dive": "Document env vars and local docker-compose for Langfuse optional.",
+    "advanced_extra": "Runbook: trace-driven incident response steps.",
+    "failure_modes": [
+      "Traces without cost/token fields"
+    ],
+    "interview_prompts": [
+      "Demo trace for failed validation path."
+    ],
+    "capstone_action": "Merge instrumentation.",
+    "done_when": "Screenshot with run id in README."
+  },
+  "92": {
+    "one_liner": "Prove Month 9: trace screenshot plus policy test output.",
+    "why_now": "Shows observability + authorization together.",
+    "mental_model": "Two artifacts: trace UI + opa test stdout.",
+    "beginner_extra": "Redact sensitive fields.",
+    "intermediate_deep_dive": "Link both to same synthetic scenario.",
+    "advanced_extra": "Explain how trace proves policy fired (metadata).",
+    "failure_modes": [
+      "Unrelated screenshots"
+    ],
+    "interview_prompts": [
+      "Security + observability story in 5 min."
+    ],
+    "capstone_action": "Prove section in README.",
+    "done_when": "Course 9 acceptance met."
+  },
+  "93": {
+    "one_liner": "Capstone ingestion: Docling or LlamaParse on public/synthetic docs feeding chunks pipeline.",
+    "why_now": "Month 10 integrates prior months into runnable alpha.",
+    "mental_model": "Ingestion job = scheduled bronze load.",
+    "beginner_extra": "Wire existing Month 5 parser into capstone checklist row.",
+    "intermediate_deep_dive": "Idempotent job keyed by doc_id; metrics on parse failures.",
+    "advanced_extra": "Backpressure and retry policy on parse queue.",
+    "failure_modes": [
+      "Manual one-off parses only"
+    ],
+    "interview_prompts": [
+      "End-to-end data flow from PDF to answer."
+    ],
+    "capstone_action": "Checklist row done with command in README.",
+    "done_when": "Ingest command documented."
+  },
+  "94": {
+    "one_liner": "Capstone gateway: LiteLLM proxy + failover + prompt caching on static prefixes.",
+    "why_now": "Production-shaped inference path for integrated demo.",
+    "mental_model": "Caching = reuse compiled prefix tokens for schemas/tools.",
+    "beginner_extra": "Enable caching per practical gate readings later in course.",
+    "intermediate_deep_dive": "Measure TTFT and cached token fields in logs.",
+    "advanced_extra": "Cache invalidation when tool schema version changes.",
+    "failure_modes": [
+      "Caching stale tool definitions"
+    ],
+    "interview_prompts": [
+      "Explain prompt caching cost win with numbers."
+    ],
+    "capstone_action": "Gateway row checked with caching config.",
+    "done_when": "Logs show cache hits on repeated prefix."
+  },
+  "95": {
+    "one_liner": "Capstone extraction: Instructor + Pydantic + validation retries on integrated path.",
+    "why_now": "Core business logic in alpha pipeline.",
+    "mental_model": "Extract step = typed transform in DAG.",
+    "beginner_extra": "Reuse boot-week module; no duplicate extract code.",
+    "intermediate_deep_dive": "Single entrypoint function called from graph node.",
+    "advanced_extra": "Circuit breaker when validation error rate spikes.",
+    "failure_modes": [
+      "Different extract behavior in CLI vs graph"
+    ],
+    "interview_prompts": [
+      "Where is schema enforced?"
+    ],
+    "capstone_action": "Integration test on extract node.",
+    "done_when": "Test passes in CI."
+  },
+  "96": {
+    "one_liner": "Capstone invariants & lineage: root validators; chunk → model → output lineage fields.",
+    "why_now": "Auditability for integrated answers.",
+    "mental_model": "Lineage fields on output: chunk_ids, model, prompt_hash.",
+    "beginner_extra": "Add fields to output JSON schema.",
+    "intermediate_deep_dive": "OpenLineage event preview for one run (Month 12 expands).",
+    "advanced_extra": "Immutable lineage log for compliance narrative.",
+    "failure_modes": [
+      "Lineage optional/null in prod path"
+    ],
+    "interview_prompts": [
+      "Trace an answer back to source chunks."
+    ],
+    "capstone_action": "Lineage fields populated in demo run.",
+    "done_when": "Sample output JSON shows lineage."
+  },
+  "97": {
+    "one_liner": "Capstone policy: OPA before write tools in integrated agent path.",
+    "why_now": "Safety gate in end-to-end demo.",
+    "mental_model": "Policy check = mandatory middleware on tool router.",
+    "beginner_extra": "Reuse Month 9 policies.",
+    "intermediate_deep_dive": "Deny path surfaces user-safe error + audit log.",
+    "advanced_extra": "Policy version in trace metadata.",
+    "failure_modes": [
+      "Write tools callable in alpha demo without policy"
+    ],
+    "interview_prompts": [
+      "Demo policy deny in integrated run."
+    ],
+    "capstone_action": "Policy wired in capstone graph.",
+    "done_when": "Deny scenario tested."
+  },
+  "98": {
+    "one_liner": "Capstone LangGraph: pass → stage write; fail → interrupt() HITL in integrated flow.",
+    "why_now": "Human gate on bad extractions in alpha story.",
+    "mental_model": "Same HITL as Month 2, now in full pipeline.",
+    "beginner_extra": "Document operator steps in DEMO.md.",
+    "intermediate_deep_dive": "Resume path tested after human correction.",
+    "advanced_extra": "Metrics on interrupt rate and time-to-resume.",
+    "failure_modes": [
+      "HITL bypassed in ‘happy path only’ demo"
+    ],
+    "interview_prompts": [
+      "Walk alpha demo including interrupt."
+    ],
+    "capstone_action": "DEMO.md script includes fail branch.",
+    "done_when": "Demo script rehearsed."
+  },
+  "99": {
+    "one_liner": "Capstone eval CI: GitHub Actions + tiered metrics on integrated golden set.",
+    "why_now": "Quality gate on whole pipeline, not isolated scripts.",
+    "mental_model": "CI runs end-to-end or staged eval on golden.jsonl.",
+    "beginner_extra": "Reuse Month 8 workflow; expand dataset.",
+    "intermediate_deep_dive": "Tiered thresholds documented in METRICS.md.",
+    "advanced_extra": "Nightly full eval vs PR smoke documented.",
+    "failure_modes": [
+      "CI tests mock only, alpha untested"
+    ],
+    "interview_prompts": [
+      "What blocks alpha tag merge?"
+    ],
+    "capstone_action": "CI green on main with eval summary.",
+    "done_when": "Workflow linked in README."
+  },
+  "100": {
+    "one_liner": "Capstone telemetry: Langfuse or OTel trace per integrated run.",
+    "why_now": "Demo credibility—show observability in alpha.",
+    "mental_model": "Every demo run has shareable trace id.",
+    "beginner_extra": "Screenshot in DEMO.md.",
+    "intermediate_deep_dive": "Spans for ingest, retrieve, extract, validate, respond.",
+    "advanced_extra": "Alerting sketch on error rate (even if not wired).",
+    "failure_modes": [
+      "Demo without trace id"
+    ],
+    "interview_prompts": [
+      "Open trace and explain spans live."
+    ],
+    "capstone_action": "Telemetry row checked.",
+    "done_when": "Trace id in demo script."
+  },
+  "101": {
+    "one_liner": "Optional Phase 5: E2B, semantic cache, NeMo—document defer/adopt with metrics.",
+    "why_now": "Frontier extras only after alpha required rows done.",
+    "mental_model": "Optional row = ADR + spike, not scope creep.",
+    "beginner_extra": "Skip unless alpha prove complete.",
+    "intermediate_deep_dive": "If explored, README section with bottleneck + metric.",
+    "advanced_extra": "Honest ‘deferred’ entries valued in staff interviews.",
+    "failure_modes": [
+      "Optional features blocking alpha"
+    ],
+    "interview_prompts": [
+      "What did you consciously defer?"
+    ],
+    "capstone_action": "DEFERRED.md or README section.",
+    "done_when": "Alpha required items done first."
+  },
+  "102": {
+    "one_liner": "Practical gate: identify static prefix (schemas, tools, policy, few-shots) for caching.",
+    "why_now": "Cost/latency optimization with measurable evidence.",
+    "mental_model": "Static prefix = stable system prompt blocks.",
+    "beginner_extra": "List prefix components in CACHING.md.",
+    "intermediate_deep_dive": "Separate volatile user content from stable prefix in code.",
+    "advanced_extra": "Version prefix hash when schemas change.",
+    "failure_modes": [
+      "Caching entire prompt including user PII"
+    ],
+    "interview_prompts": [
+      "What is safe to cache?"
+    ],
+    "capstone_action": "CACHING.md committed.",
+    "done_when": "Prefix list reviewed."
+  },
+  "103": {
+    "one_liner": "Anthropic prompt caching docs—provider-native cache breakpoints and billing.",
+    "why_now": "Understand cache read/write pricing for interview numbers.",
+    "mental_model": "Cache breakpoints mark reusable prefix sections.",
+    "beginner_extra": "Read how to mark cacheable blocks in API calls.",
+    "intermediate_deep_dive": "Implement if using Anthropic models; else document N/A with LiteLLM path.",
+    "advanced_extra": "Compare Anthropic vs LiteLLM caching abstractions.",
+    "read_sections": [
+      "Prompt caching",
+      "Pricing implications"
+    ],
+    "failure_modes": [
+      "Assuming cache hits without log verification"
+    ],
+    "interview_prompts": [
+      "Explain cache read vs write tokens."
+    ],
+    "capstone_action": "Config snippet or N/A note.",
+    "done_when": "README references provider caching behavior."
+  },
+  "104": {
+    "one_liner": "LiteLLM prompt caching—unified caching config across providers where supported.",
+    "why_now": "Matches gateway-centric capstone architecture.",
+    "mental_model": "LiteLLM passes cache directives to providers.",
+    "beginner_extra": "Follow LiteLLM prompt caching doc.",
+    "intermediate_deep_dive": "Log cached vs uncached token fields per request.",
+    "advanced_extra": "Alert if cache hit rate drops after deploy.",
+    "read_sections": [
+      "Prompt caching",
+      "Logging cache stats"
+    ],
+    "failure_modes": [
+      "Caching without measuring TTFT improvement"
+    ],
+    "interview_prompts": [
+      "Show ≥10 request table cached vs uncached."
+    ],
+    "capstone_action": "Caching enabled in proxy.",
+    "done_when": "Table in README practical gate."
+  },
+  "105": {
+    "one_liner": "Practical gate README table: TTFT + cached vs uncached tokens over ≥10 requests.",
+    "why_now": "Numeric prove for caching work.",
+    "mental_model": "Before/after table like query optimization proof.",
+    "beginner_extra": "Run scripted load against stable prefix.",
+    "intermediate_deep_dive": "Include median and P95 TTFT.",
+    "advanced_extra": "Note model/provider and date; reproducible script.",
+    "failure_modes": [
+      "Single request cherry-pick"
+    ],
+    "interview_prompts": [
+      "Quantify caching benefit in one sentence."
+    ],
+    "capstone_action": "Table committed.",
+    "done_when": "Practical gate satisfied."
+  },
+  "106": {
+    "one_liner": "Practical gate: one-sentence interview line on cost/latency without behavior change.",
+    "why_now": "Forces crisp communication of optimization.",
+    "mental_model": "Elevator pitch backed by table in previous topic.",
+    "beginner_extra": "Write sentence in README CACHING.md header.",
+    "intermediate_deep_dive": "Peer review: sentence matches table numbers.",
+    "advanced_extra": "Practice aloud for Month 15 interviews.",
+    "failure_modes": [
+      "Vague ‘caching made it faster’"
+    ],
+    "interview_prompts": [
+      "Deliver the one-liner live."
+    ],
+    "capstone_action": "Sentence in README.",
+    "done_when": "Numbers align with table."
+  },
+  "107": {
+    "one_liner": "AI Agents in LangGraph (Course 10 repeat)—refresh for integrated capstone graph patterns.",
+    "why_now": "Second pass while wiring alpha; focus integration gaps only.",
+    "mental_model": "Re-watch targeted modules, not full course.",
+    "beginner_extra": "Skip if graph already meets capstone checklist.",
+    "intermediate_deep_dive": "Note one pattern fixed after re-watch.",
+    "advanced_extra": "Compare DL.AI labs to your production graph structure.",
+    "watch_for": [
+      "Multi-node error handling",
+      "Persistence in long runs"
+    ],
+    "failure_modes": [
+      "Re-taking entire course under deadline"
+    ],
+    "interview_prompts": [
+      "What changed in graph after Month 10?"
+    ],
+    "capstone_action": "Optional DEVLOG.",
+    "done_when": "Capstone rows drive priority."
+  },
+  "108": {
+    "one_liner": "OpenAPI 3 spec—document HTTP APIs on your platform for integrators.",
+    "why_now": "Month 10 integration includes service boundaries.",
+    "mental_model": "OpenAPI = contract for non-MCP clients.",
+    "beginner_extra": "Skim spec structure; generate or hand-write for one endpoint.",
+    "intermediate_deep_dive": "Publish openapi.yaml for reconciler API.",
+    "advanced_extra": "Contract tests validating responses against spec.",
+    "read_sections": [
+      "Structure",
+      "Paths",
+      "Schemas"
+    ],
+    "failure_modes": [
+      "Undocumented HTTP endpoints"
+    ],
+    "interview_prompts": [
+      "How do OpenAPI and MCP relate in your platform?"
+    ],
+    "capstone_action": "openapi.yaml in repo.",
+    "done_when": "Spec validates in CI or lint tool."
+  },
+  "109": {
+    "one_liner": "JSON Schema (Course 10)—align HTTP/MCP/tool contracts with one schema source.",
+    "why_now": "Second pass emphasizing single source of truth across surfaces.",
+    "mental_model": "Generate Pydantic from schema or vice versa—pick one direction.",
+    "beginner_extra": "Ensure tool schemas match OpenAPI components.",
+    "intermediate_deep_dive": "CI check for schema drift between MCP and OpenAPI.",
+    "advanced_extra": "Breaking change policy for schema versions.",
+    "read_sections": [
+      "$ref",
+      "Versioning patterns"
+    ],
+    "failure_modes": [
+      "Three divergent schema copies"
+    ],
+    "interview_prompts": [
+      "Schema governance in monorepo?"
+    ],
+    "capstone_action": "Drift check or shared schema package.",
+    "done_when": "Single source documented."
+  },
+  "110": {
+    "one_liner": "Instructor (Course 10)—ensure integrated extract path matches latest patterns.",
+    "why_now": "Refresh retries/validators after months of changes.",
+    "mental_model": "Regression test protects extract module during capstone merges.",
+    "beginner_extra": "Re-read retries if flake increased.",
+    "intermediate_deep_dive": "Align with eval CI failures—fix taxonomy.",
+    "advanced_extra": "Deprecate legacy extract code paths.",
+    "read_sections": [
+      "Retries",
+      "Migration guides"
+    ],
+    "failure_modes": [
+      "Two extract implementations in alpha"
+    ],
+    "interview_prompts": [
+      "How do you prevent extract regressions?"
+    ],
+    "capstone_action": "Consolidate extract entrypoint.",
+    "done_when": "One path used in alpha demo."
+  },
+  "111": {
+    "one_liner": "Build integrated pipeline: ingest → gateway (caching) → extract → validate → LangGraph → respond.",
+    "why_now": "Month 10 alpha wiring milestone.",
+    "mental_model": "Single command runs end-to-end demo.",
+    "beginner_extra": "Makefile target `make alpha-demo`.",
+    "intermediate_deep_dive": "README 5-minute demo script with prerequisites.",
+    "advanced_extra": "Feature flags for optional subsystems.",
+    "failure_modes": [
+      "Works only via manual step sequence"
+    ],
+    "interview_prompts": [
+      "Run alpha demo cold start."
+    ],
+    "capstone_action": "Merge integration PR.",
+    "done_when": "Demo command succeeds on clean clone."
+  },
+  "112": {
+    "one_liner": "Prove Month 10: alpha tag + 5-minute demo script + caching section.",
+    "why_now": "Major portfolio milestone.",
+    "mental_model": "Git tag alpha = release artifact for recruiters.",
+    "beginner_extra": "Tag and push; link in studio.",
+    "intermediate_deep_dive": "Demo script timed; includes trace id and eval summary.",
+    "advanced_extra": "Record demo video optional for portfolio.",
+    "failure_modes": [
+      "Tag without reproducible demo"
+    ],
+    "interview_prompts": [
+      "Deliver alpha demo in interview."
+    ],
+    "capstone_action": "Publish alpha + DEMO.md.",
+    "done_when": "Course 10 acceptance met."
+  },
+  "113": {
+    "one_liner": "Kubernetes Community channel—deploy concepts for Month 11 (optional video background).",
+    "why_now": "Orientation before K8s docs if new to kube.",
+    "mental_model": "Pods, services, deployments vocabulary.",
+    "beginner_extra": "One intro video if kube is new.",
+    "intermediate_deep_dive": "Glossary note in DEPLOY.md.",
+    "advanced_extra": "Skip if using compose-only prove path.",
+    "watch_for": [
+      "Deployments",
+      "Health checks"
+    ],
+    "failure_modes": [
+      "Learning K8s instead of shipping chart"
+    ],
+    "interview_prompts": [
+      "Why Helm for your capstone?"
+    ],
+    "capstone_action": "DEPLOY.md target environment stated.",
+    "done_when": "Deploy path chosen."
+  },
+  "114": {
+    "one_liner": "Kubernetes Deployments docs—replicas, rollouts, probes for agent/gateway services.",
+    "why_now": "Month 11 deploy month core reference.",
+    "mental_model": "Deployment = managed replica set with rollout strategy.",
+    "beginner_extra": "Read deployments + probes sections.",
+    "intermediate_deep_dive": "Liveness vs readiness for LLM worker (readiness waits for model warm-up).",
+    "advanced_extra": "Rollout analysis: maxUnavailable, surge during gateway upgrades.",
+    "read_sections": [
+      "Deployments",
+      "Probes",
+      "Resource management"
+    ],
+    "failure_modes": [
+      "No readiness probe on slow-start LiteLLM"
+    ],
+    "interview_prompts": [
+      "Design probes for LLM gateway pod."
+    ],
+    "capstone_action": "deployment.yaml sketch.",
+    "done_when": "Probes defined in manifest."
+  },
+  "115": {
+    "one_liner": "Helm quickstart—package Kubernetes manifests for reproducible installs.",
+    "why_now": "Capstone deliverable often Helm or compose—Helm for kube path.",
+    "mental_model": "Helm chart = parameterized Terraform for k8s apps.",
+    "beginner_extra": "helm install your chart on kind/minikube.",
+    "intermediate_deep_dive": "Values for secrets, image tags, resource limits.",
+    "advanced_extra": "Chart versioning aligned with git tags.",
+    "read_sections": [
+      "Quickstart",
+      "Charts",
+      "Values"
+    ],
+    "failure_modes": [
+      "Secrets in values.yaml committed"
+    ],
+    "interview_prompts": [
+      "What goes in values vs templates?"
+    ],
+    "capstone_action": "chart/ directory with README.",
+    "done_when": "helm template renders cleanly."
+  },
+  "116": {
+    "one_liner": "Argo CD getting started—GitOps deploy pattern for platform teams.",
+    "why_now": "Optional but strong interview story for deploy month.",
+    "mental_model": "Argo syncs cluster from git—desired state deployments.",
+    "beginner_extra": "Skim concepts; adopt only if using k8s prove path.",
+    "intermediate_deep_dive": "Document git → cluster flow in DEPLOY.md.",
+    "advanced_extra": "Promotion across dev/stage via branches.",
+    "read_sections": [
+      "Getting started",
+      "Sync policies"
+    ],
+    "failure_modes": [
+      "Argo scope creep without running app"
+    ],
+    "interview_prompts": [
+      "GitOps vs kubectl apply in CI?"
+    ],
+    "capstone_action": "Optional Argo app manifest.",
+    "done_when": "Deploy docs complete without Argo if compose-only."
+  },
+  "117": {
+    "one_liner": "LiteLLM proxy server docs—deploy gateway as standalone service in chart.",
+    "why_now": "Gateway is first-class deployable in Month 11.",
+    "mental_model": "LiteLLM deployment = shared platform service.",
+    "beginner_extra": "Follow proxy server guide for docker/k8s.",
+    "intermediate_deep_dive": "Horizontal scaling notes; sticky sessions if needed.",
+    "advanced_extra": "Budgets and rate limits per API key in multi-user sketch.",
+    "read_sections": [
+      "Proxy server",
+      "Deploy",
+      "Config"
+    ],
+    "failure_modes": [
+      "Embedding gateway in every worker pod"
+    ],
+    "interview_prompts": [
+      "Scale LiteLLM proxy—what breaks first?"
+    ],
+    "capstone_action": "Gateway service in chart/compose.",
+    "done_when": "Health endpoint responds in deploy env."
+  },
+  "118": {
+    "one_liner": "Build Helm chart or docker-compose for runnable deploy of capstone stack.",
+    "why_now": "Month 11 prove artifact.",
+    "mental_model": "Another engineer clones and brings stack up.",
+    "beginner_extra": "Choose compose OR helm; document prerequisites.",
+    "intermediate_deep_dive": "ADD_TOOL.md for registering a new MCP tool.",
+    "advanced_extra": "Resource requests based on load test notes.",
+    "failure_modes": [
+      "Undocumented env vars"
+    ],
+    "interview_prompts": [
+      "Onboard a teammate using your deploy docs."
+    ],
+    "capstone_action": "Merge deploy artifacts.",
+    "done_when": "DEPLOY.md steps verified."
+  },
+  "119": {
+    "one_liner": "Prove Month 11: kubectl get pods or compose screenshot + adding-a-tool doc.",
+    "why_now": "Deploy evidence for portfolio.",
+    "mental_model": "Screenshot + doc = prove.",
+    "beginner_extra": "Redact cluster names if needed.",
+    "intermediate_deep_dive": "Second person follows doc successfully.",
+    "advanced_extra": "SLO note for uptime of demo env.",
+    "failure_modes": [
+      "Works only on your machine"
+    ],
+    "interview_prompts": [
+      "How would you hand off deploy to SRE?"
+    ],
+    "capstone_action": "Prove link.",
+    "done_when": "Course 11 acceptance met."
+  },
+  "120": {
+    "one_liner": "OpenLineage project overview—standard for job/run/dataset lineage events.",
+    "why_now": "Month 12 lineage narrative for LLM outputs.",
+    "mental_model": "Lineage event = who ran what on which dataset producing which output.",
+    "beginner_extra": "Watch/read intro; understand Job/Run/Dataset facets.",
+    "intermediate_deep_dive": "Map facets to your chunk → model → answer path.",
+    "advanced_extra": "Integrate with existing data platform lineage if applicable.",
+    "watch_for": [
+      "Event model",
+      "Integrations"
+    ],
+    "failure_modes": [
+      "Lineage as afterthought JSON dump"
+    ],
+    "interview_prompts": [
+      "Emit one OpenLineage event—explain fields."
+    ],
+    "capstone_action": "LINEAGE.md mapping table.",
+    "done_when": "Mapping committed."
+  },
+  "121": {
+    "one_liner": "OpenLineage documentation—JSON spec for emitting lineage from your pipeline.",
+    "why_now": "Implement sample artifact for v1.0 prove.",
+    "mental_model": "lineage.json = test fixture for lineage emitter.",
+    "beginner_extra": "Follow Python or JSON examples in docs.",
+    "intermediate_deep_dive": "Emit event on successful alpha run (script hook).",
+    "advanced_extra": "Validate event against JSON schema in CI.",
+    "read_sections": [
+      "Spec",
+      "Python client",
+      "Facets"
+    ],
+    "failure_modes": [
+      "Invalid facet names"
+    ],
+    "interview_prompts": [
+      "Lineage for RAG vs batch ETL—similarities?"
+    ],
+    "capstone_action": "sample_lineage.json committed.",
+    "done_when": "CI validates JSON."
+  },
+  "122": {
+    "one_liner": "Applied LLMs production pitfalls—hardening checklist before v1.0 tag.",
+    "why_now": "Final handbook pass for reliability and security themes.",
+    "mental_model": "Pre-v1.0 review against handbook pitfall list.",
+    "beginner_extra": "Read pitfalls/failure sections.",
+    "intermediate_deep_dive": "Tick checklist; file issues for gaps.",
+    "advanced_extra": "Threat model summary in SECURITY.md.",
+    "read_sections": [
+      "Pitfalls",
+      "Security",
+      "Operations"
+    ],
+    "failure_modes": [
+      "Shipping v1.0 with known open pitfall"
+    ],
+    "interview_prompts": [
+      "Top pitfall you mitigated in v1.0?"
+    ],
+    "capstone_action": "HARDENING.md checklist.",
+    "done_when": "Critical items addressed or documented."
+  },
+  "123": {
+    "one_liner": "Build sample lineage JSON emitted from pipeline run.",
+    "why_now": "Month 12 build integration.",
+    "mental_model": "Emitter function called at end of alpha-demo.",
+    "beginner_extra": "One static sample acceptable for prove; dynamic emitter better.",
+    "intermediate_deep_dive": "Include input dataset URIs (chunk manifest) and output URI.",
+    "advanced_extra": "Link lineage run id to Langfuse trace id.",
+    "failure_modes": [
+      "Lineage disconnected from real run"
+    ],
+    "interview_prompts": [
+      "Walk through lineage JSON field by field."
+    ],
+    "capstone_action": "Emitter merged.",
+    "done_when": "Demo produces lineage file."
+  },
+  "124": {
+    "one_liner": "Prove Month 12: v1.0 tag + lineage artifact.",
+    "why_now": "Year-one capstone completion signal.",
+    "mental_model": "v1.0 = hardened release with lineage story.",
+    "beginner_extra": "Tag v1.0; link lineage sample in README.",
+    "intermediate_deep_dive": "Release notes summarize year capabilities.",
+    "advanced_extra": "Migration notes from alpha → v1.0.",
+    "failure_modes": [
+      "v1.0 without reproducible lineage"
+    ],
+    "interview_prompts": [
+      "Tell v1.0 story with lineage and evals."
+    ],
+    "capstone_action": "Publish v1.0 prove.",
+    "done_when": "Course 12 acceptance met."
+  },
+  "125": {
+    "one_liner": "Frontier vLLM—local high-throughput inference behind LiteLLM (pick-one track).",
+    "why_now": "Month 13 depth: measure before/after for one bottleneck.",
+    "mental_model": "vLLM = self-hosted inference service.",
+    "beginner_extra": "Read docs overview; spike only if GPU available or use small model.",
+    "intermediate_deep_dive": "LiteLLM routes subset of traffic to vLLM; compare latency/cost.",
+    "advanced_extra": "Ops burden ADR: when self-host beats API.",
+    "read_sections": [
+      "Getting started",
+      "Deployment"
+    ],
+    "failure_modes": [
+      "Self-host without eval comparison"
+    ],
+    "interview_prompts": [
+      "When would you operate vLLM in prod?"
+    ],
+    "capstone_action": "FRONTIER.md metric story.",
+    "done_when": "One frontier track chosen and measured."
+  },
+  "126": {
+    "one_liner": "Frontier DSPy—compiled prompts/programs with metric-driven optimization.",
+    "why_now": "Alternative frontier track for extraction quality plateaus.",
+    "mental_model": "DSPy = AutoML for prompt modules with eval metric.",
+    "beginner_extra": "Run one tutorial metric on golden subset.",
+    "intermediate_deep_dive": "Compare DSPy compiled program vs Instructor baseline.",
+    "advanced_extra": "Cost of compilation runs; CI strategy for compiled artifacts.",
+    "read_sections": [
+      "Intro",
+      "Teleprompters",
+      "Metrics"
+    ],
+    "failure_modes": [
+      "Optimizing on tiny set overfitting"
+    ],
+    "interview_prompts": [
+      "DSPy vs manual prompt engineering?"
+    ],
+    "capstone_action": "Benchmark note in FRONTIER.md.",
+    "done_when": "Metric comparison documented."
+  },
+  "127": {
+    "one_liner": "Frontier Anthropic prefix caching—TTFT before/after at provider level.",
+    "why_now": "Frontier track if caching not fully explored in Month 10.",
+    "mental_model": "Deep dive on provider cache metrics.",
+    "beginner_extra": "Extend Month 10 table with provider-specific detail.",
+    "intermediate_deep_dive": "10+ requests with cache breakpoints tuned.",
+    "advanced_extra": "Document when provider cache invalidates.",
+    "read_sections": [
+      "Prompt caching"
+    ],
+    "failure_modes": [
+      "Duplicate work from Month 10 without new insight"
+    ],
+    "interview_prompts": [
+      "Quantify TTFT improvement again with nuance."
+    ],
+    "capstone_action": "Update CACHING.md with frontier notes.",
+    "done_when": "New insight or explicit N/A."
+  },
+  "128": {
+    "one_liner": "Frontier GPTCache—semantic cache layer optional at gateway.",
+    "why_now": "Explore response caching for repeated similar queries.",
+    "mental_model": "Semantic cache = approximate dedup of LLM responses.",
+    "beginner_extra": "Read architecture; spike if high duplicate query rate in demo.",
+    "intermediate_deep_dive": "Measure hit rate on synthetic repeated questions.",
+    "advanced_extra": "Stale answer risk—TTL and invalidation policy.",
+    "read_sections": [
+      "README",
+      "Integration"
+    ],
+    "failure_modes": [
+      "Caching wrong answers semantically similar"
+    ],
+    "interview_prompts": [
+      "Semantic cache vs prompt cache?"
+    ],
+    "capstone_action": "FRONTIER.md section on semantic cache.",
+    "done_when": "Adopt/defer with metric."
+  },
+  "129": {
+    "one_liner": "Prove Month 13: README frontier section with bottleneck + metric.",
+    "why_now": "Shows deliberate depth beyond v1.0.",
+    "mental_model": "One measured optimization story.",
+    "beginner_extra": "Link FRONTIER.md in prove.",
+    "intermediate_deep_dive": "Include before/after table and decision.",
+    "advanced_extra": "Relate bottleneck to trace/evidence.",
+    "failure_modes": [
+      "Frontier without numbers"
+    ],
+    "interview_prompts": [
+      "Explain your frontier experiment crisply."
+    ],
+    "capstone_action": "Publish prove.",
+    "done_when": "Course 13 acceptance met."
+  },
+  "130": {
+    "one_liner": "Syllabus Unsloth—efficient fine-tuning tooling (portfolio month optional read).",
+    "why_now": "Month 14 awareness of fine-tune path when evals justify it.",
+    "mental_model": "Unsloth = faster LoRA training experiments.",
+    "beginner_extra": "Skim README; no training required for prove.",
+    "intermediate_deep_dive": "Note when you would choose fine-tune vs RAG vs prompt.",
+    "advanced_extra": "Data governance for fine-tune datasets.",
+    "read_sections": [
+      "README",
+      "Quickstart"
+    ],
+    "failure_modes": [
+      "Fine-tuning without baseline eval"
+    ],
+    "interview_prompts": [
+      "When is fine-tune worth it?"
+    ],
+    "capstone_action": "Portfolio post outline mentioning train vs prompt decision.",
+    "done_when": "Outline references honest scope."
+  },
+  "131": {
+    "one_liner": "NeMo Guardrails—safety/policy rails around conversations and tools.",
+    "why_now": "Complement OPA with model-output guardrails narrative.",
+    "mental_model": "Guardrails = configurable safety flows.",
+    "beginner_extra": "Read concepts; compare to your OPA layer.",
+    "intermediate_deep_dive": "Document overlap: OPA for tools, guardrails for text.",
+    "advanced_extra": "When to use both vs policy-only.",
+    "read_sections": [
+      "Introduction",
+      "Rails"
+    ],
+    "failure_modes": [
+      "Duplicate policy in three places uncoordinated"
+    ],
+    "interview_prompts": [
+      "Layered safety story for your platform."
+    ],
+    "capstone_action": "SAFETY.md layered diagram.",
+    "done_when": "Diagram committed."
+  },
+  "132": {
+    "one_liner": "E2B docs—sandboxed code execution for tool-using agents.",
+    "why_now": "Portfolio awareness of execution environments.",
+    "mental_model": "E2B = isolated VM for untrusted code tools.",
+    "beginner_extra": "Skim docs; optional spike only.",
+    "intermediate_deep_dive": "If agents run code, document why not bare subprocess.",
+    "advanced_extra": "Cost and security comparison in SAFETY.md.",
+    "read_sections": [
+      "Sandbox",
+      "SDK"
+    ],
+    "failure_modes": [
+      "Arbitrary code execution on host"
+    ],
+    "interview_prompts": [
+      "Secure code execution design?"
+    ],
+    "capstone_action": "Note in SAFETY or DEFERRED.",
+    "done_when": "Position documented."
+  },
+  "133": {
+    "one_liner": "Optional Karpathy Zero to Hero playlist—deep ML foundations for portfolio curiosity.",
+    "why_now": "Optional; not required for AI engineer track prove.",
+    "mental_model": "Training intuition for conversations with ML engineers.",
+    "beginner_extra": "Only if interviewing at training-heavy teams.",
+    "intermediate_deep_dive": "One playlist episode tied to blog post if writing.",
+    "advanced_extra": "Do not delay portfolio posts for this playlist.",
+    "watch_for": [
+      "Backprop intuition",
+      "Architectures"
+    ],
+    "failure_modes": [
+      "Zero to Hero instead of shipping posts"
+    ],
+    "interview_prompts": [
+      "How much training math do you need for your role target?"
+    ],
+    "capstone_action": "Optional learning log.",
+    "done_when": "Portfolio prove independent."
+  },
+  "134": {
+    "one_liner": "Prove Month 14: public posts + resume refresh per Master Plan §14.",
+    "why_now": "Career artifact month—make work visible.",
+    "mental_model": "Post = tutorial with numbers from your repo.",
+    "beginner_extra": "One technical post with trace/eval screenshot.",
+    "intermediate_deep_dive": "Resume bullets with metrics (valid %, latency, cost).",
+    "advanced_extra": "Cross-link GitHub releases in post.",
+    "failure_modes": [
+      "Vague resume bullets without numbers"
+    ],
+    "interview_prompts": [
+      "Walk through your best post."
+    ],
+    "capstone_action": "Links in prove (public).",
+    "done_when": "Course 14 acceptance met."
+  },
+  "135": {
+    "one_liner": "AI Engineer conference talks—curated industry stories for interview narratives.",
+    "why_now": "Month 15—learn how seniors present shipping stories.",
+    "mental_model": "Talks = templates for your capstone story arc.",
+    "beginner_extra": "Watch 2 talks aligned with your repo themes (evals, agents, RAG).",
+    "intermediate_deep_dive": "Outline your talk: problem, architecture, metrics, failures.",
+    "advanced_extra": "Practice 10-minute version with trace demo.",
+    "watch_for": [
+      "Architecture slides",
+      "Lessons learned",
+      "Metrics"
+    ],
+    "failure_modes": [
+      "Watching talks without practicing your story"
+    ],
+    "interview_prompts": [
+      "Deliver your capstone as a conference talk outline."
+    ],
+    "capstone_action": "INTERVIEW_STORY.md outline.",
+    "done_when": "Outline has metrics and failure anecdote."
+  },
+  "136": {
+    "one_liner": "Applied LLMs (Month 15)—final read for staff-level vocabulary refresh.",
+    "why_now": "Interview month synthesis across handbook.",
+    "mental_model": "Skim index; deep-read weak areas flagged in mocks.",
+    "beginner_extra": "Pick 3 sections you could not explain well in mock.",
+    "intermediate_deep_dive": "Update INTERVIEW_STORY.md with handbook terms used correctly.",
+    "advanced_extra": "Prepare ‘what I would do differently v2’ section.",
+    "read_sections": [
+      "Index-driven weak spots"
+    ],
+    "failure_modes": [
+      "Passive re-read without mock feedback"
+    ],
+    "interview_prompts": [
+      "Staff-level tradeoff question practice."
+    ],
+    "capstone_action": "Story doc updated.",
+    "done_when": "Mock gaps addressed in notes."
+  },
+  "137": {
+    "one_liner": "Anthropic agents essay (Month 15)—refresh workflow vs agent framing for interviews.",
+    "why_now": "Common interview topic; tie to your LangGraph design.",
+    "mental_model": "Essay bullets = answer scaffold.",
+    "beginner_extra": "Re-read workflows vs agents section.",
+    "intermediate_deep_dive": "Map essay to your repo: where workflow ends and agent begins.",
+    "advanced_extra": "Counterfactual: what if you over-agentified—how evals caught it.",
+    "read_sections": [
+      "Workflows vs agents",
+      "Evaluations"
+    ],
+    "failure_modes": [
+      "Generic essay recap without repo tie-in"
+    ],
+    "interview_prompts": [
+      "Answer ‘how do you build agents?’ with your project."
+    ],
+    "capstone_action": "Practice answer recorded or written.",
+    "done_when": "Answer references your prove artifacts."
+  },
+  "138": {
+    "one_liner": "Master Plan §14–§15—resume, narrative, and positioning for AI platform roles.",
+    "why_now": "Aligns story with what hiring managers scan for.",
+    "mental_model": "Resume = index to GitHub evidence.",
+    "beginner_extra": "Read positioning sections in master plan doc.",
+    "intermediate_deep_dive": "Each bullet points to tag (v1.0, alpha) and metric.",
+    "advanced_extra": "Tailor variants for data platform vs ML platform roles.",
+    "read_sections": [
+      "Resume",
+      "Narrative",
+      "Positioning"
+    ],
+    "failure_modes": [
+      "Buzzwords without repo links"
+    ],
+    "interview_prompts": [
+      "Why AI platform vs data engineer title?"
+    ],
+    "capstone_action": "Resume diff committed privately or checklist.",
+    "done_when": "Positioning statement written."
+  },
+  "139": {
+    "one_liner": "Do: 3–5 quality applications per week with tailored story.",
+    "why_now": "Execution habit for job search month.",
+    "mental_model": "Applications = targeted loops with custom paragraph.",
+    "beginner_extra": "Track in spreadsheet: company, role, story angle, date.",
+    "intermediate_deep_dive": "Each application cites one repo metric and one failure learned.",
+    "advanced_extra": "A/B test story openings; note response rates privately.",
+    "failure_modes": [
+      "Spray and pray resumes"
+    ],
+    "interview_prompts": [
+      "How do you tailor without lying?"
+    ],
+    "capstone_action": "Weekly log (private OK).",
+    "done_when": "Habit sustained per syllabus."
+  },
+  "140": {
+    "one_liner": "Do: mock system design—orchestration control plane for LLM platform.",
+    "why_now": "Practice whiteboard using your capstone as reference implementation.",
+    "mental_model": "Mock = design gateway, evals, policy, deploy—your repo is cheat sheet.",
+    "beginner_extra": "One mock with peer or rubric self-score.",
+    "intermediate_deep_dive": "Timed 45-minute session; capture gaps in INTERVIEW_STORY.md.",
+    "advanced_extra": "Second mock focusing on failure modes and scaling.",
+    "failure_modes": [
+      "Mocks on trivia not systems"
+    ],
+    "interview_prompts": [
+      "Whiteboard your architecture without slides."
+    ],
+    "capstone_action": "Mock notes file updated.",
+    "done_when": "At least one mock completed."
+  },
+  "141": {
+    "one_liner": "Prove Month 15: offer or structured interview feedback notes (private OK).",
+    "why_now": "Closes loop on job search month.",
+    "mental_model": "Feedback notes = retro for story improvements.",
+    "beginner_extra": "Save debrief bullets after each onsite.",
+    "intermediate_deep_dive": "Update INTERVIEW_STORY.md from feedback patterns.",
+    "advanced_extra": "Share anonymized lessons in portfolio if appropriate.",
+    "failure_modes": [
+      "No written debrief after rejections"
+    ],
+    "interview_prompts": [
+      "What question stumped you—how did you fix the gap?"
+    ],
+    "capstone_action": "Prove notes in studio (private).",
+    "done_when": "Course 15 acceptance met."
+  }
+}

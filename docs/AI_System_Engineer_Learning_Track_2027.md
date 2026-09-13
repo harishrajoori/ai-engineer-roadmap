@@ -10,7 +10,7 @@
 | | |
 | --- | --- |
 | **Strategy, capstone, deep topics** | [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) |
-| **Audience** | Engineers learning AI systems & platform engineering (self-paced, open curriculum) |
+| **Audience** | Data engineers **new to AI** (comfortable with Python, git, pipelines)—step-by-step to AI platform depth; self-paced |
 | **Outcome** | Portfolio-ready AI platform skills (gateway, agents, evals, deploy) |
 | **Pace** | ~15 months at **10–15 h/week** (adjust to your schedule) |
 | **Links validated** | 13 Sep 2026 — `npm run validate` (docs + lesson resources) |

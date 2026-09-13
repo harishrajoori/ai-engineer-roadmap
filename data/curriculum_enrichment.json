@@ -394,5 +394,450 @@
       "readme_example": "Private notes OK in backup JSON—not required in public repo.",
       "commands": []
     }
+  },
+  "program_pace": {
+    "assumes_min_years": 5,
+    "primary_audience": "Data, analytics, and platform engineers who already ship pipelines, tests, and infra",
+    "default_theory_level": "intermediate",
+    "ramp_summary": "Contracts & golden sets → gateway & unit economics → orchestration & tools → retrieval → eval CI & policy → integrated platform → staff depth",
+    "time_box_note": "Skip optional videos unless you have a specific gap; every month ends in a prove artifact you can show in a design review."
+  },
+  "real_world_by_course": {
+    "0": {
+      "title": "Foundation week — first production habit",
+      "summary": "Turn messy log-like text into typed records with retries and a golden set—the same contract mindset as bronze tables and GE tests.",
+      "where_it_applies": [
+        {
+          "area": "Semi-structured landing",
+          "example": "Application logs, webhook payloads, or CSV-adjacent text that is not yet in your warehouse schema.",
+          "you_build": "A small Python package: `extract(raw) -> Model`, pytest on fixtures, README metric.",
+          "skills_from_course": ["Pydantic", "Instructor retries", "golden-set %"]
+        },
+        {
+          "area": "Pipeline pre-check",
+          "example": "Before promoting a new parser in Spark/Glue, shadow-score 50 rows with the same contract.",
+          "you_build": "`data/golden/` + `scripts/score.py` run locally and in CI.",
+          "skills_from_course": ["Invariants", "threat model for untrusted fields"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Shadow",
+          "action": "Run extraction on synthetic/public samples only—no prod credentials.",
+          "exit": "Golden valid-json % documented in README."
+        },
+        {
+          "step": 2,
+          "name": "Harden",
+          "action": "Add LiteLLM fallback and max retries on validation errors.",
+          "exit": "Forced provider failure switches model once; logged."
+        },
+        {
+          "step": 3,
+          "name": "Prove",
+          "action": "Public repo + pytest + prove checklist in course overview.",
+          "exit": "Reviewer runs commands in README in under 10 minutes."
+        }
+      ],
+      "week_at_work": "Mirror a real parser you own (e.g. JSON lines from an API) with synthetic data; do not send employer data to external LLMs without approval.",
+      "maps_to_prove": "Boot sprint prove — public repo + golden-set metric"
+    },
+    "1": {
+      "title": "Month 1 — LLM foundations where data platforms live",
+      "summary": "Course 1 is not “learn AI from zero.” It gives you interview-grade mental models plus a gateway layer so any LLM step in your stack has cost, latency, and model attribution—like query tags on Snowflake or per-job DPU metrics on Glue.",
+      "where_it_applies": [
+        {
+          "area": "Unstructured → typed bronze",
+          "example": "Vendor emails, support tickets, PDF tables, or API error blobs that today land as raw strings in S3 or VARIANT columns.",
+          "you_build": "Versioned `extract()` with low temperature, schema validation, and a golden set sampled from production-shaped fixtures (synthetic only in OSS).",
+          "skills_from_course": ["Structured output", "hallucination guards", "sampling for extraction"]
+        },
+        {
+          "area": "Operational analytics on AI steps",
+          "example": "You add an LLM summarization or classification step next to dbt, Glue, or an ECS job.",
+          "you_build": "LiteLLM router/proxy; per-request log: model, prompt_tokens, completion_tokens, latency_ms, USD estimate.",
+          "skills_from_course": ["Gateway", "token/cost accounting", "context window budgeting"]
+        },
+        {
+          "area": "Incident & failure triage assist",
+          "example": "MWAA task logs, Glue stderr, or stack traces that engineers read manually today.",
+          "you_build": "CLI that outputs a **structured** triage object (severity, suspected layer, suggested checks)—human reviews before action.",
+          "skills_from_course": ["Structured output", "low temperature", "done-when = human sign-off"]
+        },
+        {
+          "area": "Contract drafting for new events",
+          "example": "New Kafka topic or landing JSON with evolving keys—before you lock Avro/Protobuf or Iceberg schema.",
+          "you_build": "Propose a Pydantic model from N sample events; DE reviews and commits schema—not auto-deploy.",
+          "skills_from_course": ["Pydantic validators", "separate schema validity vs semantic correctness"]
+        },
+        {
+          "area": "DQ / anomaly explanation layer",
+          "example": "Great Expectations or custom DQ failure with context rows—stakeholders want a paragraph, not a stack trace.",
+          "you_build": "Narration step that must cite input fields; validate shape; never auto-delete data.",
+          "skills_from_course": ["Hallucination modes", "invariants", "golden set for tone/facts"]
+        },
+        {
+          "area": "Semantic / metrics documentation assist",
+          "example": "Cube YAML, dbt model descriptions, or Glue column comments that drift from reality.",
+          "you_build": "Batch job: table metadata in → suggested dimension/measure descriptions out → human PR to semantic repo.",
+          "skills_from_course": ["Batch extraction", "Applied LLMs patterns", "eval later in Course 7"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Mental model (time-boxed)",
+          "action": "Karpathy intro + one Applied LLMs section; write half a page: tokens, context limit, one failure mode.",
+          "exit": "You can explain LLM limits to your team without hand-waving."
+        },
+        {
+          "step": 2,
+          "name": "Shadow CLI on fixtures",
+          "action": "Extend boot repo: `your-cli extract --sample data/golden/001.json` with logging fields above.",
+          "exit": "Ten golden rows pass; failures are explicit validation errors."
+        },
+        {
+          "step": 3,
+          "name": "Gateway in the path",
+          "action": "All model calls go through LiteLLM; document primary + fallback models in README.",
+          "exit": "Table row per request in README or exported JSONL sample."
+        },
+        {
+          "step": 4,
+          "name": "Release prove",
+          "action": "Tag `v0.2`; paste release URL in studio Lab & Prove.",
+          "exit": "Course 1 prove acceptance table satisfied."
+        }
+      ],
+      "week_at_work": "Pick **one** scenario above that matches work you understand (reconciliation, DQ, or landing parsing). Use **only** synthetic or public data in the OSS repo; pilot internally only with written approval and a gateway.",
+      "maps_to_prove": "v0.2 release prove — LiteLLM router + README cost/latency/token table",
+      "anti_patterns": [
+        "Sending production PII to a public API without legal/security sign-off",
+        "Replacing GE/dbt tests with an LLM “it looks fine”",
+        "Watching entire 16h playlists when the syllabus names one module",
+        "Skipping the metrics table—platform engineers are judged on unit economics"
+      ]
+    },
+    "2": {
+      "title": "Month 2 — Orchestration like Airflow with state",
+      "summary": "Wrap extraction in a graph: retries, checkpoints, and human approval when validation fails—same reliability patterns as saga workflows or MWAA sensors.",
+      "where_it_applies": [
+        {
+          "area": "Multi-step reconciliation",
+          "example": "Extract → validate → match → escalate when confidence low.",
+          "you_build": "LangGraph with `interrupt()` on fail path and documented resume steps.",
+          "skills_from_course": ["HITL", "checkpointer", "state graph"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Linear graph",
+          "action": "Three nodes: ingest, extract, persist.",
+          "exit": "Single command runs end-to-end on golden sample."
+        },
+        {
+          "step": 2,
+          "name": "HITL branch",
+          "action": "On validation error, interrupt and require human JSON fix.",
+          "exit": "README demo of fail → fix → resume."
+        }
+      ],
+      "week_at_work": "Model one real pipeline stage that already has a manual approval (e.g. finance sign-off) as a graph node.",
+      "maps_to_prove": "LangGraph HITL prove"
+    },
+    "3": {
+      "title": "Month 3 — Tools as internal APIs",
+      "summary": "Expose warehouse-adjacent operations as MCP tools with audit logs—catalog + CloudTrail mindset for agents.",
+      "where_it_applies": [
+        {
+          "area": "Governed tool surface",
+          "example": "Read-only Athena query, partition repair, or metadata lookup—never arbitrary SQL from the model.",
+          "you_build": "MCP server + allow-listed tools + append-only audit log.",
+          "skills_from_course": ["MCP", "tool schema", "audit log"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "One safe tool",
+          "action": "Implement `describe_table` or `fetch_golden_case` with schema.",
+          "exit": "Agent call produces inspectable log line."
+        }
+      ],
+      "week_at_work": "List three internal APIs your team would never give an LLM directly; implement one read-only surrogate.",
+      "maps_to_prove": "MCP server prove"
+    },
+    "4": {
+      "title": "Month 4 — Retrieval for grounding",
+      "summary": "Hybrid search over runbooks, schema docs, and past incidents—measured with recall@k, not vibes.",
+      "where_it_applies": [
+        {
+          "area": "Internal knowledge RAG",
+          "example": "Runbooks + dbt docs + pipeline READMEs indexed for triage assist.",
+          "you_build": "BM25 + dense hybrid with benchmark table on labeled questions.",
+          "skills_from_course": ["Hybrid retrieval", "labeled Q/A eval"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Corpus",
+          "action": "Curate 20–50 markdown docs (public/synthetic).",
+          "exit": "chunks.jsonl contract documented."
+        },
+        {
+          "step": 2,
+          "name": "Benchmark",
+          "action": "Labeled Q/A; compare dense vs hybrid.",
+          "exit": "README table with recall@5."
+        }
+      ],
+      "week_at_work": "Use your team’s public architecture docs or open-source analogs—no internal wiki scrape without policy.",
+      "maps_to_prove": "Hybrid retrieval prove"
+    },
+    "5": {
+      "title": "Month 5 — Document parsing at scale",
+      "summary": "Layout-aware parsing and chunk contracts—the same care you give Avro/Parquet schema evolution.",
+      "where_it_applies": [
+        {
+          "area": "PDF / HTML ingestion",
+          "example": "Invoices or compliance PDFs before warehouse load.",
+          "you_build": "Parser → chunks.jsonl with stable ids and metadata.",
+          "skills_from_course": ["Chunk contract", "layout parsing"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Schema",
+          "action": "Define chunk id, text, source, page, checksum.",
+          "exit": "One validated JSONL in repo."
+        }
+      ],
+      "week_at_work": "Align chunk boundaries with how you would partition an Iceberg table (date, source system).",
+      "maps_to_prove": "Chunks contract prove"
+    },
+    "6": {
+      "title": "Month 6 — Graph slice for relationships",
+      "summary": "One graph validator for reconciliation relationships—not a full GraphRAG product.",
+      "where_it_applies": [
+        {
+          "area": "Entity relationships",
+          "example": "Account ↔ transaction ↔ adjustment edges for mismatch detection.",
+          "you_build": "Single Cypher validator test in CI.",
+          "skills_from_course": ["Graph validator", "when graphs help"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Validator",
+          "action": "One passing + one failing graph fixture.",
+          "exit": "pytest green on graph rules."
+        }
+      ],
+      "week_at_work": "Map one real dimensional model to “what edge would catch a bad join?”",
+      "maps_to_prove": "Graph validator prove"
+    },
+    "7": {
+      "title": "Month 7 — Eval harness",
+      "summary": "Golden set ≥30 cases and tiered metrics—pytest for probabilistic components.",
+      "where_it_applies": [
+        {
+          "area": "Regression on extraction quality",
+          "example": "Every prompt or model change runs `python -m evals.run` in CI.",
+          "you_build": "Versioned golden.jsonl + tier 1/2 metrics in README.",
+          "skills_from_course": ["Eval harness", "golden set tiers"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Label",
+          "action": "Add cases from Month 1 failures you already saw.",
+          "exit": "≥30 labeled rows in git."
+        }
+      ],
+      "week_at_work": "Treat eval cases like dbt seeds—reviewed in PR, owned by team.",
+      "maps_to_prove": "Eval harness prove"
+    },
+    "8": {
+      "title": "Month 8 — CI gate",
+      "summary": "Block merge on eval regression—the same bar as schema tests on PRs.",
+      "where_it_applies": [
+        {
+          "area": "Pipeline for ML-adjacent code",
+          "example": "GitHub Action fails when valid-json % drops or cost/latency SLO regresses.",
+          "you_build": "Baseline file + actionable CI message.",
+          "skills_from_course": ["CI eval gate", "baseline metrics"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Red build",
+          "action": "Intentionally break prompt; show CI failure.",
+          "exit": "Screenshot or link in README."
+        }
+      ],
+      "week_at_work": "Mirror how your data platform blocks destructive SQL—same culture for prompts.",
+      "maps_to_prove": "CI eval gate prove"
+    },
+    "9": {
+      "title": "Month 9 — Policy and traces",
+      "summary": "OPA on tools + Langfuse/OTel run_id—who called what, and was it allowed?",
+      "where_it_applies": [
+        {
+          "area": "Governed agent in prod path",
+          "example": "Deny write tools; require trace on every gateway call.",
+          "you_build": "Policy unit test + trace screenshot with run_id.",
+          "skills_from_course": ["OPA", "tracing", "redaction"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Deny rule",
+          "action": "Test that destructive tool is blocked.",
+          "exit": "opa test or equivalent green."
+        }
+      ],
+      "week_at_work": "Align tool policy with existing IAM/RBAC—you are not replacing them, wrapping them.",
+      "maps_to_prove": "Policy + trace prove"
+    },
+    "10": {
+      "title": "Month 10 — Integration alpha",
+      "summary": "Wire extraction, gateway, graph, retrieval, eval, and policy into one runnable alpha.",
+      "where_it_applies": [
+        {
+          "area": "Platform demo",
+          "example": "Single command runs reconciliation story with trace and eval summary.",
+          "you_build": "Tagged `alpha` + caching evidence table.",
+          "skills_from_course": ["Eight layers integrated", "OpenAPI surface"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Checklist",
+          "action": "Complete capstone rows in course syllabus order.",
+          "exit": "Tag `alpha` pushed."
+        }
+      ],
+      "week_at_work": "Record a 5-minute demo as if presenting to your platform team.",
+      "maps_to_prove": "Capstone alpha prove"
+    },
+    "11": {
+      "title": "Month 11 — Deploy and UX for engineers",
+      "summary": "Health checks, sidecar gateway, docs for adding a tool—how other DEs adopt your platform.",
+      "where_it_applies": [
+        {
+          "area": "Internal platform",
+          "example": "Deploy on ECS/Fargate or k8s with LiteLLM sidecar pattern you already know from infra work.",
+          "you_build": "Deploy screenshot + `docs/adding-a-tool.md`.",
+          "skills_from_course": ["Twelve-factor agents", "health checks"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Runbook",
+          "action": "Document how a DE adds one tool and one eval case.",
+          "exit": "Another engineer could follow without you."
+        }
+      ],
+      "week_at_work": "Reuse your team’s standard deploy checklist (secrets, tags, rollback).",
+      "maps_to_prove": "Deploy prove"
+    },
+    "12": {
+      "title": "Month 12 — Lineage and hardening",
+      "summary": "Emit lineage on model/chunk ids; threat-model retrieval injection.",
+      "where_it_applies": [
+        {
+          "area": "Auditability",
+          "example": "OpenLineage event when extraction or retrieval influences a warehouse write.",
+          "you_build": "Sample lineage JSON + `v1.0` tag.",
+          "skills_from_course": ["Lineage emit", "threat model"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Emit",
+          "action": "One lineage event in demo path.",
+          "exit": "Documented in README."
+        }
+      ],
+      "week_at_work": "Connect to how you already track table lineage—add AI artifact ids as facets.",
+      "maps_to_prove": "Lineage v1.0 prove"
+    },
+    "13": {
+      "title": "Month 13 — Frontier slice",
+      "summary": "Pick one optimization (cache, vLLM, DSPy) with before/after metric—staff differentiation.",
+      "where_it_applies": [
+        {
+          "area": "Cost or latency win",
+          "example": "Prefix caching or routing change with measured USD or P99 delta.",
+          "you_build": "README “why we added X” with numbers.",
+          "skills_from_course": ["Frontier track", "metric proof"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Hypothesis",
+          "action": "One page ADR + benchmark.",
+          "exit": "Prove row satisfied."
+        }
+      ],
+      "week_at_work": "Choose a bottleneck you already profiled in data jobs—apply same discipline.",
+      "maps_to_prove": "Frontier prove"
+    },
+    "14": {
+      "title": "Month 14 — Portfolio",
+      "summary": "Translate capstone into posts and resume bullets—platform outcomes, not course names.",
+      "where_it_applies": [
+        {
+          "area": "Public narrative",
+          "example": "Post on eval CI or gateway pattern with link to repo.",
+          "you_build": "1–2 posts + resume bullet with metrics.",
+          "skills_from_course": ["Portfolio", "positioning"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Ship story",
+          "action": "Draft STAR bullet from prove artifacts.",
+          "exit": "Linked in studio prove."
+        }
+      ],
+      "week_at_work": "Use the same metrics table from Course 1—interviewers anchor on numbers.",
+      "maps_to_prove": "Portfolio prove"
+    },
+    "15": {
+      "title": "Month 15 — Interviews",
+      "summary": "System design drills using your capstone—harness, evals, policy, not framework trivia.",
+      "where_it_applies": [
+        {
+          "area": "Staff loop",
+          "example": "Whiteboard gateway + eval CI + HITL on reconciliation failure.",
+          "you_build": "Story bank + live demo script from repo.",
+          "skills_from_course": ["System design", "demo script"]
+        }
+      ],
+      "practice_ladder": [
+        {
+          "step": 1,
+          "name": "Four stories",
+          "action": "Reliability, cost, safety, delivery—each tied to repo evidence.",
+          "exit": "Prove notes or offer feedback captured."
+        }
+      ],
+      "week_at_work": "Practice explaining Course 1 gateway table as if it were Snowflake query history.",
+      "maps_to_prove": "Interview prove"
+    }
   }
 }

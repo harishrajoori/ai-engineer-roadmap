@@ -54,8 +54,19 @@ if (!COURSES_REF_DATA || typeof COURSES_REF_DATA !== "object") {
       if (!Array.isArray(ref.prove_pack?.acceptance) || ref.prove_pack.acceptance.length < 1) {
         checks.push(`courses_ref[${c}] missing prove_pack.acceptance`);
       }
+      const rw = ref.real_world;
+      if (!rw?.summary || !Array.isArray(rw.practice_ladder) || rw.practice_ladder.length < 1) {
+        checks.push(`courses_ref[${c}] missing real_world practice ladder`);
+      }
+      if (!ref.walkthrough?.plain_title || ref.entry_lesson_order == null) {
+        checks.push(`courses_ref[${c}] missing walkthrough or entry_lesson_order`);
+      }
     }
   }
+}
+
+if (!data.program_walkthrough?.what_is_llm) {
+  checks.push("program_walkthrough missing — run npm run curriculum");
 }
 
 if (!data.program_primer_markdown || data.program_primer_markdown.length < 200) {
@@ -69,7 +80,7 @@ if (!sample.theory_summary?.includes("Study guide (five layers)")) {
   checks.push("theory_summary missing five-layer study guide — run npm run curriculum");
 }
 const levels = sample.theory_levels;
-if (!levels?.beginner?.includes("Beginner path") || !levels?.advanced?.includes("Advanced path")) {
+if (!levels?.beginner?.includes("**Beginner**") || !levels?.advanced?.includes("**Advanced**")) {
   checks.push("theory_levels missing beginner/advanced — run npm run curriculum");
 }
 

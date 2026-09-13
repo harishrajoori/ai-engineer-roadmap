@@ -42,6 +42,11 @@ def prove_pack_for_course(course: int | str) -> dict:
     return dict(packs.get(str(course)) or {})
 
 
+def real_world_for_course(course: int | str) -> dict:
+    blocks = load_curriculum_enrichment().get("real_world_by_course") or {}
+    return dict(blocks.get(str(course)) or {})
+
+
 def load_program_primer_markdown() -> str:
     if PRIMER_PATH.exists():
         return PRIMER_PATH.read_text(encoding="utf-8").strip()

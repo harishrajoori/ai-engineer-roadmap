@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import { BookOpen, ExternalLink, ListChecks } from "lucide-react";
 import { buildCourseTopicOutline, formatTopicTitle } from "../utils/syllabusDisplay";
 import CourseEnrichmentPanels from "./CourseEnrichmentPanels";
+import CourseWalkthroughPanel from "./CourseWalkthroughPanel";
 
 export default function CourseStage({
   course,
@@ -21,13 +22,20 @@ export default function CourseStage({
   const ref = courseRef || {};
   const outcomes = ref.outcomes || [];
   const summaryMd = ref.summary_markdown || "";
+  const entryOrder = ref.entry_lesson_order;
+
+  const handleStartHere = () => {
+    if (entryOrder != null) {
+      onSelectLesson(entryOrder);
+    }
+  };
 
   return (
     <div className="learning-stage course-overview-stage">
       <div className="learning-stage-breadcrumb">
         <span className="learning-stage-course">Course {course.course}</span>
         <span className="learning-stage-sep">/</span>
-        <span className="learning-stage-topic">Overview</span>
+        <span className="learning-stage-topic">Overview &amp; walkthrough</span>
       </div>
 
       <div className="learning-stage-hero">
@@ -37,50 +45,29 @@ export default function CourseStage({
             {ref.duration && <span className="learning-stage-effort">{ref.duration}</span>}
             {course.month && <span className="learning-stage-month">{course.month}</span>}
           </div>
-          <h1 className="learning-stage-title">{ref.name || course.title}</h1>
+          <h1 className="learning-stage-title">{ref.walkthrough?.plain_title || ref.name || course.title}</h1>
           {ref.assignment && (
             <p className="course-overview-assignment">
               <ListChecks size={16} />
               <span>
-                <strong>Prove gate:</strong> {ref.assignment}
+                <strong>End-of-course goal:</strong> {ref.assignment}
               </span>
             </p>
           )}
         </div>
       </div>
 
-      <CourseEnrichmentPanels
-        courseNum={course.course}
-        programPrimerMarkdown={programPrimerMarkdown}
-        glossary={glossary}
-        courseRef={ref}
+      <CourseWalkthroughPanel
+        walkthrough={ref.walkthrough}
+        entryLessonOrder={entryOrder}
+        onStartHere={handleStartHere}
       />
 
-      {outcomes.length > 0 && (
-        <section className="course-overview-block">
-          <h2>
-            <BookOpen size={18} />
-            What you will learn
-          </h2>
-          <ul className="course-overview-list">
-            {outcomes.map((o, i) => (
-              <li key={i}>{o}</li>
-            ))}
-          </ul>
-        </section>
-      )}
-
-      {summaryMd && (
-        <section className="course-overview-block markdown-theory prose-learning">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{summaryMd}</ReactMarkdown>
-        </section>
-      )}
-
-      <section className="course-overview-block">
-        <h2>Topics in this course</h2>
+      <section className="course-overview-block course-overview-topics-first">
+        <h2>Topics — do these in order</h2>
         <p className="course-overview-hint">
-          Duplicate checklist lines that share the same URL are merged here. Select a topic for the full study guide,
-          primary source, and alternate links.
+          The topic marked START HERE is your entry point. On each topic: Theory (Beginner) → Lecture → Lab when
+          needed.
         </p>
         {outline.map((group) => (
           <div key={group.label} className="course-overview-section">
@@ -89,6 +76,7 @@ export default function CourseStage({
               {group.items.map((lesson) => (
                 <li key={lesson.order}>
                   <button type="button" className="course-overview-topic-btn" onClick={() => onSelectLesson(lesson.order)}>
+                    {lesson.is_start_here && <span className="topic-start-badge">START HERE</span>}
                     <span className="course-overview-topic-title">{formatTopicTitle(lesson)}</span>
                     {lesson.url?.startsWith("http") && (
                       <ExternalLink size={12} className="course-overview-topic-ext" aria-hidden />
@@ -101,6 +89,36 @@ export default function CourseStage({
           </div>
         ))}
       </section>
+
+      {outcomes.length > 0 && (
+        <section className="course-overview-block">
+          <h2>
+            <BookOpen size={18} />
+            Skills you will have by the end
+          </h2>
+          <ul className="course-overview-list">
+            {outcomes.map((o, i) => (
+              <li key={i}>{o}</li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <CourseEnrichmentPanels
+        courseNum={course.course}
+        programPrimerMarkdown={programPrimerMarkdown}
+        glossary={glossary}
+        courseRef={ref}
+      />
+
+      {summaryMd && (
+        <details className="course-overview-block course-syllabus-details">
+          <summary>Full syllabus checklist (optional)</summary>
+          <div className="markdown-theory prose-learning">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{summaryMd}</ReactMarkdown>
+          </div>
+        </details>
+      )}
     </div>
   );
 }

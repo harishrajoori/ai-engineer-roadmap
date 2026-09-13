@@ -14,15 +14,21 @@ export default function Header({
   onGoogleLogout,
   googleOAuthEnabled = false,
   onOpenSettings,
-  onExportBackup
+  onExportBackup,
+  onGoHome,
 }) {
+  const handleBrandClick = (e) => {
+    e.preventDefault();
+    onGoHome?.();
+  };
+
   return (
     <header>
-      <a href="#" className="brand">
+      <a href="/" className="brand" onClick={handleBrandClick}>
         <div className="brand-logo">AI</div>
         <div className="brand-text">
           <div className="brand-title">AI Systems Engineer Studio</div>
-          <div className="brand-subtitle">Open curriculum · Theory-first learning</div>
+          <div className="brand-subtitle">Step-by-step · Theory before lecture</div>
         </div>
       </a>
 
