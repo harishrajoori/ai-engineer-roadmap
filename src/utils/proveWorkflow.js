@@ -219,6 +219,18 @@ export function buildProveWorksheetMarkdown({
   ];
 
   const labPlan = lesson?.lab_plan;
+  const deLab = labPlan?.de_lab;
+  if (deLab?.scenario_markdown) {
+    lines.push(`## ${deLab.scenario_title || "DE scenario"}`, "", deLab.scenario_markdown, "");
+    (deLab.code_snippets || []).forEach((block) => {
+      lines.push(`### ${block.title}`, "");
+      if (block.filename) {
+        lines.push(`File: \`${block.filename}\``, "");
+      }
+      lines.push(`\`\`\`${block.language || ""}`, block.code, "```", "");
+    });
+  }
+
   if (labPlan?.steps?.length) {
     lines.push(`## ${labPlan.title || "Implementation plan"}`, "");
     if (labPlan.done_when) {

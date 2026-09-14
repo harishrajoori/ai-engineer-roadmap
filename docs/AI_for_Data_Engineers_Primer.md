@@ -10,7 +10,7 @@ You have shipped **pipelines, models, and services**. This studio teaches **AI p
 | --- | --- |
 | **Left** | Courses **0 → 15** in order. Advance when the **Prove** gate for that course is done. |
 | **Middle** | Topic checklist—work **top to bottom**. Follow **START HERE**. |
-| **Center** | **Theory (Foundations)** → **Lecture** → **More resources** → **Lab & Prove**. |
+| **Center** | **Theory (Foundations) first** → **Lecture / Reading** → **Study guide** when easy → **Lab & Prove** (DE scenario + code blocks). |
 | **Right** | Notes; optional mentor (Settings → API key). Use **Focus content** on small screens. |
 
 ## Rules (senior-engineer pace)
@@ -43,8 +43,11 @@ You have shipped **pipelines, models, and services**. This studio teaches **AI p
 
 | Level | Use when |
 | --- | --- |
-| **Foundations** | Default on every new topic |
-| **Study guide** | Foundations feels easy |
-| **Platform depth** | You want failure modes, tradeoffs, and ops detail |
+| **Foundations** | **Always start here** on every new topic (studio opens on Theory) |
+| **Study guide / Visual guide** | After Foundations; before or alongside Lecture |
+| **Lecture / Reading** | Primary link—**after** Foundations ready checklist |
+| **Platform depth** | Failure modes, tradeoffs, ops detail |
 
 Mark a topic complete when **this row’s** outcome is met—not when you have watched every resource on the internet.
+
+**Transformers (Course 1):** intuition via Karpathy Deep Dive + 3Blue1Brown; optional code depth in [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md).

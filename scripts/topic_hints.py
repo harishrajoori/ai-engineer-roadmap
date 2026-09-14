@@ -33,10 +33,22 @@ _HINTS: dict[str, dict[str, Any]] = {
     "https://www.youtube.com/watch?v=7xtgnnlpymi": {
         "one_liner": "Deep dive into transformers, KV cache, and how chat models run in production.",
         "why_now": "Course 1 connects gateway cost and latency to what actually happens inside the model stack.",
-        "concepts": ["token", "ttft", "attention", "sampling"],
+        "concepts": ["transformer", "token", "ttft", "attention", "inference"],
         "watch_for": ["Transformer block at a high level", "Why context length matters for cost", "Sampling knobs (temperature)"],
+        "beginner_extra": (
+            "Read the studio **Foundations** and **Visual guide** before pressing play. "
+            "Prefill (whole prompt) drives TTFT; decode (one token at a time) drives completion tokens. "
+            "KV cache is why generation gets cheaper per step after the first token—not magic memory."
+        ),
         "capstone_action": "Log `prompt_tokens`, `completion_tokens`, and wall-clock latency for one CLI call.",
         "done_when": "You can relate P99 latency to token volume in one paragraph.",
+        "advanced_extra": (
+            "Use the deep dive to connect **transformer inference** to dollars: KV cache, batching, and "
+            "sequence length drive memory and TTFT. For extraction workloads, prefer **short structured "
+            "outputs** over long chain-of-thought in production. Document which layers of the stack you "
+            "**own** (gateway, prompts, evals) vs which you **buy** (frontier API). Optional code depth: "
+            "docs/OPTIONAL_MODEL_DEPTH.md."
+        ),
     },
     "https://python.useinstructor.com": {
         "one_liner": "Library that forces LLM outputs into Pydantic models with retries on validation errors.",

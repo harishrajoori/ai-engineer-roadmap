@@ -272,6 +272,21 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
             f"{advanced_shorter_than_beginner} lessons where advanced is shorter than beginner (inverted depth)"
         )
 
+    missing_de_lab: list[str] = []
+    for course_id in ("0", "1", "2", "3", "4"):
+        sample = next((les for les in lessons if str(les.get("course")) == course_id), None)
+        if not sample:
+            missing_de_lab.append(f"course {course_id}: no lessons")
+            continue
+        de = (sample.get("lab_plan") or {}).get("de_lab") or {}
+        if not (de.get("scenario_markdown") or "").strip():
+            missing_de_lab.append(f"course {course_id}: lab_plan.de_lab missing")
+        elif course_id in ("0", "1") and not (de.get("code_snippets") or []):
+            missing_de_lab.append(f"course {course_id}: de_lab has no code_snippets")
+    if missing_de_lab:
+        for msg in missing_de_lab:
+            warnings.append(f"lab_scenarios: {msg}")
+
     link_issues: list[str] = []
     for les in lessons:
         link_issues.extend(validate_lesson_links(les))

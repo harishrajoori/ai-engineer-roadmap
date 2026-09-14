@@ -538,7 +538,12 @@ def entries() -> dict[int, dict[str, Any]]:
             "mental_model": "Pods, services, deployments vocabulary.",
             "beginner_extra": "One intro video if kube is new.",
             "intermediate_deep_dive": "Glossary note in DEPLOY.md.",
-            "advanced_extra": "Skip if using compose-only prove path.",
+            "advanced_extra": (
+                "Skip deep kube study if your prove path is compose-only—but still document **why** in DEPLOY.md. "
+                "If you use Kubernetes, note how LLM gateway pods differ from stateless APIs: readiness waits for "
+                "proxy health, memory limits reflect sidecars, and rollouts need surge strategy so LiteLLM does not "
+                "drop in-flight streams. Interview story: smallest deploy surface that satisfies the Course 11 rubric."
+            ),
             "watch_for": ["Deployments", "Health checks"],
             "failure_modes": ["Learning K8s instead of shipping chart"],
             "interview_prompts": ["Why Helm for your capstone?"],
@@ -603,7 +608,12 @@ def entries() -> dict[int, dict[str, Any]]:
             "mental_model": "Another engineer clones and brings stack up.",
             "beginner_extra": "Choose compose OR helm; document prerequisites.",
             "intermediate_deep_dive": "ADD_TOOL.md for registering a new MCP tool.",
-            "advanced_extra": "Resource requests based on load test notes.",
+            "advanced_extra": (
+                "Resource requests should cite a **load test note**: concurrent extract jobs, gateway RPS, and MCP "
+                "latency. Document secrets via env vars or external secret store—never commit values. Split stateless "
+                "workers from gateway/proxy so you scale extraction without duplicating routing config. Add a smoke "
+                "test in CI that hits /health and one golden extract against a stub model if live APIs are too flaky."
+            ),
             "failure_modes": ["Undocumented env vars"],
             "interview_prompts": ["Onboard a teammate using your deploy docs."],
             "capstone_action": "Merge deploy artifacts.",
@@ -678,7 +688,12 @@ def entries() -> dict[int, dict[str, Any]]:
             "mental_model": "v1.0 = hardened release with lineage story.",
             "beginner_extra": "Tag v1.0; link lineage sample in README.",
             "intermediate_deep_dive": "Release notes summarize year capabilities.",
-            "advanced_extra": "Migration notes from alpha → v1.0.",
+            "advanced_extra": (
+                "v1.0 is a **narrative release**: notes should list eval CI gates, policy tests, deploy path, and "
+                "lineage sample. Include migration notes from alpha → v1.0 (schema changes, new env vars). Tie "
+                "lineage JSON to Langfuse run_id where possible. File explicit DEFERRED.md items with risk owner for "
+                "anything not shipped."
+            ),
             "failure_modes": ["v1.0 without reproducible lineage"],
             "interview_prompts": ["Tell v1.0 story with lineage and evals."],
             "capstone_action": "Publish v1.0 prove.",
@@ -742,7 +757,11 @@ def entries() -> dict[int, dict[str, Any]]:
             "mental_model": "One measured optimization story.",
             "beginner_extra": "Link FRONTIER.md in prove.",
             "intermediate_deep_dive": "Include before/after table and decision.",
-            "advanced_extra": "Relate bottleneck to trace/evidence.",
+            "advanced_extra": (
+                "Frontier prove must show **before/after** on one bottleneck from traces (latency, cost, or eval "
+                "score). Link README to Langfuse/LiteLLM evidence. State adopt vs defer with a re-evaluation date. "
+                "A documented failed experiment beats a successful spike with no numbers."
+            ),
             "failure_modes": ["Frontier without numbers"],
             "interview_prompts": ["Explain your frontier experiment crisply."],
             "capstone_action": "Publish prove.",
@@ -780,7 +799,11 @@ def entries() -> dict[int, dict[str, Any]]:
             "mental_model": "E2B = isolated VM for untrusted code tools.",
             "beginner_extra": "Skim docs; optional spike only.",
             "intermediate_deep_dive": "If agents run code, document why not bare subprocess.",
-            "advanced_extra": "Cost and security comparison in SAFETY.md.",
+            "advanced_extra": (
+                "If agents execute code, compare **E2B (or similar)** vs host subprocess on network egress, secret "
+                "exposure, CPU/memory caps, audit logs, and $/minute. Document default-deny egress; sandbox does not "
+                "replace OPA/tool authorization. Treat sandboxes like ephemeral Spark executors with strict IAM."
+            ),
             "read_sections": ["Sandbox", "SDK"],
             "failure_modes": ["Arbitrary code execution on host"],
             "interview_prompts": ["Secure code execution design?"],

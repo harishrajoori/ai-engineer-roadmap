@@ -17,6 +17,20 @@ export default function CourseWalkthroughPanel({ walkthrough, entryLessonOrder, 
       </h2>
       <p className="course-walkthrough-lead">{walkthrough.in_plain_english}</p>
 
+      {walkthrough.theory_first_steps?.length > 0 && (
+        <div className="course-walkthrough-card course-walkthrough-theory-first">
+          <h3>Theory before lecture (every topic)</h3>
+          <ol className="course-walkthrough-theory-steps">
+            {walkthrough.theory_first_steps.map((step) => (
+              <li key={step}>{step}</li>
+            ))}
+          </ol>
+          {walkthrough.model_fundamentals_note && (
+            <p className="course-walkthrough-model-note">{walkthrough.model_fundamentals_note}</p>
+          )}
+        </div>
+      )}
+
       {walkthrough.learning_objectives?.length > 0 && (
         <div className="course-walkthrough-card course-walkthrough-objectives-card">
           <h3>By the end you can</h3>

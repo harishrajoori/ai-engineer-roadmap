@@ -148,6 +148,10 @@ export default function HomeStage({
           </ol>
         </section>
 
+        {programWalkthrough.theory_first_rule && (
+          <p className="home-theory-first-callout">{programWalkthrough.theory_first_rule}</p>
+        )}
+
         <section className="home-how" aria-labelledby="home-every-topic">
           <h2 id="home-every-topic">On every topic, same order</h2>
           <ol className="home-steps home-steps-compact">

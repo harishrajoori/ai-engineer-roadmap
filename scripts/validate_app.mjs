@@ -90,7 +90,9 @@ if (studioGuideCount < 1) {
 }
 const levels = sample.theory_levels;
 const begOk =
-  levels?.beginner?.includes("**Foundations**") || levels?.beginner?.includes("**Beginner**");
+  levels?.beginner?.includes("**Foundations**") ||
+  levels?.beginner?.includes("**Step 1") ||
+  levels?.beginner?.includes("**Beginner**");
 const advOk =
   levels?.advanced?.includes("**Platform depth**") || levels?.advanced?.includes("**Advanced**");
 if (!begOk || !advOk) {

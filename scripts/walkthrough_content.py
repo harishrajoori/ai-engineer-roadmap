@@ -28,14 +28,19 @@ PROGRAM_WALKTHROUGH: dict[str, Any] = {
     "first_three_clicks": [
         "Scroll the **program brief** on this page (architecture + course map)—10–15 minutes.",
         "Open **Course 0 overview** (map, glossary, prove rubric) before jumping to Month 1.",
-        "Press **Start Course 0** and complete the **START HERE** topic (schemas & extraction)—then optional LLM videos.",
+        "On any topic: stay on **Theory → Foundations** first, then **Lecture**—never start with the raw video link.",
     ],
     "every_topic_same_order": [
-        "Theory (Foundations) — plain English and data-pipeline analogies.",
-        "Lecture — video or article for this checkbox only.",
+        "Theory → Foundations (this tab first on every new topic).",
+        "Lecture or Reading (primary link—only after Foundations checklist).",
+        "Study guide / Visual guide when Foundations feels easy.",
         "More resources — only if you are stuck.",
         "Lab & Prove — when the topic asks for code or a link.",
     ],
+    "theory_first_rule": (
+        "The studio always opens on **Theory**. Do not start the video or external article until "
+        "the Foundations section says you are ready—then use the **Lecture** or **Reading** tab."
+    ),
     "every_course_same_order": [
         "Open **Course overview** once to see the map and end-of-course goal.",
         "Do topics **top to bottom** in the middle panel (Watch → Read → Build → Prove).",
@@ -92,16 +97,26 @@ COURSE_WALKTHROUGH: dict[str, dict[str, Any]] = {
     },
     "1": {
         "plain_title": "Month 1 — LLM basics and a gateway",
-        "in_plain_english": "Deeper mental models (tokens, cost, latency) and a single front door (LiteLLM) so every model call is logged like a billed query.",
+        "in_plain_english": "Deeper mental models (tokens, transformers at a high level, cost, latency) and a single front door (LiteLLM) so every model call is logged like a billed query.",
         "learning_objectives": [
+            "Explain transformer inference (prefill, decode, KV cache) without deriving math—then watch Karpathy.",
             "Relate token volume to latency and cost on real CLI calls.",
             "Ship LiteLLM routing with per-request logging (v0.2).",
             "Document adopt/defer decisions from Applied LLMs and Instructor reads.",
         ],
-        "start_here_label": "DL.AI / Karpathy foundations (first required Watch in the list)",
-        "topic_order": "Watch → Read → Build (tag v0.2) → Prove.",
+        "start_here_label": "First Watch topic — read Theory (Foundations) before opening DL.AI or YouTube",
+        "topic_order": "Per topic: Theory → Lecture → (optional Study guide) → next checkbox. Month ends with Build (v0.2) → Prove.",
+        "theory_first_steps": [
+            "Open each topic on the **Theory** tab (default). Finish **Foundations** until the ready checklist is true.",
+            "Switch to **Lecture** or **Reading** for the primary link—not the hero “Open resource” button first.",
+            "Karpathy Deep Dive: use the **Visual guide** after Foundations, then the ~3 h video.",
+        ],
+        "model_fundamentals_note": (
+            "Transformers & attention are **required at intuition level** (Karpathy Deep Dive + 3Blue1Brown). "
+            "Build-from-scratch depth is optional—see docs/OPTIONAL_MODEL_DEPTH.md."
+        ),
         "end_of_course": "Release v0.2 with a README table: model, tokens, latency, cost per request.",
-        "do_not_worry_about": "Optional 16-hour playlists—only the modules named on each line.",
+        "do_not_worry_about": "Training your own foundation model or finishing entire MOOC catalogs—time-box each checkbox.",
     },
     "2": {
         "plain_title": "Month 2 — Workflows with LangGraph",

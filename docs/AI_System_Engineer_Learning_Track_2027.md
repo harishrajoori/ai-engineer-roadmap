@@ -136,8 +136,11 @@
 ### What you'll learn
 
 - LLM lifecycle, limits, and interview-ready mental models
+- Transformer **inference intuition** (attention, KV cache, tokens)—read studio **Theory** before each Watch row
 - Free **DL.AI / YouTube** LLM foundations (time-boxed)
 - LiteLLM cost logging and CLI hardening
+
+**Studio order:** **Theory (Foundations)** → **Lecture** on every topic. Optional code depth: [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md).
 
 ### Syllabus
 

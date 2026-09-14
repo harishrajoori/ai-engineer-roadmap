@@ -6,6 +6,7 @@ from typing import Any
 
 from append_implementation_repos import local_setup_for_lesson
 from curriculum_enrichment import prove_pack_for_course, real_world_for_course
+from lab_scenarios import resolve_de_lab
 from topic_hints import get_topic_hint
 
 
@@ -150,14 +151,18 @@ def build_lab_plan(row: dict) -> dict[str, Any]:
         done_when = f"You can demo {prove_pack['title']} from your repo with tests passing."
 
     local_setup = local_setup_for_lesson(row)
+    de_lab = resolve_de_lab(row)
 
-    return {
+    plan: dict[str, Any] = {
         "title": "Implementation plan",
         "done_when": done_when,
         "steps": steps,
         "implementation_links": _implementation_resources(row),
         "local_setup": local_setup,
     }
+    if de_lab:
+        plan["de_lab"] = de_lab
+    return plan
 
 
 def attach_lab_plan(row: dict) -> None:

@@ -25,22 +25,8 @@ import { proveCompletionWarnings } from "../utils/proveWorkflow";
 import LabProvePanel from "./LabProvePanel";
 import LearningFocusBar from "./LearningFocusBar";
 
-const DEFAULT_RESOURCES = [
-  {
-    level: "Beginner",
-    title: "StatQuest: Transformer Attention Visually",
-    color: "var(--success)",
-    url: "https://www.youtube.com/watch?v=zxQyTK8quyY",
-    description: "Step-by-step breakdown of query, key, value matrix multiplications."
-  },
-  {
-    level: "Intermediate",
-    title: "Andrej Karpathy: Let's Build GPT from Scratch",
-    color: "var(--accent)",
-    url: "https://www.youtube.com/watch?v=kCc8FmEb1nY",
-    description: "Coding character-level nanoGPT in raw PyTorch line-by-line."
-  }
-];
+/** Fallback only when a topic has no curated resources in lessons.json */
+const DEFAULT_RESOURCES = [];
 
 function resourceToBlock(res, fallbackVideoId) {
   const repo = isRepoResource(res);
@@ -151,12 +137,6 @@ export default function SmartStage({
   useEffect(() => {
     setActiveTab(defaultTabForLesson(lesson));
   }, [lesson?.order]);
-
-  useEffect(() => {
-    if (lesson?.theory_studio_guide && !regeneratedContent) {
-      setTheoryLevel("intermediate");
-    }
-  }, [lesson?.order, lesson?.theory_studio_guide, regeneratedContent]);
 
   const resources = useMemo(() => {
     if (!lesson) {
@@ -296,14 +276,21 @@ export default function SmartStage({
 
       {activeTab === "overview" && (
         <div className="learning-tab-panel animation-fade-in">
-          <div className="theory-path-banner">
-            <span>
-              <strong>New to AI?</strong> Use <strong>Foundations</strong> below → read this page → then{" "}
-              <button type="button" className="theory-path-link" onClick={() => setActiveTab("lecture")}>
-                {sourceTab.label}
-              </button>
-              . Open <strong>Study guide</strong> when Foundations feels easy on this topic.
-            </span>
+          <div className="theory-path-banner" role="note">
+            <ol className="theory-path-steps">
+              <li>
+                <strong>Foundations</strong> — read this page first (default depth).
+              </li>
+              <li>
+                <button type="button" className="theory-path-link" onClick={() => setActiveTab("lecture")}>
+                  {sourceTab.label}
+                </button>
+                — primary video or article after you meet the ready checklist below.
+              </li>
+              <li>
+                <strong>Study guide</strong> / <strong>Visual guide</strong> — when Step 1 feels easy, not before.
+              </li>
+            </ol>
           </div>
           {lesson.theory_studio_guide && !regeneratedContent && (
             <div className="theory-studio-banner" role="note">
@@ -350,6 +337,13 @@ export default function SmartStage({
 
       {activeTab === "lecture" && (
         <div className="learning-tab-panel animation-fade-in">
+          <div className="lecture-prereq-banner" role="note">
+            <strong>Step 2.</strong> Use this tab after{" "}
+            <button type="button" className="theory-path-link" onClick={() => setActiveTab("overview")}>
+              Theory → Foundations
+            </button>{" "}
+            — meet the ready checklist there first so the video or article reinforces concepts, not replaces them.
+          </div>
           {showPrimaryEmbed ? (
             <div className="learning-video-hero">
               <iframe

@@ -155,6 +155,12 @@
       "term": "Attention",
       "definition": "Mechanism for the model to weigh which input tokens matter for each output token.",
       "de_analogy": "Weighted join keys—without math depth, just “focus mechanism.”"
+    },
+    {
+      "id": "transformer",
+      "term": "Transformer",
+      "definition": "Neural architecture using self-attention (stacked blocks) that powers modern LLMs; decoder-only variants predict the next token.",
+      "de_analogy": "A parallelizable scoring pipeline over a sequence—cost scales with length and width, not a single SQL lookup."
     }
   ],
   "concept_maps": {
@@ -398,7 +404,7 @@
   "program_pace": {
     "assumes_min_years": 5,
     "primary_audience": "Data, analytics, and platform engineers who already ship pipelines, tests, and infra",
-    "default_theory_level": "intermediate",
+    "default_theory_level": "beginner",
     "ramp_summary": "Contracts & golden sets → gateway & unit economics → orchestration & tools → retrieval → eval CI & policy → integrated platform → staff depth",
     "time_box_note": "Skip optional videos unless you have a specific gap; every month ends in a prove artifact you can show in a design review."
   },

@@ -1,0 +1,263 @@
+{
+  "by_course": {
+    "0": {
+      "scenario_title": "Bronze-layer log reconciliation (synthetic ops data)",
+      "scenario_markdown": "Your team lands **application and pipeline logs** in S3 as semi-structured text. Downstream dbt models need **typed JSON** with stable keys (`event_id`, `severity`, `service`, `message`). Today an analyst regex-parses samples; you replace that with an **LLM extractor behind Pydantic + Instructor**, the same way you would add a Great Expectations check before promoting bronze.\n\n**Synthetic-only for this course:** use `data/golden/*.json` fixtures shaped like MWAA task logs, Glue stderr, or API gateway lines—never employer production text in a public repo.\n\n```mermaid\nflowchart LR\n  S3[(S3 landing / sample files)] --> ING[ingest.py]\n  ING --> EXT[extractor + Instructor]\n  EXT --> VAL[Pydantic + invariants]\n  VAL --> BRZ[(bronze JSONL / staging table)]\n  VAL --> MET[golden-set score in README]\n```",
+      "code_snippets": [
+        {
+          "title": "Schema contract (`models/log_event.py`)",
+          "language": "python",
+          "filename": "models/log_event.py",
+          "code": "from pydantic import BaseModel, Field, field_validator\nfrom typing import Literal\n\nclass LogEvent(BaseModel):\n    event_id: str = Field(min_length=1)\n    severity: Literal[\"DEBUG\", \"INFO\", \"WARN\", \"ERROR\"]\n    service: str\n    message: str\n    amount_usd: float | None = None\n\n    @field_validator(\"amount_usd\")\n    @classmethod\n    def non_negative(cls, v: float | None) -> float | None:\n        if v is not None and v < 0:\n            raise ValueError(\"amount_usd must be >= 0\")\n        return v"
+        },
+        {
+          "title": "Extractor with retries (`extractor.py`)",
+          "language": "python",
+          "filename": "extractor.py",
+          "code": "import instructor\nfrom openai import OpenAI\nfrom models.log_event import LogEvent\n\nclient = instructor.from_openai(OpenAI())\n\ndef extract_log_line(raw: str, max_retries: int = 3) -> LogEvent:\n    return client.chat.completions.create(\n        model=\"gpt-4o-mini\",\n        response_model=LogEvent,\n        max_retries=max_retries,\n        messages=[\n            {\"role\": \"system\", \"content\": \"Parse one log line into the schema. No prose.\"},\n            {\"role\": \"user\", \"content\": raw},\n        ],\n    )"
+        },
+        {
+          "title": "Golden-set test (`tests/test_golden.py`)",
+          "language": "python",
+          "filename": "tests/test_golden.py",
+          "code": "import json\nfrom pathlib import Path\nfrom extractor import extract_log_line\n\nGOLDEN = Path(\"data/golden\")\n\ndef test_golden_valid_json_rate():\n    ok = 0\n    total = 0\n    for path in GOLDEN.glob(\"*.txt\"):\n        raw = path.read_text()\n        expected = json.loads((path.with_suffix(\".json\")).read_text())\n        total += 1\n        got = extract_log_line(raw).model_dump()\n        if got == expected:\n            ok += 1\n    assert total >= 10\n    assert ok / total >= 0.85"
+        }
+      ]
+    },
+    "1": {
+      "scenario_title": "Meter every model call like you meter warehouse spend",
+      "scenario_markdown": "You add an LLM step next to an existing **batch scoring job** (classification, summarization, or field extraction). Finance asks: *which team, which model, how many tokens, what latency?* You front all providers with **LiteLLM**, log structured usage per request, and tag releases as `v0.2` with a README table—same discipline as tagging a Glue job version.\n\n**DE angle:** treat the gateway as **Apigee for models**: one API key surface, budgets, fallbacks, and CSV/JSONL usage logs you can join to `job_id` or `dag_run_id`.",
+      "code_snippets": [
+        {
+          "title": "LiteLLM completion + usage log",
+          "language": "python",
+          "filename": "gateway/log_usage.py",
+          "code": "import json\nimport time\nfrom litellm import completion\n\n\ndef extract_with_metering(raw: str, job_id: str) -> dict:\n    t0 = time.perf_counter()\n    resp = completion(\n        model=\"gpt-4o-mini\",\n        messages=[{\"role\": \"user\", \"content\": raw}],\n        metadata={\"job_id\": job_id},\n    )\n    ms = int((time.perf_counter() - t0) * 1000)\n    usage = resp.usage or {}\n    row = {\n        \"job_id\": job_id,\n        \"model\": resp.model,\n        \"prompt_tokens\": usage.get(\"prompt_tokens\"),\n        \"completion_tokens\": usage.get(\"completion_tokens\"),\n        \"latency_ms\": ms,\n    }\n    print(json.dumps(row))  # ship to stdout / OpenTelemetry / warehouse\n    return row"
+        },
+        {
+          "title": "Fallback chain (reliable completions)",
+          "language": "python",
+          "filename": "gateway/fallbacks.py",
+          "code": "from litellm import completion\n\nMODELS = [\"gpt-4o-mini\", \"gemini/gemini-2.0-flash\"]\n\ndef completion_with_fallback(messages: list[dict]):\n    return completion(model=MODELS, messages=messages, fallbacks=MODELS)"
+        }
+      ]
+    },
+    "2": {
+      "scenario_title": "Orchestrate extraction like a DAG with human approval",
+      "scenario_markdown": "A **bad extraction** must not auto-load to bronze. Model your pipeline as a **LangGraph**: ingest → extract → validate → either **commit** or **interrupt()** for human fix (like pausing an Airflow task). State carries `raw_line`, `parsed`, `validation_errors`, and `thread_id` for resume.\n\n```mermaid\nstateDiagram-v2\n  [*] --> Extract\n  Extract --> Validate\n  Validate --> Commit: schema OK\n  Validate --> HITL: validation fail\n  HITL --> Extract: human fixed input\n  Commit --> [*]\n```",
+      "code_snippets": [
+        {
+          "title": "Minimal graph skeleton",
+          "language": "python",
+          "filename": "reconciler_agent/graph.py",
+          "code": "from langgraph.checkpoint.sqlite import SqliteSaver\nfrom langgraph.graph import END, StateGraph\nfrom typing import TypedDict\n\nclass State(TypedDict):\n    raw: str\n    parsed: dict | None\n    errors: list[str]\n\ndef extract_node(state: State) -> State:\n    ...  # call your Course 0 extractor\n\ndef validate_node(state: State) -> State:\n    ...  # pydantic + invariants\n\nbuilder = StateGraph(State)\nbuilder.add_node(\"extract\", extract_node)\nbuilder.add_node(\"validate\", validate_node)\nbuilder.set_entry_point(\"extract\")\nmemory = SqliteSaver.from_conn_string(\"checkpoints.db\")\napp = builder.compile(checkpointer=memory, interrupt_before=[\"commit\"])"
+        }
+      ]
+    },
+    "3": {
+      "scenario_title": "Audited tools instead of ad-hoc SQL in prompts",
+      "scenario_markdown": "An agent must **look up schema metadata** and **run read-only queries** against a staging schema—not arbitrary warehouse admin. Expose tools via **MCP** with JSON Schema, log every call (`user_id`, `tool`, `args_hash`, `timestamp`, `status`). This mirrors stored procedures + query audit tables you already use for compliance.\n\n**Tools to implement:** `lookup_schema`, `query_golden_set`, `run_readonly_sql` (allow-listed tables only).",
+      "code_snippets": [
+        {
+          "title": "Audit log row (append-only)",
+          "language": "python",
+          "filename": "mcp_server/audit.py",
+          "code": "import hashlib\nimport json\nfrom datetime import datetime, timezone\n\n\ndef audit_row(user_id: str, tool: str, args: dict, status: str) -> dict:\n    payload = json.dumps(args, sort_keys=True)\n    return {\n        \"user_id\": user_id,\n        \"tool\": tool,\n        \"args_hash\": hashlib.sha256(payload.encode()).hexdigest()[:16],\n        \"ts\": datetime.now(timezone.utc).isoformat(),\n        \"status\": status,\n    }"
+        }
+      ]
+    },
+    "4": {
+      "scenario_title": "Hybrid retrieval benchmark before you trust RAG in prod",
+      "scenario_markdown": "Support engineers search **runbooks and 10-K style docs** to answer ops questions. You build a **labeled Q/A set** (question → doc_id) and compare **dense-only** vs **hybrid (dense + BM25 + RRF)** retrieval—same mindset as A/B testing a new sort key on a fact table.\n\nProve = committed `benchmarks/retrieval.json` with `recall@5` per method.",
+      "code_snippets": [
+        {
+          "title": "Recall@k scorer sketch",
+          "language": "python",
+          "filename": "scripts/benchmark_retrieval.py",
+          "code": "def recall_at_k(ranked_ids: list[str], gold_id: str, k: int = 5) -> float:\n    return 1.0 if gold_id in ranked_ids[:k] else 0.0\n\n\ndef evaluate(method: str, cases: list[dict]) -> dict:\n    scores = [recall_at_k(c[\"ranked\"], c[\"gold_doc_id\"]) for c in cases]\n    return {\"method\": method, \"recall_at_5\": sum(scores) / len(scores), \"n\": len(scores)}"
+        }
+      ]
+    },
+    "5": {
+      "scenario_title": "Layout-aware chunks for downstream RAG",
+      "scenario_markdown": "PDFs and HTML runbooks land in bronze as blobs. You produce **`chunks.jsonl`** with stable ids, text, and metadata (`source`, `page`, `section`)—the contract your embedding job and vector index consume, like a staging table between raw landing and silver.",
+      "code_snippets": [
+        {
+          "title": "Chunk record contract",
+          "language": "json",
+          "filename": "data/chunks.jsonl (one line)",
+          "code": "{\"id\": \"chunk-00042\", \"text\": \"...\", \"metadata\": {\"source\": \"runbook-oncall.md\", \"page\": 3, \"section\": \"Rollback\"}}"
+        }
+      ]
+    },
+    "6": {
+      "scenario_title": "Graph validator for reconciliation rules",
+      "scenario_markdown": "Some business rules are **relational** (account → events → balances). Model a tiny graph slice and run **one Cypher validator** in CI—not full GraphRAG product marketing, but the same idea as referential integrity checks before publish.",
+      "code_snippets": [
+        {
+          "title": "Example validator query (Neo4j)",
+          "language": "cypher",
+          "filename": "tests/cypher/balance_check.cypher",
+          "code": "MATCH (a:Account)-[:HAS_EVENT]->(e:Event)\nWITH a, sum(e.amount_usd) AS total\nWHERE abs(total) > 0.01\nRETURN a.id AS account_id, total"
+        }
+      ]
+    },
+    "7": {
+      "scenario_title": "Golden-set eval harness (pytest for LLM outputs)",
+      "scenario_markdown": "Before any prompt change merges, run **`evals/golden.jsonl`** through your extractor/RAG path and compare to labeled outputs. Tier metrics: schema pass rate, field-level accuracy, cost/latency envelope—parallel to dbt tests + row counts.",
+      "code_snippets": [
+        {
+          "title": "Golden row format",
+          "language": "jsonl",
+          "filename": "evals/golden.jsonl",
+          "code": "{\"id\": \"g-001\", \"input\": \"ERROR billing-svc ...\", \"expected\": {\"severity\": \"ERROR\", \"service\": \"billing-svc\"}}"
+        }
+      ]
+    },
+    "8": {
+      "scenario_title": "Eval CI blocks bad prompt changes",
+      "scenario_markdown": "Wire **GitHub Actions** (or your CI) to run the golden harness on every PR. Regression = failing build, like a broken dbt test on `main`.",
+      "code_snippets": [
+        {
+          "title": "CI workflow stub",
+          "language": "yaml",
+          "filename": ".github/workflows/evals.yml",
+          "code": "name: eval-gate\non: [pull_request]\njobs:\n  evals:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-python@v5\n        with:\n          python-version: \"3.11\"\n      - run: pip install -r requirements.txt\n      - run: python -m evals.run --fail-on-regression"
+        }
+      ]
+    },
+    "9": {
+      "scenario_title": "Policy before tools + traces for incidents",
+      "scenario_markdown": "**OPA** (or similar) denies dangerous tool args before execution. **Langfuse/OTel** traces tie `run_id` to model and tool spans—like pipeline lineage plus request logs when debugging a failed Airflow task.",
+      "code_snippets": [
+        {
+          "title": "OPA deny example (Rego sketch)",
+          "language": "rego",
+          "filename": "policies/tools.rego",
+          "code": "package tools\n\ndefault allow = false\n\nallow {\n  input.tool == \"run_readonly_sql\"\n  startswith(lower(input.args.sql), \"select\")\n}"
+        }
+      ]
+    },
+    "10": {
+      "scenario_title": "Integrate all layers behind one API",
+      "scenario_markdown": "Tag **`alpha`**: gateway + graph + retrieval + eval hooks in one demo path. Measure **prompt caching** TTFT before/after—document dollars and latency like a capacity review.",
+      "code_snippets": [
+        {
+          "title": "Caching evidence table (README)",
+          "language": "markdown",
+          "filename": "README.md",
+          "code": "| Run | TTFT ms | Cached tokens | Notes |\n| --- | --- | --- | --- |\n| cold | 820 | 0 | first request |\n| warm | 210 | 4096 | same system prompt |"
+        }
+      ]
+    },
+    "11": {
+      "scenario_title": "Deploy the platform for another engineer to run",
+      "scenario_markdown": "Hand off **docker-compose or Helm** so a teammate runs `docker compose up` and hits health checks—same bar as internal data platform onboarding docs.",
+      "code_snippets": []
+    },
+    "12": {
+      "scenario_title": "Lineage for model outputs",
+      "scenario_markdown": "Emit **OpenLineage** (or compatible JSON) linking chunk ids, model version, and output artifact—answer *which document and which model version produced this field?*",
+      "code_snippets": []
+    },
+    "13": {
+      "scenario_title": "Measured frontier experiment",
+      "scenario_markdown": "Pick one bottleneck (cache, vLLM, DSPy). Show before/after metrics in README—no slide-deck adoption.",
+      "code_snippets": []
+    },
+    "14": {
+      "scenario_title": "Public narrative of the platform",
+      "scenario_markdown": "Write a technical post walking through architecture with redacted diagrams—tie back to prove artifacts.",
+      "code_snippets": []
+    },
+    "15": {
+      "scenario_title": "Interview story from the repo",
+      "scenario_markdown": "Demo live: ingest → extract → policy → trace. Narrate tradeoffs using your golden set and CI gate.",
+      "code_snippets": []
+    }
+  },
+  "by_order": {
+    "8": {
+      "scenario_title": "Course 0 build — public reconciler repo",
+      "scenario_markdown": "Create **`production-log-reconciler`** (or similar): package layout below, synthetic `data/golden/`, README metric **valid JSON %**, and `pytest` in CI. This is your bronze-parser microservice template for the rest of the track.",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Suggested repo layout",
+          "language": "text",
+          "filename": "tree",
+          "code": ".\n├── models/log_event.py\n├── extractor.py\n├── scripts/score.py\n├── data/golden/*.txt + matching .json\n├── tests/test_golden.py\n├── README.md  # metric table + threat model\n└── requirements.txt"
+        },
+        {
+          "title": "README metric table",
+          "language": "markdown",
+          "filename": "README.md",
+          "code": "| Metric | Value |\n| --- | --- |\n| Golden valid JSON % | 92% (n=50) |\n| Primary model | gpt-4o-mini |\n| Fallback | gemini-2.0-flash |"
+        }
+      ]
+    },
+    "22": {
+      "scenario_title": "Build milestone — LiteLLM gateway `v0.2`",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "CLI entry with logging",
+          "language": "python",
+          "filename": "cli.py",
+          "code": "import argparse\nfrom gateway.log_usage import extract_with_metering\n\nif __name__ == \"__main__\":\n    p = argparse.ArgumentParser()\n    p.add_argument(\"--sample\", required=True)\n    p.add_argument(\"--job-id\", default=\"local-dev\")\n    args = p.parse_args()\n    raw = open(args.sample).read()\n    extract_with_metering(raw, job_id=args.job_id)"
+        }
+      ]
+    },
+    "33": {
+      "scenario_title": "Build — `reconciler-agent` LangGraph package",
+      "scenario_markdown": "Wrap Course 0 extractor in a graph with **SQLite/Postgres checkpointer**. README must show **validation fail → interrupt → resume** with log lines or GIF.",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Interrupt on validation failure",
+          "language": "python",
+          "filename": "reconciler_agent/nodes.py",
+          "code": "from langgraph.types import interrupt\n\ndef validate_node(state):\n    if state[\"errors\"]:\n        interrupt({\"reason\": \"validation_failed\", \"errors\": state[\"errors\"]})\n    return state"
+        }
+      ]
+    },
+    "45": {
+      "scenario_title": "Build — MCP tools for schema + golden set",
+      "scenario_markdown": "Implement allow-listed tools; wire FastMCP or official SDK. Every tool call writes one JSON line to `logs/tool_audit.jsonl`.",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Read-only SQL guard (sketch)",
+          "language": "python",
+          "filename": "mcp_server/tools/sql.py",
+          "code": "ALLOWED_TABLES = {\"staging.events\", \"staging.golden\"}\n\ndef run_readonly_sql(sql: str) -> list[dict]:\n    normalized = sql.strip().lower()\n    if not normalized.startswith(\"select\"):\n        raise ValueError(\"only SELECT allowed\")\n    if any(t not in normalized for t in ALLOWED_TABLES):\n        raise ValueError(\"table not allow-listed\")\n    ...  # execute against sqlite demo db"
+        }
+      ]
+    },
+    "55": {
+      "scenario_title": "Prove — hybrid retrieval benchmark table",
+      "scenario_markdown": "Commit `benchmarks/retrieval_results.json` and paste summary in README. Include labeled Q/A count and date.",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Results artifact",
+          "language": "json",
+          "filename": "benchmarks/retrieval_results.json",
+          "code": "{\n  \"labeled_qa_count\": 25,\n  \"methods\": [\n    {\"name\": \"dense\", \"recall_at_5\": 0.52},\n    {\"name\": \"hybrid_rrf\", \"recall_at_5\": 0.68}\n  ]\n}"
+        }
+      ]
+    },
+    "76": {
+      "scenario_title": "Build — golden eval runner",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Eval runner CLI",
+          "language": "python",
+          "filename": "evals/run.py",
+          "code": "import json\nfrom pathlib import Path\n\n\ndef main() -> None:\n    rows = [json.loads(l) for l in Path(\"evals/golden.jsonl\").read_text().splitlines() if l.strip()]\n    passed = 0\n    for row in rows:\n        got = run_pipeline(row[\"input\"])  # your integrated path\n        if got == row[\"expected\"]:\n            passed += 1\n    rate = passed / len(rows)\n    print(json.dumps({\"pass_rate\": rate, \"n\": len(rows)}))\n    if rate < 0.8:\n        raise SystemExit(1)\n\nif __name__ == \"__main__\":\n    main()"
+        }
+      ]
+    }
+  }
+}

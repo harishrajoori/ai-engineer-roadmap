@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   Square,
 } from "lucide-react";
+import MarkdownProse from "./MarkdownProse";
 import {
   buildProveWorksheetMarkdown,
   downloadTextFile,
@@ -41,6 +42,7 @@ export default function LabProvePanel({
   const provePack = courseRef.prove_pack || {};
   const realWorld = courseRef.real_world || {};
   const labPlan = lesson.lab_plan || null;
+  const deLab = labPlan?.de_lab || null;
   const topicImplRepos = getTopicImplementationResources(lesson, { max: 4 });
   const showPortfolioStarter = Boolean(portfolioStarter?.repo_url && lesson.is_start_here);
   const acceptance = provePack.acceptance || [];
@@ -96,6 +98,50 @@ export default function LabProvePanel({
           auto-grade.
         </p>
       </div>
+
+      {deLab?.scenario_markdown && (
+        <section className="lab-prove-section lab-prove-de-scenario" aria-labelledby="lab-de-scenario-heading">
+          <h4 id="lab-de-scenario-heading" className="lab-prove-section-title">
+            <Factory size={16} aria-hidden />
+            {deLab.scenario_title || "Practical scenario (data engineering)"}
+          </h4>
+          <div className="lab-prove-scenario-prose">
+            <MarkdownProse math>{deLab.scenario_markdown}</MarkdownProse>
+          </div>
+          {deLab.code_snippets?.length > 0 && (
+            <div className="lab-prove-code-blocks">
+              <p className="lab-prove-muted">
+                <strong>Copy into your portfolio repo</strong> — adapt names/paths; keep synthetic data only.
+              </p>
+              {deLab.code_snippets.map((block) => (
+                <div key={block.filename || block.title} className="lab-prove-code-card">
+                  <div className="lab-prove-code-card-head">
+                    <span className="lab-prove-code-title">{block.title}</span>
+                    {block.filename && <code className="lab-prove-code-filename">{block.filename}</code>}
+                    <button
+                      type="button"
+                      className="filter-btn lab-prove-code-copy"
+                      onClick={() => handleCopy(block.code)}
+                      title="Copy code"
+                    >
+                      <ClipboardCopy size={12} />
+                      Copy
+                    </button>
+                  </div>
+                  <pre className="lab-prove-code-pre">
+                    <code>{block.code}</code>
+                  </pre>
+                </div>
+              ))}
+            </div>
+          )}
+          {realWorld.maps_to_prove && (
+            <p className="lab-prove-muted lab-prove-prove-gate">
+              <strong>Course prove gate:</strong> {realWorld.maps_to_prove}
+            </p>
+          )}
+        </section>
+      )}
 
       {topicImplRepos.length > 0 && (
         <section className="lab-prove-section lab-prove-topic-repos" aria-labelledby="lab-topic-repos-heading">
@@ -244,7 +290,7 @@ export default function LabProvePanel({
         </section>
       )}
 
-      {realWorld.summary && (
+      {realWorld.summary && !deLab?.scenario_markdown && (
         <section className="lab-prove-section" aria-labelledby="lab-real-world-heading">
           <h4 id="lab-real-world-heading" className="lab-prove-section-title">
             <Factory size={16} aria-hidden />
@@ -269,6 +315,25 @@ export default function LabProvePanel({
               ))}
             </ol>
           )}
+        </section>
+      )}
+
+      {realWorld.where_it_applies?.length > 0 && (
+        <section className="lab-prove-section" aria-labelledby="lab-de-areas-heading">
+          <h4 id="lab-de-areas-heading" className="lab-prove-section-title">
+            Where this shows up at work
+          </h4>
+          <ul className="lab-prove-de-areas">
+            {realWorld.where_it_applies.map((row) => (
+              <li key={row.area} className="lab-prove-de-area-card">
+                <strong>{row.area}</strong>
+                <p className="lab-prove-body">{row.example}</p>
+                <p className="lab-prove-muted">
+                  <strong>You build:</strong> {row.you_build}
+                </p>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -54,10 +55,27 @@ def load_program_primer_markdown() -> str:
     return ""
 
 
+def prepare_program_brief_for_studio(md: str) -> str:
+    """Learner-facing copy for the app: no repo filenames, no maintainer section."""
+    text = md.strip()
+    # Drop maintainer-only tail (still in docs/ for GitHub readers).
+    text = re.sub(r"\n## 15\. Document maintenance\b.*", "", text, flags=re.DOTALL).strip()
+    text = re.sub(r"\n15\. \[Document maintenance\][^\n]*\n?", "\n", text)
+    # Home section already has a title; avoid duplicate H1 in the scroll body.
+    if text.startswith("# "):
+        text = re.sub(r"^# [^\n]+\n+", "", text, count=1).strip()
+    # [Label](./something.md) → Label
+    text = re.sub(r"\[([^\]]+)\]\([^)]*\.md[^)]*\)", r"\1", text)
+    # `file.md` path literals
+    text = re.sub(r"`[^`\n]*\.md`", "", text)
+    return text.strip()
+
+
 def load_program_brief_markdown() -> str:
-    if BRIEF_PATH.exists():
-        return BRIEF_PATH.read_text(encoding="utf-8").strip()
-    return ""
+    if not BRIEF_PATH.exists():
+        return ""
+    raw = BRIEF_PATH.read_text(encoding="utf-8").strip()
+    return prepare_program_brief_for_studio(raw)
 
 
 def portfolio_starter() -> dict:

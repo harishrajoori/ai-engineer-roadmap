@@ -33,8 +33,13 @@ def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
     lines.append("")
     read_tab = "Reading" if ltype == "Read" else "Lecture"
     lines.append(
-        f"> **Foundations** — plain language first. When this makes sense, open **{read_tab}**. "
-        "Switch to **Study guide** for the full checklist and prove rubric."
+        "> **Step 1 — Foundations (this tab)** Read until **Ready for the lecture when** (or reading equivalent) is true."
+    )
+    lines.append(
+        f"> **Step 2 — {read_tab}** Open the **{read_tab}** tab for the primary video or article."
+    )
+    lines.append(
+        "> **Step 3 — Study guide** Use **Study guide** / **Visual guide** only when Step 1 feels easy on this topic."
     )
     lines.append("")
 

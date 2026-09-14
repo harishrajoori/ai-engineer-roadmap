@@ -4,10 +4,18 @@
 
 | | |
 | --- | --- |
-| **Companion docs** | Daily syllabus: [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) · Strategy & depth: [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) · Studio habits: [`AI_for_Data_Engineers_Primer.md`](./AI_for_Data_Engineers_Primer.md) |
+| **In this studio** | **Course sidebar** (topics & prove lines) · **Course overview** (map, glossary, checklist) · **Lab & Prove** on each topic |
 | **Who it is for** | Data, analytics, and platform engineers who ship production pipelines and want to **design and run LLM/agent platforms** |
 | **Pace** | ~15 months · 10–15 hours/week (self-paced) |
 | **What you leave with** | One **end-to-end AI platform** on public or synthetic data: gateway, contracts, orchestration, tools, retrieval, eval gates, policy, traces, deploy |
+
+## Start here in 60 seconds
+
+1. **Daily driver** — topics in the studio sidebar (not this whole brief every day).
+2. **Every topic** — **Theory → Foundations** first, then **Lecture / Reading**, then Lab & Prove.
+3. **Course 0** — schemas & extraction; **Course 1** — transformers *at intuition level* (Karpathy + 3Blue1Brown) + LiteLLM gateway.
+4. **Strategy once** — skim phases and reference architecture below; depth lives in Master Plan §17.
+5. **Optional model math/code** — [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md) (not required for prove gates).
 
 ## Contents
 
@@ -318,13 +326,13 @@ Logs / docs → LiteLLM gateway → Instructor/Pydantic extraction
 | --- | --- |
 | **Courses (left)** | Navigate months 0–15; tier labels P0 / P1 / P2. |
 | **Topics (left-center)** | Ordered checklist per course; **START HERE** on entry topic. |
-| **Content (center)** | **Theory** → **Lecture/Read** → **More resources** → **Lab & Prove**. |
+| **Content (center)** | **Theory (Foundations)** → **Lecture/Reading** → **Study guide** when easy → **Lab & Prove**. |
 | **Mentor (right, optional)** | BYOK API keys for explanations—not required to learn. |
 
 **Rules**
 
 1. One topic at a time—finish the checkbox, not the whole channel playlist.
-2. **Foundations** theory before lecture when you are new to a topic.
+2. **Always start on Theory** — read **Foundations** until the ready checklist is true, then open **Lecture** or **Reading** (the video/article is Step 2, not Step 1).
 3. **Prove** ends the course—paste evidence in Lab & Prove.
 4. Use **Focus content** (toolbar) on small screens to hide side panels.
 
@@ -358,7 +366,7 @@ All data **synthetic or public**—no employer secrets in the public repo.
 
 ## 10. Course-by-course coverage (detailed)
 
-**Quick view:** artifact per course is in [§9](#9-what-you-build-over-15-months-artifact-ladder). Below is **skills depth** only; hours and prove lines live in the [learning track](./AI_System_Engineer_Learning_Track_2027.md). Maintainer map: [`DOCUMENTATION_MAP.md`](./DOCUMENTATION_MAP.md).
+**Quick view:** artifact per course is in [§9](#9-what-you-build-over-15-months-artifact-ladder). Below is **skills depth** only; hours and prove lines are in the **topic checklist** for each course in the sidebar.
 
 ### Course 0 — Boot: structured extraction (foundation week)
 
@@ -382,9 +390,11 @@ All data **synthetic or public**—no employer secrets in the public repo.
 | **Hours** | 12–18 |
 | **Prove** | Release `v0.2` + README metrics |
 
-**Covers:** LLM lifecycle, context limits, failure modes; time-boxed generative-AI short courses; Karpathy deep dive (optional depth); LiteLLM router hardened; per-request **cost and latency** logging.
+**Covers:** LLM lifecycle, context limits, failure modes; time-boxed generative-AI short courses; **required** Karpathy deep dive (transformers, KV cache, inference) + 3Blue1Brown attention intuition; LiteLLM router hardened; per-request **cost and latency** logging.
 
 **Platform skills:** Gateway as **single front door** to models; observability baseline.
+
+**Theory before video:** Each Course 1 topic opens on **Foundations** in the studio; optional build-from-scratch links in [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md).
 
 ---
 
@@ -573,10 +583,9 @@ All data **synthetic or public**—no employer secrets in the public repo.
 ## 11. Suggested reading order (before you touch “LLM lecture”)
 
 1. **This brief** (you are here)—platform frame, mindmap, architecture.
-2. [`AI_for_Data_Engineers_Primer.md`](./AI_for_Data_Engineers_Primer.md)—studio layout and first-30-minutes habits.
-3. **Course 0 overview** in the studio (course map, glossary, prove rubric)—not Course 1 yet.
-4. **Course 0 → START HERE topic**—first prove-sized slice of work.
-5. **Course 1** LLM foundations when Course 0 prove is done or nearly done.
+2. **Course 0 overview** also shows the short **studio primer** (panels, rules, first hour)—same ideas as this page, lighter weight.
+3. **Course 0 → START HERE** topic—first prove-sized slice of work (extraction & schemas).
+4. **Course 1** LLM foundations when Course 0 prove is done or nearly done.
 
 If you open Karpathy’s deep dive on day one, that is fine **as optional depth**—but your **graded story** is platform artifacts, not hours watched.
 

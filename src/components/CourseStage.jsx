@@ -80,7 +80,8 @@ export default function CourseStage({
       <section className="course-overview-block course-overview-topics-first">
         <h2>Topics — do these in order</h2>
         <p className="course-overview-hint">
-          The topic marked START HERE is your entry point. On each topic: Theory (Foundations) → Lecture → Lab when
+          The topic marked START HERE is your entry point. On each topic: read <strong>Theory → Foundations</strong> until
+          the ready checklist is true, then open <strong>Lecture</strong> or <strong>Reading</strong>, then Lab when
           needed.
         </p>
         {outline.map((group) => (

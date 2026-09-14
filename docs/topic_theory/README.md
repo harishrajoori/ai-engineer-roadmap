@@ -48,4 +48,7 @@ Learners can still use **Regenerate theory** in the mentor panel; that AI output
 
 1. Pick `order` from the sidebar topic number.
 2. Add `docs/topic_theory/NNN-short-slug.studio.md`.
-3. Run `npm run curriculum` and `npm run validate:ci`.
+3. Add or extend **`data/lab_scenarios.json`** (`by_course` + optional `by_order`) for DE scenario text and copy-paste code in **Lab & Prove**.
+4. Run `npm run curriculum` and `npm run validate:ci`.
+
+**Visual guides today:** Karpathy intro/deep-dive, Instructor, LangGraph, MCP, document RAG, Course 0/1/3/4 build milestones—add more for any topic where a diagram beats prose alone.
