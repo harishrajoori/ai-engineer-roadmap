@@ -306,3 +306,6 @@ def attach_theory_levels(lesson: dict, course_outcomes: list[str], coverage_note
     lesson["theory_summary"] = intermediate_md
     lesson["study_order"] = "theory_then_lecture"
     apply_studio_theory_docs(lesson)
+    from theory_enrichment import enrich_theory_levels
+
+    enrich_theory_levels(lesson)

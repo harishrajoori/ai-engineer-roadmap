@@ -8,6 +8,7 @@ from append_implementation_repos import local_setup_for_lesson
 from curriculum_enrichment import prove_pack_for_course, real_world_for_course
 from lab_scenarios import resolve_de_lab
 from topic_hints import get_topic_hint
+from topic_lab_practice import lab_practice_for_plan
 
 
 def _implementation_resources(row: dict) -> list[dict]:
@@ -162,6 +163,7 @@ def build_lab_plan(row: dict) -> dict[str, Any]:
     }
     if de_lab:
         plan["de_lab"] = de_lab
+    plan["lab_practice"] = lab_practice_for_plan(row)
     return plan
 
 

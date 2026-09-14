@@ -99,6 +99,18 @@ export default function LabProvePanel({
         </p>
       </div>
 
+      {labPlan?.lab_practice?.markdown && (
+        <section className="lab-prove-section lab-prove-lab-practice" aria-labelledby="lab-practice-heading">
+          <h4 id="lab-practice-heading" className="lab-prove-section-title">
+            <Code2 size={16} aria-hidden />
+            {labPlan.lab_practice.title || "Lab & Practice"}
+          </h4>
+          <div className="lab-prove-scenario-prose">
+            <MarkdownProse math>{labPlan.lab_practice.markdown}</MarkdownProse>
+          </div>
+        </section>
+      )}
+
       {deLab?.scenario_markdown && (
         <section className="lab-prove-section lab-prove-de-scenario" aria-labelledby="lab-de-scenario-heading">
           <h4 id="lab-de-scenario-heading" className="lab-prove-section-title">

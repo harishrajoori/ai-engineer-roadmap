@@ -6,8 +6,8 @@ from typing import Any
 
 PROGRAM_WALKTHROUGH: dict[str, Any] = {
     "audience": (
-        "~5+ years shipping data or platform systems (pipelines, warehouses, APIs, tests). "
-        "You are adding an AI platform layer—not starting over as a beginner developer."
+        "7+ years shipping data or platform systems (Spark/Airflow-scale pipelines, warehouses, APIs, CI). "
+        "You are adding an AI platform layer—assume production judgment, not bootcamp pacing."
     ),
     "default_theory_level": "beginner",
     "what_is_platform": (

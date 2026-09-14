@@ -1,4 +1,4 @@
-"""Fill and enrich topic hints for every lesson (all audiences)."""
+"""Fill and enrich topic hints for every lesson (senior DE / platform audience)."""
 
 from __future__ import annotations
 

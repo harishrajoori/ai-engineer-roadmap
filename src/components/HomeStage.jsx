@@ -60,7 +60,7 @@ export default function HomeStage({
         <div className="home-hero">
           <p className="home-eyebrow">
             <Sparkles size={14} aria-hidden />
-            {programWalkthrough.audience || "Learn AI systems step by step"}
+            {programWalkthrough.audience || "7+ YOE data/platform engineers → AI platform depth"}
           </p>
           <h1 className="home-title">AI platform engineering — for data &amp; platform engineers</h1>
 

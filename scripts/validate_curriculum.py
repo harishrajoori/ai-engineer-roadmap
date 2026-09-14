@@ -267,6 +267,14 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
 
     if shallow_advanced:
         warnings.append(f"{shallow_advanced} lessons with advanced theory < 1600 chars (target richer platform depth)")
+
+    missing_mermaid = sum(
+        1
+        for les in lessons
+        if "```mermaid" not in (les.get("theory_levels") or {}).get("beginner", "")
+    )
+    if missing_mermaid:
+        warnings.append(f"{missing_mermaid} lessons missing mermaid diagram in beginner theory")
     if advanced_shorter_than_beginner:
         warnings.append(
             f"{advanced_shorter_than_beginner} lessons where advanced is shorter than beginner (inverted depth)"
