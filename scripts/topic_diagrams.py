@@ -7,21 +7,29 @@ from typing import Any
 
 _COURSE_ARCHITECTURE: dict[str, str] = {
     "0": """flowchart TB
-  subgraph Landing["Landing / raw"]
-    RAW[Unstructured logs events]
+  subgraph ingest [Ingest boundary]
+    RAW[Unstructured logs]
+    RL[Rate limit per job_id]
   end
-  subgraph Bronze["Your platform slice"]
-    EXT[Extractor API]
-    VAL[Pydantic + invariants]
+  subgraph core [Extraction service]
+    EXT[Instructor + schema]
+    VAL[Pydantic validators]
+    DLQ[Quarantine invalid rows]
+  end
+  subgraph quality [Quality gate]
     GS[Golden-set pytest]
+    MET[README metric]
   end
-  RAW --> EXT --> VAL --> GS
-  GS --> MET[README metric]""",
+  RAW --> RL --> EXT --> VAL
+  VAL -->|ok| GS --> MET
+  VAL -->|fail| DLQ""",
     "1": """flowchart LR
-  JOB[Batch / CLI job] --> GW[LiteLLM gateway]
-  GW --> M1[Primary model]
-  GW --> M2[Fallback model]
-  GW --> LOG[(usage: tokens latency USD)]""",
+  JOB[Batch CLI] --> GW[LiteLLM proxy]
+  GW --> RL[429 retry + budget]
+  RL --> M1[Primary model]
+  RL --> M2[Fallback route]
+  GW --> LOG[(usage JSONL)]
+  LOG --> FIN[Cost attribution]""",
     "2": """stateDiagram-v2
   [*] --> Extract
   Extract --> Validate
@@ -123,12 +131,14 @@ def architecture_mermaid(lesson: dict) -> str:
 
     if "instructor" in b or "pydantic" in b:
         return """flowchart TB
-  RAW[Raw text] --> PROMPT[Prompt + response_model]
-  PROMPT --> LLM[Chat completion]
-  LLM --> PARSE[JSON to Pydantic]
-  PARSE -->|invalid| RETRY[Repair retry]
+  RAW[Raw text] --> HASH[prompt_hash logged]
+  HASH --> LLM[Chat completion]
+  LLM --> PARSE[JSON parse]
+  PARSE -->|invalid| RETRY[Repair max 3]
   RETRY --> LLM
-  PARSE -->|valid| OUT[Typed record]"""
+  PARSE -->|valid| PYD[Pydantic validate]
+  PYD -->|fail| DLQ[Quarantine + metric]
+  PYD -->|ok| OUT[Typed bronze record]"""
     if "litellm" in b:
         return _COURSE_ARCHITECTURE["1"]
     if "langgraph" in b or "langchain" in b:
@@ -197,7 +207,7 @@ def diagram_markdown_block(lesson: dict) -> str:
     lines = [
         "## Architecture (visual)",
         "",
-        "Map this topic to components you already operate (jobs, gateways, catalogs, CI).",
+        "Boundaries, failure paths, and stores—not a generic pipeline sticker.",
         "",
         "```mermaid",
         arch.strip(),

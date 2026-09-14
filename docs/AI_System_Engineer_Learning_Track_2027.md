@@ -109,7 +109,7 @@
 **Read**
 
 - [ ] [Instructor — quick start](https://python.useinstructor.com/getting-started/)
-- [ ] [Pydantic V2 docs](https://docs.pydantic.dev/latest/)
+- [ ] [Pydantic V2 — models](https://docs.pydantic.dev/latest/concepts/models/)
 - [ ] [LiteLLM — reliable completions / fallbacks](https://docs.litellm.ai/docs/completion/reliable_completions)
 - [ ] [Hamel — evals intro](https://hamel.dev/blog/posts/evals/)
 - [ ] [Applied LLMs in Production](https://applied-llms.org/) · skim structure

@@ -55,6 +55,9 @@ URL_FIXES: dict[str, str] = {
     "https://github.com/zilliztech/gptcache": "https://github.com/zilliztech/GPTCache#-installation",
     "https://github.com/NVIDIA/NeMo-Guardrails": "https://github.com/NVIDIA/NeMo-Guardrails#getting-started",
     "https://github.com/pgvector/pgvector": "https://github.com/pgvector/pgvector#installation",
+    "https://docs.pydantic.dev/latest/": "https://docs.pydantic.dev/latest/concepts/models/",
+    "https://docs.pydantic.dev/latest": "https://docs.pydantic.dev/latest/concepts/models/",
+    "https://github.com/vllm-project/vllm": "https://github.com/vllm-project/vllm/blob/main/docs/design/automatic_prefix_caching.md",
 }
 
 # For Read topics: prefer official docs over raw GitHub when both exist.

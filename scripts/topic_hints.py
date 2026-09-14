@@ -58,7 +58,7 @@ _HINTS: dict[str, dict[str, Any]] = {
         "capstone_action": "Implement `extract(record) -> LogEvent` with max 3 retries on `ValidationError`.",
         "done_when": "Golden set reports valid JSON % on `data/golden/`.",
     },
-    "https://docs.pydantic.dev/latest": {
+    "https://docs.pydantic.dev/latest/concepts/models/": {
         "one_liner": "Data validation and settings layer—your schema contract for LLM outputs.",
         "why_now": "Same role as warehouse column types: reject bad shapes before they hit downstream tables.",
         "concepts": ["pydantic", "structured_output", "invariant"],

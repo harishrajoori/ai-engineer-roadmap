@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from topic_hints import get_topic_hint
+from topic_lab_specs import specific_code_fence, specific_implementation
 
 
 def _de_analogy_line(course: str, ltype: str) -> str:
@@ -45,7 +46,10 @@ def lab_practice_markdown(lesson: dict) -> str:
 
     lines.append("### What you implement")
     lines.append("")
-    if hint.get("capstone_action"):
+    spec = specific_implementation(lesson, hint)
+    if spec:
+        lines.append(spec)
+    elif hint.get("capstone_action"):
         lines.append(hint["capstone_action"])
     elif ltype == "Build":
         lines.append(f"**Build milestone:** {title}")
@@ -76,7 +80,8 @@ def lab_practice_markdown(lesson: dict) -> str:
 
     lines.append("### Starter code (adapt paths)")
     lines.append("")
-    lines.append(_starter_fence(lesson, ltype))
+    fence = specific_code_fence(lesson, ltype) or _starter_fence(lesson, ltype)
+    lines.append(fence)
     lines.append("")
 
     if url.startswith("http"):
@@ -154,13 +159,15 @@ pytest -q
 git commit -am "feat: milestone N"
 git tag v0.N   # when syllabus asks
 ```"""
-    return """```python
-# sketch.py — replace with topic-specific module
-def main() -> None:
-    raise SystemExit("implement me and add pytest")
+    course = str(lesson.get("course", "0"))
+    return f"""```python
+# course_{course}/topic_{lesson.get("order", "?")}.py — wire to prove artifact for this row
+def run() -> None:
+    \"\"\"TODO: implement acceptance criteria from Theory → Lab & Prove.\"\"\"
+    raise NotImplementedError("add behavior + pytest before marking topic complete")
 
 if __name__ == "__main__":
-    main()
+    run()
 ```"""
 
 
