@@ -5,11 +5,54 @@ from __future__ import annotations
 from typing import Any
 
 PROGRAM_WALKTHROUGH: dict[str, Any] = {
-    "audience": (
-        "7+ years shipping data or platform systems (Spark/Airflow-scale pipelines, warehouses, APIs, CI). "
-        "You are adding an AI platform layer—assume production judgment, not bootcamp pacing."
-    ),
+    "audience": "Senior data & platform engineers · 7+ years in production systems",
     "default_theory_level": "beginner",
+    "home_headline": "Master AI platform engineering.",
+    "home_subhead": (
+        "Transition distributed-systems expertise into production LLM architecture: typed contracts, "
+        "model gateways, agent orchestration, measured retrieval, eval CI, policy, and traces—built incrementally "
+        "in one capstone repository with prove artifacts at every course."
+    ),
+    "home_value_props": [
+        {
+            "title": "Engineering discipline first",
+            "body": "Schemas, golden sets, and merge gates—not prompt hacks. Same rigor you apply to pipelines and APIs.",
+        },
+        {
+            "title": "One platform spine",
+            "body": "Sixteen courses extend a single repo: extraction, gateway, graphs, tools, RAG, evals, deploy, lineage.",
+        },
+        {
+            "title": "Theory before lecture",
+            "body": "Every topic opens on Foundations. You read the operational model, then open the video or doc.",
+        },
+        {
+            "title": "Prove what you ship",
+            "body": "Each course ends with a verifiable artifact: tags, CI runs, benchmarks, policy tests, or deploy evidence.",
+        },
+    ],
+    "home_artifact_ladder": [
+        {"courses": "0–1", "title": "Contracts & gateway", "outcome": "Validated extraction + per-request cost/latency logs"},
+        {"courses": "2–3", "title": "Orchestration & tools", "outcome": "LangGraph with HITL + audited MCP surface"},
+        {"courses": "4–6", "title": "Knowledge layer", "outcome": "Hybrid retrieval benchmarks, chunks, graph slice"},
+        {"courses": "7–9", "title": "Trust & observability", "outcome": "Golden-set harness, CI regression gate, OPA + traces"},
+        {"courses": "10–12", "title": "Ship & harden", "outcome": "Integrated alpha, deploy proof, v1.0 lineage sample"},
+        {"courses": "13–15", "title": "Depth & narrative", "outcome": "Frontier spikes + public architecture story"},
+    ],
+    "home_workflow": [
+        {
+            "title": "Start Course 0",
+            "detail": "Boot week: Pydantic, Instructor, golden-set metric in your public repo.",
+        },
+        {
+            "title": "Follow the checklist",
+            "detail": "Topics run Watch → Read → Build → Prove. Use START HERE on each course.",
+        },
+        {
+            "title": "Advance on proof",
+            "detail": "Mark a course complete when its Prove gate is done—not when videos are finished.",
+        },
+    ],
     "what_is_platform": (
         "AI platform engineering is how you run LLM and agent workloads like any other production system: "
         "contracts on outputs, a gateway for models and cost, orchestration with human checkpoints, "
@@ -21,14 +64,13 @@ PROGRAM_WALKTHROUGH: dict[str, Any] = {
         "They are not SQL engines and not source-of-truth databases—validate every field like a DQ check."
     ),
     "what_you_build_overall": (
-        "One capstone repo that grows each course: typed extraction → gateway metrics → LangGraph + HITL → "
-        "MCP tools → hybrid search → chunk pipelines → eval CI → policy/traces → integrated alpha → deploy → v1.0 lineage. "
-        "Public or synthetic data only."
+        "One capstone repository grows across sixteen courses—each month adds a platform capability "
+        "with tests and a prove artifact (public or synthetic data only)."
     ),
     "first_three_clicks": [
-        "Scroll the **program brief** on this page (architecture + course map)—10–15 minutes.",
-        "Open **Course 0 overview** (map, glossary, prove rubric) before jumping to Month 1.",
-        "On any topic: stay on **Theory → Foundations** first, then **Lecture**—never start with the raw video link.",
+        "Press **Start Course 0** and complete the first START HERE topic.",
+        "Skim the **program brief** when you need architecture context—not before your first commit.",
+        "Use **Course overview** for the monthly map, glossary, and acceptance checklist.",
     ],
     "every_topic_same_order": [
         "Theory → Foundations (this tab first on every new topic).",

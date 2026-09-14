@@ -3,15 +3,81 @@
   "program_primer_markdown": "# Studio primer — data & platform engineers\n\nYou have shipped **pipelines, models, and services**. This studio teaches **AI platform engineering** in the same discipline: contracts, tests, observability, and prove artifacts—not a pile of disconnected videos.\n\n**Read the full narrative first:** [`AI_Platform_System_Engineer_Program_Brief.md`](./AI_Platform_System_Engineer_Program_Brief.md) (also on the **home page** in the app).\n\n## How the studio maps to your job\n\n| Panel | What to do |\n| --- | --- |\n| **Left** | Courses **0 → 15** in order. Advance when the **Prove** gate for that course is done. |\n| **Middle** | Topic checklist—work **top to bottom**. Follow **START HERE**. |\n| **Center** | **Theory (Foundations) first** → **Lecture / Reading** → **Study guide** when easy → **Lab & Prove** (DE scenario + code blocks). |\n| **Right** | Notes; optional mentor (Settings → API key). Use **Focus content** on small screens. |\n\n## Rules (senior-engineer pace)\n\n1. **Platform before playlist** — finish the topic objective; do not binge entire channels.\n2. **Foundations → Study guide → Platform depth** — move up only when the level feels easy.\n3. **Optional rows** — skip until you have slack; they are depth, not blockers.\n4. **Prove = merge gate** — link release, CI, benchmark, or demo when the rubric is met.\n\n## Your first hour (not “learn transformers first”)\n\n1. On **home**, read the **program brief** sections on architecture and phases (~15 min).\n2. Open **Course 0 overview** (map, glossary, acceptance checklist).\n3. Start **Course 0 → START HERE** — extraction, schemas, golden set.\n4. When that line is clear, take the **optional** LLM intro videos as context for Course 0–1—not as the program definition.\n\n## Artifact ladder (one repo)\n\n| Course | Platform increment |\n| --- | --- |\n| 0 | Typed JSON + golden-set metric |\n| 1 | Gateway cost/latency logs |\n| 2–3 | LangGraph + MCP audit |\n| 4–6 | Retrieval benchmarks + chunks + graph slice |\n| 7–9 | Eval harness, CI gate, policy + traces |\n| 10–12 | Alpha integration → deploy → `v1.0` lineage |\n| 13–15 | Frontier electives + public narrative (+ optional career module) |\n\n## Theory levels\n\n| Level | Use when |\n| --- | --- |\n| **Foundations** | **Always start here** on every new topic (studio opens on Theory) |\n| **Study guide / Visual guide** | After Foundations; before or alongside Lecture |\n| **Lecture / Reading** | Primary link—**after** Foundations ready checklist |\n| **Platform depth** | Failure modes, tradeoffs, ops detail |\n\nMark a topic complete when **this row’s** outcome is met—not when you have watched every resource on the internet.\n\n**Transformers (Course 1):** intuition via Karpathy Deep Dive + 3Blue1Brown; optional code depth in [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md).",
   "program_brief_markdown": "**Read this before Course 0.** If you have spent years moving data through warehouses, orchestrators, and APIs, this brief explains how **AI platform engineering** extends that work—not replaces it—and how **16 courses (0–15)** assemble into one system you can run, test, and operate. LLM mechanics, RAG, and agents appear **in context** as you add each layer; they are not the opening chapter.\n\n| | |\n| --- | --- |\n| **In this studio** | **Course sidebar** (topics & prove lines) · **Course overview** (map, glossary, checklist) · **Lab & Prove** on each topic |\n| **Who it is for** | Data, analytics, and platform engineers who ship production pipelines and want to **design and run LLM/agent platforms** |\n| **Pace** | ~15 months · 10–15 hours/week (self-paced) |\n| **What you leave with** | One **end-to-end AI platform** on public or synthetic data: gateway, contracts, orchestration, tools, retrieval, eval gates, policy, traces, deploy |\n\n## Start here in 60 seconds\n\n1. **Daily driver** — topics in the studio sidebar (not this whole brief every day).\n2. **Every topic** — **Theory → Foundations** first, then **Lecture / Reading**, then Lab & Prove.\n3. **Course 0** — schemas & extraction; **Course 1** — transformers *at intuition level* (Karpathy + 3Blue1Brown) + LiteLLM gateway.\n4. **Strategy once** — skim phases and reference architecture below; depth lives in Master Plan §17.\n5. **Optional model math/code** —  (not required for prove gates).\n\n## Contents\n\n1. [What you are signing up for](#1-what-you-are-signing-up-for)  \n2. [What is AI platform / systems engineering?](#2-what-is-ai-platform--ai-systems-engineering)  \n3. [Who this is for & prerequisites](#3-who-this-is-for--prerequisites)  \n4. [Pacing while employed](#4-pacing-while-employed)  \n5. [What problems it solves](#5-what-problems-does-ai-platform-engineering-solve)  \n6. [Program mindmap & phases](#6-program-mindmap-domains-and-order)  \n7. [Reference architecture](#7-reference-architecture-what-you-are-building-toward)  \n8. [Learning studio layout](#8-how-the-learning-studio-works)  \n9. [Artifact ladder (courses 0–15)](#9-what-you-build-over-15-months-artifact-ladder)  \n10. [Course encyclopedia (skills depth)](#10-course-by-course-coverage-detailed)  \n11. [Reading order](#11-suggested-reading-order-before-you-touch-llm-lecture)  \n12. [Success criteria](#12-success-criteria-how-you-know-the-platform-is-real)  \n13. [Data & security boundaries](#13-data--security-boundaries)  \n14. [Glossary & stack substitutions](#14-glossary--stack-substitutions)  \n\n### Prerequisites\n\n| You should already be comfortable with | You do **not** need |\n| --- | --- |\n| Python 3.11+, git, code review culture | Training foundation models from scratch |\n| Building or operating **data pipelines** or **backend APIs** | A prior job title of “ML engineer” |\n| Unit tests, CI, idempotent jobs | Transformer math proofs |\n| Reading cloud/IAM docs at a practitioner level | A paid MOOC subscription |\n| ~**5 years** shipping data/platform software (or equivalent depth) | Completing every optional video in the track |\n\n---\n\n## 1. What you are signing up for\n\nPicture your week as a data engineer: a product team wants “AI on our logs/docs.” Someone wires ChatGPT to a script; JSON shape changes every deploy; nobody knows token spend; the demo works until real data hits. You have seen this movie—**missing contracts, missing tests, missing lineage**—just with a model in the middle.\n\nThis program is the **opposite of a demo script**. It is a **universal, course-by-course build** of the platform layer teams actually need: force structured outputs, route models safely, run agent workflows with human checkpoints, expose tools with audit, index knowledge with benchmarks, block bad releases with eval CI, and trace what happened end to end. You implement it once, in one repo, the same way you would grow a internal data platform—**incremental milestones, each with a prove artifact** (release, test suite, benchmark table, policy test, deploy note).\n\n**How it is organized**\n\n- **Courses 0–15** are months of scope, not vanity certificates. Each course adds a **capability** to the same capstone codebase.\n- The **learning studio** (this repo’s app) is the syllabus UI: theory at three depths, lectures/links, lab steps with real OSS references, and checklists. Progress is yours; **Prove** means “show the artifact,” not “watched the video.”\n- **Course 0** is a short boot on **typed extraction** (messy text → validated records). That is deliberate: you start where data engineers already live—**schemas and tests**—then widen into gateway, agents, retrieval, and governance.\n\n**What you are not signing up for**\n\n| Skip this expectation | What we do instead |\n| --- | --- |\n| Learn prompts in isolation | Learn **contracts, gateways, and harnesses** that make prompts one small input |\n| Collect random framework repos | Follow one **architecture spine**; frameworks are interchangeable details |\n| Train or research foundation models | **Operate** models via APIs; depth is integration and reliability |\n| Begin with three months of transformer math | Get a **platform map** first; deep LLM theory is tied to Courses 0–1 when you need it |\n| Pay for MOOCs | Free docs, videos, and OSS implementations are enough if you do the proves |\n\n**What “done” feels like**\n\nYou can walk someone through your repo—from raw-ish input to stored, typed output—and point to **where** you validate, **where** you route models, **where** tools are allowed, **where** retrieval is measured, and **where** CI would stop a bad change. That is the universal skill this course sells: **AI platform engineering as engineered systems**, not as magic strings.\n\n---\n\n## 2. What is AI platform / AI systems engineering?\n\n**AI platform engineering** is the discipline of running **LLM and agent workloads as production software**: APIs, data contracts, orchestration, retrieval, cost controls, security, testing, and observability—so other teams can build features **without** every app reinventing the same fragile glue.\n\nThink of an LLM as an **untrusted compute kernel**: fast and flexible, but nondeterministic, opaque, and unsafe to wire directly to databases or tools without guards.\n\n| Layer | Platform engineer owns | Typical data-engineer analogy |\n| --- | --- | --- |\n| **Ingress** | Auth, rate limits, request IDs, PII classification | API gateway + landing zone |\n| **Contract** | Pydantic schemas, validation, retries | Schema registry + Great Expectations on a row |\n| **Routing** | Multi-model proxy, fallbacks, budgets | Job router / queue priority |\n| **Orchestration** | State machines, HITL, checkpointing | Airflow / Dagster with human approval steps |\n| **Tools** | MCP or internal tool APIs, audit logs | Stored procedures + access logs |\n| **Knowledge** | Chunking, hybrid search, grounding | Bronze/silver indexing pipelines |\n| **Quality** | Golden sets, eval CI, regression gates | DQ tests blocking merge |\n| **Policy** | OPA / RBAC before tool execution | Row-level security + IAM |\n| **Observability** | Traces, cost per request, attribution | Pipeline lineage + SLA dashboards |\n| **Delivery** | Deploy, runbooks, platform docs for devs | Platform team “golden path” |\n\n**AI systems engineering** emphasizes **end-to-end behavior**: what happens from a user or batch job request through model calls, tool calls, retrieval, persistence, and audit—not a single notebook cell.\n\n### How this course sits in the landscape\n\n```mermaid\nflowchart LR\n  subgraph thin [Thin integration]\n    A[Single-app wrapper\\none API key · no tests]\n  end\n  subgraph research [Model building]\n    B[Training / research stack\\nnot this course]\n  end\n  subgraph here [This program]\n    C[AI platform engineering\\ncontracts · gateway · evals · ops]\n  end\n  A -.->|fragile in prod| X[Breaks on schema and cost]\n  B -.->|different path| Y[Frontier electives 13–14]\n  C --> Z[Reliable platform you can extend]\n```\n\n---\n\n## 3. Who this is for & prerequisites\n\n### Data engineers (primary lens)\n\nYou already solve problems that **production AI cannot skip**:\n\n1. **Messy inputs → trusted tables** — Logs, PDFs, tickets, and events need parsing, typing, and DQ before anyone trusts a dashboard. LLM extraction is the same class of problem with a noisier engine.\n2. **Idempotency and reconciliation** — You know duplicate keys and balance checks. Agent platforms need the same **invariant checks** before writes.\n3. **Lineage** — “Which upstream file produced this metric?” becomes “which chunk and which model call produced this field?”\n4. **Cost and capacity** — Warehouse spend discipline translates to **token budgets**, caching, and model routing.\n5. **Security and classification** — You already think about PII in pipelines; LLM calls need **data-classification gates** before text leaves the VPC.\n6. **Testing culture** — pytest, CI, and fixture data are how you prove a platform change is safe—exactly what **eval harnesses** are for LLM features.\n\nRoughly **most production AI work** is still **data and platform**: ingestion, indexing, schema enforcement, batch + online paths, and governance—not tuning attention heads.\n\n### Skills you reuse vs skills you add\n\n| You already have | You will add in this program |\n| --- | --- |\n| Python, git, SQL, pipelines | Instructor/Pydantic **response contracts** |\n| Unit tests, CI | **Golden-set evals** and regression gates |\n| Airflow/MWAA-style orchestration | **LangGraph** (or equivalent) state + HITL |\n| API integrations | **LiteLLM** gateway patterns |\n| Data modeling | **Chunk schemas**, graph slices for GraphRAG |\n| IAM, secrets patterns | **OPA**-style policy before tools |\n| On-call and runbooks | **Traces** (e.g. Langfuse) and cost attribution |\n\nYou do **not** need to abandon data engineering. You **extend** it into the control plane for AI features.\n\n### Platform & backend engineers\n\nIf your week is **services, queues, and on-call** rather than SQL-only, the same program applies: you will map ingress, routing, and policy to patterns you already use, and add **eval harnesses** and **retrieval pipelines** as new subsystems. Skip duplicate “what is git” material; lean on **Platform depth** theory and prove gates.\n\n### Analytics & ML-adjacent engineers\n\nIf you own **metrics layers, semantic models, or experimentation**, Courses 4–9 are especially natural (retrieval quality, golden sets, CI). Course 0 still matters—**typed extraction** is how AI features land in tables you would trust.\n\n---\n\n## 4. Pacing while employed\n\n| Hours/week | Realistic pace | Tips |\n| --- | --- | --- |\n| **10** | ~1 course / 5–6 weeks | Finish required prove lines; defer optional Watch rows. |\n| **12–15** | ~1 course / month (track intent) | Batch Lab work on weekends; run eval CI during weekday PRs. |\n| **20+** | Course 0 in 1–2 weeks; faster P1 | Still do prove gates—speed without artifacts is a demo, not a platform. |\n\n**Course 0** can be a **7-day sprint** or **two weeks** beside a day job. **Courses 10–12** need larger integration blocks—plan a single “integration month” with slack.\n\n**Advancing to “advanced”:** move from **Foundations** → **Study guide** → **Platform depth** per topic; complete **Courses 7–9** before calling retrieval/agent work “production-ready”; treat **Course 12 `v1.0`** as the baseline complete platform, **13–14** as electives on top.\n\n---\n\n## 5. What problems does AI platform engineering solve?\n\nWithout a platform layer, teams repeat the same failures:\n\n| Failure mode | Symptom | Platform response (what you build) |\n| --- | --- | --- |\n| **Schema chaos** | JSON shape drifts every prompt tweak | `response_model` + validators + retries |\n| **Silent hallucination** | Wrong fields land in DB | Golden-set evals + block merge on regression |\n| **Runaway cost** | One loop burns tokens | Gateway budgets, caching, model routing |\n| **Unsafe tools** | Agent deletes or exfiltrates | Policy gate + audited tool surface (MCP) |\n| **No accountability** | “The model did it” | Trace IDs tying chunk → call → write |\n| **RAG theater** | Vector DB without benchmarks | Hybrid retrieval + measured recall/precision table |\n| **Demo-only agents** | Works in notebook, dies in prod | HITL interrupt, checkpointing, timeouts |\n| **Framework churn** | Rewrite every year | Thin domain logic on thick **harness** |\n\nThe capstone story in this program is deliberately **boring in the right way**: reconciler / ops logs / public docs → typed records → workflows → tools → search → eval CI → deploy.\n\n---\n\n## 6. Program mindmap (domains and order)\n\nHigh-level **concept map**—not the lesson order. You climb from **contracts** to **capstone**.\n\n```mermaid\nmindmap\n  root((AI Platform\\nEngineering))\n    Foundations\n      Platform mindset\n      Agentic SDLC\n      Threat model\n      Synthetic data only\n    Contracts\n      Pydantic models\n      Instructor extraction\n      Retries\n      Invariants\n    Gateway\n      LiteLLM routing\n      Fallbacks\n      Cost logs\n      Rate limits\n    Orchestration\n      LangGraph state\n      Branching\n      HITL interrupt\n      Checkpointing\n    Tools\n      MCP servers\n      JSON Schema tools\n      Audit fields\n    Knowledge\n      Hybrid retrieval\n      Chunk pipelines\n      Graph slice\n    Quality\n      Golden sets\n      Eval harness\n      CI gates\n    Governance\n      OPA policy\n      Tracing\n      Lineage\n    Delivery\n      Deploy\n      Platform UX\n      Docs for devs\n    Electives\n      Frontier topics\n      Public narrative\n      Optional career module\n```\n\n### Phases (how courses group)\n\n| Phase | Courses | Theme | Prove mindset |\n| --- | --- | --- | --- |\n| **P0 — Boot** | 0 | Ship typed extraction fast | Public repo + metric on golden set |\n| **P1 — Platform core** | 1–3 | Gateway + agents + tools | Releases, HITL demo, MCP + audit |\n| **P2 — Knowledge** | 4–6 | Retrieval & documents | Benchmark tables, chunks, graph validator |\n| **P3 — Trust** | 7–9 | Evals, CI, policy, traces | Golden ≥30, CI blocks bad merge, policy test |\n| **P4 — Capstone** | 10–12 | Integrate, deploy, harden | `alpha` → deploy proof → `v1.0` + lineage |\n| **P5 — Electives** | 13–15 | Frontier + narrative | Measured experiments, technical posts, optional career module |\n\n**LLMs** are taught when you need them for **contracts and routing** (Courses 0–1), not as the first page of the program. **RAG** is Courses 4–6 after you can **extract and route** reliably.\n\n---\n\n## 7. Reference architecture (what you are building toward)\n\nThis is the **spine** every course extends:\n\n```mermaid\nflowchart TB\n  subgraph sources [Sources]\n    LOGS[Logs / tickets / docs\\npublic or synthetic]\n  end\n\n  subgraph ingress [Ingress]\n    GW[LiteLLM gateway\\nmodels · fallbacks · cost]\n  end\n\n  subgraph core [Core platform]\n    EXT[Instructor + Pydantic\\nstructured extraction]\n    ORCH[LangGraph orchestration\\nHITL · state]\n    MCP[MCP tool surface\\nschema · audit]\n  end\n\n  subgraph knowledge [Knowledge]\n    RAG[Hybrid retrieval\\nvector + keyword]\n    CHUNK[Chunk pipeline\\njsonl schema]\n    GRAPH[Graph slice\\nvalidator queries]\n  end\n\n  subgraph trust [Trust layer]\n    EVAL[Eval harness\\ngolden set]\n    CI[CI gate\\nblock regression]\n    OPA[OPA policy\\nbefore tools]\n    TRACE[Tracing\\nLangfuse / OTel]\n  end\n\n  subgraph store [Persistence]\n    DB[(Warehouse / OLTP\\ntyped tables)]\n    LINEAGE[Lineage sample\\nchunk → call → row]\n  end\n\n  LOGS --> GW\n  GW --> EXT\n  EXT --> ORCH\n  ORCH --> MCP\n  ORCH --> RAG\n  RAG --> CHUNK\n  CHUNK --> GRAPH\n  ORCH --> EVAL\n  EVAL --> CI\n  MCP --> OPA\n  ORCH --> TRACE\n  EXT --> DB\n  TRACE --> LINEAGE\n```\n\nASCII equivalent (for plain-text readers):\n\n```\nLogs / docs → LiteLLM gateway → Instructor/Pydantic extraction\n  → LangGraph + HITL → MCP tools + OPA → RAG + eval CI → deploy + lineage\n```\n\n**How to read the diagram:** Courses **0–3** wire ingress, contracts, orchestration, and tools. **Courses 4–6** add knowledge paths (you can stub retrieval early, but benchmarks matter in Course 4+). **Courses 7–9** harden trust. **Course 10** connects the branches; **11–12** ship and record lineage. Not every arrow is a separate microservice on day one—start as modules in one repo, split when prove gates demand it.\n\n---\n\n## 8. How the learning studio works\n\n| Panel | Purpose |\n| --- | --- |\n| **Courses (left)** | Navigate months 0–15; tier labels P0 / P1 / P2. |\n| **Topics (left-center)** | Ordered checklist per course; **START HERE** on entry topic. |\n| **Content (center)** | **Theory (Foundations)** → **Lecture/Reading** → **Study guide** when easy → **Lab & Prove**. |\n| **Mentor (right, optional)** | BYOK API keys for explanations—not required to learn. |\n\n**Rules**\n\n1. One topic at a time—finish the checkbox, not the whole channel playlist.\n2. **Always start on Theory** — read **Foundations** until the ready checklist is true, then open **Lecture** or **Reading** (the video/article is Step 2, not Step 1).\n3. **Prove** ends the course—paste evidence in Lab & Prove.\n4. Use **Focus content** (toolbar) on small screens to hide side panels.\n\n---\n\n## 9. What you build over 15 months (artifact ladder)\n\nOne GitHub portfolio repo (name your choice) grows each course:\n\n| Course | You add to the platform |\n| --- | --- |\n| **0** | Reconciler service: messy text → typed JSON; golden-set score in README |\n| **1** | Gateway logging: model, tokens, latency, cost per request |\n| **2** | LangGraph workflow around reconciler; HITL fail path |\n| **3** | MCP server; tool audit log (user, tool, args hash, timestamp) |\n| **4** | Hybrid retrieval benchmark table (committed, reproducible) |\n| **5** | `chunks.jsonl` + chunk schema for document pipeline |\n| **6** | Graph validator test + sample GraphRAG query |\n| **7** | Eval harness; golden set ≥ 30 cases |\n| **8** | CI job that **blocks** merge on eval regression |\n| **9** | Trace export + policy test (deny dangerous tool) |\n| **10** | Integrated **alpha** tag; caching proof |\n| **11** | Deploy screenshot + “how to add a tool/eval” doc |\n| **12** | **`v1.0`** tag + lineage artifact (chunk → call → row) |\n| **13–14** | 1–2 frontier modules + public technical narrative |\n| **15** | Optional system-design practice & career log |\n\nAll data **synthetic or public**—no employer secrets in the public repo.\n\n---\n\n## 10. Course-by-course coverage (detailed)\n\n**Quick view:** artifact per course is in [§9](#9-what-you-build-over-15-months-artifact-ladder). Below is **skills depth** only; hours and prove lines are in the **topic checklist** for each course in the sidebar.\n\n### Course 0 — Boot: structured extraction (foundation week)\n\n| | |\n| --- | --- |\n| **Hours** | 14–28 |\n| **Prove** | Public GitHub reconciler + golden-set metric |\n\n**Covers:** Agentic SDLC (tests, README, threat model); Pydantic v2; Instructor `response_model` and retries; LiteLLM fallbacks; invariant validators on messy log-like text; pytest harness; shipping OSS.\n\n**Platform skills:** Treat LLM output as **untrusted** until validated; first **metric** you can reproduce from README.\n\n**LLM content here:** Short intro videos and Pydantic-for-LLM workflows—not a full transformer course yet.\n\n---\n\n### Course 1 — LLM foundations & deterministic I/O (month 1)\n\n| | |\n| --- | --- |\n| **Hours** | 12–18 |\n| **Prove** | Release `v0.2` + README metrics |\n\n**Covers:** LLM lifecycle, context limits, failure modes; time-boxed generative-AI short courses; **required** Karpathy deep dive (transformers, KV cache, inference) + 3Blue1Brown attention intuition; LiteLLM router hardened; per-request **cost and latency** logging.\n\n**Platform skills:** Gateway as **single front door** to models; observability baseline.\n\n**Theory before video:** Each Course 1 topic opens on **Foundations** in the studio; optional build-from-scratch links in .\n\n---\n\n### Course 2 — Agent orchestration (LangGraph) (month 2)\n\n| | |\n| --- | --- |\n| **Hours** | 12–18 |\n| **Prove** | HITL demo in README (validation fail → `interrupt()`) |\n\n**Covers:** Cyclic graphs, state, branching, checkpointing; LangGraph vs ad-hoc chains; wrap reconciler in a graph; human-in-the-loop paths.\n\n**Platform skills:** **Orchestration control plane**—not one-shot prompts.\n\n---\n\n### Course 3 — Tools & MCP (month 3)\n\n| | |\n| --- | --- |\n| **Hours** | 12–16 |\n| **Prove** | MCP server + audit log snippet |\n\n**Covers:** Model Context Protocol; tool schemas; JSON Schema; safe tool design; audit fields; align tools with your capstone repo layout.\n\n**Platform skills:** **Discoverable, versioned tool surface** other engineers can attach to.\n\n---\n\n### Course 4 — Hybrid retrieval (month 4)\n\n| | |\n| --- | --- |\n| **Hours** | 10–14 |\n| **Prove** | Hybrid benchmark table in repo |\n\n**Covers:** When RAG helps vs hurts; dense + sparse retrieval; grounding and no-answer paths; reproducible benchmarks on public corpus.\n\n**Platform skills:** Retrieval as **measured pipeline**, not “we installed a vector DB.”\n\n---\n\n### Course 5 — Document parsing & chunks (month 5)\n\n| | |\n| --- | --- |\n| **Hours** | 10–14 |\n| **Prove** | `chunks.jsonl` + schema |\n\n**Covers:** Parsing pipelines (including modern doc parsers); chunk boundaries; metadata; schema for downstream indexers.\n\n**Platform skills:** **Bronze-layer** for unstructured data feeding RAG.\n\n---\n\n### Course 6 — Graph & GraphRAG slice (month 6)\n\n| | |\n| --- | --- |\n| **Hours** | 10–14 |\n| **Prove** | Validator test + example query |\n\n**Covers:** Property graph basics; when graph augments vectors; small GraphRAG slice with tests—not entire Neo4j admin arc.\n\n**Platform skills:** **Structured relationships** alongside embeddings.\n\n---\n\n### Course 7 — Evaluation harness (month 7)\n\n| | |\n| --- | --- |\n| **Hours** | 10–14 |\n| **Prove** | Golden set ≥ 30 cases |\n\n**Covers:** Eval design (schema vs semantic correctness); Ragas or custom metrics where appropriate; harness layout; Hamel-style eval thinking.\n\n**Platform skills:** **Quality engineering** for nondeterministic components.\n\n---\n\n### Course 8 — Eval CI/CD gates (month 8)\n\n| | |\n| --- | --- |\n| **Hours** | 8–12 |\n| **Prove** | CI blocks regression |\n\n**Covers:** Running evals in GitHub Actions (or equivalent); thresholds; cost/latency budgets in PR checks.\n\n**Platform skills:** Same muscle as **DQ gates on merge**.\n\n---\n\n### Course 9 — Policy + observability (month 9)\n\n| | |\n| --- | --- |\n| **Hours** | 10–14 |\n| **Prove** | Trace sample + policy test |\n\n**Covers:** OPA (or equivalent) before tool execution; Langfuse/OpenTelemetry-style traces; tying user/session to model and tool calls.\n\n**Platform skills:** **Security and audit** for agentic systems.\n\n---\n\n### Course 10 — Capstone integration (month 10)\n\n| | |\n| --- | --- |\n| **Hours** | 16–24 |\n| **Prove** | Git tag `alpha` + caching proof |\n\n**Covers:** Wire gateway, graph, MCP, retrieval, evals into one runnable demo; performance/caching where justified.\n\n**Platform skills:** **Integration engineering**—the hard part of real platforms.\n\n---\n\n### Course 11 — Deploy & platform UX (month 11)\n\n| | |\n| --- | --- |\n| **Hours** | 12–16 |\n| **Prove** | Deploy screenshot + platform doc |\n\n**Covers:** Container or PaaS deploy; health checks; minimal UX or API for internal “customers”; how another dev adds a tool or eval.\n\n**Platform skills:** You are building **for other engineers**, not only for yourself.\n\n---\n\n### Course 12 — Lineage & hardening (month 12)\n\n| | |\n| --- | --- |\n| **Hours** | 8–12 |\n| **Prove** | Tag `v1.0` + lineage sample |\n\n**Covers:** End-to-end lineage story; hardening checklist; on-call style runbook for common failures.\n\n**Platform skills:** **Production credibility**.\n\n---\n\n### Course 13 — Frontier deep dive (month 13)\n\n| | |\n| --- | --- |\n| **Hours** | 8–16 |\n| **Prove** | README “why we added X” |\n\n**Covers:** Pick 1–2 of: fine-tuning slice, DSPy, advanced routing, multimodal, etc.—tied to capstone, not tangent projects.\n\n**Platform skills:** **Differentiation** without losing harness focus.\n\n---\n\n### Course 14 — Frontier + public narrative (month 14)\n\n| | |\n| --- | --- |\n| **Hours** | 8–12 |\n| **Prove** | Technical post or design doc link |\n\n**Covers:** Architecture diagrams; metrics from evals/traces; repo polish for external readers.\n\n**Platform skills:** **Explain the system** like a platform RFC.\n\n---\n\n### Course 15 — System design & optional career module (month 15)\n\n| | |\n| --- | --- |\n| **Hours** | 10–20 |\n| **Prove** | Design notes or private career log (optional) |\n\n**Covers:** End-to-end platform design drills using your capstone; optional job-search tasks if you are switching roles.\n\n**Platform skills:** **Operate and extend** the platform story under questioning.\n\n---\n\n## 11. Suggested reading order (before you touch “LLM lecture”)\n\n1. **This brief** (you are here)—platform frame, mindmap, architecture.\n2. **Course 0 overview** also shows the short **studio primer** (panels, rules, first hour)—same ideas as this page, lighter weight.\n3. **Course 0 → START HERE** topic—first prove-sized slice of work (extraction & schemas).\n4. **Course 1** LLM foundations when Course 0 prove is done or nearly done.\n\nIf you open Karpathy’s deep dive on day one, that is fine **as optional depth**—but your **graded story** is platform artifacts, not hours watched.\n\n---\n\n## 12. Success criteria (how you know the platform is real)\n\nYou can demonstrate, with repo links:\n\n1. **Contract** — Show a Pydantic model and a test that fails when the model drifts.\n2. **Gateway** — Show cost/latency per request and a fallback path.\n3. **Orchestration** — Show a graph with HITL interrupt on validation failure.\n4. **Tools** — Show MCP (or equivalent) with audit log redacted sample.\n5. **Retrieval** — Show a benchmark table you can reproduce.\n6. **Eval CI** — Show a PR that failed because evals regressed.\n7. **Policy** — Show a denied tool call with reason.\n8. **Lineage** — Show one traced path from source chunk to stored field.\n\n---\n\n## 13. Data & security boundaries\n\n- Use **synthetic or public** data in the portfolio repo.\n- Do not paste production credentials, customer data, or proprietary architectures into public artifacts.\n- Before sending **any** real data to an external LLM API, follow your organization’s classification and vendor policy—this program practices the **gates** you would use at work (policy course) on safe data only.\n\n---\n\n## 14. Glossary & stack substitutions\n\n| Term | Meaning in this program |\n| --- | --- |\n| **Untrusted kernel** | LLM/API call whose output must pass schema/DQ before load |\n| **Prove gate** | Course exit artifact (release, CI, benchmark, policy test) |\n| **Golden set** | Labeled rows used like fixture data for regression |\n| **HITL** | Human-in-the-loop checkpoint (e.g. LangGraph `interrupt()`) |\n| **MCP** | Standard tool surface between agents and allow-listed capabilities |\n| **Harness** | Eval + CI + tracing + policy wrapped around model calls |\n\n| Track default | Substitutions (same pattern) |\n| --- | --- |\n| LangGraph | Temporal, custom state machine, PydanticAI |\n| LiteLLM | Corporate model gateway, Bedrock proxy, direct provider SDK + wrapper |\n| OPA | Cedar, IAM conditions, custom authz middleware |\n| Langfuse | OpenTelemetry + your log stack |\n| Qdrant/pgvector | OpenSearch, Weaviate, managed vector store |\n\nStudio **glossary** (course overviews) may define additional terms—see Course 0 map.\n\n---",
   "program_walkthrough": {
-    "audience": "7+ years shipping data or platform systems (Spark/Airflow-scale pipelines, warehouses, APIs, CI). You are adding an AI platform layer—assume production judgment, not bootcamp pacing.",
+    "audience": "Senior data & platform engineers · 7+ years in production systems",
     "default_theory_level": "beginner",
+    "home_headline": "Master AI platform engineering.",
+    "home_subhead": "Transition distributed-systems expertise into production LLM architecture: typed contracts, model gateways, agent orchestration, measured retrieval, eval CI, policy, and traces—built incrementally in one capstone repository with prove artifacts at every course.",
+    "home_value_props": [
+      {
+        "title": "Engineering discipline first",
+        "body": "Schemas, golden sets, and merge gates—not prompt hacks. Same rigor you apply to pipelines and APIs."
+      },
+      {
+        "title": "One platform spine",
+        "body": "Sixteen courses extend a single repo: extraction, gateway, graphs, tools, RAG, evals, deploy, lineage."
+      },
+      {
+        "title": "Theory before lecture",
+        "body": "Every topic opens on Foundations. You read the operational model, then open the video or doc."
+      },
+      {
+        "title": "Prove what you ship",
+        "body": "Each course ends with a verifiable artifact: tags, CI runs, benchmarks, policy tests, or deploy evidence."
+      }
+    ],
+    "home_artifact_ladder": [
+      {
+        "courses": "0–1",
+        "title": "Contracts & gateway",
+        "outcome": "Validated extraction + per-request cost/latency logs"
+      },
+      {
+        "courses": "2–3",
+        "title": "Orchestration & tools",
+        "outcome": "LangGraph with HITL + audited MCP surface"
+      },
+      {
+        "courses": "4–6",
+        "title": "Knowledge layer",
+        "outcome": "Hybrid retrieval benchmarks, chunks, graph slice"
+      },
+      {
+        "courses": "7–9",
+        "title": "Trust & observability",
+        "outcome": "Golden-set harness, CI regression gate, OPA + traces"
+      },
+      {
+        "courses": "10–12",
+        "title": "Ship & harden",
+        "outcome": "Integrated alpha, deploy proof, v1.0 lineage sample"
+      },
+      {
+        "courses": "13–15",
+        "title": "Depth & narrative",
+        "outcome": "Frontier spikes + public architecture story"
+      }
+    ],
+    "home_workflow": [
+      {
+        "title": "Start Course 0",
+        "detail": "Boot week: Pydantic, Instructor, golden-set metric in your public repo."
+      },
+      {
+        "title": "Follow the checklist",
+        "detail": "Topics run Watch → Read → Build → Prove. Use START HERE on each course."
+      },
+      {
+        "title": "Advance on proof",
+        "detail": "Mark a course complete when its Prove gate is done—not when videos are finished."
+      }
+    ],
     "what_is_platform": "AI platform engineering is how you run LLM and agent workloads like any other production system: contracts on outputs, a gateway for models and cost, orchestration with human checkpoints, audited tools, measured retrieval, eval gates in CI, policy, and traces. Models are one component—schemas, tests, and lineage are the job you already know.",
     "what_is_llm": "Later in Course 0–1 you will use LLMs as **APIs** that read/write text. They are not SQL engines and not source-of-truth databases—validate every field like a DQ check.",
-    "what_you_build_overall": "One capstone repo that grows each course: typed extraction → gateway metrics → LangGraph + HITL → MCP tools → hybrid search → chunk pipelines → eval CI → policy/traces → integrated alpha → deploy → v1.0 lineage. Public or synthetic data only.",
+    "what_you_build_overall": "One capstone repository grows across sixteen courses—each month adds a platform capability with tests and a prove artifact (public or synthetic data only).",
     "first_three_clicks": [
-      "Scroll the **program brief** on this page (architecture + course map)—10–15 minutes.",
-      "Open **Course 0 overview** (map, glossary, prove rubric) before jumping to Month 1.",
-      "On any topic: stay on **Theory → Foundations** first, then **Lecture**—never start with the raw video link."
+      "Press **Start Course 0** and complete the first START HERE topic.",
+      "Skim the **program brief** when you need architecture context—not before your first commit.",
+      "Use **Course overview** for the monthly map, glossary, and acceptance checklist."
     ],
     "every_topic_same_order": [
       "Theory → Foundations (this tab first on every new topic).",
@@ -1823,7 +1889,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Paste GitHub URL + README golden-set metric",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Instructor — structured extraction example",
@@ -1846,6 +1911,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 0 acceptance table satisfied; link saved in studio.",
@@ -4105,7 +4171,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Release `v0.2` link + README metrics",
-      "is_start_here": false,
       "resources": [
         {
           "title": "LiteLLM — custom logging callbacks",
@@ -4128,6 +4193,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 1 acceptance satisfied.",
@@ -6340,7 +6406,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "README demo: validation fail → `interrupt()` HITL",
-      "is_start_here": false,
       "resources": [
         {
           "title": "LangGraph — human-in-the-loop how-to",
@@ -6353,6 +6418,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Reviewer can reproduce HITL flow.",
@@ -8175,7 +8241,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Hub — LlamaIndex MCP sample",
@@ -8188,6 +8253,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Agent demo calls each tool successfully.",
@@ -8300,7 +8366,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "FastMCP — middleware / logging hooks",
@@ -8313,6 +8378,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Every tool call produces one audit row.",
@@ -8425,7 +8491,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "README + redacted Cursor/Claude MCP snippet",
-      "is_start_here": false,
       "resources": [
         {
           "title": "MCP — official servers repo (audit patterns)",
@@ -8438,6 +8503,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 3 acceptance met.",
@@ -9687,8 +9753,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "prove_criteria": "README + redacted Cursor/Claude MCP snippet",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Hub — fastest RAG stack (corpus + index)",
@@ -9701,6 +9765,8 @@
           "match_score": 16
         }
       ],
+      "prove_criteria": "README + redacted Cursor/Claude MCP snippet",
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Manifest lists sources and dates.",
@@ -9991,7 +10057,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Committed benchmark table",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Hub — agentic RAG benchmark scripts",
@@ -10004,6 +10069,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 4 acceptance satisfied.",
@@ -11930,7 +11996,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Test case that fails validation",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Microsoft GraphRAG — indexing pipeline",
@@ -11943,6 +12008,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 6 acceptance met.",
@@ -13479,7 +13545,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Golden set committed + summary metrics",
-      "is_start_here": false,
       "resources": [
         {
           "title": "DeepEval — dataset + test case examples",
@@ -13492,6 +13557,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 7 acceptance met.",
@@ -14286,7 +14352,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "CI regression screenshot",
-      "is_start_here": false,
       "resources": [
         {
           "title": "DeepEval — GitHub Actions workflow sample",
@@ -14299,6 +14364,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 8 acceptance met.",
@@ -15557,7 +15623,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "OPA — Rego examples (deny rules)",
@@ -15570,6 +15635,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Test shows analyst blocked from write tool.",
@@ -17783,7 +17849,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "LiteLLM — proxy caching (self-hosted)",
@@ -17796,6 +17861,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Practical gate satisfied.",
@@ -17907,7 +17973,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "AI Engineering from Scratch — cost/latency module",
@@ -17920,6 +17985,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Numbers align with table.",
@@ -18870,7 +18936,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "`alpha` tag + 5-minute demo script + caching section in README",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Hub — eval and observability integration",
@@ -18883,6 +18948,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 10 acceptance met.",
@@ -19640,7 +19706,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "Langfuse — Docker Compose (observability stack)",
@@ -19653,6 +19718,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "DEPLOY.md steps verified.",
@@ -19758,7 +19824,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "`kubectl get pods` or compose screenshot + doc link",
-      "is_start_here": false,
       "resources": [
         {
           "title": "LiteLLM — health check endpoints",
@@ -19771,6 +19836,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 11 acceptance met.",
@@ -21152,7 +21218,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "README section with bottleneck + metric",
-      "is_start_here": true,
       "resources": [
         {
           "title": "DSPy — introductory programs",
@@ -21165,6 +21230,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": true,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 13 acceptance met.",
@@ -21787,7 +21853,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Posts + resume refresh (see Master Plan §14)",
-      "is_start_here": false,
       "resources": [
         {
           "title": "AI Engineering Hub — portfolio-quality READMEs",
@@ -21800,6 +21865,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 14 acceptance met.",
@@ -22439,7 +22505,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "AI Engineering from Scratch — platform modules",
@@ -22452,6 +22517,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Positioning statement written.",
@@ -22558,7 +22624,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "LangGraph — platform architecture docs",
@@ -22571,6 +22636,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Habit sustained per syllabus.",
@@ -22675,7 +22741,6 @@
       "open_how": "Checkbox",
       "embed_url": "",
       "status": "Not started",
-      "is_start_here": false,
       "resources": [
         {
           "title": "LiteLLM — multi-tenant proxy routing",
@@ -22688,6 +22753,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "At least one mock completed.",
@@ -22793,7 +22859,6 @@
       "embed_url": "",
       "status": "Not started",
       "prove_criteria": "Offer or feedback notes",
-      "is_start_here": false,
       "resources": [
         {
           "title": "DeepEval — evaluation report artifacts",
@@ -22806,6 +22871,7 @@
           "match_score": 16
         }
       ],
+      "is_start_here": false,
       "lab_plan": {
         "title": "Implementation plan",
         "done_when": "Course 15 acceptance met.",
