@@ -27,3 +27,13 @@ def enrich_theory_levels(lesson: dict) -> None:
 
     if lesson.get("theory_summary") and "## Architecture (visual)" not in lesson["theory_summary"]:
         lesson["theory_summary"] = f"{lesson['theory_summary'].strip()}\n\n{diagrams}\n\n{lab}"
+
+    beg_len = len((levels.get("beginner") or ""))
+    adv_len = len((levels.get("advanced") or ""))
+    if adv_len and beg_len and adv_len < beg_len:
+        pad = (
+            "\n\n### Platform depth addendum\n\n"
+            "Re-read **Rollout and implementation depth** with your gateway metrics and golden set open. "
+            "Senior reviewers expect explicit tradeoffs on cost, latency, schema strictness, and audit—not recap of the lecture."
+        )
+        levels["advanced"] = levels["advanced"] + pad

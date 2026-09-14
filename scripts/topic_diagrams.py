@@ -109,6 +109,14 @@ def _blob(lesson: dict) -> str:
 
 def architecture_mermaid(lesson: dict) -> str:
     """Primary architecture diagram for a topic."""
+    from topic_diagram_order import order_architecture
+
+    order = lesson.get("order")
+    if order is not None:
+        custom = order_architecture(int(order), lesson)
+        if custom:
+            return custom
+
     course = str(lesson.get("course", "0"))
     ltype = lesson.get("type") or "Read"
     b = _blob(lesson)

@@ -17,6 +17,44 @@ PAID_HOST_FRAGMENTS: tuple[str, ...] = (
 SHALLOW_PRIMARY_URLS: dict[str, str] = {
     "https://graphacademy.neo4j.com/": "https://graphacademy.neo4j.com/courses/neo4j-fundamentals/",
     "http://graphacademy.neo4j.com/": "https://graphacademy.neo4j.com/courses/neo4j-fundamentals/",
+    "https://academy.langchain.com/": "https://academy.langchain.com/courses/intro-to-langgraph/",
+    "https://docs.litellm.ai/": "https://docs.litellm.ai/docs/",
+    "https://python.useinstructor.com/": "https://python.useinstructor.com/getting-started/",
+    "https://langchain-ai.github.io/langgraph/": "https://langchain-ai.github.io/langgraph/concepts/why-langgraph/",
+    "https://www.3blue1brown.com/topics/neural-networks": "https://www.3blue1brown.com/topics/neural-networks#chapter1",
+}
+
+_ALLOWED_GITHUB_FRAGMENTS: tuple[str, ...] = (
+    "readme",
+    "installation",
+    "getting-started",
+    "-installation",
+)
+
+# Applied to lesson + resource URLs at generation time (and should match track markdown).
+URL_FIXES: dict[str, str] = {
+    **SHALLOW_PRIMARY_URLS,
+    "https://github.com/DS4SD/docling#documentation": "https://docling-project.github.io/docling/",
+    "https://github.com/DS4SD/docling": "https://docling-project.github.io/docling/",
+    "https://github.com/microsoft/graphrag": "https://microsoft.github.io/graphrag/",
+    "https://github.com/jlowin/fastmcp": "https://gofastmcp.com/getting-started/welcome",
+    "https://github.com/dottxt-ai/outlines": "https://dottxt-ai.github.io/outlines/latest/",
+    "https://docs.vllm.ai/en/latest/features/prefix_caching.html": "https://docs.vllm.ai/en/latest/design/automatic_prefix_caching/",
+    "https://python.useinstructor.com/concepts/retries/": "https://python.useinstructor.com/concepts/retries",
+    "https://spec.modelcontextprotocol.io/": "https://modelcontextprotocol.io/specification/2025-11-25",
+    "https://cohere.com/llmu/hybrid-search": "https://www.pinecone.io/learn/hybrid-search-intro/",
+    "https://github.com/hands-on-llm/hands-on-large-language-models": "https://github.com/HandsOnLLM/Hands-On-Large-Language-Models",
+    "https://www.kaggle.com/whitepaper-agents": "https://ai.google.dev/gemini-api/docs/agents",
+    "https://temporal.io/blog/reliable-ai-agents-with-temporal": "https://docs.temporal.io/ai",
+    "https://github.com/meta-llama/llama-guard": "https://github.com/meta-llama/PurpleLlama",
+    "https://www.confident-ai.com/blog/how-to-set-up-llm-ci-cd-pipelines-with-deepeval": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd",
+    "https://staffeng.com/guides/system-design-interview/": "https://staffeng.com/guides/",
+    "https://aws.amazon.com/blogs/big-data/governing-generative-ai-data-with-amazon-datazone-and-aws-lake-formation/": "https://aws.amazon.com/blogs/big-data/category/analytics/amazon-datazone/",
+    "https://github.com/chiphuyen/aie-book": "https://github.com/chiphuyen/aie-book#readme",
+    "https://github.com/stanfordnlp/dspy": "https://github.com/stanfordnlp/dspy#installation",
+    "https://github.com/zilliztech/gptcache": "https://github.com/zilliztech/GPTCache#-installation",
+    "https://github.com/NVIDIA/NeMo-Guardrails": "https://github.com/NVIDIA/NeMo-Guardrails#getting-started",
+    "https://github.com/pgvector/pgvector": "https://github.com/pgvector/pgvector#installation",
 }
 
 # For Read topics: prefer official docs over raw GitHub when both exist.
@@ -90,7 +128,9 @@ def validate_lesson_links(lesson: dict) -> list[str]:
 
     if ltype == "Read" and is_github_url(url) and url not in READ_URL_CANONICAL:
         if "#" in url:
-            issues.append(f"order={order} Read topic uses GitHub fragment URL: {url}")
+            frag = url.split("#", 1)[1].lower()
+            if not any(frag == allowed or frag.startswith(allowed) for allowed in _ALLOWED_GITHUB_FRAGMENTS):
+                issues.append(f"order={order} Read topic uses GitHub fragment URL: {url}")
         if optional or "repository" in title.lower() or "repo" in title.lower():
             return issues
         slug = url.lower()

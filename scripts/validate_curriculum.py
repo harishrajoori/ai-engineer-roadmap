@@ -226,12 +226,17 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
             f"{len(missing_handbook)} lessons missing topic_handbook entry (orders {missing_handbook[:8]}…)"
         )
     shallow_handbook = 0
+    short_handbook = 0
     for oid in orders & handbook_orders:
         row = HANDBOOK_BY_ORDER[oid]
         if not (row.get("intermediate_deep_dive") or "").strip() or not (row.get("advanced_extra") or "").strip():
             shallow_handbook += 1
+        if len((row.get("intermediate_deep_dive") or "")) < 720 or len((row.get("advanced_extra") or "")) < 720:
+            short_handbook += 1
     if shallow_handbook:
         warnings.append(f"{shallow_handbook} handbook rows missing intermediate_deep_dive or advanced_extra")
+    if short_handbook:
+        warnings.append(f"{short_handbook} handbook rows with intermediate/advanced < 720 chars (re-run merge_topic_handbook)")
 
     missing_levels = sum(
         1

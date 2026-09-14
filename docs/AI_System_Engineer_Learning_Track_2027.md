@@ -108,7 +108,7 @@
 
 **Read**
 
-- [ ] [Instructor — quick start](https://python.useinstructor.com/)
+- [ ] [Instructor — quick start](https://python.useinstructor.com/getting-started/)
 - [ ] [Pydantic V2 docs](https://docs.pydantic.dev/latest/)
 - [ ] [LiteLLM — reliable completions / fallbacks](https://docs.litellm.ai/docs/completion/reliable_completions)
 - [ ] [Hamel — evals intro](https://hamel.dev/blog/posts/evals/)
@@ -151,7 +151,7 @@
 **Watch**
 
 - [ ] [Karpathy — Deep Dive into LLMs](https://www.youtube.com/watch?v=7xTGNNLPyMI) · ~3 h
-- [ ] [3Blue1Brown — neural networks / attention](https://www.3blue1brown.com/topics/neural-networks) · 2–4 h
+- [ ] [3Blue1Brown — neural networks / attention](https://www.3blue1brown.com/topics/neural-networks#chapter1) · 2–4 h
 - [ ] *(optional)* [StatQuest video index](https://statquest.org/video-index/) · search attention / embedding
 - [ ] *(optional)* [DeepLearning.AI YouTube](https://www.youtube.com/@DeepLearningAI)
 - [ ] *(optional)* [Karpathy channel](https://www.youtube.com/c/AndrejKarpathy)
@@ -159,10 +159,10 @@
 **Read**
 
 - [ ] [Applied LLMs — 3+ sections](https://applied-llms.org/)
-- [ ] [Instructor — patterns & retries](https://python.useinstructor.com/)
-- [ ] [LiteLLM docs hub](https://docs.litellm.ai/)
+- [ ] [Instructor — patterns & retries](https://python.useinstructor.com/getting-started/)
+- [ ] [LiteLLM docs hub](https://docs.litellm.ai/docs/)
 - [ ] [Chip Huyen — blog](https://chiphuyen.com/)
-- [ ] [AI Engineering book repo](https://github.com/chiphuyen/aie-book)
+- [ ] [AI Engineering book repo](https://github.com/chiphuyen/aie-book#readme)
 - [ ] *(optional)* [Outlines — constrained decoding](https://github.com/dottxt-ai/outlines)
 
 **Build**
@@ -195,7 +195,7 @@
 **DL.AI & docs**
 
 - [ ] [AI Agents in LangGraph](https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/) · 2–3 h
-- [ ] [LangChain Academy — LangGraph modules](https://academy.langchain.com/) · 4–8 h
+- [ ] [LangChain Academy — Intro to LangGraph](https://academy.langchain.com/courses/intro-to-langgraph/) · 4–8 h
 
 **Watch**
 
@@ -207,7 +207,7 @@
 **Read**
 
 - [ ] [Anthropic — Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)
-- [ ] [LangGraph documentation](https://langchain-ai.github.io/langgraph/)
+- [ ] [LangGraph documentation](https://langchain-ai.github.io/langgraph/concepts/why-langgraph/)
 - [ ] [Applied LLMs — agents / orchestration](https://applied-llms.org/)
 
 **Build**
@@ -290,7 +290,7 @@
 
 - [ ] [Qdrant documentation](https://qdrant.tech/documentation/)
 - [ ] [Qdrant — hybrid queries](https://qdrant.tech/documentation/concepts/hybrid-queries/)
-- [ ] [pgvector](https://github.com/pgvector/pgvector)
+- [ ] [pgvector](https://github.com/pgvector/pgvector#installation)
 - [ ] [Applied LLMs — retrieval](https://applied-llms.org/)
 
 **Build**
@@ -335,7 +335,7 @@
 
 - [ ] Sample file + documented schema
 
-> **Note:** Hub folder [rag-with-dockling](https://github.com/patchy631/ai-engineering-hub/tree/main/rag-with-dockling) is misspelled; library is **[Docling](https://github.com/DS4SD/docling)**.
+> **Note:** Hub folder [rag-with-dockling](https://github.com/patchy631/ai-engineering-hub/tree/main/rag-with-dockling) is misspelled; library is **[Docling](https://docling-project.github.io/docling/)** (repo in studio resources).
 
 *Parsing deep dive:* Master Plan §17 → **Course 5**
 
@@ -535,7 +535,7 @@
 
 - [ ] [OpenAPI 3](https://swagger.io/specification/)
 - [ ] [JSON Schema](https://json-schema.org/)
-- [ ] [Instructor](https://python.useinstructor.com/) · [LiteLLM](https://docs.litellm.ai/)
+- [ ] [Instructor](https://python.useinstructor.com/getting-started/) · [LiteLLM](https://docs.litellm.ai/docs/)
 
 **Build**
 
@@ -663,7 +663,7 @@
 ### Syllabus
 
 - [ ] [Unsloth](https://github.com/unslothai/unsloth) · [HF PEFT](https://huggingface.co/docs/peft/index) · LoRA/QLoRA skim
-- [ ] [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails)
+- [ ] [NeMo Guardrails](https://github.com/NVIDIA/NeMo-Guardrails#getting-started)
 - [ ] [E2B docs](https://e2b.dev/docs)
 - [ ] *(optional)* [Karpathy Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ)
 

@@ -24,6 +24,7 @@ from external_curriculum_links import append_external_resources
 from lab_implementation import attach_lab_plan
 from link_quality import (
     READ_COMPANION_REPO,
+    URL_FIXES,
     access_note_for_url,
     canonical_read_url,
     is_github_url,
@@ -42,26 +43,6 @@ TRACK = REPO_ROOT / "docs" / "AI_System_Engineer_Learning_Track_2027.md"
 OUT_DIR = REPO_ROOT / "data"
 PUBLIC_DATA_DIR = REPO_ROOT / "public" / "data"
 LESSONS_JS_PATH = REPO_ROOT / "src" / "data" / "lessonsData.js"
-
-URL_FIXES: dict[str, str] = {
-    "https://graphacademy.neo4j.com/": "https://graphacademy.neo4j.com/courses/neo4j-fundamentals/",
-    "https://github.com/DS4SD/docling#documentation": "https://docling-project.github.io/docling/",
-    "https://github.com/DS4SD/docling": "https://docling-project.github.io/docling/",
-    "https://github.com/microsoft/graphrag": "https://microsoft.github.io/graphrag/",
-    "https://github.com/jlowin/fastmcp": "https://gofastmcp.com/getting-started/welcome",
-    "https://github.com/dottxt-ai/outlines": "https://dottxt-ai.github.io/outlines/latest/",
-    "https://docs.vllm.ai/en/latest/features/prefix_caching.html": "https://docs.vllm.ai/en/latest/design/automatic_prefix_caching/",
-    "https://python.useinstructor.com/concepts/retries/": "https://python.useinstructor.com/",
-    "https://spec.modelcontextprotocol.io/": "https://modelcontextprotocol.io/specification/2025-11-25",
-    "https://cohere.com/llmu/hybrid-search": "https://www.pinecone.io/learn/hybrid-search-intro/",
-    "https://github.com/hands-on-llm/hands-on-large-language-models": "https://github.com/HandsOnLLM/Hands-On-Large-Language-Models",
-    "https://www.kaggle.com/whitepaper-agents": "https://ai.google.dev/gemini-api/docs/agents",
-    "https://temporal.io/blog/reliable-ai-agents-with-temporal": "https://docs.temporal.io/ai",
-    "https://github.com/meta-llama/llama-guard": "https://github.com/meta-llama/PurpleLlama",
-    "https://www.confident-ai.com/blog/how-to-set-up-llm-ci-cd-pipelines-with-deepeval": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd",
-    "https://staffeng.com/guides/system-design-interview/": "https://staffeng.com/guides/",
-    "https://aws.amazon.com/blogs/big-data/governing-generative-ai-data-with-amazon-datazone-and-aws-lake-formation/": "https://aws.amazon.com/blogs/big-data/category/analytics/amazon-datazone/",
-}
 
 ENRICH_FIELDS = (
     "resources",
