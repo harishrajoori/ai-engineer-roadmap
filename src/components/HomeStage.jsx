@@ -21,6 +21,7 @@ export default function HomeStage({
   completedCount = 0,
   progressPct = 0,
   programWalkthrough = {},
+  programBriefMarkdown = "",
   onBeginStepOne,
   onOpenCourseOverview,
   onOpenCourse,
@@ -61,17 +62,21 @@ export default function HomeStage({
             <Sparkles size={14} aria-hidden />
             {programWalkthrough.audience || "Learn AI systems step by step"}
           </p>
-          <h1 className="home-title">Full walkthrough — from “what is an LLM?” to a shipped project</h1>
+          <h1 className="home-title">AI platform engineering — for data &amp; platform engineers</h1>
 
-          {programWalkthrough.what_is_llm && (
-            <div className="home-llm-box">
-              <h2 className="home-llm-title">What is an LLM?</h2>
-              <p>{programWalkthrough.what_is_llm}</p>
+          {programWalkthrough.what_is_platform && (
+            <div className="home-llm-box home-platform-box">
+              <h2 className="home-llm-title">What you are learning</h2>
+              <p>{programWalkthrough.what_is_platform}</p>
             </div>
           )}
 
           {programWalkthrough.what_you_build_overall && (
             <p className="home-lead">{programWalkthrough.what_you_build_overall}</p>
+          )}
+
+          {programWalkthrough.what_is_llm && (
+            <p className="home-llm-aside">{programWalkthrough.what_is_llm}</p>
           )}
 
           <div className="home-cta-row">
@@ -81,13 +86,19 @@ export default function HomeStage({
                 <ArrowRight size={18} />
               </button>
             )}
+            {programBriefMarkdown && (
+              <a className="home-cta home-cta-secondary" href="#program-brief">
+                <BookOpen size={18} />
+                Read program brief
+              </a>
+            )}
             <button type="button" className="home-cta home-cta-primary" onClick={onBeginStepOne}>
               <PlayCircle size={18} />
-              Start step 1 — What is an LLM?
+              Start Course 0 — extraction boot
             </button>
             <button type="button" className="home-cta home-cta-secondary" onClick={onOpenCourseOverview}>
               <BookOpen size={18} />
-              See Course 0 map first
+              Course 0 overview map
             </button>
           </div>
           {hasProgress && resumeLabel && (
@@ -97,6 +108,19 @@ export default function HomeStage({
             </p>
           )}
         </div>
+
+        {programBriefMarkdown && (
+          <section id="program-brief" className="home-program-brief" aria-labelledby="program-brief-heading">
+            <h2 id="program-brief-heading">Program brief</h2>
+            <p className="course-overview-hint">
+              Full map: platform scope, architecture, pacing, and what each course adds. Skim the TOC, then dive
+              sections as needed.
+            </p>
+            <div className="home-program-brief-body prose-learning">
+              <MarkdownProse>{programBriefMarkdown}</MarkdownProse>
+            </div>
+          </section>
+        )}
 
         <HomeAuthPanel
           userProfile={userProfile}

@@ -79,6 +79,7 @@ export default function App() {
   const [lessonsData, setLessonsData] = useState([]);
   const [coursesRefData, setCoursesRefData] = useState({});
   const [programPrimerMarkdown, setProgramPrimerMarkdown] = useState("");
+  const [programBriefMarkdown, setProgramBriefMarkdown] = useState("");
   const [programWalkthrough, setProgramWalkthrough] = useState({});
   const [glossary, setGlossary] = useState([]);
   const [portfolioStarter, setPortfolioStarter] = useState(null);
@@ -146,10 +147,11 @@ export default function App() {
     }
   }, [userProfile]);
 
-  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, programWalkthrough: walkthrough, glossary: terms, portfolioStarter: starter }) => {
+  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, programBriefMarkdown: brief, programWalkthrough: walkthrough, glossary: terms, portfolioStarter: starter }) => {
     setLessonsData(lessons);
     setCoursesRefData(coursesRef);
     setProgramPrimerMarkdown(primer || "");
+    setProgramBriefMarkdown(brief || "");
     setProgramWalkthrough(walkthrough || {});
     setGlossary(terms || []);
     setPortfolioStarter(starter || null);
@@ -732,6 +734,7 @@ export default function App() {
               completedCount={completedCount}
               progressPct={progressPct}
               programWalkthrough={programWalkthrough}
+              programBriefMarkdown={programBriefMarkdown}
               onBeginStepOne={handleBeginStepOne}
               onOpenCourseOverview={handleStartFoundation}
               onOpenCourse={handleOpenCourseFromHome}

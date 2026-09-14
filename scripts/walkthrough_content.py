@@ -1,26 +1,34 @@
-"""Plain-language program and per-course walkthrough (new to AI, data-engineering background)."""
+"""Plain-language program and per-course walkthrough (data/platform engineers → AI platform depth)."""
 
 from __future__ import annotations
 
 from typing import Any
 
 PROGRAM_WALKTHROUGH: dict[str, Any] = {
-    "audience": "You know data engineering (pipelines, warehouses, tests). You are new to AI—we explain every idea in order.",
+    "audience": (
+        "~5+ years shipping data or platform systems (pipelines, warehouses, APIs, tests). "
+        "You are adding an AI platform layer—not starting over as a beginner developer."
+    ),
     "default_theory_level": "beginner",
+    "what_is_platform": (
+        "AI platform engineering is how you run LLM and agent workloads like any other production system: "
+        "contracts on outputs, a gateway for models and cost, orchestration with human checkpoints, "
+        "audited tools, measured retrieval, eval gates in CI, policy, and traces. "
+        "Models are one component—schemas, tests, and lineage are the job you already know."
+    ),
     "what_is_llm": (
-        "An LLM (Large Language Model) is a program that reads text and writes text. "
-        "It is not a database and it does not run your SQL. Think of it as a fast assistant that "
-        "can draft or classify text—but it can be wrong, so you validate outputs the same way you "
-        "catch bad rows in a pipeline."
+        "Later in Course 0–1 you will use LLMs as **APIs** that read/write text. "
+        "They are not SQL engines and not source-of-truth databases—validate every field like a DQ check."
     ),
     "what_you_build_overall": (
-        "One practice GitHub project grows each month: turn messy log-like text into typed JSON, "
-        "then add gateway logging, agents, search, tests in CI, and deploy docs. All on synthetic or public data."
+        "One capstone repo that grows each course: typed extraction → gateway metrics → LangGraph + HITL → "
+        "MCP tools → hybrid search → chunk pipelines → eval CI → policy/traces → integrated alpha → deploy → v1.0 lineage. "
+        "Public or synthetic data only."
     ),
     "first_three_clicks": [
-        "Click **Start step 1** on the home page (or Course 0 → first Watch topic).",
-        "Open the **Theory** tab, stay on **Foundations**, read the short guide.",
-        "Open the **Lecture** tab and watch only this topic's video—not the whole channel.",
+        "Scroll the **program brief** on this page (architecture + course map)—10–15 minutes.",
+        "Open **Course 0 overview** (map, glossary, prove rubric) before jumping to Month 1.",
+        "Press **Start Course 0** and complete the **START HERE** topic (schemas & extraction)—then optional LLM videos.",
     ],
     "every_topic_same_order": [
         "Theory (Foundations) — plain English and data-pipeline analogies.",
@@ -37,27 +45,27 @@ PROGRAM_WALKTHROUGH: dict[str, Any] = {
     "phases": [
         {
             "id": "foundation",
-            "label": "Phase 1 — Understand AI & typed output",
+            "label": "Phase 1 — Contracts & gateway",
             "courses": [0, 1],
-            "plain": "Learn what an LLM is, then force model output into JSON schemas you can test.",
+            "plain": "Typed extraction boot, then LiteLLM front door with cost/latency logs (platform basics).",
         },
         {
             "id": "platform",
-            "label": "Phase 2 — Agents, tools, and search",
+            "label": "Phase 2 — Orchestration, tools, knowledge",
             "courses": list(range(2, 7)),
-            "plain": "Orchestrate steps like a workflow, expose safe tools, add document search.",
+            "plain": "LangGraph workflows, MCP tools, hybrid RAG, chunks, graph slice—measured pipelines.",
         },
         {
             "id": "quality",
-            "label": "Phase 3 — Tests, policy, and shipping",
+            "label": "Phase 3 — Trust & ship",
             "courses": list(range(7, 13)),
-            "plain": "Golden tests in CI, permissions, traces, then integrate and deploy.",
+            "plain": "Golden evals, CI gates, OPA + traces, capstone alpha, deploy, v1.0 hardening.",
         },
         {
-            "id": "career",
-            "label": "Phase 4 — Depth & portfolio",
+            "id": "depth",
+            "label": "Phase 4 — Electives & narrative",
             "courses": [13, 14, 15],
-            "plain": "Optional frontier slice, public write-ups, interview stories.",
+            "plain": "Frontier modules, public technical narrative, optional career module.",
         },
     ],
     "studio_panels_plain": {
@@ -70,14 +78,14 @@ PROGRAM_WALKTHROUGH: dict[str, Any] = {
 
 COURSE_WALKTHROUGH: dict[str, dict[str, Any]] = {
     "0": {
-        "plain_title": "Foundation week — your first LLM vocabulary",
-        "in_plain_english": "You will learn what an LLM is, why it hallucinates, and how to turn messy text into validated JSON using Python tools you already use in data work.",
+        "plain_title": "Foundation week — typed extraction platform slice",
+        "in_plain_english": "Ship the first platform primitive: messy operational text → validated records (Pydantic/Instructor), retries, invariants, pytest, and a golden-set score—same discipline as a bronze ingestion job.",
         "learning_objectives": [
-            "Explain LLM inference in plain language (tokens, context, hallucination).",
-            "Extract one log-like record into a Pydantic model with Instructor retries.",
-            "Run a golden-set scorer and publish a public repo with a README metric.",
+            "Model log-like events with Pydantic and enforce them with Instructor retries.",
+            "Run invariant checks before treating model output as ready to load.",
+            "Publish a public repo with golden-set metric and minimal threat model.",
         ],
-        "start_here_label": "Karpathy — Intro to LLMs",
+        "start_here_label": "START HERE — boot tooling & extraction (not the whole LLM syllabus)",
         "topic_order": "Watch (both videos) → Read (docs) → Build (your repo) → Prove (GitHub link).",
         "end_of_course": "A public repo that scores how often your extractor returns valid JSON on a small golden set.",
         "do_not_worry_about": "Training models, GPUs, or math proofs—only using models through an API.",
@@ -252,30 +260,30 @@ COURSE_WALKTHROUGH: dict[str, dict[str, Any]] = {
         "do_not_worry_about": "Doing every frontier track.",
     },
     "14": {
-        "plain_title": "Month 14 — Portfolio",
-        "in_plain_english": "Turn repo artifacts into posts and resume bullets with numbers.",
+        "plain_title": "Month 14 — Public technical narrative",
+        "in_plain_english": "Explain your platform architecture with diagrams, metrics, and traces from the capstone—how you would present to another engineering team.",
         "learning_objectives": [
-            "Publish a technical post with traces, evals, or metrics from your repo.",
-            "Refresh resume bullets tied to v1.0/alpha tags.",
-            "Position story for AI platform vs data engineering roles.",
+            "Publish a post or internal-style design doc using repo evidence.",
+            "Tie v1.0/alpha artifacts to a clear before/after platform story.",
+            "Document adopt/defer decisions on frontier experiments.",
         ],
-        "start_here_label": "First Read on portfolio",
+        "start_here_label": "First Read on portfolio writing",
         "topic_order": "Read → Prove.",
-        "end_of_course": "Public post link + updated resume bullet.",
-        "do_not_worry_about": "Perfect branding—one honest technical post counts.",
+        "end_of_course": "Public post or design doc link.",
+        "do_not_worry_about": "Perfect branding—one rigorous engineering narrative counts.",
     },
     "15": {
-        "plain_title": "Month 15 — Interviews",
-        "in_plain_english": "Practice telling your capstone story with traces, evals, and safety—not framework trivia.",
+        "plain_title": "Month 15 — System design & optional career module",
+        "in_plain_english": "Practice end-to-end platform design questions using your repo; optional job-search tasks if you are actively switching roles.",
         "learning_objectives": [
-            "Deliver capstone story with demo trace and eval numbers.",
-            "Complete system design mocks using your repo as reference.",
-            "Run weekly applications with tailored narratives.",
+            "Walk through capstone architecture with gateway, evals, policy, and lineage.",
+            "Answer “how would you add a tool / eval / model” using your docs.",
+            "Optional: capture interview feedback or offer notes privately.",
         ],
         "start_here_label": "First Read or Do item",
         "topic_order": "Watch → Read → Do → Prove.",
-        "end_of_course": "Interview notes or offer feedback (private OK).",
-        "do_not_worry_about": "Memorizing every algorithm—evidence from your repo is the story.",
+        "end_of_course": "Design mock notes or private career log (optional).",
+        "do_not_worry_about": "Framework trivia—your prove artifacts are the reference implementation.",
     },
 }
 

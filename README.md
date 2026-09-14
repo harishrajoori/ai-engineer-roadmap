@@ -45,6 +45,8 @@ The canonical syllabus lives in markdown:
 
 | Document | Role |
 | --- | --- |
+| [`docs/AI_Platform_System_Engineer_Program_Brief.md`](docs/AI_Platform_System_Engineer_Program_Brief.md) | **Read first:** platform narrative (also on studio home via `program_brief_markdown`) |
+| [`docs/DOCUMENTATION_MAP.md`](docs/DOCUMENTATION_MAP.md) | How brief, track, primer, walkthrough, and `lessons.json` connect |
 | [`docs/AI_System_Engineer_Learning_Track_2027.md`](docs/AI_System_Engineer_Learning_Track_2027.md) | Course-by-course topics, resources, Prove checklist |
 | [`docs/AI_System_Engineer_Master_Plan.md`](docs/AI_System_Engineer_Master_Plan.md) | Strategy, capstone (§13), ethics, deep module reference |
 | [`docs/AI_for_Data_Engineers_Primer.md`](docs/AI_for_Data_Engineers_Primer.md) | Onboarding for data/platform engineers |

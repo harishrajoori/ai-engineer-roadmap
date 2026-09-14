@@ -1,54 +1,50 @@
-# Start here — data engineering background, new to AI
+# Studio primer — data & platform engineers
 
-You already know **pipelines, tables, and tests**. This program teaches **AI in the same order**: plain words first, then short videos, then small code you can run.
+You have shipped **pipelines, models, and services**. This studio teaches **AI platform engineering** in the same discipline: contracts, tests, observability, and prove artifacts—not a pile of disconnected videos.
 
-## What is an LLM?
+**Read the full narrative first:** [`AI_Platform_System_Engineer_Program_Brief.md`](./AI_Platform_System_Engineer_Program_Brief.md) (also on the **home page** in the app).
 
-An **LLM** (Large Language Model) is software that **reads text and writes text**. It is not your warehouse and it does not run SQL for you. Think of it as a very fast assistant that can summarize, classify, or draft structured answers—**but it can be wrong**, so you check outputs like you check for bad rows after a load.
-
-## How this studio is laid out
+## How the studio maps to your job
 
 | Panel | What to do |
 | --- | --- |
-| **Left** | Courses **0 → 15** in order. Click the next course when the Prove gate is done. |
-| **Middle** | Topics for that course—work **top to bottom**. The first topic says **START HERE**. |
-| **Center** | **Theory (Foundations)** → **Lecture** → **Lab & Prove** for the topic you selected. |
-| **Right** | Notes and optional mentor (Settings → API key). |
+| **Left** | Courses **0 → 15** in order. Advance when the **Prove** gate for that course is done. |
+| **Middle** | Topic checklist—work **top to bottom**. Follow **START HERE**. |
+| **Center** | **Theory (Foundations)** → **Lecture** → **More resources** → **Lab & Prove**. |
+| **Right** | Notes; optional mentor (Settings → API key). Use **Focus content** on small screens. |
 
-## Rules that keep you from getting lost
+## Rules (senior-engineer pace)
 
-1. **One topic at a time** — finish the checkbox objective, not the whole YouTube channel.
-2. **Theory before lecture** — open **Foundations** theory until the words make sense, then watch.
-3. **Optional means skip for now** — come back when you have time.
-4. **Prove ends the month** — paste a GitHub (or other) link when the rubric is met.
+1. **Platform before playlist** — finish the topic objective; do not binge entire channels.
+2. **Foundations → Study guide → Platform depth** — move up only when the level feels easy.
+3. **Optional rows** — skip until you have slack; they are depth, not blockers.
+4. **Prove = merge gate** — link release, CI, benchmark, or demo when the rubric is met.
 
-## What you build over ~15 months
+## Your first hour (not “learn transformers first”)
 
-One practice project on GitHub (synthetic or public data only) that grows each course:
+1. On **home**, read the **program brief** sections on architecture and phases (~15 min).
+2. Open **Course 0 overview** (map, glossary, acceptance checklist).
+3. Start **Course 0 → START HERE** — extraction, schemas, golden set.
+4. When that line is clear, take the **optional** LLM intro videos as context for Course 0–1—not as the program definition.
 
-| When | You add |
+## Artifact ladder (one repo)
+
+| Course | Platform increment |
 | --- | --- |
-| Course 0 | Typed JSON from messy text + golden-set score |
-| Course 1 | Gateway logs: model, tokens, latency, cost |
-| Courses 2–3 | Workflow + safe tools |
-| Courses 4–6 | Search and document chunks |
-| Courses 7–9 | Tests in CI + policy + traces |
-| Courses 10–12 | Full demo + deploy + lineage sample |
-| Courses 13–15 | Portfolio and interviews |
-
-## Your first 30 minutes
-
-1. On the **home** page, click **Start step 1 — What is an LLM?**
-2. Read **Theory** on **Foundations**.
-3. Watch the **Lecture** (about one hour).
-4. Write three notes: what is a **token**, what is a **context limit**, one way the model can be **wrong**.
+| 0 | Typed JSON + golden-set metric |
+| 1 | Gateway cost/latency logs |
+| 2–3 | LangGraph + MCP audit |
+| 4–6 | Retrieval benchmarks + chunks + graph slice |
+| 7–9 | Eval harness, CI gate, policy + traces |
+| 10–12 | Alpha integration → deploy → `v1.0` lineage |
+| 13–15 | Frontier electives + public narrative (+ optional career module) |
 
 ## Theory levels
 
-| Level | When to use it |
+| Level | Use when |
 | --- | --- |
-| **Foundations** | **Default** — start here on every new topic. |
-| Study guide | After Foundations feels easy on that topic. |
-| Platform depth | Tradeoffs, metrics, failures—when you want staff-level depth. |
+| **Foundations** | Default on every new topic |
+| **Study guide** | Foundations feels easy |
+| **Platform depth** | You want failure modes, tradeoffs, and ops detail |
 
-Mark a topic complete when **this line’s** goal is met—not when you finish every video on the internet.
+Mark a topic complete when **this row’s** outcome is met—not when you have watched every resource on the internet.

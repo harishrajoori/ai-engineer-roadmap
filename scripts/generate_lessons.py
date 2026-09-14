@@ -11,6 +11,7 @@ from pathlib import Path
 from curriculum_enrichment import (
     concept_map_for_course,
     glossary_entries,
+    load_program_brief_markdown,
     load_program_primer_markdown,
     portfolio_starter,
     prove_pack_for_course,
@@ -317,6 +318,7 @@ def write_curriculum_payload(
     return {
         "generated_from": track_rel,
         "program_primer_markdown": load_program_primer_markdown(),
+        "program_brief_markdown": load_program_brief_markdown(),
         "program_walkthrough": PROGRAM_WALKTHROUGH,
         "glossary": glossary_entries(),
         "portfolio_starter": portfolio_starter(),

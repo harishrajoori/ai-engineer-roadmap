@@ -1,0 +1,40 @@
+# Documentation & curriculum data map
+
+How narrative, syllabus, and studio JSON fit together. **Audience lens:** experienced data / platform engineers learning **AI platform engineering** end to end (foundations → advanced capstone).
+
+| Artifact | Role | Consumed by |
+| --- | --- | --- |
+| [`AI_Platform_System_Engineer_Program_Brief.md`](./AI_Platform_System_Engineer_Program_Brief.md) | **Canonical story** — what the program is, architecture, phases, course intent, prerequisites, pacing | Human readers; bundled as `program_brief_markdown` in `data/lessons.json` → **home page** |
+| [`AI_for_Data_Engineers_Primer.md`](./AI_for_Data_Engineers_Primer.md) | **Short in-app companion** — studio panels, rules, first hour; points to the brief | `program_primer_markdown` → Course 0 overview panel |
+| [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) | **Syllabus source** — every checkbox, link, prove line | `scripts/generate_lessons.py` → `lessons[]` |
+| [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) | Strategy, module depth (§17+), appendices | Humans; not auto-bundled to JSON |
+| [`scripts/walkthrough_content.py`](../scripts/walkthrough_content.py) | Home hero copy, phases, per-course walkthrough objects | `program_walkthrough`, `courses_ref[].walkthrough` |
+| [`data/curriculum_enrichment.json`](../data/curriculum_enrichment.json) | Glossary, concept maps, prove packs, real-world ladders | Merged into `courses_ref` and `glossary` in JSON |
+| `data/lessons.json` + `public/data/lessons.json` | **Runtime bundle** for the studio | `curriculumLoader.js` |
+
+## Regenerate after edits
+
+```bash
+# Brief, primer, track, enrichment, or walkthrough_content.py changed:
+npm run curriculum
+npm run validate:ci
+```
+
+## Content order for learners (5+ YOE data engineer)
+
+1. **Home** — full program brief (markdown) + walkthrough phases + course map  
+2. **Course 0 overview** — primer + walkthrough + concept map  
+3. **Course 0 START HERE** — schemas, extraction, golden set (LLM intro videos are topics, not the program headline)  
+4. **Courses 1–3** — gateway, orchestration, tools  
+5. **Courses 4–6** — retrieval & documents (RAG as measured pipelines)  
+6. **Courses 7–9** — evals, CI, policy, traces  
+7. **Courses 10–12** — integrate, deploy, lineage (`v1.0`)  
+8. **Courses 13–15** — frontier electives, public narrative, optional career module  
+
+## Theory depth in the studio
+
+| Level | When |
+| --- | --- |
+| **Foundations** | Default on every new topic |
+| **Study guide** | Topic feels easy at Foundations |
+| **Platform depth** | Advanced tradeoffs, failure modes, ops |

@@ -65,12 +65,16 @@ if (!COURSES_REF_DATA || typeof COURSES_REF_DATA !== "object") {
   }
 }
 
-if (!data.program_walkthrough?.what_is_llm) {
-  checks.push("program_walkthrough missing — run npm run curriculum");
+if (!data.program_walkthrough?.what_is_platform) {
+  checks.push("program_walkthrough.what_is_platform missing — run npm run curriculum");
 }
 
 if (!data.program_primer_markdown || data.program_primer_markdown.length < 200) {
   checks.push("program_primer_markdown missing or too short — run npm run curriculum");
+}
+
+if (!data.program_brief_markdown || data.program_brief_markdown.length < 8000) {
+  checks.push("program_brief_markdown missing or too short — run npm run curriculum");
 }
 if (!Array.isArray(data.glossary) || data.glossary.length < 10) {
   checks.push("glossary missing or too small in lessons.json");

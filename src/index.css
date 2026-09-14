@@ -795,6 +795,33 @@ header {
   color: var(--muted);
   line-height: 1.55;
 }
+.home-llm-aside {
+  font-size: 0.82rem;
+  color: var(--muted-dark);
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  max-width: 52rem;
+}
+.home-program-brief {
+  margin: 2rem 0 2.5rem;
+  padding: 1.25rem 0 0;
+  border-top: 1px solid var(--border);
+}
+.home-program-brief h2 {
+  font-size: 1.35rem;
+  margin-bottom: 0.35rem;
+}
+.home-program-brief-body {
+  margin-top: 1rem;
+  padding: 1.25rem 1.35rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  max-height: none;
+}
+.home-program-brief-body .prose-learning {
+  font-size: 0.9rem;
+}
 .home-phase-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

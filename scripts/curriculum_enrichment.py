@@ -9,6 +9,7 @@ from typing import Any
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ENRICHMENT_PATH = REPO_ROOT / "data" / "curriculum_enrichment.json"
 PRIMER_PATH = REPO_ROOT / "docs" / "AI_for_Data_Engineers_Primer.md"
+BRIEF_PATH = REPO_ROOT / "docs" / "AI_Platform_System_Engineer_Program_Brief.md"
 
 _cache: dict[str, Any] | None = None
 
@@ -50,6 +51,12 @@ def real_world_for_course(course: int | str) -> dict:
 def load_program_primer_markdown() -> str:
     if PRIMER_PATH.exists():
         return PRIMER_PATH.read_text(encoding="utf-8").strip()
+    return ""
+
+
+def load_program_brief_markdown() -> str:
+    if BRIEF_PATH.exists():
+        return BRIEF_PATH.read_text(encoding="utf-8").strip()
     return ""
 
 

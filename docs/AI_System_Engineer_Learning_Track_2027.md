@@ -9,6 +9,7 @@
 
 | | |
 | --- | --- |
+| **Start here (platform frame, mindmap, course encyclopedia)** | [`AI_Platform_System_Engineer_Program_Brief.md`](./AI_Platform_System_Engineer_Program_Brief.md) |
 | **Strategy, capstone, deep topics** | [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) |
 | **Audience** | Data engineers **new to AI** (comfortable with Python, git, pipelines)—step-by-step to AI platform depth; self-paced |
 | **Outcome** | Portfolio-ready AI platform skills (gateway, agents, evals, deploy) |
