@@ -74,8 +74,8 @@ body {
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* Header */
-header {
+/* App chrome — do not use bare <header> in page content (see .home-hero-mega) */
+header.site-header {
   background: var(--header-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -341,6 +341,10 @@ header {
   max-width: 1040px;
 }
 .home-hero-mega {
+  position: static;
+  z-index: auto;
+  height: auto;
+  display: block;
   margin-bottom: 2.75rem;
   padding: 2.25rem 2rem 2rem;
   border-radius: 20px;

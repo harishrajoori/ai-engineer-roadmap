@@ -108,7 +108,7 @@ export default function HomeStage({
   return (
     <div className="home-stage">
       <div className="home-stage-inner home-stage-wide">
-        <header className="home-hero-mega">
+        <section className="home-hero-mega" aria-label="Program introduction">
           <p className="home-eyebrow">
             <Sparkles size={14} aria-hidden />
             {programWalkthrough.audience || "Senior data & platform engineers"}
@@ -161,7 +161,7 @@ export default function HomeStage({
               {resumeLabel ? ` · ${resumeLabel}` : ""}
             </button>
           )}
-        </header>
+        </section>
 
         <section className="home-value-section" aria-labelledby="home-value-heading">
           <h2 id="home-value-heading" className="home-section-title">Why this studio</h2>

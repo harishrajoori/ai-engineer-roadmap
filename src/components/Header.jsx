@@ -24,7 +24,7 @@ export default function Header({
   };
 
   return (
-    <header>
+    <header className="site-header">
       <a href="/" className="brand" onClick={handleBrandClick}>
         <div className="brand-logo">AI</div>
         <div className="brand-text">
