@@ -225,10 +225,16 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
         warnings.append(
             f"{len(missing_handbook)} lessons missing topic_handbook entry (orders {missing_handbook[:8]}…)"
         )
+    handbook_json_path = REPO_ROOT / "data" / "topic_handbook.json"
+    merged_handbook: dict[int, dict] = {}
+    if handbook_json_path.exists():
+        raw = json.loads(handbook_json_path.read_text(encoding="utf-8"))
+        merged_handbook = {int(k): v for k, v in raw.items()}
+
     shallow_handbook = 0
     short_handbook = 0
     for oid in orders & handbook_orders:
-        row = HANDBOOK_BY_ORDER[oid]
+        row = merged_handbook.get(oid) or HANDBOOK_BY_ORDER[oid]
         if not (row.get("intermediate_deep_dive") or "").strip() or not (row.get("advanced_extra") or "").strip():
             shallow_handbook += 1
         if len((row.get("intermediate_deep_dive") or "")) < 720 or len((row.get("advanced_extra") or "")) < 720:

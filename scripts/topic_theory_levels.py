@@ -19,6 +19,7 @@ from advanced_depth import (
 )
 from curriculum_enrichment import concept_map_for_course, glossary_by_id, prove_pack_for_course
 from topic_hints import get_topic_hint
+from topic_plain_english import beginner_plain_english_block, intermediate_plain_english_block
 
 
 def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
@@ -109,6 +110,8 @@ def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
             "the repo is for source, issues, and README install notes—not a video lecture."
         )
         lines.append("")
+
+    lines.append(beginner_plain_english_block(lesson, hint))
 
     return "\n".join(lines)
 

@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from topic_diagrams import diagram_markdown_block
+from topic_hints import get_topic_hint
 from topic_lab_practice import lab_practice_markdown
+from topic_plain_english import advanced_plain_english_block
 
 
 def enrich_theory_levels(lesson: dict) -> None:
@@ -29,11 +31,14 @@ def enrich_theory_levels(lesson: dict) -> None:
         lesson["theory_summary"] = f"{lesson['theory_summary'].strip()}\n\n{diagrams}\n\n{lab}"
 
     beg_len = len((levels.get("beginner") or ""))
-    adv_len = len((levels.get("advanced") or ""))
-    if adv_len and beg_len and adv_len < beg_len:
-        pad = (
-            "\n\n### Platform depth addendum\n\n"
-            "Re-read **Rollout and implementation depth** with your gateway metrics and golden set open. "
-            "Senior reviewers expect explicit tradeoffs on cost, latency, schema strictness, and audit—not recap of the lecture."
-        )
-        levels["advanced"] = levels["advanced"] + pad
+    adv_body = (levels.get("advanced") or "").strip()
+    adv_len = len(adv_body)
+    if beg_len and adv_len < beg_len:
+        hint = get_topic_hint(lesson)
+        levels["advanced"] = adv_body + "\n\n" + advanced_plain_english_block(hint)
+        if len(levels["advanced"]) < beg_len:
+            levels["advanced"] += (
+                "\n\n### Platform depth addendum\n\n"
+                "Re-read **Rollout and implementation depth** with gateway metrics and golden-set labels open. "
+                "Staff reviewers expect explicit tradeoffs on cost, latency, schema strictness, and audit—not a lecture recap."
+            )

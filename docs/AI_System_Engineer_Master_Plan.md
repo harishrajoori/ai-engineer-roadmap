@@ -441,7 +441,7 @@ Granular concept maps, interview prompts, optional shelf, and appendices A–F. 
 | Karpathy — Intro to LLMs | https://www.youtube.com/watch?v=zjkBMFhNj_g | 1 h |
 | Pydantic for LLM Workflows | https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/ | 1 h |
 | Instructor quick start | https://python.useinstructor.com/ | — |
-| Pydantic V2 | https://docs.pydantic.dev/latest/ | — |
+| Pydantic V2 | https://docs.pydantic.dev/latest/concepts/models/ | — |
 | LiteLLM reliable completions | https://docs.litellm.ai/docs/completion/reliable_completions | — |
 | Hamel evals | https://hamel.dev/blog/posts/evals/ | — |
 | Applied LLMs | https://applied-llms.org/ | skim |

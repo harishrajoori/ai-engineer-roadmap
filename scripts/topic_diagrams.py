@@ -199,7 +199,62 @@ def sequence_mermaid(lesson: dict) -> str | None:
   MCP->>AUD: append
   MCP->>DB: allow-listed query
   MCP-->>Agent: result"""
-    return None
+    if "litellm" in b or "gateway" in b:
+        return """sequenceDiagram
+  participant Job
+  participant GW as LiteLLM
+  participant P as Primary model
+  participant F as Fallback model
+  Job->>GW: completion + metadata
+  GW->>P: route
+  P-->>GW: error 429
+  GW->>F: fallback
+  F-->>GW: tokens
+  GW-->>Job: usage JSONL row"""
+    if "instructor" in b or "pydantic" in b:
+        return """sequenceDiagram
+  participant ETL as Extract job
+  participant LLM as Model API
+  participant V as Pydantic validate
+  ETL->>LLM: structured prompt
+  LLM-->>ETL: JSON text
+  ETL->>V: parse
+  alt invalid
+    V-->>ETL: ValidationError
+    ETL->>LLM: repair retry
+  else valid
+    V-->>ETL: typed row
+  end"""
+    if "eval" in b or "golden" in b or ltype == "Prove":
+        return """sequenceDiagram
+  participant Dev
+  participant CI as GitHub Actions
+  participant H as Eval harness
+  participant G as golden.jsonl
+  Dev->>CI: pull request
+  CI->>H: run evals
+  H->>G: score rows
+  H-->>CI: pass rate
+  CI-->>Dev: merge blocked or allowed"""
+    course = str(lesson.get("course", "0"))
+    if course in ("0", "1", "5"):
+        return """sequenceDiagram
+  participant You
+  participant Doc as Primary source
+  participant Repo as Capstone repo
+  participant Test as pytest
+  You->>Doc: read or watch
+  You->>Repo: smallest working change
+  Repo->>Test: run checks
+  Test-->>You: green before mark complete"""
+    return """sequenceDiagram
+  participant Client
+  participant Platform as Your service
+  participant Dep as External dependency
+  Client->>Platform: request
+  Platform->>Dep: bounded call
+  Dep-->>Platform: response
+  Platform-->>Client: validated output"""
 
 
 def diagram_markdown_block(lesson: dict) -> str:

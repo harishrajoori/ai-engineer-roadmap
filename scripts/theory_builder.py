@@ -5,6 +5,7 @@ from __future__ import annotations
 from curriculum_enrichment import glossary_by_id, prove_pack_for_course
 from enrichment_utils import digest_matches_lesson
 from topic_hints import get_topic_hint
+from topic_plain_english import intermediate_plain_english_block
 
 SECTION_DISPLAY: dict[str, str] = {
     "video_spine": "Free program spine",
@@ -85,6 +86,7 @@ def build_theory_summary(
         lines.append("")
         lines.append(hint["intermediate_deep_dive"])
         lines.append("")
+    lines.append(intermediate_plain_english_block(hint, include_dive=not hint.get("intermediate_deep_dive")))
     if hint.get("mental_model"):
         lines.append("## Mental model")
         lines.append("")
