@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "notes": "Merged into lesson resources when catalog scoring finds no topic-scoped repo. URLs must be deep paths (blob/tree), not bare repo roots.",
+  "by_order": {
+    "9": [
+      {
+        "title": "Instructor — structured extraction example",
+        "url": "https://github.com/instructor-ai/instructor/blob/main/examples/extract/extract.py",
+        "repo_id": "order-9-instructor-extract",
+        "description": "Minimal extract→Pydantic pattern to mirror your Course 0 golden-set prove."
+      },
+      {
+        "title": "Pydantic — model validators (invariants)",
+        "url": "https://github.com/pydantic/pydantic/blob/main/docs/concepts/validators.md",
+        "repo_id": "order-9-pydantic-validators",
+        "description": "Validator patterns for fail-closed extraction before bronze load."
+      }
+    ],
+    "12": [
+      {
+        "title": "nanoGPT — transformer training loop (Karpathy)",
+        "url": "https://github.com/karpathy/nanoGPT/blob/master/train.py",
+        "repo_id": "order-12-nanogpt-train",
+        "description": "Connect 3Blue1Brown attention intuition to real training/inference code paths."
+      }
+    ],
+    "14": [
+      {
+        "title": "Google Gemini cookbook — optional depth labs",
+        "url": "https://github.com/google-gemini/cookbook/tree/main/quickstarts",
+        "repo_id": "order-14-gemini-cookbook",
+        "description": "Optional video companion: runnable quickstarts when you skip the YouTube backlog."
+      }
+    ],
+    "23": [
+      {
+        "title": "LiteLLM — custom logging callbacks",
+        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/observability/custom_callbacks.md",
+        "repo_id": "order-23-litellm-logging",
+        "description": "Wire per-request token/latency logs for v0.2 README metrics."
+      },
+      {
+        "title": "LiteLLM — reliable completions / fallbacks",
+        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/completion/reliable_completions.md",
+        "repo_id": "order-23-litellm-fallbacks",
+        "description": "Fallback chain pattern for gateway prove evidence."
+      }
+    ],
+    "34": [
+      {
+        "title": "LangGraph — human-in-the-loop how-to",
+        "url": "https://github.com/langchain-ai/langgraph/blob/main/docs/docs/how-tos/human_in_the_loop/add-human-in-the-loop.md",
+        "repo_id": "order-34-langgraph-hitl",
+        "description": "interrupt() / resume patterns for validation-fail prove demo."
+      }
+    ],
+    "35": [
+      {
+        "title": "FastMCP — server examples",
+        "url": "https://github.com/jlowin/fastmcp/tree/main/examples",
+        "repo_id": "order-35-fastmcp-examples",
+        "description": "Runnable MCP servers to compare with Daily Dose of DS walkthroughs."
+      }
+    ],
+    "41": [
+      {
+        "title": "MCP Python SDK — examples",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/tree/main/examples",
+        "repo_id": "order-41-mcp-sdk-examples",
+        "description": "Official SDK samples backing the Illustrated Guidebook concepts."
+      }
+    ],
+    "43": [
+      {
+        "title": "AI Engineering Hub — MCP roadmap section",
+        "url": "https://github.com/patchy631/ai-engineering-hub/blob/main/ai-engineering-roadmap/README.md",
+        "repo_id": "order-43-hub-mcp-roadmap",
+        "description": "Month 3 folder map—pick the MCP project matching your prove pack."
+      }
+    ],
+    "44": [
+      {
+        "title": "Pydantic — JSON Schema export",
+        "url": "https://github.com/pydantic/pydantic/blob/main/docs/concepts/json_schema.md",
+        "repo_id": "order-44-pydantic-json-schema",
+        "description": "Generate tool/MCP schemas from models—pairs with json-schema.org reading."
+      }
+    ],
+    "45": [
+      {
+        "title": "Hub — LlamaIndex MCP sample",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/llamaindex-mcp",
+        "repo_id": "order-45-hub-llamaindex-mcp",
+        "description": "Reference layout for lookup_schema / query_golden_set / readonly SQL tools."
+      }
+    ],
+    "46": [
+      {
+        "title": "FastMCP — middleware / logging hooks",
+        "url": "https://github.com/jlowin/fastmcp/blob/main/src/fastmcp/server/middleware.py",
+        "repo_id": "order-46-fastmcp-audit",
+        "description": "Hook point for user_id, tool, args_hash audit fields."
+      }
+    ],
+    "47": [
+      {
+        "title": "MCP — official servers repo (audit patterns)",
+        "url": "https://github.com/modelcontextprotocol/servers/tree/main/src",
+        "repo_id": "order-47-mcp-servers",
+        "description": "Compare your MCP server structure to reference implementations."
+      }
+    ],
+    "54": [
+      {
+        "title": "Hub — fastest RAG stack (corpus + index)",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/fastest-rag-stack",
+        "repo_id": "order-54-hub-rag-corpus",
+        "description": "Public-corpus indexing pattern before your hybrid benchmark."
+      }
+    ],
+    "56": [
+      {
+        "title": "Hub — agentic RAG benchmark scripts",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/agentic_rag",
+        "repo_id": "order-56-hub-rag-benchmark",
+        "description": "Committed benchmark table inspiration for Course 4 prove."
+      }
+    ],
+    "66": [
+      {
+        "title": "Hub — Graphiti MCP (Cypher + graph tools)",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/graphiti-mcp",
+        "repo_id": "order-66-hub-graphiti",
+        "description": "Graph validation slice alongside Cypher manual reading."
+      }
+    ],
+    "68": [
+      {
+        "title": "Microsoft GraphRAG — indexing pipeline",
+        "url": "https://github.com/microsoft/graphrag/tree/main/graphrag/index",
+        "repo_id": "order-68-graphrag-index",
+        "description": "Validator/query patterns for graph-assisted retrieval prove."
+      }
+    ],
+    "77": [
+      {
+        "title": "DeepEval — dataset + test case examples",
+        "url": "https://github.com/confident-ai/deepeval/tree/main/examples",
+        "repo_id": "order-77-deepeval-examples",
+        "description": "Golden set layout for ≥30 cases with summary metrics."
+      }
+    ],
+    "82": [
+      {
+        "title": "DeepEval — GitHub Actions workflow sample",
+        "url": "https://github.com/confident-ai/deepeval/blob/main/docs/docs/evaluation-end-to-end-ci-cd.mdx",
+        "repo_id": "order-82-deepeval-ci",
+        "description": "CI regression screenshot / failing PR pattern for Course 8 prove."
+      }
+    ],
+    "83": [
+      {
+        "title": "Langfuse — Python SDK tracing example",
+        "url": "https://github.com/langfuse/langfuse-python/tree/main/langfuse",
+        "repo_id": "order-83-langfuse-sdk",
+        "description": "Map LangSmith video concepts to Langfuse traces you will ship in Month 9."
+      }
+    ],
+    "88": [
+      {
+        "title": "OpenTelemetry Python — examples",
+        "url": "https://github.com/open-telemetry/opentelemetry-python/tree/main/docs/examples",
+        "repo_id": "order-88-otel-examples",
+        "description": "Instrument agent spans before wiring Langfuse export."
+      }
+    ],
+    "90": [
+      {
+        "title": "OPA — Rego examples (deny rules)",
+        "url": "https://github.com/open-policy-agent/opa/tree/main/examples",
+        "repo_id": "order-90-opa-examples",
+        "description": "block write_* for analyst role—start from official examples."
+      }
+    ],
+    "103": [
+      {
+        "title": "LiteLLM — prompt caching integration",
+        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/completion/prompt_caching.md",
+        "repo_id": "order-103-litellm-cache",
+        "description": "Capstone: configure caching on stable system prefix."
+      }
+    ],
+    "105": [
+      {
+        "title": "LiteLLM — proxy caching (self-hosted)",
+        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/proxy/caching.md",
+        "repo_id": "order-105-litellm-proxy-cache",
+        "description": "README TTFT table: cached vs uncached token fields."
+      }
+    ],
+    "106": [
+      {
+        "title": "AI Engineering from Scratch — cost/latency module",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main",
+        "repo_id": "order-106-from-scratch",
+        "description": "Interview narrative backed by measurable gateway metrics in repo."
+      }
+    ],
+    "108": [
+      {
+        "title": "Instructor — FastAPI integration",
+        "url": "https://github.com/instructor-ai/instructor/blob/main/examples/fastapi_app/main.py",
+        "repo_id": "order-108-instructor-fastapi",
+        "description": "OpenAPI surface for alpha integration prove."
+      }
+    ],
+    "109": [
+      {
+        "title": "Pydantic — JSON Schema for API contracts",
+        "url": "https://github.com/pydantic/pydantic/blob/main/docs/concepts/json_schema.md",
+        "repo_id": "order-109-pydantic-schema",
+        "description": "Keep MCP tool schemas and OpenAPI in sync."
+      }
+    ],
+    "112": [
+      {
+        "title": "Hub — eval and observability integration",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main/eval-and-observability",
+        "repo_id": "order-112-hub-alpha",
+        "description": "alpha tag demo: eval hook + trace export wiring."
+      }
+    ],
+    "113": [
+      {
+        "title": "LiteLLM — Kubernetes deployment manifests",
+        "url": "https://github.com/BerriAI/litellm/tree/main/deploy/kubernetes",
+        "repo_id": "order-113-litellm-k8s",
+        "description": "Gateway deployment reference while watching K8s community content."
+      }
+    ],
+    "114": [
+      {
+        "title": "LiteLLM — Docker Compose proxy",
+        "url": "https://github.com/BerriAI/litellm/blob/main/docker-compose.yml",
+        "repo_id": "order-114-litellm-compose",
+        "description": "Deployments doc companion—health checks and service boundaries."
+      }
+    ],
+    "115": [
+      {
+        "title": "LiteLLM — Helm chart (proxy)",
+        "url": "https://github.com/BerriAI/litellm/tree/main/deploy/charts/litellm",
+        "repo_id": "order-115-litellm-helm",
+        "description": "Helm values for model routes, secrets, and resource limits."
+      }
+    ],
+    "116": [
+      {
+        "title": "Argo CD — example application manifests",
+        "url": "https://github.com/argoproj/argo-cd/tree/master/examples",
+        "repo_id": "order-116-argocd-examples",
+        "description": "Git→cluster flow for Course 11 deploy prove."
+      }
+    ],
+    "118": [
+      {
+        "title": "Langfuse — Docker Compose (observability stack)",
+        "url": "https://github.com/langfuse/langfuse/blob/main/docker-compose.yml",
+        "repo_id": "order-118-langfuse-compose",
+        "description": "Compose alternative to Helm for local deploy demos."
+      }
+    ],
+    "119": [
+      {
+        "title": "LiteLLM — health check endpoints",
+        "url": "https://github.com/BerriAI/litellm/blob/main/litellm/proxy/proxy_server.py",
+        "repo_id": "order-119-litellm-health",
+        "description": "kubectl get pods / compose screenshot—proxy liveness patterns."
+      }
+    ],
+    "122": [
+      {
+        "title": "OpenLineage — Python client examples",
+        "url": "https://github.com/OpenLineage/OpenLineage/tree/main/client/python",
+        "repo_id": "order-122-openlineage-py",
+        "description": "Lineage v1.0 sample: chunk → call → row metadata."
+      }
+    ],
+    "127": [
+      {
+        "title": "vLLM — automatic prefix caching design",
+        "url": "https://github.com/vllm-project/vllm/blob/main/docs/design/automatic_prefix_caching.md",
+        "repo_id": "order-127-vllm-prefix-cache",
+        "description": "Frontier prefix caching spike with before/after TTFT metric."
+      }
+    ],
+    "129": [
+      {
+        "title": "DSPy — introductory programs",
+        "url": "https://github.com/stanfordnlp/dspy/tree/main/examples",
+        "repo_id": "order-129-dspy-examples",
+        "description": "README bottleneck section with compiled program metric."
+      }
+    ],
+    "132": [
+      {
+        "title": "E2B — code interpreter SDK examples",
+        "url": "https://github.com/e2b-dev/E2B/tree/main/packages/python-sdk",
+        "repo_id": "order-132-e2b-sdk",
+        "description": "Sandboxed execution patterns for public narrative demos."
+      }
+    ],
+    "134": [
+      {
+        "title": "AI Engineering Hub — portfolio-quality READMEs",
+        "url": "https://github.com/patchy631/ai-engineering-hub/tree/main",
+        "repo_id": "order-134-hub-narrative",
+        "description": "Structure technical posts from runnable mini-systems."
+      }
+    ],
+    "135": [
+      {
+        "title": "Microsoft — Generative AI for Beginners",
+        "url": "https://github.com/microsoft/generative-ai-for-beginners/tree/main/translations/en",
+        "repo_id": "order-135-ms-genai",
+        "description": "Conference talk companion labs for system design vocabulary."
+      }
+    ],
+    "136": [
+      {
+        "title": "Chip Huyen — AI Engineering book notebooks",
+        "url": "https://github.com/chiphuyen/aie-book/tree/main",
+        "repo_id": "order-136-aie-book",
+        "description": "Production pitfalls cross-check for Course 15 reading."
+      }
+    ],
+    "138": [
+      {
+        "title": "AI Engineering from Scratch — platform modules",
+        "url": "https://github.com/rohitg00/ai-engineering-from-scratch/tree/main",
+        "repo_id": "order-138-from-scratch-career",
+        "description": "Resume bullets anchored in shipped modules + tests."
+      }
+    ],
+    "139": [
+      {
+        "title": "LangGraph — platform architecture docs",
+        "url": "https://github.com/langchain-ai/langgraph/blob/main/docs/docs/concepts/langgraph.md",
+        "repo_id": "order-139-langgraph-platform",
+        "description": "Weekly application practice: explain your graph as a control plane."
+      }
+    ],
+    "140": [
+      {
+        "title": "LiteLLM — multi-tenant proxy routing",
+        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/proxy/load_balancing.md",
+        "repo_id": "order-140-litellm-routing",
+        "description": "Mock system design: orchestration + gateway + policy boundaries."
+      }
+    ],
+    "141": [
+      {
+        "title": "DeepEval — evaluation report artifacts",
+        "url": "https://github.com/confident-ai/deepeval/blob/main/docs/docs/evaluation-introduction.mdx",
+        "repo_id": "order-141-deepeval-report",
+        "description": "Offer/feedback notes tied to measurable eval summaries in repo."
+      }
+    ]
+  }
+}

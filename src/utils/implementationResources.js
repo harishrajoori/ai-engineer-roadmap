@@ -22,6 +22,9 @@ export function getTopicImplementationResources(lesson, opts = {}) {
     .filter((r) => {
       const source = r.source || "";
       const id = r.repo_id || "";
+      if (source === "topic_order_override" && r.matchScore >= 6) {
+        return true;
+      }
       if (source === "verified_repo_catalog" && r.matchScore < 6) {
         return false;
       }

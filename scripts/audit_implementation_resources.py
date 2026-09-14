@@ -35,6 +35,9 @@ def topic_scoped_impl(lesson: dict) -> list[dict]:
         source = r.get("source") or ""
         score = int(r.get("match_score") or 0)
         repo_id = r.get("repo_id") or ""
+        if source == "topic_order_override" and score >= MIN_CATALOG_MATCH_SCORE:
+            rows.append(r)
+            continue
         if source == "verified_repo_catalog" and score < MIN_CATALOG_MATCH_SCORE:
             continue
         if repo_id in GENERIC_REPO_IDS and score < 12:

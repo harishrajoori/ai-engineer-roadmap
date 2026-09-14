@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from enrichment_utils import lesson_stable_key, normalize_lesson_title, token_set
+from topic_implementation_overrides import resources_for_lesson
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CATALOG_PATH = REPO_ROOT / "data" / "implementation_repo_catalog.json"
@@ -128,7 +129,7 @@ def strip_stale_catalog_resources(row: dict) -> None:
 def append_implementation_repos(row: dict) -> None:
     """Merge catalog repos into row['resources'] (after external curriculum)."""
     strip_stale_catalog_resources(row)
-    extras = pick_repos_for_lesson(row)
+    extras = resources_for_lesson(row) + pick_repos_for_lesson(row)
     if not extras:
         return
     resources = list(row.get("resources") or [])
