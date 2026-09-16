@@ -129,12 +129,12 @@ def advanced_plain_english_block(hint: dict[str, Any]) -> str:
     if adv:
         lines.append(adv)
         lines.append("")
-    lines.append(
-        "**Cost:** log tokens and wall time per record on your golden set; compare P50 vs P95 after any prompt change. "
-        "**Safety:** treat user content and log lines as untrusted input—never let them rewrite system instructions. "
-        "**Ops:** every external call needs a timeout, a retry budget, and a dashboard or JSONL you can grep during an incident."
-    )
-    lines.append("")
+    if not adv:
+        lines.append(
+            "Before changing models or prompts in production, re-check the course **prove pack** and golden-set metrics "
+            "(cost, latency, valid JSON %)."
+        )
+        lines.append("")
     return "\n".join(lines)
 
 

@@ -86,6 +86,34 @@ def sanitize_lesson_enrichment(row: dict, youtube_id_from_url: Any) -> None:
     row.pop("course_prompts", None)
 
 
+def handbook_matches_lesson(entry: dict[str, Any], lesson: dict) -> bool:
+    """Handbook rows are keyed by lesson order; skip overlay when syllabus drift misaligns text."""
+    if not entry:
+        return False
+    one = (entry.get("one_liner") or "").strip()
+    if not one:
+        return True
+    title = normalize_lesson_title(lesson.get("lesson") or "")
+    ltype = (lesson.get("type") or "").lower()
+    if re.search(r"prove month \d+", one.lower()):
+        if ltype != "prove" and not title.lower().startswith("prove"):
+            return False
+    lt = token_set(title)
+    ht = token_set(one)
+    if not lt:
+        return True
+    overlap = len(lt & ht)
+    if overlap >= 2:
+        return True
+    if overlap >= 1 and len(lt) <= 5:
+        return True
+    if ltype == "prove" and "prove" in one.lower():
+        return True
+    if re.search(r"month \d+:", one.lower()) and overlap < 1:
+        return False
+    return overlap >= 1
+
+
 def index_lessons_by_key(lessons: list[dict]) -> dict[str, dict]:
     out: dict[str, dict] = {}
     for row in lessons:

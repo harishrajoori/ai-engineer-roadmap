@@ -17,7 +17,8 @@
     "validate:repos": "python3 scripts/github_repo_validate.py --check",
     "validate:ci": "npm run validate:app && npm run validate:models && npm run test:prove && npm run validate:repos && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/curriculum_qa.py && python3 scripts/audit_public_content.py && python3 scripts/audit_implementation_resources.py",
     "audit:implementation": "python3 scripts/audit_implementation_resources.py",
-    "audit:public": "python3 scripts/audit_public_content.py"
+    "audit:public": "python3 scripts/audit_public_content.py",
+    "coverage:curriculum": "python3 scripts/coverage_report.py"
   },
   "dependencies": {
     "@react-oauth/google": "^0.13.5",

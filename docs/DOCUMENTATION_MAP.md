@@ -8,7 +8,10 @@ How narrative, syllabus, and studio JSON fit together. **Audience lens:** experi
 | [`AI_for_Data_Engineers_Primer.md`](./AI_for_Data_Engineers_Primer.md) | **Short in-app companion** — studio panels, rules, first hour; points to the brief | `program_primer_markdown` → Course 0 overview panel |
 | [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) | **Syllabus source** — every checkbox, link, prove line | `scripts/generate_lessons.py` → `lessons[]` |
 | [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) | Strategy, module depth (§17+), appendices | Humans; not auto-bundled to JSON |
-| [`audit/AI_Systems_Engineer_Studio_Full_Audit_Review.md`](./audit/AI_Systems_Engineer_Studio_Full_Audit_Review.md) | External full-product audit (Grok, Sep 2026) + prioritized backlog | Humans; tracks UX/prove gaps |
+| [`audit/AI_Systems_Engineer_Studio_Full_Audit_Review.md`](./audit/AI_Systems_Engineer_Studio_Full_Audit_Review.md) | External full-product audit (Grok, Sep 2026) + prioritized backlog | Humans; studio UX (mostly addressed) |
+| [`audit/AI_System_Engineer_Astra_Curriculum_Review.md`](./audit/AI_System_Engineer_Astra_Curriculum_Review.md) | GPT-6 Astra curriculum / platform-depth review (Sep 2026) | Humans; systems vs platform positioning |
+| [`audit/Astra_Curriculum_Gap_Matrix.md`](./audit/Astra_Curriculum_Gap_Matrix.md) | Astra themes × courses 0–15 status | Maintainers; platform extension backlog |
+| [`audit/Content_Theory_Duplication_Audit.md`](./audit/Content_Theory_Duplication_Audit.md) | Theory/lab duplication, handbook drift, QA fixes | Maintainers; studio content quality |
 | [`capstone_product_brief.md`](./capstone_product_brief.md) | Course 10 scope contract (OpsLedger AI) | `courses_ref["10"].capstone_product_brief_markdown` |
 | [`lesson_json_schema.md`](./lesson_json_schema.md) | React studio lesson JSON contract | Humans + `validate_app.mjs` subset |
 | [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md) | Optional transformer / training depth index | Humans; linked from Course 1 overview & primer |
@@ -37,7 +40,9 @@ Do **not** hand-edit `data/lessons.json` — see [`lesson_json_schema.md`](./les
 3. `python3 scripts/generate_lessons.py` → `data/lessons.json` + `public/data/lessons.json`  
 4. `npm run validate:ci`
 
-Or **`npm run curriculum`** (steps 2–3). Decision records: [`docs/decisions/`](./decisions/).
+Or **`npm run curriculum`** (steps 2–3; also writes `data/topic_handbook_by_key.json`). Decision records: [`docs/decisions/`](./decisions/).
+
+Coverage summary: **`npm run coverage:curriculum`**.
 
 ## Content order for learners (5+ YOE data engineer)
 

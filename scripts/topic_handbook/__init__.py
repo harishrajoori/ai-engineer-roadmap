@@ -5,20 +5,28 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Any
 
-from topic_handbook.entries import HANDBOOK_BY_ORDER
+from enrichment_utils import handbook_matches_lesson, lesson_stable_key
+from topic_handbook.entries import HANDBOOK_BY_KEY, HANDBOOK_BY_ORDER
 
 
 def handbook_entry(lesson: dict) -> dict[str, Any]:
+    stable = lesson_stable_key(lesson)
+    keyed = HANDBOOK_BY_KEY.get(stable)
+    if keyed:
+        return dict(keyed)
     order = lesson.get("order")
     if order is None:
         return {}
-    return dict(HANDBOOK_BY_ORDER.get(int(order)) or {})
+    entry = HANDBOOK_BY_ORDER.get(int(order)) or {}
+    if entry and handbook_matches_lesson(entry, lesson):
+        return dict(entry)
+    return {}
 
 
 def merge_handbook_into_hint(lesson: dict, hint: dict[str, Any]) -> dict[str, Any]:
     """Overlay curated fields onto the dynamic hint (handbook wins when set)."""
     entry = handbook_entry(lesson)
-    if not entry:
+    if not entry or not handbook_matches_lesson(entry, lesson):
         return hint
     out = dict(hint)
     scalar_keys = (

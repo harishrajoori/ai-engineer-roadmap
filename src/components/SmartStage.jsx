@@ -139,6 +139,11 @@ export default function SmartStage({
 
   useEffect(() => {
     setActiveTab(defaultTabForLesson(lesson));
+    if (lesson?.theory_studio_guide) {
+      setTheoryLevel("intermediate");
+    } else {
+      setTheoryLevel(loadTheoryLevelPreference());
+    }
   }, [lesson?.order]);
 
   const resources = useMemo(() => {

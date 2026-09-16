@@ -232,7 +232,9 @@
     "11": [
       "Twelve-factor agents",
       "Health checks and LiteLLM sidecar",
-      "docs/adding-a-tool.md pattern"
+      "Reproducible deploy and rollback (DEPLOY.md)",
+      "Smoke eval + policy after deploy",
+      "docs/adding-a-tool.md (peer-reviewable)"
     ],
     "12": [
       "OpenLineage emit on model/chunk ids",
@@ -362,14 +364,17 @@
       "commands": ["make demo", "python scripts/caching_benchmark.py"]
     },
     "11": {
-      "title": "Deploy prove",
+      "title": "Deploy prove (executable)",
       "acceptance": [
-        { "criterion": "Running deploy URL or screenshot with health check path visible (`/health` or `/livez`)", "required": true },
-        { "criterion": "`docs/adding-a-tool.md` covers JSON schema, auth, and one new eval case", "required": true },
-        { "criterion": "Reviewer can hit health endpoint from README commands", "required": true }
+        { "criterion": "`DEPLOY.md` or README: one-command deploy from clean clone (compose, Helm, or pipeline link)", "required": true },
+        { "criterion": "Health check documented and verifiable (`curl` output or CI log)", "required": true },
+        { "criterion": "Post-deploy smoke: eval + policy tests pass (commands in DEPLOY.md)", "required": true },
+        { "criterion": "Rollback procedure documented and exercised once (or CI rollback job linked)", "required": true },
+        { "criterion": "`docs/adding-a-tool.md`: schema, auth, one new eval case; peer can add read-only tool", "required": true },
+        { "criterion": "Screenshot or URL only as supplement—not sole evidence", "required": false }
       ],
-      "readme_example": "## Deploy\n- URL: …\n- Health: `curl -s $BASE/health`",
-      "commands": ["docker compose up -d", "curl -s localhost:8000/health"]
+      "readme_example": "## Deploy\n```bash\ndocker compose up -d --build\nmake smoke   # eval + policy\n```\nRollback: `git checkout <prev-tag> && docker compose up -d --build`",
+      "commands": ["docker compose up -d --build", "make smoke", "curl -sf localhost:8000/health"]
     },
     "12": {
       "title": "Lineage v1.0 prove",
@@ -748,7 +753,7 @@
         {
           "area": "Internal platform",
           "example": "Deploy on ECS/Fargate or k8s with LiteLLM sidecar pattern you already know from infra work.",
-          "you_build": "Deploy screenshot + `docs/adding-a-tool.md`.",
+          "you_build": "One-command deploy prove + smoke tests + rollback + `docs/adding-a-tool.md`.",
           "skills_from_course": ["Twelve-factor agents", "health checks"]
         }
       ],

@@ -1,0 +1,1439 @@
+{
+  "c0|t|prove: paste github url + readme golden-set metric|prove": {
+    "advanced_extra": "Add CONTRIBUTING with how to add golden rows—signals platform maturity in interviews.\n\n## Production notes (still plain English)\n\nAdd CONTRIBUTING with how to add golden rows—signals platform maturity in interviews.\n\n\n**Architecture anchor:** Prove = link + metric a stranger can verify in 10 minutes.",
+    "beginner_extra": "Paste the repo URL in Lab & Prove; ensure README shows the valid JSON percentage.",
+    "capstone_action": "Publish URL; ensure README golden-set metric is current.",
+    "done_when": "Course 0 acceptance table satisfied; link saved in studio.",
+    "failure_modes": [
+      "Private repo without access",
+      "Metric without reproducible command"
+    ],
+    "intermediate_deep_dive": "README table: command, sample output, valid %, date. Optional: badge or screenshot of scorer output.\n\n## Plain English implementation path\n\nREADME table: command, sample output, valid %, date. Optional: badge or screenshot of scorer output.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Publish URL; ensure README golden-set metric is current.\n\n**You are done when:** Course 0 acceptance table satisfied; link saved in studio.\n\n## Explain it to a staff engineer\n\n- How would an interviewer verify your boot week claim live?\n\n\n## Why this link exists\n\nProve boot week: public GitHub URL plus README metric from golden-set scoring. The syllabus title **Prove: Paste GitHub URL + README golden-set metric** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How would an interviewer verify your boot week claim live?"
+    ],
+    "mental_model": "Prove = link + metric a stranger can verify in 10 minutes.",
+    "one_liner": "Prove boot week: public GitHub URL plus README metric from golden-set scoring.",
+    "why_now": "Teaches evidence-based completion—same bar as production change tickets."
+  },
+  "c0|t|repo: `production-log-reconciler` or `telemetry-log-reconciler` · synthetic/public data only|build": {
+    "advanced_extra": "Add CODEOWNERS-style clarity: what is in scope for boot week vs later tags. Pre-commit for ruff/format; pin dependencies; document Python version.\n\n## Production notes (still plain English)\n\nAdd CODEOWNERS-style clarity: what is in scope for boot week vs later tags. Pre-commit for ruff/format; pin dependencies; document Python version.\n\n\n**Architecture anchor:** Repo = mini data product: ingest → extract → validate → score.",
+    "beginner_extra": "Public GitHub is fine; use synthetic or public sample logs only—no employer data.",
+    "capstone_action": "Initialize repo; first commit with README + golden folder + stub extract.",
+    "done_when": "Clone → install → score runs (even if 0% valid).",
+    "failure_modes": [
+      "Secrets in repo",
+      "No reproducible install story"
+    ],
+    "intermediate_deep_dive": "Scaffold: `src/`, `data/golden/`, `scripts/score.py`, Makefile or `uv run`, CI placeholder. README must explain how to run score locally in <5 commands.\n\n## Plain English implementation path\n\nScaffold: `src/`, `data/golden/`, `scripts/score.py`, Makefile or `uv run`, CI placeholder. README must explain how to run score locally in <5 commands.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Initialize repo; first commit with README + golden folder + stub extract.\n\n**You are done when:** Clone → install → score runs (even if 0% valid).\n\n## Explain it to a staff engineer\n\n- Walk through repo layout like a system design whiteboard.",
+    "interview_prompts": [
+      "Walk through repo layout like a system design whiteboard."
+    ],
+    "mental_model": "Repo = mini data product: ingest → extract → validate → score.",
+    "one_liner": "Create the capstone repo: production-log-reconciler (or telemetry-log-reconciler) with README, golden folder, and extract stub.",
+    "why_now": "All later courses attach to this repo—treat it like a platform monorepo, not homework."
+  },
+  "c0|u|https://applied-llms.org/": {
+    "advanced_extra": "Cross-reference handbook patterns with your repo: where is gateway, where is eval harness, where is human review. Use handbook language in design docs so staff engineers recognize tradeoffs quickly.\n\n## Production notes (still plain English)\n\nCross-reference handbook patterns with your repo: where is gateway, where is eval harness, where is human review. Use handbook language in design docs so staff engineers recognize tradeoffs quickly.\n\n\n**Architecture anchor:** Handbook = internal RFC index for LLM platforms.",
+    "beginner_extra": "Skim the table of contents; read only sections named on your syllabus line for this course.",
+    "capstone_action": "README ADR snippet: adopted vs deferred pattern with rationale.",
+    "done_when": "You can cite one concrete idea from the handbook in a design sentence.",
+    "failure_modes": [
+      "Reading cover-to-cover without shipping",
+      "Quoting patterns without metrics"
+    ],
+    "intermediate_deep_dive": "For Course 0, focus on extraction + validation + observability chapters. Write one ADR: pattern adopted (e.g., schema-first extraction), pattern deferred (e.g., fine-tuning).\n\n## Plain English implementation path\n\nFor Course 0, focus on extraction + validation + observability chapters. Write one ADR: pattern adopted (e.g., schema-first extraction), pattern deferred (e.g., fine-tuning).\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** README ADR snippet: adopted vs deferred pattern with rationale.\n\n**You are done when:** You can cite one concrete idea from the handbook in a design sentence.\n\n## Explain it to a staff engineer\n\n- Name one handbook pattern you adopted and one you rejected—why?",
+    "interview_prompts": [
+      "Name one handbook pattern you adopted and one you rejected—why?"
+    ],
+    "mental_model": "Handbook = internal RFC index for LLM platforms.",
+    "one_liner": "Applied LLMs handbook—production patterns for gateways, RAG, agents, and evals (read as a map, not a novel).",
+    "read_sections": [
+      "Structured outputs",
+      "Evaluation",
+      "Observability",
+      "Failure modes"
+    ],
+    "why_now": "Gives vocabulary for architecture reviews you will repeat monthly; first pass in boot week, deeper passes later."
+  },
+  "c0|u|https://docs.litellm.ai/docs/completion/reliable_completions": {
+    "advanced_extra": "Alert when fallback rate > baseline—often quality regression. Keep fallback models on comparable schema contracts; do not fork prompts per model without eval diff.\n\n## Production notes (still plain English)\n\nAlert when fallback rate > baseline—often quality regression. Keep fallback models on comparable schema contracts; do not fork prompts per model without eval diff.\n\n\n**Architecture anchor:** Fallback chain = multi-source ingestion with priority list.",
+    "beginner_extra": "Read fallbacks as ‘if primary warehouse is down, read replica’—same idea for models.",
+    "capstone_action": "Wire fallback in dev; document in README with a forced failure test.",
+    "done_when": "You can demo primary failure → fallback success with logs.",
+    "failure_modes": [
+      "Silent model switch without audit",
+      "Unbounded fallback spend"
+    ],
+    "intermediate_deep_dive": "Configure primary + fallback models; log `model_used` per request. Set aggressive timeouts for batch jobs vs interactive CLI.\n\n## Plain English implementation path\n\nConfigure primary + fallback models; log `model_used` per request. Set aggressive timeouts for batch jobs vs interactive CLI.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Wire fallback in dev; document in README with a forced failure test.\n\n**You are done when:** You can demo primary failure → fallback success with logs.\n\n## Explain it to a staff engineer\n\n- How do you test failover without production incidents?\n\n\n## Why this link exists\n\nLiteLLM reliable completions: fallbacks, timeouts, and routing when a provider throttles or errors. The syllabus title **LiteLLM — reliable completions / fallbacks** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you test failover without production incidents?"
+    ],
+    "mental_model": "Fallback chain = multi-source ingestion with priority list.",
+    "one_liner": "LiteLLM reliable completions: fallbacks, timeouts, and routing when a provider throttles or errors.",
+    "read_sections": [
+      "Reliable completions",
+      "Fallbacks",
+      "Timeouts",
+      "Router"
+    ],
+    "why_now": "Boot week preview of Course 1 gateway—your extractor should not fail closed on a single 429."
+  },
+  "c0|u|https://docs.pydantic.dev/latest/concepts/models/": {
+    "advanced_extra": "Use discriminated unions when log types differ materially. Performance: validate at boundary once; avoid re-parsing dicts in inner loops. For compliance, keep audit trail of schema hash in each extracted record.\n\n## Production notes (still plain English)\n\nUse discriminated unions when log types differ materially. Performance: validate at boundary once; avoid re-parsing dicts in inner loops. For compliance, keep audit trail of schema hash in each extracted record.\n\n\n**Architecture anchor:** Docs = DDL + CHECK constraints for Python objects.",
+    "beginner_extra": "Focus on Models, Field(), and `@model_validator`—skip exotic serialization until you need it.",
+    "capstone_action": "Add one `@model_validator` for a business invariant on your event model.",
+    "done_when": "Invalid golden rows fail with readable errors in CI.",
+    "failure_modes": [
+      "Validator logic only in prompts",
+      "Breaking changes without version bump"
+    ],
+    "intermediate_deep_dive": "Implement cross-field rules (e.g., end_time after start_time) in validators, not prompts. Document error messages—they become operator runbooks when extraction fails in prod.\n\n## Plain English implementation path\n\nImplement cross-field rules (e.g., end_time after start_time) in validators, not prompts. Document error messages—they become operator runbooks when extraction fails in prod.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Add one `@model_validator` for a business invariant on your event model.\n\n**You are done when:** Invalid golden rows fail with readable errors in CI.\n\n## Explain it to a staff engineer\n\n- Field validator vs model validator—when to use which?",
+    "interview_prompts": [
+      "Field validator vs model validator—when to use which?"
+    ],
+    "mental_model": "Docs = DDL + CHECK constraints for Python objects.",
+    "one_liner": "Pydantic V2 is the reference for validators, model validators, and settings—your schema source of truth.",
+    "read_sections": [
+      "Models",
+      "Validators",
+      "Model validators",
+      "Serialization"
+    ],
+    "why_now": "Instructor inherits Pydantic semantics; misunderstandings here become silent data bugs downstream."
+  },
+  "c0|u|https://hamel.dev/blog/posts/evals/": {
+    "advanced_extra": "Tier metrics: L0 schema pass, L1 field accuracy, L2 business KPI. Block releases on L0/L1; investigate L2 with humans. Store golden set in git; review label changes like code.\n\n## Production notes (still plain English)\n\nTier metrics: L0 schema pass, L1 field accuracy, L2 business KPI. Block releases on L0/L1; investigate L2 with humans. Store golden set in git; review label changes like code.\n\n\n**Architecture anchor:** Golden set = labeled fixture table for a non-deterministic UDF.",
+    "beginner_extra": "You are building pytest for prompts—not chasing a single accuracy number on day one.",
+    "capstone_action": "Commit ≥10 labeled examples and a scorer script output.",
+    "done_when": "You can explain what would block a release on your project.",
+    "failure_modes": [
+      "10-example toy set",
+      "Labels without reviewer agreement"
+    ],
+    "intermediate_deep_dive": "Create `data/golden/` with diverse failure types: malformed logs, ambiguous amounts, injection-ish strings. Label both **schema** and **semantic** correctness where possible.\n\n## Plain English implementation path\n\nCreate `data/golden/` with diverse failure types: malformed logs, ambiguous amounts, injection-ish strings. Label both **schema** and **semantic** correctness where possible.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Commit ≥10 labeled examples and a scorer script output.\n\n**You are done when:** You can explain what would block a release on your project.\n\n## Explain it to a staff engineer\n\n- How big should a golden set be before v1 launch?",
+    "interview_prompts": [
+      "How big should a golden set be before v1 launch?"
+    ],
+    "mental_model": "Golden set = labeled fixture table for a non-deterministic UDF.",
+    "one_liner": "Hamel’s evals essay: golden sets, metric tiers, and why launch without regression tests fails.",
+    "read_sections": [
+      "Why evals",
+      "Golden sets",
+      "Error analysis",
+      "What not to do"
+    ],
+    "why_now": "Sets the quality culture before you scale features in later courses."
+  },
+  "c0|u|https://python.useinstructor.com/getting-started/": {
+    "advanced_extra": "Wrap Instructor calls in a **budgeted** function: max dollars per record, circuit breaker on error rate. For multi-record batches, prefer row-level extraction over giant array JSON—easier to retry partial failures. Compare Instructor to Outlines/constrained decoding: Instructor is faster to ship; constrained decoding when latency and guarantee matter at scale.\n\n## Production notes (still plain English)\n\nWrap Instructor calls in a **budgeted** function: max dollars per record, circuit breaker on error rate. For multi-record batches, prefer row-level extraction over giant array JSON—easier to retry partial failures. Compare Instructor to Outlines/constrained decoding: Instructor is faster to ship; constrained decoding when latency and guarantee matter at scale.\n\n\n**Architecture anchor:** Instructor = typed client SDK over an untrusted HTTP API.",
+    "beginner_extra": "Start with the quick start: one model, one function, one golden example. Retries are not free—each retry is another billed call.",
+    "capstone_action": "Implement `extract(record) -> LogEvent` with capped retries and structured logs.",
+    "done_when": "`scripts/score.py` reports valid % you trust on labeled data.",
+    "failure_modes": [
+      "Infinite retries on semantic errors",
+      "Logging raw prompts containing PII",
+      "Same temperature on repair as on first pass (often too creative)"
+    ],
+    "intermediate_deep_dive": "Read retries and partial validation sections with your golden set open. Define `max_retries`, backoff, and a **repair** system message template. Log every attempt with `attempt`, `model`, and validation error class.\n\n## Plain English implementation path\n\nRead retries and partial validation sections with your golden set open. Define `max_retries`, backoff, and a **repair** system message template. Log every attempt with `attempt`, `model`, and validation error class.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Implement `extract(record) -> LogEvent` with capped retries and structured logs.\n\n**You are done when:** `scripts/score.py` reports valid % you trust on labeled data.\n\n## Explain it to a staff engineer\n\n- Design an extraction API with idempotency keys.\n- How do you test Instructor integrations without flaky CI?",
+    "interview_prompts": [
+      "Design an extraction API with idempotency keys.",
+      "How do you test Instructor integrations without flaky CI?"
+    ],
+    "mental_model": "Instructor = typed client SDK over an untrusted HTTP API.",
+    "one_liner": "Instructor wraps chat completions so responses must parse into your Pydantic models, with retries on validation failure.",
+    "read_sections": [
+      "Quick start",
+      "Retries",
+      "Validators",
+      "Partial validation"
+    ],
+    "why_now": "This is the adapter between probabilistic text and deterministic Python objects in your boot-week repo."
+  },
+  "c0|u|https://www.deeplearning.ai/short-courses/pydantic-for-llm-workflows/": {
+    "advanced_extra": "Schema evolution: version models (`LogEventV1`) and migrate with shadow validation before flipping prod. Custom validators belong at the boundary; do not sprinkle business rules inside prompt text only. Measure **validation error taxonomy** (missing field vs wrong enum vs semantic wrong amount) separately in metrics—retries help syntax, not semantics. Interview: compare Pydantic validation to Great Expectations / JSON Schema in a CDC stream.\n\n## Production notes (still plain English)\n\nSchema evolution: version models (`LogEventV1`) and migrate with shadow validation before flipping prod. Custom validators belong at the boundary; do not sprinkle business rules inside prompt text only. Measure **validation error taxonomy** (missing field vs wrong enum vs semantic wrong amount) separately in metrics—retries help syntax, not semantics. Interview: compare Pydantic validation to Great Expectations / JSON Schema in a CDC stream.\n\n\n**Architecture anchor:** Pydantic model = table DDL for one API response; validation errors are rejected rows.",
+    "beginner_extra": "The course shows models, validators, and retries. You do not need every Pydantic feature—copy the **smallest** model that matches your log event schema and grow fields only when the golden set proves you need them.",
+    "capstone_action": "Mirror one course pattern in `extract()` with explicit `ValidationError` handling.",
+    "done_when": "Golden set shows valid JSON % and you can explain each field’s business meaning.",
+    "failure_modes": [
+      "Coercing invalid types silently (`.model_construct` abuse)",
+      "Huge nested models that explode token usage in tool schemas",
+      "No version field on extracted records"
+    ],
+    "intermediate_deep_dive": "Map each lesson exercise to your `LogEvent` (or similar): required fields, optional metadata, enums for severity. Decide **fail closed** on unknown keys vs strip unknowns—default fail closed for finance-adjacent logs. Pair the course with Instructor (next reads): Pydantic defines shape; Instructor enforces shape against live model output.\n\n## Plain English implementation path\n\nMap each lesson exercise to your `LogEvent` (or similar): required fields, optional metadata, enums for severity. Decide **fail closed** on unknown keys vs strip unknowns—default fail closed for finance-adjacent logs. Pair the course with Instructor (next reads): Pydantic defines shape; Instructor enforces shape against live model output.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Mirror one course pattern in `extract()` with explicit `ValidationError` handling.\n\n**You are done when:** Golden set shows valid JSON % and you can explain each field’s business meaning.\n\n## Explain it to a staff engineer\n\n- How do you migrate a Pydantic model without breaking consumers?\n- When is a repair prompt better than a third retry?",
+    "interview_prompts": [
+      "How do you migrate a Pydantic model without breaking consumers?",
+      "When is a repair prompt better than a third retry?"
+    ],
+    "mental_model": "Pydantic model = table DDL for one API response; validation errors are rejected rows.",
+    "one_liner": "Hands-on Pydantic patterns so LLM outputs become typed records you can unit test like warehouse rows.",
+    "watch_for": [
+      "Defining nested models for real log shapes",
+      "When the course retries vs when you fix the prompt",
+      "Optional vs required fields tradeoffs"
+    ],
+    "why_now": "Immediately after the mental model video—you need a concrete contract between messy text and your reconciler code."
+  },
+  "c0|u|https://www.youtube.com/watch?v=zjkbmfhnj_g": {
+    "advanced_extra": "Platform framing: treat inference as a **multi-tenant, rate-limited dependency** with fat-tailed latency. Capacity planning starts with tokens-per-record distributions on your golden set, not GPU specs. Security: prompt injection is input validation; never concatenate untrusted log lines into system prompts without sanitization boundaries. For interviews, articulate pretrain/finetune/prompt/RAG as a **cost ladder**—you default to prompt+schema until evals prove you need the next rung.\n\n## Production notes (still plain English)\n\nPlatform framing: treat inference as a **multi-tenant, rate-limited dependency** with fat-tailed latency. Capacity planning starts with tokens-per-record distributions on your golden set, not GPU specs. Security: prompt injection is input validation; never concatenate untrusted log lines into system prompts without sanitization boundaries. For interviews, articulate pretrain/finetune/prompt/RAG as a **cost ladder**—you default to prompt+schema until evals prove you need the next rung.\n\n\n**Architecture anchor:** LLM = stateless text function with a max input size; your platform owns schemas, retries, and tests around it.",
+    "beginner_extra": "When Karpathy talks about tokens, think **columns in a wide string**: the model only sees a limited window at once. When he talks about hallucination, think **synthetic rows** that pass a vibe check but fail a join to ground truth.",
+    "capstone_action": "README: 3 bullets—failure mode, log field, test you will add.",
+    "done_when": "You can sketch input → model → validated JSON on one diagram.",
+    "failure_modes": [
+      "Treating model prose as ground truth without schema validation",
+      "Unbounded prompts on large logs → cost spikes and timeouts",
+      "No logging of prompt hash + model version for incident replay"
+    ],
+    "intermediate_deep_dive": "Use this video to draw a one-page diagram: **training** (offline, expensive, not your job in this track) vs **inference** (online API calls you pay per token). Note three production knobs you will reuse in Course 1: max tokens, temperature, and timeout. After watching, write a README section ‘What we trust the model for’ vs ‘What we always validate’—that becomes your team policy seed.\n\n## Plain English implementation path\n\nUse this video to draw a one-page diagram: **training** (offline, expensive, not your job in this track) vs **inference** (online API calls you pay per token). Note three production knobs you will reuse in Course 1: max tokens, temperature, and timeout. After watching, write a README section ‘What we trust the model for’ vs ‘What we always validate’—that becomes your team policy seed.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** README: 3 bullets—failure mode, log field, test you will add.\n\n**You are done when:** You can sketch input → model → validated JSON on one diagram.\n\n## Explain it to a staff engineer\n\n- Explain LLMs to a data engineer without saying ‘AI magic.’\n- Where would you enforce max context for log extraction?\n- How do you detect and respond to a provider outage?",
+    "interview_prompts": [
+      "Explain LLMs to a data engineer without saying ‘AI magic.’",
+      "Where would you enforce max context for log extraction?",
+      "How do you detect and respond to a provider outage?"
+    ],
+    "mental_model": "LLM = stateless text function with a max input size; your platform owns schemas, retries, and tests around it.",
+    "one_liner": "Karpathy explains LLMs as next-token predictors: training vs inference, why they sound confident when wrong, and what a context window really means.",
+    "watch_for": [
+      "Training vs inference—what runs in your AWS bill monthly",
+      "Context window as a hard limit (truncation policy)",
+      "Why scale changes capability but not the need for verification",
+      "Sampling / temperature as a stability lever for extraction"
+    ],
+    "why_now": "Every later topic assumes you know the model is not a database—you validate outputs like bad rows in a pipeline."
+  },
+  "c10|t|policy: opa before write tools|capstone checklist": {
+    "advanced_extra": "Metrics on interrupt rate and time-to-resume.\n\n## Production notes (still plain English)\n\nMetrics on interrupt rate and time-to-resume.\n\n\n**Architecture anchor:** Same HITL as Month 2, now in full pipeline.",
+    "beginner_extra": "Document operator steps in DEMO.md.",
+    "capstone_action": "DEMO.md script includes fail branch.",
+    "done_when": "Demo script rehearsed.",
+    "failure_modes": [
+      "HITL bypassed in ‘happy path only’ demo"
+    ],
+    "intermediate_deep_dive": "Resume path tested after human correction.\n\n## Plain English implementation path\n\nResume path tested after human correction.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** DEMO.md script includes fail branch.\n\n**You are done when:** Demo script rehearsed.\n\n## Explain it to a staff engineer\n\n- Walk alpha demo including interrupt.\n\n\n## Why this link exists\n\nCapstone LangGraph: pass → stage write; fail → interrupt() HITL in integrated flow. The syllabus title **Policy: OPA before write tools** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Walk alpha demo including interrupt."
+    ],
+    "mental_model": "Same HITL as Month 2, now in full pipeline.",
+    "one_liner": "Capstone LangGraph: pass → stage write; fail → interrupt() HITL in integrated flow.",
+    "why_now": "Human gate on bad extractions in alpha story."
+  },
+  "c10|u|https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching": {
+    "advanced_extra": "Alert if cache hit rate drops after deploy.\n\n## Production notes (still plain English)\n\nAlert if cache hit rate drops after deploy.\n\n\n**Architecture anchor:** LiteLLM passes cache directives to providers.",
+    "beginner_extra": "Follow LiteLLM prompt caching doc.",
+    "capstone_action": "Caching enabled in proxy.",
+    "done_when": "Table in README practical gate.",
+    "failure_modes": [
+      "Caching without measuring TTFT improvement"
+    ],
+    "intermediate_deep_dive": "Log cached vs uncached token fields per request.\n\n## Plain English implementation path\n\nLog cached vs uncached token fields per request.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Caching enabled in proxy.\n\n**You are done when:** Table in README practical gate.\n\n## Explain it to a staff engineer\n\n- Show ≥10 request table cached vs uncached.\n\n\n## Why this link exists\n\nLiteLLM prompt caching—unified caching config across providers where supported. The syllabus title **Anthropic prompt caching** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Show ≥10 request table cached vs uncached."
+    ],
+    "mental_model": "LiteLLM passes cache directives to providers.",
+    "one_liner": "LiteLLM prompt caching—unified caching config across providers where supported.",
+    "read_sections": [
+      "Prompt caching",
+      "Logging cache stats"
+    ],
+    "why_now": "Matches gateway-centric capstone architecture."
+  },
+  "c11|u|https://kubernetes.io/docs/concepts/workloads/controllers/deployment/": {
+    "advanced_extra": "Chart versioning aligned with git tags.\n\n## Production notes (still plain English)\n\nChart versioning aligned with git tags.\n\n\n**Architecture anchor:** Helm chart = parameterized Terraform for k8s apps.",
+    "beginner_extra": "helm install your chart on kind/minikube.",
+    "capstone_action": "chart/ directory with README.",
+    "done_when": "helm template renders cleanly.",
+    "failure_modes": [
+      "Secrets in values.yaml committed"
+    ],
+    "intermediate_deep_dive": "Values for secrets, image tags, resource limits.\n\n## Plain English implementation path\n\nValues for secrets, image tags, resource limits.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** chart/ directory with README.\n\n**You are done when:** helm template renders cleanly.\n\n## Explain it to a staff engineer\n\n- What goes in values vs templates?\n\n\n## Why this link exists\n\nHelm quickstart—package Kubernetes manifests for reproducible installs. The syllabus title **Kubernetes — Deployments** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What goes in values vs templates?"
+    ],
+    "mental_model": "Helm chart = parameterized Terraform for k8s apps.",
+    "one_liner": "Helm quickstart—package Kubernetes manifests for reproducible installs.",
+    "read_sections": [
+      "Quickstart",
+      "Charts",
+      "Values"
+    ],
+    "why_now": "Capstone deliverable often Helm or compose—Helm for kube path."
+  },
+  "c11|u|https://www.youtube.com/c/kubernetescommunity": {
+    "advanced_extra": "Rollout analysis: maxUnavailable, surge during gateway upgrades.\n\n## Production notes (still plain English)\n\nRollout analysis: maxUnavailable, surge during gateway upgrades.\n\n\n**Architecture anchor:** Deployment = managed replica set with rollout strategy.",
+    "beginner_extra": "Read deployments + probes sections.",
+    "capstone_action": "deployment.yaml sketch.",
+    "done_when": "Probes defined in manifest.",
+    "failure_modes": [
+      "No readiness probe on slow-start LiteLLM"
+    ],
+    "intermediate_deep_dive": "Liveness vs readiness for LLM worker (readiness waits for model warm-up).\n\n## Plain English implementation path\n\nLiveness vs readiness for LLM worker (readiness waits for model warm-up).\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** deployment.yaml sketch.\n\n**You are done when:** Probes defined in manifest.\n\n## Explain it to a staff engineer\n\n- Design probes for LLM gateway pod.\n\n\n## Why this link exists\n\nKubernetes Deployments docs—replicas, rollouts, probes for agent/gateway services. The syllabus title **Kubernetes Community** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Design probes for LLM gateway pod."
+    ],
+    "mental_model": "Deployment = managed replica set with rollout strategy.",
+    "one_liner": "Kubernetes Deployments docs—replicas, rollouts, probes for agent/gateway services.",
+    "read_sections": [
+      "Deployments",
+      "Probes",
+      "Resource management"
+    ],
+    "why_now": "Month 11 deploy month core reference."
+  },
+  "c12|u|https://www.openlineage.io/": {
+    "advanced_extra": "Validate event against JSON schema in CI.\n\n## Production notes (still plain English)\n\nValidate event against JSON schema in CI.\n\n\n**Architecture anchor:** lineage.json = test fixture for lineage emitter.",
+    "beginner_extra": "Follow Python or JSON examples in docs.",
+    "capstone_action": "sample_lineage.json committed.",
+    "done_when": "CI validates JSON.",
+    "failure_modes": [
+      "Invalid facet names"
+    ],
+    "intermediate_deep_dive": "Emit event on successful alpha run (script hook).\n\n## Plain English implementation path\n\nEmit event on successful alpha run (script hook).\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** sample_lineage.json committed.\n\n**You are done when:** CI validates JSON.\n\n## Explain it to a staff engineer\n\n- Lineage for RAG vs batch ETL—similarities?\n\n\n## Why this link exists\n\nOpenLineage documentation—JSON spec for emitting lineage from your pipeline. The syllabus title **OpenLineage project** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Lineage for RAG vs batch ETL—similarities?"
+    ],
+    "mental_model": "lineage.json = test fixture for lineage emitter.",
+    "one_liner": "OpenLineage documentation—JSON spec for emitting lineage from your pipeline.",
+    "read_sections": [
+      "Spec",
+      "Python client",
+      "Facets"
+    ],
+    "why_now": "Implement sample artifact for v1.0 prove."
+  },
+  "c15|t|prove: offer or feedback notes|prove": {
+    "advanced_extra": "Update positioning statement from real feedback (private doc).\n\n## Production notes (still plain English)\n\nUpdate positioning statement from real feedback (private doc).\n\n\n**Architecture anchor:** Private notes in studio backup are OK; public repo stays synthetic.",
+    "beginner_extra": "Link offer PDF or write 5 bullets of feedback themes in prove notes.",
+    "capstone_action": "Studio prove URL or backup JSON notes.",
+    "done_when": "Course 15 prove acceptance checklist complete.",
+    "failure_modes": [
+      "Skipping written debrief when no offer yet"
+    ],
+    "intermediate_deep_dive": "Retro: which prove artifacts interviewers asked about most.\n\n## Plain English implementation path\n\nRetro: which prove artifacts interviewers asked about most.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Studio prove URL or backup JSON notes.\n\n**You are done when:** Course 15 prove acceptance checklist complete.\n\n## Explain it to a staff engineer\n\n- What would you change in the capstone story for the next loop?\n\n\n## Why this link exists\n\nProve: offer letter or structured interview feedback (Course 15 closure). The syllabus title **Prove: Offer or feedback notes** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What would you change in the capstone story for the next loop?"
+    ],
+    "mental_model": "Private notes in studio backup are OK; public repo stays synthetic.",
+    "one_liner": "Prove: offer letter or structured interview feedback (Course 15 closure).",
+    "why_now": "Final prove row—capture outcome or learning from the search loop."
+  },
+  "c1|t|prove: release `v0.2` link + readme metrics|prove": {
+    "advanced_extra": "Attach sample log JSON (redacted) as artifact in repo docs.\n\n## Production notes (still plain English)\n\nAttach sample log JSON (redacted) as artifact in repo docs.\n\n\n**Architecture anchor:** Release tag = deployable artifact for reviewers.",
+    "beginner_extra": "Paste release URL in Lab & Prove.",
+    "capstone_action": "Publish release; update studio prove link.",
+    "done_when": "Course 1 acceptance satisfied.",
+    "failure_modes": [
+      "Metrics from hand-waved numbers"
+    ],
+    "intermediate_deep_dive": "Verify a friend can run one command and see a log row.\n\n## Plain English implementation path\n\nVerify a friend can run one command and see a log row.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Publish release; update studio prove link.\n\n**You are done when:** Course 1 acceptance satisfied.\n\n## Explain it to a staff engineer\n\n- Walk through your v0.2 demo in 5 minutes.\n\n\n## Why this link exists\n\nProve Month 1: published v0.2 release with README cost/latency metrics. The syllabus title **Prove: Release `v0.2` link + README metrics** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Walk through your v0.2 demo in 5 minutes."
+    ],
+    "mental_model": "Release tag = deployable artifact for reviewers.",
+    "one_liner": "Prove Month 1: published v0.2 release with README cost/latency metrics.",
+    "why_now": "Demonstrates operable gateway—not just code on a branch."
+  },
+  "c1|t|tag `v0.2`; litellm router + per-request cost log|build": {
+    "advanced_extra": "Add redaction middleware for prompts/responses in logs. SLO: P95 latency budget per record on golden set.\n\n## Production notes (still plain English)\n\nAdd redaction middleware for prompts/responses in logs. SLO: P95 latency budget per record on golden set.\n\n\n**Architecture anchor:** Gateway log row = fact table for FinOps and debugging.",
+    "beginner_extra": "Tag `v0.2` on GitHub when README metrics table is truthful.",
+    "capstone_action": "Merge v0.2; README metrics from real runs.",
+    "done_when": "Release link + table in README.",
+    "failure_modes": [
+      "Logging costs without token counts",
+      "Different log schemas per entrypoint"
+    ],
+    "intermediate_deep_dive": "Fields: timestamp, model, prompt_tokens, completion_tokens, latency_ms, estimated_cost, request_id. CLI and library paths both emit the same schema.\n\n## Plain English implementation path\n\nFields: timestamp, model, prompt_tokens, completion_tokens, latency_ms, estimated_cost, request_id. CLI and library paths both emit the same schema.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Merge v0.2; README metrics from real runs.\n\n**You are done when:** Release link + table in README.\n\n## Explain it to a staff engineer\n\n- How do you attribute LLM spend to a team or job?\n\n\n## Why this link exists\n\nBuild v0.2: LiteLLM router plus per-request cost and latency logging. The syllabus title **Tag `v0.2`; LiteLLM router + per-request cost log** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you attribute LLM spend to a team or job?"
+    ],
+    "mental_model": "Gateway log row = fact table for FinOps and debugging.",
+    "one_liner": "Build v0.2: LiteLLM router plus per-request cost and latency logging.",
+    "why_now": "Month 1 core deliverable—every later observability story hangs off this."
+  },
+  "c1|u|https://applied-llms.org/": {
+    "advanced_extra": "Write a short comparison table: handbook recommendation vs your current implementation vs gap.\n\n## Production notes (still plain English)\n\nWrite a short comparison table: handbook recommendation vs your current implementation vs gap.\n\n\n**Architecture anchor:** Second read = highlight what changes now that LiteLLM exists in repo.",
+    "beginner_extra": "Pick three section titles from the handbook TOC that mention cost, logging, or validation.",
+    "capstone_action": "Three ADR bullets in README for Month 1.",
+    "done_when": "Each bullet links to a merged PR or config file.",
+    "failure_modes": [
+      "Duplicate notes from Course 0 without new insights"
+    ],
+    "intermediate_deep_dive": "Annotate margins: each section → one change in your v0.2 PR (config, log field, test).\n\n## Plain English implementation path\n\nAnnotate margins: each section → one change in your v0.2 PR (config, log field, test).\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Three ADR bullets in README for Month 1.\n\n**You are done when:** Each bullet links to a merged PR or config file.\n\n## Explain it to a staff engineer\n\n- What changed in your architecture after the second Applied LLMs pass?\n\n\n## Why this link exists\n\nApplied LLMs second pass—read 3+ sections focused on gateways, extraction, and monitoring for Month 1. The syllabus title **Applied LLMs — 3+ sections** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What changed in your architecture after the second Applied LLMs pass?"
+    ],
+    "mental_model": "Second read = highlight what changes now that LiteLLM exists in repo.",
+    "one_liner": "Applied LLMs second pass—read 3+ sections focused on gateways, extraction, and monitoring for Month 1.",
+    "read_sections": [
+      "Gateway patterns",
+      "Structured outputs",
+      "Monitoring"
+    ],
+    "why_now": "Revisit with gateway context; first pass was boot-week breadth."
+  },
+  "c1|u|https://chiphuyen.com/": {
+    "advanced_extra": "Connect post themes to OpenLineage/evals later—data flywheel narrative for interviews.\n\n## Production notes (still plain English)\n\nConnect post themes to OpenLineage/evals later—data flywheel narrative for interviews.\n\n\n**Architecture anchor:** Blog = case studies in operationalizing models.",
+    "beginner_extra": "Read 2–3 posts on data loops, monitoring, or deployment—not the entire archive.",
+    "capstone_action": "One checklist item implemented or ticketed in README.",
+    "done_when": "You can summarize one post’s thesis in two sentences.",
+    "failure_modes": [
+      "Reading without operationalizing any checklist item"
+    ],
+    "intermediate_deep_dive": "Pick one post; extract a checklist you add to repo OPERATIONS.md.\n\n## Plain English implementation path\n\nPick one post; extract a checklist you add to repo OPERATIONS.md.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** One checklist item implemented or ticketed in README.\n\n**You are done when:** You can summarize one post’s thesis in two sentences.\n\n## Explain it to a staff engineer\n\n- How does data drift show up in LLM apps?\n\n\n## Why this link exists\n\nChip Huyen’s blog—production ML/LLM systems essays bridging data and serving. The syllabus title **Chip Huyen — blog** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How does data drift show up in LLM apps?"
+    ],
+    "mental_model": "Blog = case studies in operationalizing models.",
+    "one_liner": "Chip Huyen’s blog—production ML/LLM systems essays bridging data and serving.",
+    "read_sections": [
+      "Posts on LLM apps",
+      "Data distribution shift",
+      "Monitoring"
+    ],
+    "why_now": "Frames how data quality and serving interact—natural for data engineers."
+  },
+  "c1|u|https://docs.litellm.ai/docs/": {
+    "advanced_extra": "Plan HA: multiple proxy replicas, secret rotation, budget caps per team. Integrate Langfuse in Course 9—leave hooks now.\n\n## Production notes (still plain English)\n\nPlan HA: multiple proxy replicas, secret rotation, budget caps per team. Integrate Langfuse in Course 9—leave hooks now.\n\n\n**Architecture anchor:** LiteLLM = ODBC for LLMs: one connection string, many backends.",
+    "beginner_extra": "Start with completion API + proxy overview; defer exotic providers until needed.",
+    "capstone_action": "Tag v0.2 with router config + cost log sample in README.",
+    "done_when": "README table shows model, tokens, latency, cost for sample requests.",
+    "failure_modes": [
+      "API keys in each script",
+      "No request id in logs"
+    ],
+    "intermediate_deep_dive": "Stand up proxy or embedded router; standardize env vars; per-request metadata (`job_id`).\n\n## Plain English implementation path\n\nStand up proxy or embedded router; standardize env vars; per-request metadata (`job_id`).\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Tag v0.2 with router config + cost log sample in README.\n\n**You are done when:** README table shows model, tokens, latency, cost for sample requests.\n\n## Explain it to a staff engineer\n\n- Design a multi-tenant LLM gateway.\n\n\n## Why this link exists\n\nLiteLLM docs hub—proxy, routing, logging integrations for your Month 1 gateway. The syllabus title **LiteLLM docs hub** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Design a multi-tenant LLM gateway."
+    ],
+    "mental_model": "LiteLLM = ODBC for LLMs: one connection string, many backends.",
+    "one_liner": "LiteLLM docs hub—proxy, routing, logging integrations for your Month 1 gateway.",
+    "read_sections": [
+      "Proxy server",
+      "Routing",
+      "Logging",
+      "Fallbacks"
+    ],
+    "why_now": "Central place to configure models, keys, and observability hooks used all year."
+  },
+  "c1|u|https://github.com/chiphuyen/aie-book#readme": {
+    "advanced_extra": "Compare book architecture diagrams to your repo—gap analysis for portfolio.\n\n## Production notes (still plain English)\n\nCompare book architecture diagrams to your repo—gap analysis for portfolio.\n\n\n**Architecture anchor:** Repo = worked examples to steal patterns from.",
+    "beginner_extra": "Clone optional; browse folders on serving and monitoring only if time.",
+    "capstone_action": "Optional: link to upstream pattern you mirrored.",
+    "done_when": "Optional—skip if blog + v0.2 suffice.",
+    "failure_modes": [
+      "Forking entire book repo into capstone"
+    ],
+    "intermediate_deep_dive": "If used, port one small pattern (config, logging) into capstone with attribution.\n\n## Plain English implementation path\n\nIf used, port one small pattern (config, logging) into capstone with attribution.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional: link to upstream pattern you mirrored.\n\n**You are done when:** Optional—skip if blog + v0.2 suffice.\n\n## Explain it to a staff engineer\n\n- Which book pattern did you adopt vs ignore?\n\n\n## Why this link exists\n\nAI Engineering book repo—companion code and references for Chip Huyen’s textbook themes. The syllabus title **AI Engineering book repo** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Which book pattern did you adopt vs ignore?"
+    ],
+    "mental_model": "Repo = worked examples to steal patterns from.",
+    "one_liner": "AI Engineering book repo—companion code and references for Chip Huyen’s textbook themes.",
+    "read_sections": [
+      "Serving",
+      "Monitoring",
+      "Data pipelines"
+    ],
+    "why_now": "Optional depth alongside blog; skim code examples matching gateway/eval topics."
+  },
+  "c1|u|https://github.com/dottxt-ai/outlines": {
+    "advanced_extra": "When to adopt: high-volume extraction with strict JSON grammar. When to defer: rapid schema churn or small volumes where retries are cheaper than engineering.\n\n## Production notes (still plain English)\n\nWhen to adopt: high-volume extraction with strict JSON grammar. When to defer: rapid schema churn or small volumes where retries are cheaper than engineering.\n\n\n**Architecture anchor:** Outlines = compile schema into generation constraints.",
+    "beginner_extra": "Only explore after Instructor baseline works; compare valid % and latency.",
+    "capstone_action": "Optional spike branch with benchmark notes in README.",
+    "done_when": "Decision documented: adopt / defer with metric.",
+    "failure_modes": [
+      "Adopting constrained decoding before basic evals exist"
+    ],
+    "intermediate_deep_dive": "Spike: one golden subset with Outlines vs Instructor; document tradeoff table.\n\n## Plain English implementation path\n\nSpike: one golden subset with Outlines vs Instructor; document tradeoff table.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional spike branch with benchmark notes in README.\n\n**You are done when:** Decision documented: adopt / defer with metric.\n\n## Explain it to a staff engineer\n\n- Compare retry-based validation vs constrained decoding.\n\n\n## Why this link exists\n\nOutlines library—constrained decoding for guaranteed JSON/schema adherence (optional advanced). The syllabus title ***(optional)* Outlines — constrained decoding** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Compare retry-based validation vs constrained decoding."
+    ],
+    "mental_model": "Outlines = compile schema into generation constraints.",
+    "one_liner": "Outlines library—constrained decoding for guaranteed JSON/schema adherence (optional advanced).",
+    "read_sections": [
+      "Getting started",
+      "JSON schema",
+      "Models supported"
+    ],
+    "why_now": "Alternative to retry-heavy Instructor when you need stricter guarantees or lower latency."
+  },
+  "c1|u|https://python.useinstructor.com/getting-started/": {
+    "advanced_extra": "Expose metrics: `validation_error_type` counter, `retry_count` histogram. Document idempotency for batch replays.\n\n## Production notes (still plain English)\n\nExpose metrics: `validation_error_type` counter, `retry_count` histogram. Document idempotency for batch replays.\n\n\n**Architecture anchor:** Shared library module `extraction.py` used by CLI and later agents.",
+    "beginner_extra": "Focus on retries, partial parsing, and consistent exception types.",
+    "capstone_action": "Refactor extract behind one module; tests for validation failures.",
+    "done_when": "CI runs unit tests without API keys.",
+    "failure_modes": [
+      "Copy-paste extract logic per script"
+    ],
+    "intermediate_deep_dive": "Refactor boot-week extract into a module with injectable client (LiteLLM). Unit-test validation paths without calling the network.\n\n## Plain English implementation path\n\nRefactor boot-week extract into a module with injectable client (LiteLLM). Unit-test validation paths without calling the network.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Refactor extract behind one module; tests for validation failures.\n\n**You are done when:** CI runs unit tests without API keys.\n\n## Explain it to a staff engineer\n\n- How do you structure LLM client code in a monorepo?\n\n\n## Why this link exists\n\nInstructor patterns and retries—Month 1 angle: production extraction functions and error taxonomy. The syllabus title **Instructor — patterns & retries** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you structure LLM client code in a monorepo?"
+    ],
+    "mental_model": "Shared library module `extraction.py` used by CLI and later agents.",
+    "one_liner": "Instructor patterns and retries—Month 1 angle: production extraction functions and error taxonomy.",
+    "read_sections": [
+      "Retries",
+      "Validators",
+      "Hooks"
+    ],
+    "why_now": "You already read quick start; now standardize patterns across services behind LiteLLM."
+  },
+  "c1|u|https://statquest.org/video-index/": {
+    "advanced_extra": "Skip if time-boxed—optional means optional unless evals show knowledge gaps.\n\n## Production notes (still plain English)\n\nSkip if time-boxed—optional means optional unless evals show knowledge gaps.\n\n\n**Architecture anchor:** StatQuest = glossary in video form.",
+    "beginner_extra": "Search the site for ‘attention’ or ‘embeddings’; watch one video, not the whole index.",
+    "capstone_action": "If used: one README bullet citing the StatQuest concept.",
+    "done_when": "You can skip guilt-free if Month 1 prove passed.",
+    "failure_modes": [
+      "Substituting optional videos for prove gates"
+    ],
+    "intermediate_deep_dive": "Pick one video aligned with your weakest concept from Month 1 notes.\n\n## Plain English implementation path\n\nPick one video aligned with your weakest concept from Month 1 notes.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** If used: one README bullet citing the StatQuest concept.\n\n**You are done when:** You can skip guilt-free if Month 1 prove passed.\n\n## Explain it to a staff engineer\n\n- Which optional resource actually changed a design decision?\n\n\n## Why this link exists\n\nStatQuest index—search for attention/embeddings when you want gentler statistics framing (optional). The syllabus title ***(optional)* StatQuest video index · search attention / embedding** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Which optional resource actually changed a design decision?"
+    ],
+    "mental_model": "StatQuest = glossary in video form.",
+    "one_liner": "StatQuest index—search for attention/embeddings when you want gentler statistics framing (optional).",
+    "watch_for": [
+      "Clear definitions",
+      "Visual intuition"
+    ],
+    "why_now": "Optional supplement; use only if 3Blue1Brown or DL.AI modules felt too fast."
+  },
+  "c1|u|https://www.3blue1brown.com/topics/neural-networks#chapter1": {
+    "advanced_extra": "Use this to explain embedding models to stakeholders without claiming embeddings equal meaning.\n\n## Production notes (still plain English)\n\nUse this to explain embedding models to stakeholders without claiming embeddings equal meaning.\n\n\n**Architecture anchor:** Neural net = composed functions; attention = soft lookup over positions.",
+    "beginner_extra": "Watch the attention episode if linear algebra is rusty; otherwise skim and return before RAG month.",
+    "capstone_action": "Note one diagram you will reuse in a future RAG README.",
+    "done_when": "You can point to what an embedding model approximates.",
+    "failure_modes": [
+      "Confusing intuition with implementation details in interviews"
+    ],
+    "intermediate_deep_dive": "Pause on attention visuals—relate to ‘which chunk of document mattered’ in RAG explanations.\n\n## Plain English implementation path\n\nPause on attention visuals—relate to ‘which chunk of document mattered’ in RAG explanations.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Note one diagram you will reuse in a future RAG README.\n\n**You are done when:** You can point to what an embedding model approximates.\n\n## Explain it to a staff engineer\n\n- Explain attention to a PM in one minute.\n\n\n## Why this link exists\n\n3Blue1Brown visual intuition for neural nets and attention—optional math depth for embeddings later. The syllabus title **3Blue1Brown — neural networks / attention** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Explain attention to a PM in one minute."
+    ],
+    "mental_model": "Neural net = composed functions; attention = soft lookup over positions.",
+    "one_liner": "3Blue1Brown visual intuition for neural nets and attention—optional math depth for embeddings later.",
+    "watch_for": [
+      "Layer stacking",
+      "Attention as weighted sum",
+      "Training vs inference split"
+    ],
+    "why_now": "Helps when Month 4–5 discuss vectors and attention-based retrieval."
+  },
+  "c1|u|https://www.deeplearning.ai/courses/generative-ai-with-llms/": {
+    "advanced_extra": "Document which modules you skipped and why—interviewers prefer honest scope to fake completion. Relate transformer intuition to cost: longer contexts in prompts directly map to gateway bills.\n\n## Production notes (still plain English)\n\nDocument which modules you skipped and why—interviewers prefer honest scope to fake completion. Relate transformer intuition to cost: longer contexts in prompts directly map to gateway bills.\n\n\n**Architecture anchor:** Course hub = playlist you curate against syllabus headings only.",
+    "beginner_extra": "Pick modules on tokens, fine-tuning vs prompting, and deployment—skip research-heavy units unless optional.",
+    "capstone_action": "README ‘Month 1 notes’ with 5 terms tied to your gateway design.",
+    "done_when": "You can explain one module’s idea without reading slides.",
+    "failure_modes": [
+      "Trying to finish all modules",
+      "Notes without connection to repo"
+    ],
+    "intermediate_deep_dive": "Align each module you watch to a README note: new term defined, new risk for your extractor. Pair with Karpathy deep dive (next topic) for inference-centric view.\n\n## Plain English implementation path\n\nAlign each module you watch to a README note: new term defined, new risk for your extractor. Pair with Karpathy deep dive (next topic) for inference-centric view.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** README ‘Month 1 notes’ with 5 terms tied to your gateway design.\n\n**You are done when:** You can explain one module’s idea without reading slides.\n\n## Explain it to a staff engineer\n\n- When would you fine-tune vs RAG vs prompt-only?",
+    "interview_prompts": [
+      "When would you fine-tune vs RAG vs prompt-only?"
+    ],
+    "mental_model": "Course hub = playlist you curate against syllabus headings only.",
+    "one_liner": "DL.AI Generative AI with LLMs course hub—modular videos on transformers, training, and deployment (time-boxed).",
+    "watch_for": [
+      "Tokenization",
+      "Fine-tuning vs prompting",
+      "Deployment constraints"
+    ],
+    "why_now": "Month 1 deepens foundations before you wire LiteLLM; do not attempt the entire specialization."
+  },
+  "c1|u|https://www.youtube.com/@deeplearningai": {
+    "advanced_extra": "Treat as conference talks backlog for Month 15 interview prep.\n\n## Production notes (still plain English)\n\nTreat as conference talks backlog for Month 15 interview prep.\n\n\n**Architecture anchor:** Channel = library, syllabus = reading list.",
+    "beginner_extra": "Subscribe if helpful; do not binge—return when a specific technique is named in build tasks.",
+    "capstone_action": "Only if watched: link one video in README notes.",
+    "done_when": "Optional topic may be marked done without viewing if required topics complete.",
+    "failure_modes": [
+      "40 hours of video zero repo commits"
+    ],
+    "intermediate_deep_dive": "If you watch anything, log title + 3 bullets tied to capstone.\n\n## Plain English implementation path\n\nIf you watch anything, log title + 3 bullets tied to capstone.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Only if watched: link one video in README notes.\n\n**You are done when:** Optional topic may be marked done without viewing if required topics complete.\n\n## Explain it to a staff engineer\n\n- How do you time-box learning resources?\n\n\n## Why this link exists\n\nDeepLearning.AI YouTube channel hub—browse only topics referenced elsewhere in Month 1. The syllabus title ***(optional)* DeepLearning.AI YouTube** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you time-box learning resources?"
+    ],
+    "mental_model": "Channel = library, syllabus = reading list.",
+    "one_liner": "DeepLearning.AI YouTube channel hub—browse only topics referenced elsewhere in Month 1.",
+    "watch_for": [
+      "Production-focused titles",
+      "Short courses overlapping syllabus"
+    ],
+    "why_now": "Optional discovery; avoid rabbit holes."
+  },
+  "c1|u|https://www.youtube.com/c/andrejkarpathy": {
+    "advanced_extra": "Use for narrative in portfolio posts—how you think about systems, not trivia.\n\n## Production notes (still plain English)\n\nUse for narrative in portfolio posts—how you think about systems, not trivia.\n\n\n**Architecture anchor:** Essays = senior engineer perspective pieces.",
+    "beginner_extra": "Read/watch one essay if curious about career direction—not required for prove.",
+    "capstone_action": "Optional README reflection (3 sentences max).",
+    "done_when": "Skip allowed when v0.2 prove is on track.",
+    "failure_modes": [
+      "Consuming content instead of shipping v0.2"
+    ],
+    "intermediate_deep_dive": "If engaged, compare essay themes to your capstone architecture choices.\n\n## Plain English implementation path\n\nIf engaged, compare essay themes to your capstone architecture choices.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional README reflection (3 sentences max).\n\n**You are done when:** Skip allowed when v0.2 prove is on track.\n\n## Explain it to a staff engineer\n\n- What Karpathy idea influenced your repo design?\n\n\n## Why this link exists\n\nKarpathy YouTube channel—long-form essays on software 2.0 and LLM engineering (optional). The syllabus title ***(optional)* Karpathy channel** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What Karpathy idea influenced your repo design?"
+    ],
+    "mental_model": "Essays = senior engineer perspective pieces.",
+    "one_liner": "Karpathy YouTube channel—long-form essays on software 2.0 and LLM engineering (optional).",
+    "watch_for": [
+      "Engineering mindset",
+      "Data flywheels"
+    ],
+    "why_now": "Optional culture/context; primary required Karpathy items are the intro and deep dive topics."
+  },
+  "c1|u|https://www.youtube.com/watch?v=7xtgnnlpymi": {
+    "advanced_extra": "Discuss speculative decoding / caching only as future optimizations—document baseline first. For self-hosted path (Month 13), this video is the prerequisite to reading vLLM docs.\n\n## Production notes (still plain English)\n\nDiscuss speculative decoding / caching only as future optimizations—document baseline first. For self-hosted path (Month 13), this video is the prerequisite to reading vLLM docs.\n\n\n**Architecture anchor:** Attention = pairwise context mixing; KV cache = amortizing work across generated tokens.",
+    "beginner_extra": "You do not need to derive math—capture what grows with sequence length and batch size.",
+    "capstone_action": "Log prompt/completion tokens for one CLI call with interpretation.",
+    "done_when": "One paragraph relates P99 latency to token volume.",
+    "failure_modes": [
+      "Optimizing GPUs before golden-set quality plateaus"
+    ],
+    "intermediate_deep_dive": "While watching, build a table: knob → effect on latency/cost (context length, batch, model size). Apply to your logging use case: prefer short JSON outputs.\n\n## Plain English implementation path\n\nWhile watching, build a table: knob → effect on latency/cost (context length, batch, model size). Apply to your logging use case: prefer short JSON outputs.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Log prompt/completion tokens for one CLI call with interpretation.\n\n**You are done when:** One paragraph relates P99 latency to token volume.\n\n## Explain it to a staff engineer\n\n- Why does TTFT spike with long prompts?\n\n\n## Why this link exists\n\nKarpathy deep dive: transformers, KV cache, and inference mechanics that explain latency and cost. The syllabus title **Karpathy — Deep Dive into LLMs** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Why does TTFT spike with long prompts?"
+    ],
+    "mental_model": "Attention = pairwise context mixing; KV cache = amortizing work across generated tokens.",
+    "one_liner": "Karpathy deep dive: transformers, KV cache, and inference mechanics that explain latency and cost.",
+    "watch_for": [
+      "Transformer block",
+      "KV cache intuition",
+      "Sampling parameters"
+    ],
+    "why_now": "Connects Course 1 gateway metrics (TTFT, tokens) to what the stack is actually doing."
+  },
+  "c2|t|package `reconciler-agent`: langgraph + sqlite/postgres checkpoints|build": {
+    "advanced_extra": "Emit OpenTelemetry spans per node; propagate trace id into LiteLLM metadata.\n\n## Production notes (still plain English)\n\nEmit OpenTelemetry spans per node; propagate trace id into LiteLLM metadata.\n\n\n**Architecture anchor:** Graph = orchestration layer; extraction module unchanged underneath.",
+    "beginner_extra": "Smallest graph that calls existing `extract()` then validates.",
+    "capstone_action": "Merge package with README run instructions.",
+    "done_when": "CI tests graph without network.",
+    "failure_modes": [
+      "Business logic inside prompt-only",
+      "No version on state schema"
+    ],
+    "intermediate_deep_dive": "Nodes as pure functions; explicit state schema; tests with mocked LLM.\n\n## Plain English implementation path\n\nNodes as pure functions; explicit state schema; tests with mocked LLM.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Merge package with README run instructions.\n\n**You are done when:** CI tests graph without network.\n\n## Explain it to a staff engineer\n\n- Show how you tested a branching graph.\n\n\n## Why this link exists\n\nBuild reconciler-agent: LangGraph workflow with SQLite/Postgres checkpointer and validation branch. The syllabus title **Package `reconciler-agent`: LangGraph + SQLite/Postgres checkpoints** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Show how you tested a branching graph."
+    ],
+    "mental_model": "Graph = orchestration layer; extraction module unchanged underneath.",
+    "one_liner": "Build reconciler-agent: LangGraph workflow with SQLite/Postgres checkpointer and validation branch.",
+    "why_now": "Month 2 core integration—extraction graph replaces one-off scripts."
+  },
+  "c2|t|prove: readme demo: validation fail → `interrupt()` hitl|prove": {
+    "advanced_extra": "Redact PII in demo data; document authorization for who may resume.\n\n## Production notes (still plain English)\n\nRedact PII in demo data; document authorization for who may resume.\n\n\n**Architecture anchor:** GIF or numbered steps = acceptance test for agents.",
+    "beginner_extra": "Record terminal or write step-by-step with expected prompts.",
+    "capstone_action": "Publish demo section; link in Lab & Prove.",
+    "done_when": "Reviewer can reproduce HITL flow.",
+    "failure_modes": [
+      "Demo only works on your laptop magic env"
+    ],
+    "intermediate_deep_dive": "Include run id, checkpoint id, and how operator edits state safely.\n\n## Plain English implementation path\n\nInclude run id, checkpoint id, and how operator edits state safely.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Publish demo section; link in Lab & Prove.\n\n**You are done when:** Reviewer can reproduce HITL flow.\n\n## Explain it to a staff engineer\n\n- Walk through HITL demo in interview.\n\n\n## Why this link exists\n\nProve Month 2: README demo of validation fail → interrupt() → human fix → resume. The syllabus title **Prove: README demo: validation fail → `interrupt()` HITL** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Walk through HITL demo in interview."
+    ],
+    "mental_model": "GIF or numbered steps = acceptance test for agents.",
+    "one_liner": "Prove Month 2: README demo of validation fail → interrupt() → human fix → resume.",
+    "why_now": "Shows operable human-in-the-loop—not a slide deck."
+  },
+  "c2|u|https://academy.langchain.com/courses/intro-to-langgraph/": {
+    "advanced_extra": "Compare Academy patterns to Anthropic agents essay—converge on your house style.\n\n## Production notes (still plain English)\n\nCompare Academy patterns to Anthropic agents essay—converge on your house style.\n\n\n**Architecture anchor:** Academy = interactive labs; syllabus names which modules matter.",
+    "beginner_extra": "Time-box to modules on persistence and human-in-the-loop if listed on your line.",
+    "capstone_action": "Port one academy pattern into capstone with test.",
+    "done_when": "Graph unit test runs in CI (mocked LLM).",
+    "failure_modes": [
+      "Starting new tutorial repos instead of capstone package"
+    ],
+    "intermediate_deep_dive": "Complete exercises; copy patterns into `reconciler-agent` package structure.\n\n## Plain English implementation path\n\nComplete exercises; copy patterns into `reconciler-agent` package structure.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Port one academy pattern into capstone with test.\n\n**You are done when:** Graph unit test runs in CI (mocked LLM).\n\n## Explain it to a staff engineer\n\n- How do you test a LangGraph workflow?\n\n\n## Why this link exists\n\nLangChain Academy—LangGraph modules for hands-on graph patterns beyond the short course. The syllabus title **LangChain Academy — Intro to LangGraph** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you test a LangGraph workflow?"
+    ],
+    "mental_model": "Academy = interactive labs; syllabus names which modules matter.",
+    "one_liner": "LangChain Academy—LangGraph modules for hands-on graph patterns beyond the short course.",
+    "watch_for": [
+      "Checkpointers",
+      "Breakpoints",
+      "Testing graphs"
+    ],
+    "why_now": "Deepens persistence, subgraphs, and testing patterns for production graphs."
+  },
+  "c2|u|https://applied-llms.org/": {
+    "advanced_extra": "Define SLAs for HITL steps and escalation when interrupts age out.\n\n## Production notes (still plain English)\n\nDefine SLAs for HITL steps and escalation when interrupts age out.\n\n\n**Architecture anchor:** Crosswalk essay + handbook + your README diagram.",
+    "beginner_extra": "Read agent/orchestration sections only; skip unrelated chapters.",
+    "capstone_action": "Sync README diagram with handbook terminology.",
+    "done_when": "Diagram matches code entrypoints.",
+    "failure_modes": [
+      "Documentation drift from actual graph"
+    ],
+    "intermediate_deep_dive": "Update ADR with one handbook pattern you implemented vs deferred.\n\n## Plain English implementation path\n\nUpdate ADR with one handbook pattern you implemented vs deferred.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Sync README diagram with handbook terminology.\n\n**You are done when:** Diagram matches code entrypoints.\n\n## Explain it to a staff engineer\n\n- Describe your HITL path end-to-end.\n\n\n## Why this link exists\n\nApplied LLMs pass on agents/orchestration—align handbook patterns with your LangGraph design. The syllabus title **Applied LLMs — agents / orchestration** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Describe your HITL path end-to-end."
+    ],
+    "mental_model": "Crosswalk essay + handbook + your README diagram.",
+    "one_liner": "Applied LLMs pass on agents/orchestration—align handbook patterns with your LangGraph design.",
+    "read_sections": [
+      "Agents",
+      "Orchestration",
+      "Human oversight"
+    ],
+    "why_now": "Third handbook pass; focus agent chapters now that graphs are real code."
+  },
+  "c2|u|https://langchain-ai.github.io/langgraph/concepts/why-langgraph/": {
+    "advanced_extra": "Plan horizontal scaling: single-writer checkpoints, idempotent nodes, saga compensation on tool failure.\n\n## Production notes (still plain English)\n\nPlan horizontal scaling: single-writer checkpoints, idempotent nodes, saga compensation on tool failure.\n\n\n**Architecture anchor:** Docs = contract for state transitions and persistence.",
+    "beginner_extra": "Read Concepts + Persistence before copying StackOverflow snippets.",
+    "capstone_action": "Package `reconciler-agent` with documented checkpointer choice.",
+    "done_when": "Graph resumes after simulated worker crash.",
+    "failure_modes": [
+      "Non-idempotent nodes on retry",
+      "Storing secrets in graph state"
+    ],
+    "intermediate_deep_dive": "Implement SQLite or Postgres checkpointer; document migration path to prod store.\n\n## Plain English implementation path\n\nImplement SQLite or Postgres checkpointer; document migration path to prod store.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Package `reconciler-agent` with documented checkpointer choice.\n\n**You are done when:** Graph resumes after simulated worker crash.\n\n## Explain it to a staff engineer\n\n- How do checkpoints interact with idempotency keys?\n\n\n## Why this link exists\n\nLangGraph official docs—graphs, checkpointers, interrupts, and streaming for your reconciler-agent package. The syllabus title **LangGraph documentation** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do checkpoints interact with idempotency keys?"
+    ],
+    "mental_model": "Docs = contract for state transitions and persistence.",
+    "one_liner": "LangGraph official docs—graphs, checkpointers, interrupts, and streaming for your reconciler-agent package.",
+    "read_sections": [
+      "Concepts",
+      "Persistence",
+      "Interrupts",
+      "Streaming"
+    ],
+    "why_now": "Reference while implementing Month 2 build; short course gives intuition, docs give API truth."
+  },
+  "c2|u|https://www.anthropic.com/engineering/building-effective-agents": {
+    "advanced_extra": "Map essay anti-patterns to lint rules: e.g., ban unbounded tool loops, require eval on tool outputs. Interview story: how you prevented runaway autonomy.\n\n## Production notes (still plain English)\n\nMap essay anti-patterns to lint rules: e.g., ban unbounded tool loops, require eval on tool outputs. Interview story: how you prevented runaway autonomy.\n\n\n**Architecture anchor:** Agents = loops; often you want workflows with explicit gates.",
+    "beginner_extra": "Read for ‘build the simplest thing’ and tool-use discipline.",
+    "capstone_action": "ADR: workflow vs agent for reconciler; cite essay.",
+    "done_when": "Design doc references at least two essay principles.",
+    "failure_modes": [
+      "Autonomous agent with write tools and no policy"
+    ],
+    "intermediate_deep_dive": "List which syllabus steps are workflows vs agent loops in your design doc. Add human approval on high-risk branches.\n\n## Plain English implementation path\n\nList which syllabus steps are workflows vs agent loops in your design doc. Add human approval on high-risk branches.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** ADR: workflow vs agent for reconciler; cite essay.\n\n**You are done when:** Design doc references at least two essay principles.\n\n## Explain it to a staff engineer\n\n- When would you refuse to ship an ‘agent’?\n\n\n## Why this link exists\n\nAnthropic — Building Effective Agents: patterns for reliable agentic workflows without over-autonomy. The syllabus title **Anthropic — Building Effective Agents** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "When would you refuse to ship an ‘agent’?"
+    ],
+    "mental_model": "Agents = loops; often you want workflows with explicit gates.",
+    "one_liner": "Anthropic — Building Effective Agents: patterns for reliable agentic workflows without over-autonomy.",
+    "read_sections": [
+      "Workflows vs agents",
+      "Tool use",
+      "Evaluations"
+    ],
+    "why_now": "Canonical essay before you wire tools and MCP—defines when graphs beat agents."
+  },
+  "c2|u|https://www.deeplearning.ai/short-courses/ai-agents-in-langgraph/": {
+    "advanced_extra": "Define checkpoint retention and PII policy in state store. Load-test interrupt/resume paths—common demo breakages under concurrency.\n\n## Production notes (still plain English)\n\nDefine checkpoint retention and PII policy in state store. Load-test interrupt/resume paths—common demo breakages under concurrency.\n\n\n**Architecture anchor:** LangGraph = Airflow with LLM nodes and human approval tasks.",
+    "beginner_extra": "Complete course labs; map each lab node type to a step in your reconciler.",
+    "capstone_action": "Sketch graph diagram in README before coding.",
+    "done_when": "You can name each node and its input/output types.",
+    "failure_modes": [
+      "Giant state blobs",
+      "No timeout on tool calls"
+    ],
+    "intermediate_deep_dive": "Design graph: ingest → extract → validate → branch pass/fail → optional HITL. Keep state payload small and versioned.\n\n## Plain English implementation path\n\nDesign graph: ingest → extract → validate → branch pass/fail → optional HITL. Keep state payload small and versioned.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Sketch graph diagram in README before coding.\n\n**You are done when:** You can name each node and its input/output types.\n\n## Explain it to a staff engineer\n\n- LangGraph vs plain scripts—when to adopt?\n\n\n## Why this link exists\n\nDL.AI short course: AI Agents in LangGraph—graphs, state, and tool loops for your reconciler agent. The syllabus title **AI Agents in LangGraph** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "LangGraph vs plain scripts—when to adopt?"
+    ],
+    "mental_model": "LangGraph = Airflow with LLM nodes and human approval tasks.",
+    "one_liner": "DL.AI short course: AI Agents in LangGraph—graphs, state, and tool loops for your reconciler agent.",
+    "watch_for": [
+      "State schema",
+      "Tool nodes",
+      "Conditional edges"
+    ],
+    "why_now": "Month 2 shifts from single-shot extraction to multi-step workflows with pause/resume."
+  },
+  "c2|u|https://www.youtube.com/@berkeleyrdi": {
+    "advanced_extra": "Argue which steps deserve separate models vs one generalist with tools.\n\n## Production notes (still plain English)\n\nArgue which steps deserve separate models vs one generalist with tools.\n\n\n**Architecture anchor:** Compound AI = microservices for cognition.",
+    "beginner_extra": "Focus on talks mentioning routing, verification, and retrieval—not research benchmarks.",
+    "capstone_action": "README diagram with labeled components and data flows.",
+    "done_when": "Each component has an owner test or metric.",
+    "failure_modes": [
+      "Adding models without eval per stage"
+    ],
+    "intermediate_deep_dive": "Map compound AI diagram labels to your reconciler components.\n\n## Plain English implementation path\n\nMap compound AI diagram labels to your reconciler components.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** README diagram with labeled components and data flows.\n\n**You are done when:** Each component has an owner test or metric.\n\n## Explain it to a staff engineer\n\n- Design a compound system for log reconciliation.\n\n\n## Why this link exists\n\nBerkeley RDI compound AI systems—multiple models/tools orchestrated for reliability. The syllabus title **Berkeley RDI — compound AI / agents** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Design a compound system for log reconciliation."
+    ],
+    "mental_model": "Compound AI = microservices for cognition.",
+    "one_liner": "Berkeley RDI compound AI systems—multiple models/tools orchestrated for reliability.",
+    "watch_for": [
+      "Verifier models",
+      "Retrieval stages",
+      "System diagrams"
+    ],
+    "why_now": "Frames why monolithic ‘one big prompt’ loses to specialized steps—matches your pipeline architecture."
+  },
+  "c2|u|https://www.youtube.com/@daveebbelaar": {
+    "advanced_extra": "Instrument graph with step timings; compare to video recommendations.\n\n## Production notes (still plain English)\n\nInstrument graph with step timings; compare to video recommendations.\n\n\n**Architecture anchor:** YouTube = war stories; steal checklists, not code verbatim.",
+    "beginner_extra": "Watch one production-focused episode; note debugging tactics.",
+    "capstone_action": "Document debug steps with run id and checkpoint id.",
+    "done_when": "You can replay a failed run from checkpoint.",
+    "failure_modes": [
+      "Copying demo SQLite checkpointer to prod without plan"
+    ],
+    "intermediate_deep_dive": "Add a TROUBLESHOOTING.md section mirroring video advice.\n\n## Plain English implementation path\n\nAdd a TROUBLESHOOTING.md section mirroring video advice.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Document debug steps with run id and checkpoint id.\n\n**You are done when:** You can replay a failed run from checkpoint.\n\n## Explain it to a staff engineer\n\n- How do you debug a stuck agent run?\n\n\n## Why this link exists\n\nDave Ebbelaar LangGraph production videos—practical deployment and debugging agent graphs. The syllabus title **Dave Ebbelaar — LangGraph production** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you debug a stuck agent run?"
+    ],
+    "mental_model": "YouTube = war stories; steal checklists, not code verbatim.",
+    "one_liner": "Dave Ebbelaar LangGraph production videos—practical deployment and debugging agent graphs.",
+    "watch_for": [
+      "Local vs prod checkpointers",
+      "Error handling",
+      "Logging"
+    ],
+    "why_now": "Bridges tutorial graphs to how teams run them daily."
+  },
+  "c2|u|https://www.youtube.com/@langchain": {
+    "advanced_extra": "Prefer primary docs for contracts; videos for intuition.\n\n## Production notes (still plain English)\n\nPrefer primary docs for contracts; videos for intuition.\n\n\n**Architecture anchor:** Release notes in video form.",
+    "beginner_extra": "Search channel for your error message or feature name only.",
+    "capstone_action": "Optional note in DEVLOG.",
+    "done_when": "May skip if graph prove is progressing.",
+    "failure_modes": [
+      "Tutorial hell across multiple agent frameworks"
+    ],
+    "intermediate_deep_dive": "If watched, link issue + video that unblocked you in DEVLOG.\n\n## Plain English implementation path\n\nIf watched, link issue + video that unblocked you in DEVLOG.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional note in DEVLOG.\n\n**You are done when:** May skip if graph prove is progressing.\n\n## Explain it to a staff engineer\n\n- How do you choose learning sources under time pressure?\n\n\n## Why this link exists\n\nLangChain YouTube channel—optional updates on LangGraph features and recipes. The syllabus title ***(optional)* LangChain YouTube** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you choose learning sources under time pressure?"
+    ],
+    "mental_model": "Release notes in video form.",
+    "one_liner": "LangChain YouTube channel—optional updates on LangGraph features and recipes.",
+    "watch_for": [
+      "Migration guides",
+      "Breaking changes"
+    ],
+    "why_now": "Optional; use when stuck on a specific API change."
+  },
+  "c2|u|https://www.youtube.com/watch?v=4giqzuhd5aa": {
+    "advanced_extra": "Measure context bloat: log tokens per node; alert when tool outputs dominate prompt. Relate to Month 10 prompt caching—stable prefixes for schemas/tools.\n\n## Production notes (still plain English)\n\nMeasure context bloat: log tokens per node; alert when tool outputs dominate prompt. Relate to Month 10 prompt caching—stable prefixes for schemas/tools.\n\n\n**Architecture anchor:** Context = curated join of tools, memory, docs, and policies—not raw dump.",
+    "beginner_extra": "Watch for sections on tool results formatting and trimming long histories.",
+    "capstone_action": "Implement trimming/summarization on one hot path.",
+    "done_when": "Logged token count drops on a fixed scenario.",
+    "failure_modes": [
+      "Stuffing entire tool JSON into every turn"
+    ],
+    "intermediate_deep_dive": "Define context budget per node: max tokens for tool outputs, summarization policy, stale tool result eviction.\n\n## Plain English implementation path\n\nDefine context budget per node: max tokens for tool outputs, summarization policy, stale tool result eviction.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Implement trimming/summarization on one hot path.\n\n**You are done when:** Logged token count drops on a fixed scenario.\n\n## Explain it to a staff engineer\n\n- How do you prevent context window overflow in agents?\n\n\n## Why this link exists\n\nLangChain talk on context engineering for agents—what goes in the window besides the user question. The syllabus title **LangChain — Context Engineering for Agents** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you prevent context window overflow in agents?"
+    ],
+    "mental_model": "Context = curated join of tools, memory, docs, and policies—not raw dump.",
+    "one_liner": "LangChain talk on context engineering for agents—what goes in the window besides the user question.",
+    "watch_for": [
+      "Tool message shaping",
+      "Memory vs retrieval",
+      "Failure recovery"
+    ],
+    "why_now": "Agents fail more from bad context assembly than from weak models."
+  },
+  "c3|t|audit fields: `user_id`, `tool`, `args_hash`, `timestamp`|build": {
+    "advanced_extra": "Ship sample SIEM query or SQL to detect anomalous tool volume.\n\n## Production notes (still plain English)\n\nShip sample SIEM query or SQL to detect anomalous tool volume.\n\n\n**Architecture anchor:** Audit log = fact table for agent actions (like query audit in warehouses).",
+    "beginner_extra": "Append-only JSON lines or DB table—pick one, document retention.",
+    "capstone_action": "Audit logger integrated; sample redacted line in README.",
+    "done_when": "Every tool call produces one audit row.",
+    "failure_modes": [
+      "Logging full payloads with PII",
+      "Mutable audit tables"
+    ],
+    "intermediate_deep_dive": "Hash args after redacting secrets; never store raw API keys.\n\n## Plain English implementation path\n\nHash args after redacting secrets; never store raw API keys.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Audit logger integrated; sample redacted line in README.\n\n**You are done when:** Every tool call produces one audit row.\n\n## Explain it to a staff engineer\n\n- What would you log for compliance on agent tools?\n\n\n## Why this link exists\n\nBuild audit fields on every tool call: user_id, tool, args_hash, timestamp. The syllabus title **Audit fields: `user_id`, `tool`, `args_hash`, `timestamp`** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What would you log for compliance on agent tools?"
+    ],
+    "mental_model": "Audit log = fact table for agent actions (like query audit in warehouses).",
+    "one_liner": "Build audit fields on every tool call: user_id, tool, args_hash, timestamp.",
+    "why_now": "Auditability is the prove differentiator for MCP month."
+  },
+  "c3|t|prove: readme + redacted cursor/claude mcp snippet|prove": {
+    "advanced_extra": "Optional: short screen recording link.\n\n## Production notes (still plain English)\n\nOptional: short screen recording link.\n\n\n**Architecture anchor:** Snippet = integration test narrative for reviewers.",
+    "beginner_extra": "Redact tokens and PII; use synthetic data.",
+    "capstone_action": "Publish prove section; studio link.",
+    "done_when": "Course 3 acceptance met.",
+    "failure_modes": [
+      "Secrets in snippet",
+      "Audit not shown"
+    ],
+    "intermediate_deep_dive": "Include steps: start server, list tools, invoke, show audit entry.\n\n## Plain English implementation path\n\nInclude steps: start server, list tools, invoke, show audit entry.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Publish prove section; studio link.\n\n**You are done when:** Course 3 acceptance met.\n\n## Explain it to a staff engineer\n\n- Demo MCP in 3 minutes.\n\n\n## Why this link exists\n\nProve Month 3: README plus redacted MCP client snippet showing tool call + audit line. The syllabus title **Prove: README + redacted Cursor/Claude MCP snippet** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Demo MCP in 3 minutes."
+    ],
+    "mental_model": "Snippet = integration test narrative for reviewers.",
+    "one_liner": "Prove Month 3: README plus redacted MCP client snippet showing tool call + audit line.",
+    "why_now": "Evidence that MCP is integrated, not theoretical."
+  },
+  "c3|t|tools: `lookup_schema`, `query_golden_set`, `run_readonly_sql` (sqlite)|build": {
+    "advanced_extra": "OPA policy preview for Month 9—block patterns in SQL strings.\n\n## Production notes (still plain English)\n\nOPA policy preview for Month 9—block patterns in SQL strings.\n\n\n**Architecture anchor:** Tools = parameterized stored procedures with guardrails.",
+    "beginner_extra": "Implement one tool completely before adding others.",
+    "capstone_action": "Three tools with tests and schema.",
+    "done_when": "Agent demo calls each tool successfully.",
+    "failure_modes": [
+      "Arbitrary SQL tool",
+      "No timeouts on DB calls"
+    ],
+    "intermediate_deep_dive": "Enforce row limits, timeouts, and static allow-list of tables/collections.\n\n## Plain English implementation path\n\nEnforce row limits, timeouts, and static allow-list of tables/collections.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Three tools with tests and schema.\n\n**You are done when:** Agent demo calls each tool successfully.\n\n## Explain it to a staff engineer\n\n- Design a safe read-only warehouse tool.\n\n\n## Why this link exists\n\nBuild tools: lookup_schema, query_golden_set, run_readonly_query (allow-listed, safe). The syllabus title **Tools: `lookup_schema`, `query_golden_set`, `run_readonly_sql` (sqlite)** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Design a safe read-only warehouse tool."
+    ],
+    "mental_model": "Tools = parameterized stored procedures with guardrails.",
+    "one_liner": "Build tools: lookup_schema, query_golden_set, run_readonly_query (allow-listed, safe).",
+    "why_now": "First real MCP tools—read-only, auditable, least privilege."
+  },
+  "c3|u|https://github.com/patchy631/ai-engineering-hub/blob/main/ai-engineering-roadmap/readme.md": {
+    "advanced_extra": "Document divergences from hub template with reasons.\n\n## Production notes (still plain English)\n\nDocument divergences from hub template with reasons.\n\n\n**Architecture anchor:** Hub = Pinterest for repo layouts.",
+    "beginner_extra": "Skim MCP section; steal folder naming only if it fits.",
+    "capstone_action": "README credits and divergence notes.",
+    "done_when": "You know why your layout differs.",
+    "failure_modes": [
+      "Copy-paste without security review"
+    ],
+    "intermediate_deep_dive": "Compare hub example to your audit/logging requirements.\n\n## Plain English implementation path\n\nCompare hub example to your audit/logging requirements.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** README credits and divergence notes.\n\n**You are done when:** You know why your layout differs.\n\n## Explain it to a staff engineer\n\n- How do you evaluate third-party agent templates?\n\n\n## Why this link exists\n\nAI Engineering Hub roadmap MCP section—community patterns and example layouts. The syllabus title **Hub roadmap — MCP section** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you evaluate third-party agent templates?"
+    ],
+    "mental_model": "Hub = Pinterest for repo layouts.",
+    "one_liner": "AI Engineering Hub roadmap MCP section—community patterns and example layouts.",
+    "read_sections": [
+      "MCP examples"
+    ],
+    "why_now": "Orientation for how others structure MCP repos—not gospel."
+  },
+  "c3|u|https://gofastmcp.com/getting-started/welcome": {
+    "advanced_extra": "Separate read-only vs write tools into different servers or policies.\n\n## Production notes (still plain English)\n\nSeparate read-only vs write tools into different servers or policies.\n\n\n**Architecture anchor:** FastMCP = FastAPI ergonomics for MCP tools.",
+    "beginner_extra": "Start from template; one tool end-to-end before adding many.",
+    "capstone_action": "Scaffold FastMCP server with health check.",
+    "done_when": "Local client can list tools.",
+    "failure_modes": [
+      "God-object server with 20 tools day one"
+    ],
+    "intermediate_deep_dive": "Structure repo: `mcp_server/` package, tests, docker-compose optional.\n\n## Plain English implementation path\n\nStructure repo: `mcp_server/` package, tests, docker-compose optional.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Scaffold FastMCP server with health check.\n\n**You are done when:** Local client can list tools.\n\n## Explain it to a staff engineer\n\n- How do you test MCP tools in CI?\n\n\n## Why this link exists\n\nFastMCP—Pythonic MCP server framework to ship tools quickly with type hints. The syllabus title **FastMCP (Python)** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you test MCP tools in CI?"
+    ],
+    "mental_model": "FastMCP = FastAPI ergonomics for MCP tools.",
+    "one_liner": "FastMCP—Pythonic MCP server framework to ship tools quickly with type hints.",
+    "read_sections": [
+      "Quickstart",
+      "Tools",
+      "Testing"
+    ],
+    "why_now": "Implementation path for Month 3 build milestone."
+  },
+  "c3|u|https://json-schema.org/": {
+    "advanced_extra": "Schema registry in repo with compatibility checks on PR.\n\n## Production notes (still plain English)\n\nSchema registry in repo with compatibility checks on PR.\n\n\n**Architecture anchor:** JSON Schema = Avro/Protobuf for JSON documents.",
+    "beginner_extra": "Read basics: types, required, enums, $ref.",
+    "capstone_action": "Commit schemas alongside tools.",
+    "done_when": "Invalid args fail before tool executes.",
+    "failure_modes": [
+      "Loose `object` types everywhere"
+    ],
+    "intermediate_deep_dive": "Generate or hand-write schemas for each tool; validate in tests.\n\n## Plain English implementation path\n\nGenerate or hand-write schemas for each tool; validate in tests.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Commit schemas alongside tools.\n\n**You are done when:** Invalid args fail before tool executes.\n\n## Explain it to a staff engineer\n\n- How do JSON Schema and Pydantic relate?\n\n\n## Why this link exists\n\nJSON Schema—language-agnostic contracts for tool inputs/outputs and MCP tool definitions. The syllabus title **JSON Schema** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do JSON Schema and Pydantic relate?"
+    ],
+    "mental_model": "JSON Schema = Avro/Protobuf for JSON documents.",
+    "one_liner": "JSON Schema—language-agnostic contracts for tool inputs/outputs and MCP tool definitions.",
+    "read_sections": [
+      "Understanding JSON Schema",
+      "Reference"
+    ],
+    "why_now": "Shared vocabulary between MCP, OpenAPI later, and Pydantic models."
+  },
+  "c3|u|https://mcp.dailydoseofds.com": {
+    "advanced_extra": "Use diagrams in onboarding doc for teammates.\n\n## Production notes (still plain English)\n\nUse diagrams in onboarding doc for teammates.\n\n\n**Architecture anchor:** Picture book for protocol flows.",
+    "beginner_extra": "Use for sequence diagrams of tool calls.",
+    "capstone_action": "Add sequence diagram to docs/",
+    "done_when": "Diagram matches implemented server.",
+    "failure_modes": [
+      "Illustrations without matching implementation"
+    ],
+    "intermediate_deep_dive": "Redraw one diagram with your actual tool names.\n\n## Plain English implementation path\n\nRedraw one diagram with your actual tool names.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Add sequence diagram to docs/\n\n**You are done when:** Diagram matches implemented server.\n\n## Explain it to a staff engineer\n\n- Whiteboard an MCP tool call sequence.\n\n\n## Why this link exists\n\nMCP Illustrated Guidebook—visual explanations complementing the spec. The syllabus title **MCP Illustrated Guidebook** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Whiteboard an MCP tool call sequence."
+    ],
+    "mental_model": "Picture book for protocol flows.",
+    "one_liner": "MCP Illustrated Guidebook—visual explanations complementing the spec.",
+    "read_sections": [
+      "Tool call flow",
+      "Server setup"
+    ],
+    "why_now": "Helps if spec language is dense; pair with hands-on FastMCP."
+  },
+  "c3|u|https://modelcontextprotocol.io/docs": {
+    "advanced_extra": "Plan version negotiation and backward-compatible tool schema changes.\n\n## Production notes (still plain English)\n\nPlan version negotiation and backward-compatible tool schema changes.\n\n\n**Architecture anchor:** Spec = RFC; implementations may differ—test yours.",
+    "beginner_extra": "Skim TOC; deep-read sections matching your transport (stdio vs HTTP).",
+    "capstone_action": "SPEC_VERSION note in MCP server README.",
+    "done_when": "Server declares capabilities explicitly.",
+    "failure_modes": [
+      "Assuming Claude Desktop behavior equals your server"
+    ],
+    "intermediate_deep_dive": "Document which spec version you target; pin SDK versions accordingly.\n\n## Plain English implementation path\n\nDocument which spec version you target; pin SDK versions accordingly.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** SPEC_VERSION note in MCP server README.\n\n**You are done when:** Server declares capabilities explicitly.\n\n## Explain it to a staff engineer\n\n- How would you version a breaking tool schema change?\n\n\n## Why this link exists\n\nMCP specification/docs—normative details for transports, capabilities, and versioning. The syllabus title **MCP specification / docs** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How would you version a breaking tool schema change?"
+    ],
+    "mental_model": "Spec = RFC; implementations may differ—test yours.",
+    "one_liner": "MCP specification/docs—normative details for transports, capabilities, and versioning.",
+    "read_sections": [
+      "Transports",
+      "Lifecycle",
+      "Tool definitions"
+    ],
+    "why_now": "When intro is clear, spec resolves arguments about behavior."
+  },
+  "c3|u|https://modelcontextprotocol.io/introduction": {
+    "advanced_extra": "Threat model: tool poisoning, confused deputy, credential forwarding.\n\n## Production notes (still plain English)\n\nThreat model: tool poisoning, confused deputy, credential forwarding.\n\n\n**Architecture anchor:** MCP standardizes tool discovery like OpenAPI for agents.",
+    "beginner_extra": "Read introduction + tools chapters; draw your server on paper.",
+    "capstone_action": "Draft tool schemas in repo before coding.",
+    "done_when": "Schemas reviewed for least privilege.",
+    "failure_modes": [
+      "Tools without input validation"
+    ],
+    "intermediate_deep_dive": "Map each planned capstone tool to MCP tool schema with JSON Schema types.\n\n## Plain English implementation path\n\nMap each planned capstone tool to MCP tool schema with JSON Schema types.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Draft tool schemas in repo before coding.\n\n**You are done when:** Schemas reviewed for least privilege.\n\n## Explain it to a staff engineer\n\n- Explain MCP components in one diagram.\n\n\n## Why this link exists\n\nMCP introduction—roles of hosts, clients, servers, tools, resources, and prompts. The syllabus title **MCP introduction** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Explain MCP components in one diagram."
+    ],
+    "mental_model": "MCP standardizes tool discovery like OpenAPI for agents.",
+    "one_liner": "MCP introduction—roles of hosts, clients, servers, tools, resources, and prompts.",
+    "read_sections": [
+      "Introduction",
+      "Tools",
+      "Resources",
+      "Security"
+    ],
+    "why_now": "Foundation doc before you implement FastMCP server."
+  },
+  "c3|u|https://www.youtube.com/@dailydoseofds": {
+    "advanced_extra": "Compare MCP to bespoke REST tool adapters—when standardization wins.\n\n## Production notes (still plain English)\n\nCompare MCP to bespoke REST tool adapters—when standardization wins.\n\n\n**Architecture anchor:** MCP = gRPC/REST catalog for agent tools with schemas.",
+    "beginner_extra": "Watch MCP overview episodes before reading spec—build vocabulary.",
+    "capstone_action": "List planned tools with risk tier in README.",
+    "done_when": "You can draw client ↔ MCP server ↔ tool diagram.",
+    "failure_modes": [
+      "Exposing admin tools without auth"
+    ],
+    "intermediate_deep_dive": "Note security themes: auth, scope, audit—map to your tool list.\n\n## Plain English implementation path\n\nNote security themes: auth, scope, audit—map to your tool list.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** List planned tools with risk tier in README.\n\n**You are done when:** You can draw client ↔ MCP server ↔ tool diagram.\n\n## Explain it to a staff engineer\n\n- How is MCP different from arbitrary HTTP tools?\n\n\n## Why this link exists\n\nDaily Dose of DS MCP playlist—practical Model Context Protocol explainers and examples. The syllabus title **Daily Dose of DS — MCP topics** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How is MCP different from arbitrary HTTP tools?"
+    ],
+    "mental_model": "MCP = gRPC/REST catalog for agent tools with schemas.",
+    "one_liner": "Daily Dose of DS MCP playlist—practical Model Context Protocol explainers and examples.",
+    "watch_for": [
+      "Server vs client roles",
+      "Tool schemas",
+      "Transport options"
+    ],
+    "why_now": "Month 3 introduces tools; MCP is how clients discover and call them safely."
+  },
+  "c3|u|https://www.youtube.com/playlist?list=plknia16_rmvysvb8qkuqujmjnuicujfpl": {
+    "advanced_extra": "Prefer primary MCP spec for security decisions.\n\n## Production notes (still plain English)\n\nPrefer primary MCP spec for security decisions.\n\n\n**Architecture anchor:** Supplement, not substitute for spec + build.",
+    "beginner_extra": "One episode max unless blocked.",
+    "capstone_action": "Optional DEVLOG entry.",
+    "done_when": "Skip allowed if MCP build progressing.",
+    "failure_modes": [
+      "Playlist replaces prove gate"
+    ],
+    "intermediate_deep_dive": "If used, note one trick that saved time in MCP server code.\n\n## Plain English implementation path\n\nIf used, note one trick that saved time in MCP server code.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional DEVLOG entry.\n\n**You are done when:** Skip allowed if MCP build progressing.\n\n## Explain it to a staff engineer\n\n- How do you validate optional resources helped?\n\n\n## Why this link exists\n\nOptional CampusX LangGraph/MCP playlist episode—extra walkthrough if Month 3 feels abstract. The syllabus title ***(optional)* CampusX MCP episode — LangGraph playlist** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you validate optional resources helped?"
+    ],
+    "mental_model": "Supplement, not substitute for spec + build.",
+    "one_liner": "Optional CampusX LangGraph/MCP playlist episode—extra walkthrough if Month 3 feels abstract.",
+    "watch_for": [
+      "MCP server setup"
+    ],
+    "why_now": "Optional reinforcement only."
+  },
+  "c3|u|https://www.youtube.com/watch?v=bm39ooulnsm": {
+    "advanced_extra": "Audit log ties user id to approved arg hash; replay protection.\n\n## Production notes (still plain English)\n\nAudit log ties user id to approved arg hash; replay protection.\n\n\n**Architecture anchor:** HITL on tool args before execution for write-class tools.",
+    "beginner_extra": "Watch for approval UX patterns—not just diagrams.",
+    "capstone_action": "Policy table: tool → auto / HITL / banned.",
+    "done_when": "Table reviewed and committed.",
+    "failure_modes": [
+      "HITL only on final answer, not tool calls"
+    ],
+    "intermediate_deep_dive": "Define which tools require human approval vs auto-run.\n\n## Plain English implementation path\n\nDefine which tools require human approval vs auto-run.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Policy table: tool → auto / HITL / banned.\n\n**You are done when:** Table reviewed and committed.\n\n## Explain it to a staff engineer\n\n- Design approval for a write tool.\n\n\n## Why this link exists\n\nMulti-agent MCP + HITL architecture—human gates when tool or model output is unsafe. The syllabus title **Multi-agent MCP + HITL architecture** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Design approval for a write tool."
+    ],
+    "mental_model": "HITL on tool args before execution for write-class tools.",
+    "one_liner": "Multi-agent MCP + HITL architecture—human gates when tool or model output is unsafe.",
+    "watch_for": [
+      "Approval queues",
+      "Role separation",
+      "Audit trails"
+    ],
+    "why_now": "Combines Month 2 interrupts with Month 3 tools—realistic enterprise shape."
+  },
+  "c3|u|https://www.youtube.com/watch?v=lzaglcqmhzq": {
+    "advanced_extra": "mTLS or token auth between agent and MCP; rate limits per tool.\n\n## Production notes (still plain English)\n\nmTLS or token auth between agent and MCP; rate limits per tool.\n\n\n**Architecture anchor:** FastAPI = edge; MCP = tool plane.",
+    "beginner_extra": "Focus on process boundaries, not copying entire repo.",
+    "capstone_action": "Update architecture diagram with MCP service box.",
+    "done_when": "Diagram shows network boundaries.",
+    "failure_modes": [
+      "Monolith mixing UI, agent, and tools in one process"
+    ],
+    "intermediate_deep_dive": "Sketch deploy diagram: agent, MCP server, DB, gateway.\n\n## Plain English implementation path\n\nSketch deploy diagram: agent, MCP server, DB, gateway.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Update architecture diagram with MCP service box.\n\n**You are done when:** Diagram shows network boundaries.\n\n## Explain it to a staff engineer\n\n- Where would you put auth for tool calls?\n\n\n## Why this link exists\n\nMulti-agent MCP + FastAPI video—wiring agents to MCP servers in a service architecture. The syllabus title **Multi-agent MCP + FastAPI** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Where would you put auth for tool calls?"
+    ],
+    "mental_model": "FastAPI = edge; MCP = tool plane.",
+    "one_liner": "Multi-agent MCP + FastAPI video—wiring agents to MCP servers in a service architecture.",
+    "watch_for": [
+      "Service layout",
+      "Tool registration",
+      "Error propagation"
+    ],
+    "why_now": "Shows how your future MCP server sits beside the reconciler API."
+  },
+  "c4|t|prove: committed labeled q/a set (e.g. `benchmarks/queries.jsonl`, n≥10) with gold document ids|prove": {
+    "advanced_extra": "Attach failure cases where retrieval missed—shows maturity.\n\n## Production notes (still plain English)\n\nAttach failure cases where retrieval missed—shows maturity.\n\n\n**Architecture anchor:** Prove = table + script command in README.",
+    "beginner_extra": "Link in Lab & Prove.",
+    "capstone_action": "Publish prove link.",
+    "done_when": "Course 4 acceptance satisfied.",
+    "failure_modes": [
+      "Hand-edited metrics"
+    ],
+    "intermediate_deep_dive": "Reviewer reruns benchmark script and sees similar numbers.\n\n## Plain English implementation path\n\nReviewer reruns benchmark script and sees similar numbers.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Publish prove link.\n\n**You are done when:** Course 4 acceptance satisfied.\n\n## Explain it to a staff engineer\n\n- Discuss one retrieval failure from your table.\n\n\n## Why this link exists\n\nProve Month 4: committed benchmark table in repo. The syllabus title **Prove: Committed labeled Q/A set (e.g. `benchmarks/queries.jsonl`, n≥10) with gold document ids** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Discuss one retrieval failure from your table."
+    ],
+    "mental_model": "Prove = table + script command in README.",
+    "one_liner": "Prove Month 4: committed benchmark table in repo.",
+    "why_now": "Closes retrieval month with evidence."
+  },
+  "c4|t|public corpus (10-k sample, ops markdown, or synthetic runbooks)|build": {
+    "advanced_extra": "Version corpus; evals pin corpus hash for reproducibility.\n\n## Production notes (still plain English)\n\nVersion corpus; evals pin corpus hash for reproducibility.\n\n\n**Architecture anchor:** Corpus = source dataset with lineage and license metadata.",
+    "beginner_extra": "Use only public/synthetic data; document provenance in README.",
+    "capstone_action": "Commit corpus + manifest.",
+    "done_when": "Manifest lists sources and dates.",
+    "failure_modes": [
+      "Scraped content without license",
+      "PII in corpus"
+    ],
+    "intermediate_deep_dive": "Directory layout: raw/, normalized/, manifest.json with doc ids.\n\n## Plain English implementation path\n\nDirectory layout: raw/, normalized/, manifest.json with doc ids.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Commit corpus + manifest.\n\n**You are done when:** Manifest lists sources and dates.\n\n## Explain it to a staff engineer\n\n- How do you version training/eval corpora?\n\n\n## Why this link exists\n\nBuild public corpus for RAG—10-K sample, ops markdown, or synthetic docs with license clarity. The syllabus title **Public corpus (10-K sample, ops markdown, or synthetic runbooks)** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you version training/eval corpora?"
+    ],
+    "mental_model": "Corpus = source dataset with lineage and license metadata.",
+    "one_liner": "Build public corpus for RAG—10-K sample, ops markdown, or synthetic docs with license clarity.",
+    "why_now": "Retrieval quality is data quality—same as bronze layer curation."
+  },
+  "c4|t|readme: dense-only vs hybrid metrics|build": {
+    "advanced_extra": "Confidence intervals or note dataset size limitations honestly.\n\n## Production notes (still plain English)\n\nConfidence intervals or note dataset size limitations honestly.\n\n\n**Architecture anchor:** Benchmark table = experiment results you would show in a design review.",
+    "beginner_extra": "≥10 labeled questions with expected supporting doc ids.",
+    "capstone_action": "Committed markdown table in README.",
+    "done_when": "Table reproducible via script.",
+    "failure_modes": [
+      "Cherry-picked questions only"
+    ],
+    "intermediate_deep_dive": "Metrics: recall@k, MRR, or human labeled hit rate—pick one, define it.\n\n## Plain English implementation path\n\nMetrics: recall@k, MRR, or human labeled hit rate—pick one, define it.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Committed markdown table in README.\n\n**You are done when:** Table reproducible via script.\n\n## Explain it to a staff engineer\n\n- Interpret a recall@5 regression.\n\n\n## Why this link exists\n\nBuild README benchmark: dense-only vs hybrid metrics on labeled questions. The syllabus title **README: dense-only vs hybrid metrics** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Interpret a recall@5 regression."
+    ],
+    "mental_model": "Benchmark table = experiment results you would show in a design review.",
+    "one_liner": "Build README benchmark: dense-only vs hybrid metrics on labeled questions.",
+    "why_now": "Prove Month 4 with numbers—not vibes."
+  },
+  "c4|u|https://applied-llms.org/": {
+    "advanced_extra": "Map handbook anti-patterns to tests in eval harness (Month 7).\n\n## Production notes (still plain English)\n\nMap handbook anti-patterns to tests in eval harness (Month 7).\n\n\n**Architecture anchor:** Handbook retrieval section = design review checklist.",
+    "beginner_extra": "Read retrieval/RAG sections; skip unrelated chapters.",
+    "capstone_action": "RAG checklist in docs with tick marks.",
+    "done_when": "Each item has owner file/test.",
+    "failure_modes": [
+      "Treating RAG as ‘add vector DB and done’"
+    ],
+    "intermediate_deep_dive": "Checklist: chunking, embedding model version, eval questions, injection defenses.\n\n## Plain English implementation path\n\nChecklist: chunking, embedding model version, eval questions, injection defenses.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** RAG checklist in docs with tick marks.\n\n**You are done when:** Each item has owner file/test.\n\n## Explain it to a staff engineer\n\n- Top three RAG production failures?\n\n\n## Why this link exists\n\nApplied LLMs retrieval chapters—production RAG pitfalls and architecture patterns. The syllabus title **Applied LLMs — retrieval** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Top three RAG production failures?"
+    ],
+    "mental_model": "Handbook retrieval section = design review checklist.",
+    "one_liner": "Applied LLMs retrieval chapters—production RAG pitfalls and architecture patterns.",
+    "read_sections": [
+      "Retrieval",
+      "RAG",
+      "Evaluation"
+    ],
+    "why_now": "Fourth handbook pass focused on retrieval month."
+  },
+  "c4|u|https://github.com/pgvector/pgvector#installation": {
+    "advanced_extra": "Index maintenance, vacuum, and memory tuning notes for interviews.\n\n## Production notes (still plain English)\n\nIndex maintenance, vacuum, and memory tuning notes for interviews.\n\n\n**Architecture anchor:** pgvector = one database for metadata and vectors.",
+    "beginner_extra": "Spike if you already run Postgres for app state.",
+    "capstone_action": "Optional second store benchmark or ADR why not.",
+    "done_when": "Storage choice documented with metrics.",
+    "failure_modes": [
+      "Full table scan at scale without index"
+    ],
+    "intermediate_deep_dive": "Compare recall/latency vs Qdrant on same chunks—honest ADR.\n\n## Plain English implementation path\n\nCompare recall/latency vs Qdrant on same chunks—honest ADR.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional second store benchmark or ADR why not.\n\n**You are done when:** Storage choice documented with metrics.\n\n## Explain it to a staff engineer\n\n- When is pgvector enough vs dedicated vector DB?\n\n\n## Why this link exists\n\npgvector—Postgres extension for embeddings when you want OLTP + vectors together. The syllabus title **pgvector** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "When is pgvector enough vs dedicated vector DB?"
+    ],
+    "mental_model": "pgvector = one database for metadata and vectors.",
+    "one_liner": "pgvector—Postgres extension for embeddings when you want OLTP + vectors together.",
+    "read_sections": [
+      "Installation",
+      "Indexing",
+      "Querying"
+    ],
+    "why_now": "Alternative retrieval store—familiar ops for data engineers."
+  },
+  "c4|u|https://learnwith.campusx.in/courses/advanced-rag-69d8037290a183fe36833265": {
+    "advanced_extra": "Document when hybrid added cost without recall gain—honest negative results.\n\n## Production notes (still plain English)\n\nDocument when hybrid added cost without recall gain—honest negative results.\n\n\n**Architecture anchor:** Hybrid = BM25 + vectors like SQL + search index.",
+    "beginner_extra": "Only if benchmark table shows dense-only weakness.",
+    "capstone_action": "Optional benchmark appendix.",
+    "done_when": "Decision recorded with numbers.",
+    "failure_modes": [
+      "Adding hybrid before baseline dense metrics"
+    ],
+    "intermediate_deep_dive": "Complete hybrid module; rerun benchmark subset.\n\n## Plain English implementation path\n\nComplete hybrid module; rerun benchmark subset.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional benchmark appendix.\n\n**You are done when:** Decision recorded with numbers.\n\n## Explain it to a staff engineer\n\n- When is hybrid search worth operational complexity?\n\n\n## Why this link exists\n\nOptional CampusX Advanced RAG outline—hybrid retrieval modules if dense search stalls. The syllabus title ***(optional, paid)* CampusX Advanced RAG outline · hybrid modules** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "When is hybrid search worth operational complexity?"
+    ],
+    "mental_model": "Hybrid = BM25 + vectors like SQL + search index.",
+    "one_liner": "Optional CampusX Advanced RAG outline—hybrid retrieval modules if dense search stalls.",
+    "watch_for": [
+      "BM25 + dense fusion",
+      "Reranking"
+    ],
+    "why_now": "Optional when recall@k is low on keyword-heavy queries."
+  },
+  "c4|u|https://qdrant.tech/documentation/": {
+    "advanced_extra": "Capacity plan: vector size, HNSW params, replication for prod sketch.\n\n## Production notes (still plain English)\n\nCapacity plan: vector size, HNSW params, replication for prod sketch.\n\n\n**Architecture anchor:** Qdrant = specialized index for embeddings + metadata filters.",
+    "beginner_extra": "Follow quickstart locally with docker.",
+    "capstone_action": "Index sample chunks; query script in repo.",
+    "done_when": "Script returns top-k with scores logged.",
+    "failure_modes": [
+      "No metadata filters on tenant/doc_id"
+    ],
+    "intermediate_deep_dive": "Define collection schema mirroring chunk metadata from Month 5.\n\n## Plain English implementation path\n\nDefine collection schema mirroring chunk metadata from Month 5.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Index sample chunks; query script in repo.\n\n**You are done when:** Script returns top-k with scores logged.\n\n## Explain it to a staff engineer\n\n- Why Qdrant vs pgvector for your use case?\n\n\n## Why this link exists\n\nQdrant docs—vector database operations, filtering, and hybrid queries for RAG. The syllabus title **Qdrant documentation** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Why Qdrant vs pgvector for your use case?"
+    ],
+    "mental_model": "Qdrant = specialized index for embeddings + metadata filters.",
+    "one_liner": "Qdrant docs—vector database operations, filtering, and hybrid queries for RAG.",
+    "read_sections": [
+      "Quickstart",
+      "Filtering",
+      "Hybrid queries"
+    ],
+    "why_now": "Primary retrieval store option for capstone benchmarks."
+  },
+  "c4|u|https://qdrant.tech/documentation/concepts/hybrid-queries/": {
+    "advanced_extra": "Monitor query latency vs recall tradeoff; set SLO per query class.\n\n## Production notes (still plain English)\n\nMonitor query latency vs recall tradeoff; set SLO per query class.\n\n\n**Architecture anchor:** Hybrid query = weighted union of retrieval signals.",
+    "beginner_extra": "Read after dense baseline works.",
+    "capstone_action": "Hybrid column in benchmark README table.",
+    "done_when": "Table shows dense vs hybrid on same questions.",
+    "failure_modes": [
+      "Default weights without evaluation"
+    ],
+    "intermediate_deep_dive": "Tune weights on labeled question set; document in benchmark table.\n\n## Plain English implementation path\n\nTune weights on labeled question set; document in benchmark table.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Hybrid column in benchmark README table.\n\n**You are done when:** Table shows dense vs hybrid on same questions.\n\n## Explain it to a staff engineer\n\n- Explain fusion strategies at high level.\n\n\n## Why this link exists\n\nQdrant hybrid queries—combine dense vectors with sparse signals for better recall. The syllabus title **Qdrant — hybrid queries** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Explain fusion strategies at high level."
+    ],
+    "mental_model": "Hybrid query = weighted union of retrieval signals.",
+    "one_liner": "Qdrant hybrid queries—combine dense vectors with sparse signals for better recall.",
+    "read_sections": [
+      "Hybrid queries",
+      "Sparse vectors"
+    ],
+    "why_now": "Implements optional hybrid strategy from syllabus benchmark."
+  },
+  "c4|u|https://www.youtube.com/watch?v=zgnjmwipirk": {
+    "advanced_extra": "Compare video stack to your Qdrant/pgvector choice with ADR.\n\n## Production notes (still plain English)\n\nCompare video stack to your Qdrant/pgvector choice with ADR.\n\n\n**Architecture anchor:** RAG = join docs to question, then ask model with context.",
+    "beginner_extra": "Watch once; note chunking, embedding, retrieval, generation order.",
+    "capstone_action": "Pipeline diagram in README for Month 4.",
+    "done_when": "You can name each stage’s inputs/outputs.",
+    "failure_modes": [
+      "Skipping retrieval quality measurement"
+    ],
+    "intermediate_deep_dive": "Reproduce pipeline stages on your public corpus with named metrics.\n\n## Plain English implementation path\n\nReproduce pipeline stages on your public corpus with named metrics.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Pipeline diagram in README for Month 4.\n\n**You are done when:** You can name each stage’s inputs/outputs.\n\n## Explain it to a staff engineer\n\n- Where does RAG fail even with good models?\n\n\n## Why this link exists\n\nDocument Chat RAG walkthrough—end-to-end retrieval augmented generation on a doc corpus. The syllabus title **Document Chat RAG walkthrough** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Where does RAG fail even with good models?"
+    ],
+    "mental_model": "RAG = join docs to question, then ask model with context.",
+    "one_liner": "Document Chat RAG walkthrough—end-to-end retrieval augmented generation on a doc corpus.",
+    "watch_for": [
+      "Chunking",
+      "Embedding model",
+      "Retrieval k",
+      "Answer grounding"
+    ],
+    "why_now": "Month 4 introduces search-before-generate for your reconciler knowledge base."
+  },
+  "c5|u|https://docling-project.github.io/docling/": {
+    "advanced_extra": "SLA for parse failures; dead-letter queue for corrupt PDFs.\n\n## Production notes (still plain English)\n\nSLA for parse failures; dead-letter queue for corrupt PDFs.\n\n\n**Architecture anchor:** Docs = operator guide for parse jobs.",
+    "beginner_extra": "Read installation + usage for your OS/Sail equivalent.",
+    "capstone_action": "CONFIG.md for parser settings.",
+    "done_when": "Chunks include parser_version field.",
+    "failure_modes": [
+      "Non-deterministic parses without version pins"
+    ],
+    "intermediate_deep_dive": "Pin model versions; log parser version in chunk metadata.\n\n## Plain English implementation path\n\nPin model versions; log parser version in chunk metadata.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** CONFIG.md for parser settings.\n\n**You are done when:** Chunks include parser_version field.\n\n## Explain it to a staff engineer\n\n- What metadata do you attach to each chunk?\n\n\n## Why this link exists\n\nDocling documentation—configuration, models, and export options for production parsing. The syllabus title **Docling documentation** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What metadata do you attach to each chunk?"
+    ],
+    "mental_model": "Docs = operator guide for parse jobs.",
+    "one_liner": "Docling documentation—configuration, models, and export options for production parsing.",
+    "read_sections": [
+      "Installation",
+      "Usage",
+      "Export"
+    ],
+    "why_now": "Turns GitHub README spikes into repeatable pipeline config."
+  },
+  "c5|u|https://github.com/docling-project/docling": {
+    "advanced_extra": "Cost model per page; data residency and API key handling.\n\n## Production notes (still plain English)\n\nCost model per page; data residency and API key handling.\n\n\n**Architecture anchor:** LlamaParse = SaaS bronze loader for documents.",
+    "beginner_extra": "Trial on one hard PDF; compare chunk quality to Docling.",
+    "capstone_action": "Comparison notes in docs/parsing.md.",
+    "done_when": "Decision documented with example doc.",
+    "failure_modes": [
+      "Sending confidential docs to third party"
+    ],
+    "intermediate_deep_dive": "ADR: when to route to LlamaParse vs local Docling.\n\n## Plain English implementation path\n\nADR: when to route to LlamaParse vs local Docling.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Comparison notes in docs/parsing.md.\n\n**You are done when:** Decision documented with example doc.\n\n## Explain it to a staff engineer\n\n- Build vs buy for document parsing?\n\n\n## Why this link exists\n\nLlamaParse getting started—managed parsing alternative/complement to Docling. The syllabus title ***(optional)* Docling repository · README / release demos** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Build vs buy for document parsing?"
+    ],
+    "mental_model": "LlamaParse = SaaS bronze loader for documents.",
+    "one_liner": "LlamaParse getting started—managed parsing alternative/complement to Docling.",
+    "watch_for": [
+      "API workflow",
+      "Output format",
+      "Rate limits"
+    ],
+    "why_now": "Compare build-vs-buy for parsing when Docling struggles on messy PDFs."
+  },
+  "c6|u|https://learnwith.campusx.in/courses/advanced-rag-69d8037290a183fe36833265": {
+    "advanced_extra": "If experimenting, benchmark indexing cost and answer quality vs flat RAG on 10–20 labeled questions.\n\n## Production notes (still plain English)\n\nIf experimenting, benchmark indexing cost and answer quality vs flat RAG on 10–20 labeled questions.\n\n\n**Architecture anchor:** GraphRAG pipeline = expensive; you borrow ideas, not whole stack.",
+    "beginner_extra": "Start at **Get started** on the official docs. Skim architecture; use the linked GitHub repo only after SCOPE.md is written.",
+    "capstone_action": "SCOPE.md boundaries for Month 6.",
+    "done_when": "Scope doc committed.",
+    "failure_modes": [
+      "Adopting GraphRAG without eval uplift proof"
+    ],
+    "intermediate_deep_dive": "List GraphRAG subsystems you are NOT building and map one idea to your capstone validator only.\n\n## Plain English implementation path\n\nList GraphRAG subsystems you are NOT building and map one idea to your capstone validator only.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** SCOPE.md boundaries for Month 6.\n\n**You are done when:** Scope doc committed.\n\n## Explain it to a staff engineer\n\n- Contrast GraphRAG with your validator graph.\n\n\n## Why this link exists\n\nMicrosoft GraphRAG documentation—how graph indexing differs from your validator scope. The syllabus title ***(optional, paid)* CampusX Graph RAG modules** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Contrast GraphRAG with your validator graph."
+    ],
+    "mental_model": "GraphRAG pipeline = expensive; you borrow ideas, not whole stack.",
+    "one_liner": "Microsoft GraphRAG documentation—how graph indexing differs from your validator scope.",
+    "read_sections": [
+      "Get started",
+      "Indexing pipeline overview",
+      "Query modes (local vs global)"
+    ],
+    "why_now": "Understand hype vs your scoped validator use case."
+  },
+  "c7|u|https://docs.ragas.io/en/stable/getstarted/install/": {
+    "advanced_extra": "Composite gate with explicit weights documented in ADR.\n\n## Production notes (still plain English)\n\nComposite gate with explicit weights documented in ADR.\n\n\n**Architecture anchor:** Each metric = one hypothesis about system quality.",
+    "beginner_extra": "Read definitions before enabling all metrics in CI.",
+    "capstone_action": "METRICS.md with tier table.",
+    "done_when": "Tiers linked to CI config.",
+    "failure_modes": [
+      "10 metrics, none actionable"
+    ],
+    "intermediate_deep_dive": "Tier 1: schema + retrieval hit; Tier 2: faithfulness; Tier 3: business KPIs.\n\n## Plain English implementation path\n\nTier 1: schema + retrieval hit; Tier 2: faithfulness; Tier 3: business KPIs.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** METRICS.md with tier table.\n\n**You are done when:** Tiers linked to CI config.\n\n## Explain it to a staff engineer\n\n- Which metric caught your last regression?\n\n\n## Why this link exists\n\nRagas metrics reference—choose metrics aligned with your failure buckets. The syllabus title **Ragas — install** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Which metric caught your last regression?"
+    ],
+    "mental_model": "Each metric = one hypothesis about system quality.",
+    "one_liner": "Ragas metrics reference—choose metrics aligned with your failure buckets.",
+    "read_sections": [
+      "Metrics overview",
+      "Faithfulness",
+      "Context precision"
+    ],
+    "why_now": "Avoid metric soup—pick metrics tied to error analysis."
+  },
+  "c7|u|https://www.youtube.com/watch?v=bb56baqibm4": {
+    "advanced_extra": "Prefer pinning ragas version in CI for reproducibility.\n\n## Production notes (still plain English)\n\nPrefer pinning ragas version in CI for reproducibility.\n\n\n**Architecture anchor:** Supplement to official Ragas docs.",
+    "beginner_extra": "Take only if stuck implementing metrics.",
+    "capstone_action": "Optional DEVLOG.",
+    "done_when": "Skip if eval script already runs.",
+    "failure_modes": [
+      "Course video replaces reading Ragas docs"
+    ],
+    "intermediate_deep_dive": "Complete one exercise; port to your golden set format.\n\n## Plain English implementation path\n\nComplete one exercise; port to your golden set format.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Optional DEVLOG.\n\n**You are done when:** Skip if eval script already runs.\n\n## Explain it to a staff engineer\n\n- How do you debug a failing faithfulness score?\n\n\n## Why this link exists\n\nOptional CampusX RAGAS module—hands-on Ragas if video alone is insufficient. The syllabus title **RAG Evaluation (Ragas context)** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "How do you debug a failing faithfulness score?"
+    ],
+    "mental_model": "Supplement to official Ragas docs.",
+    "one_liner": "Optional CampusX RAGAS module—hands-on Ragas if video alone is insufficient.",
+    "watch_for": [
+      "Dataset format",
+      "Metric APIs"
+    ],
+    "why_now": "Optional lab for Ragas APIs."
+  },
+  "c9|t|rego: block `write_*` for role `analyst`|build": {
+    "advanced_extra": "Runbook: trace-driven incident response steps.\n\n## Production notes (still plain English)\n\nRunbook: trace-driven incident response steps.\n\n\n**Architecture anchor:** One run_id from CLI through graph, gateway, tools.",
+    "beginner_extra": "Follow TRACE.md conventions.",
+    "capstone_action": "Merge instrumentation.",
+    "done_when": "Screenshot with run id in README.",
+    "failure_modes": [
+      "Traces without cost/token fields"
+    ],
+    "intermediate_deep_dive": "Document env vars and local docker-compose for Langfuse optional.\n\n## Plain English implementation path\n\nDocument env vars and local docker-compose for Langfuse optional.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Merge instrumentation.\n\n**You are done when:** Screenshot with run id in README.\n\n## Explain it to a staff engineer\n\n- Demo trace for failed validation path.\n\n\n## Why this link exists\n\nBuild Langfuse wired to LangGraph + LiteLLM for unified traces. The syllabus title **Rego: block `write_*` for role `analyst`** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Demo trace for failed validation path."
+    ],
+    "mental_model": "One run_id from CLI through graph, gateway, tools.",
+    "one_liner": "Build Langfuse wired to LangGraph + LiteLLM for unified traces.",
+    "why_now": "Month 9 integration milestone."
+  },
+  "c9|u|https://langfuse.com/docs": {
+    "advanced_extra": "SLO dashboard: P95 end-to-end agent latency from traces.\n\n## Production notes (still plain English)\n\nSLO dashboard: P95 end-to-end agent latency from traces.\n\n\n**Architecture anchor:** run_id correlates gateway log, graph checkpoint, trace UI.",
+    "beginner_extra": "Follow tracing quickstart for Python.",
+    "capstone_action": "Instrumentation PR with sample trace screenshot.",
+    "done_when": "One full run visible end-to-end.",
+    "failure_modes": [
+      "Broken parent/child span links"
+    ],
+    "intermediate_deep_dive": "Propagate trace context through MCP tool calls where possible.\n\n## Plain English implementation path\n\nPropagate trace context through MCP tool calls where possible.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Instrumentation PR with sample trace screenshot.\n\n**You are done when:** One full run visible end-to-end.\n\n## Explain it to a staff engineer\n\n- Correlate LiteLLM cost log to Langfuse trace.\n\n\n## Why this link exists\n\nLangfuse tracing—instrument LangGraph nodes and LiteLLM calls with consistent run ids. The syllabus title **Langfuse docs** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Correlate LiteLLM cost log to Langfuse trace."
+    ],
+    "mental_model": "run_id correlates gateway log, graph checkpoint, trace UI.",
+    "one_liner": "Langfuse tracing—instrument LangGraph nodes and LiteLLM calls with consistent run ids.",
+    "read_sections": [
+      "Tracing",
+      "SDK",
+      "Integrations"
+    ],
+    "why_now": "Implementation guide for Month 9 build."
+  },
+  "c9|u|https://langfuse.com/docs/tracing": {
+    "advanced_extra": "Unified observability story for platform interviews.\n\n## Production notes (still plain English)\n\nUnified observability story for platform interviews.\n\n\n**Architecture anchor:** OTel = portable trace IDs across tools.",
+    "beginner_extra": "Read concepts: tracer, span, exporter.",
+    "capstone_action": "Note OTel strategy in OBSERVABILITY.md.",
+    "done_when": "Strategy doc committed.",
+    "failure_modes": [
+      "Double instrumentation overhead unmeasured"
+    ],
+    "intermediate_deep_dive": "Optional: export OTel to Langfuse or collector.\n\n## Plain English implementation path\n\nOptional: export OTel to Langfuse or collector.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Note OTel strategy in OBSERVABILITY.md.\n\n**You are done when:** Strategy doc committed.\n\n## Explain it to a staff engineer\n\n- Langfuse vs OTel—when both?\n\n\n## Why this link exists\n\nOpenTelemetry Python docs—vendor-neutral tracing if you outgrow single SaaS. The syllabus title **Langfuse — tracing** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "Langfuse vs OTel—when both?"
+    ],
+    "mental_model": "OTel = portable trace IDs across tools.",
+    "one_liner": "OpenTelemetry Python docs—vendor-neutral tracing if you outgrow single SaaS.",
+    "read_sections": [
+      "Python getting started",
+      "Instrumentation"
+    ],
+    "why_now": "Understand escape hatch from Langfuse-only instrumentation."
+  },
+  "c9|u|https://www.openpolicyagent.org/docs/latest/": {
+    "advanced_extra": "Data retention and PII scrubbing configuration documented.\n\n## Production notes (still plain English)\n\nData retention and PII scrubbing configuration documented.\n\n\n**Architecture anchor:** Langfuse = DataDog for LLM spans.",
+    "beginner_extra": "Skim docs; create project and API keys in dev only.",
+    "capstone_action": "Dev Langfuse project wired in config.",
+    "done_when": "Test trace appears in UI.",
+    "failure_modes": [
+      "Logging secrets in trace metadata"
+    ],
+    "intermediate_deep_dive": "Define what metadata every trace must include.\n\n## Plain English implementation path\n\nDefine what metadata every trace must include.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Dev Langfuse project wired in config.\n\n**You are done when:** Test trace appears in UI.\n\n## Explain it to a staff engineer\n\n- What do you store per trace vs per span?\n\n\n## Why this link exists\n\nLangfuse docs—LLM observability product overview (traces, scores, datasets). The syllabus title **Open Policy Agent docs** is your scope boundary—do not boil the ocean.",
+    "interview_prompts": [
+      "What do you store per trace vs per span?"
+    ],
+    "mental_model": "Langfuse = DataDog for LLM spans.",
+    "one_liner": "Langfuse docs—LLM observability product overview (traces, scores, datasets).",
+    "read_sections": [
+      "Get started",
+      "Tracing",
+      "Scores"
+    ],
+    "why_now": "Chosen trace sink for capstone alongside LiteLLM."
+  }
+}

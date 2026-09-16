@@ -254,6 +254,33 @@ mindmap
 
 **LLMs** are taught when you need them for **contracts and routing** (Courses 0–1), not as the first page of the program. **RAG** is Courses 4–6 after you can **extract and route** reliably.
 
+### Core path vs platform extension path
+
+Following the [GPT-6 Astra curriculum review](./audit/AI_System_Engineer_Astra_Curriculum_Review.md), the program has two labeled outcomes on the **same capstone repo**:
+
+| Path | Audience | Calendar (10–15 h/week) | Courses | Employability focus |
+| --- | --- | --- | --- | --- |
+| **Core — AI systems engineer** | Ship one production LLM application with evals, policy, and deploy | ~6–8 months | **0–12** (required prove gates) | Strong portfolio app + interview narrative |
+| **Platform extension** | Build the **paved road** other teams use | +3–4 months after core | **Spread across 9–13** + extension proves below | Platform / staff-level “second app onboards here” story |
+| **Optional depth** | Researchy or interview polish | +2–3 months slack | **13–15** electives | Differentiation, not blockers |
+
+**Core path** is what the sidebar order and prove checklists already enforce. **Platform extension** does not renumber courses; it adds **extra prove themes** (see gap matrix) you attach after Course 9 or during 11–13.
+
+#### Platform extension prove checklist (portfolio add-on)
+
+Complete **at least four** of these after core Course 12 (or weave into Courses 11–13 where noted):
+
+- [ ] **Multi-tenant gateway** — Two logical apps share LiteLLM; different model allowlists, budgets, and rate limits; deny path emits audit event.
+- [ ] **Secrets & rotation** — Provider credential rotated without app redeploy; traces redact configured sensitive fields.
+- [ ] **SRE slice** — Documented SLOs; failure injection (throttle or 5xx) shows bounded retries, idempotent writes, and a simple error-budget or ops dashboard.
+- [ ] **IaC deploy** — Staging (or equivalent) provisioned or updated via PR + pipeline; smoke, eval, and policy tests in pipeline; rollback steps in `DEPLOY.md`.
+- [ ] **Serving economics** — One benchmark: hosted API vs self-hosted or batch endpoint on latency, throughput, and estimated cost per successful task.
+- [ ] **Supply chain** — CI produces SBOM or image scan artifact; documents model/prompt/app versions in a release manifest.
+- [ ] **Second app onboarded** — Minimal second service (read-only tools only) uses shared gateway, eval runner, and tracing conventions via template—not a fork of capstone internals.
+- [ ] **FinOps showback** — Monthly-style report: cost by team/app/model; one tenant budget enforced without starving others.
+
+**Graduation bar for “platform engineer” wording on your resume:** core **0–12** complete **plus** second-app onboarded **and** multi-tenant gateway **and** IaC deploy (or your staff engineer’s equivalent three).
+
 ---
 
 ## 7. Reference architecture (what you are building toward)
@@ -520,9 +547,9 @@ All data **synthetic or public**—no employer secrets in the public repo.
 | | |
 | --- | --- |
 | **Hours** | 12–16 |
-| **Prove** | Deploy screenshot + platform doc |
+| **Prove** | Reproducible deploy + smoke tests + rollback + platform doc |
 
-**Covers:** Container or PaaS deploy; health checks; minimal UX or API for internal “customers”; how another dev adds a tool or eval.
+**Covers:** Container or PaaS deploy; health checks; post-deploy eval/policy smoke; rollback; how another dev adds a read-only tool and eval case (`docs/adding-a-tool.md`).
 
 **Platform skills:** You are building **for other engineers**, not only for yourself.
 

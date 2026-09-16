@@ -80,7 +80,15 @@ def build_theory_summary(
         lines.append("")
 
     hint = get_topic_hint(lesson)
-    _append_five_layer_study_guide(lines, hint, glossary_by_id())
+    pack = prove_pack_for_course(course or "")
+    if ltype == "Prove":
+        lines.append("## What you must ship")
+        lines.append("")
+        lines.append(hint.get("one_liner") or f"Verifiable evidence for **{title}**.")
+        lines.append("")
+        _append_prove_acceptance(lines, pack, lesson.get("prove_criteria"))
+    else:
+        _append_five_layer_study_guide(lines, hint, glossary_by_id())
     if hint.get("intermediate_deep_dive"):
         lines.append("## Deep dive (this topic)")
         lines.append("")
@@ -98,8 +106,8 @@ def build_theory_summary(
         for fm in hint["failure_modes"]:
             lines.append(f"- {fm}")
         lines.append("")
-    if ltype == "Prove" or lesson.get("prove_criteria"):
-        _append_prove_acceptance(lines, prove_pack_for_course(course or ""), lesson.get("prove_criteria"))
+    if ltype != "Prove" and lesson.get("prove_criteria"):
+        _append_prove_acceptance(lines, pack, lesson.get("prove_criteria"))
 
     digest = lesson.get("digest") or {}
     use_digest = bool(digest) and digest_matches_lesson(lesson, digest)

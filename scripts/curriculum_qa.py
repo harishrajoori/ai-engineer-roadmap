@@ -37,6 +37,33 @@ VAGUE_LAB_MARKERS: tuple[str, ...] = (
 )
 
 MERMAID_BLOCK = re.compile(r"```mermaid\n(.*?)```", re.DOTALL)
+ONE_LINER_RE = re.compile(r"### 1\. In one sentence\n\n(.+?)\n\n", re.DOTALL)
+WORD_RE = re.compile(r"[a-z]{4,}")
+
+
+def _title_tokens(title: str) -> set[str]:
+    stop = {"prove", "optional", "course", "month", "readme", "docs", "your", "with", "this", "that", "from", "link", "open", "helm", "chart"}
+    return {w for w in WORD_RE.findall((title or "").lower()) if w not in stop}
+
+
+def _theory_one_liner(text: str) -> str:
+    m = ONE_LINER_RE.search(text or "")
+    return (m.group(1).strip() if m else "").lower()
+
+
+def _theory_misaligned(lesson: dict) -> str | None:
+    title = lesson.get("lesson") or ""
+    inter = (lesson.get("theory_levels") or {}).get("intermediate") or lesson.get("theory_summary") or ""
+    one = _theory_one_liner(inter)
+    if not one:
+        return None
+    if "prove month" in one and not title.lower().startswith("prove"):
+        return f"handbook drift: one_liner mentions prove month but title is not Prove"
+    tt = _title_tokens(title)
+    ot = _title_tokens(one)
+    if tt and ot and len(tt & ot) < 1 and len(ot) > 12:
+        return f"one_liner unrelated to title (overlap 0): {one[:60]}"
+    return None
 
 
 def _check_mermaid_syntax(body: str, ctx: str) -> list[str]:
@@ -85,7 +112,13 @@ def main() -> int:
         for level_name, text in levels.items():
             if not text:
                 continue
+            if "## Lab & Practice" in text:
+                failures.append(f"{ctx}: theory.{level_name} embeds Lab & Practice (use Lab tab only)")
             failures.extend(_check_mermaid_syntax(text, f"{ctx} theory.{level_name}"))
+
+        mis = _theory_misaligned(les)
+        if mis:
+            failures.append(f"{ctx}: {mis}")
 
         lab_md = (les.get("lab_plan") or {}).get("lab_practice", {}).get("markdown") or ""
         if lab_md:

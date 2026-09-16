@@ -19,6 +19,7 @@ You have shipped **pipelines, models, and services**. This studio teaches **AI p
 2. **Foundations → Study guide → Platform depth** — move up only when the level feels easy.
 3. **Optional rows** — skip until you have slack; they are depth, not blockers.
 4. **Prove = merge gate** — link release, CI, benchmark, or demo when the rubric is met.
+5. **Eval habit every course** — after each month’s build, add or extend the golden set (even 2–3 cases) and run the same metric command; Course 7 formalizes the harness, but don’t wait until Month 7 to measure.
 
 ## Your first hour (not “learn transformers first”)
 

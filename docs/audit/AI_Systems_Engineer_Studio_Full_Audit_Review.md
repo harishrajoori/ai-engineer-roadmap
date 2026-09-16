@@ -903,7 +903,7 @@ Selected terms with data-engineer analogies (abbreviated):
 
 ## Closing
 
-This audit treats the studio as both a **learning vehicle** and a **portfolio-grade product**. The architecture spine and Prove culture are worth protecting. The highest leverage improvements are: (1) Prove Dashboard + stricter mid/late Prove packs, (2) App state decomposition and schema freeze, (3) Capstone product brief and Course 10 scope control, (4) Selective hand-authored theory and full DE lab coverage on critical path.
+This audit treats the studio as both a **learning vehicle** and a **portfolio-grade product**. The architecture spine and Prove culture are worth protecting. Studio-oriented items in §17–19 were largely addressed on `main` (Sep 2026). **Curriculum / platform depth** follow-up is tracked separately in [`AI_System_Engineer_Astra_Curriculum_Review.md`](./AI_System_Engineer_Astra_Curriculum_Review.md) and [`Astra_Curriculum_Gap_Matrix.md`](./Astra_Curriculum_Gap_Matrix.md) (systems vs platform engineer, platform extension path, Course 11 executable deploy prove).
 
 **End of full audit dump.**  
 Regenerate curriculum and run `npm run validate:ci` after any structural edits.

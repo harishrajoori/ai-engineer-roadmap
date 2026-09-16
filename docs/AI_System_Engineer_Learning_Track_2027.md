@@ -34,7 +34,7 @@
 | 8 | Eval CI/CD gates | Month 8 | 8–12 | CI blocks regression |
 | 9 | Policy + observability | Month 9 | 10–14 | Trace + policy test |
 | 10 | Capstone integration | Month 10 | 16–24 | Git tag `alpha` + caching proof |
-| 11 | Deploy & platform UX | Month 11 | 12–16 | Deploy screenshot + tool doc |
+| 11 | Deploy & platform UX | Month 11 | 12–16 | Reproducible deploy + smoke tests + rollback |
 | 12 | Lineage & hardening | Month 12 | 8–12 | Tag `v1.0` + lineage sample |
 | 13 | Frontier (pick 1–2) | Month 13 | 8–16 | README “why we added X” |
 | 14 | Frontier + portfolio | Month 14 | 8–12 | Posts + resume refresh |
@@ -555,7 +555,7 @@
 | | |
 | --- | --- |
 | **Duration** | ~3 weeks |
-| **Graded assignment** | Deploy screenshot + `docs/adding-a-tool.md` |
+| **Graded assignment** | Executable deploy prove + `docs/adding-a-tool.md` (see acceptance below) |
 
 ### What you'll learn
 
@@ -579,9 +579,9 @@
 
 - [ ] Helm chart or compose
 
-**Prove**
+**Prove** (executable evidence — [Astra review](./audit/AI_System_Engineer_Astra_Curriculum_Review.md); full rubric in studio **prove_pack** course 11)
 
-- [ ] `kubectl get pods` or compose screenshot + doc link
+- [ ] `DEPLOY.md` + `docs/adding-a-tool.md`: one-command deploy, health + smoke (eval+policy), rollback exercised, peer can add read-only tool (screenshot/URL optional supplement only)
 
 *Deploy checklist:* Master Plan §17 → **Course 11**
 
