@@ -52,11 +52,29 @@ def _normalize_resource(entry: dict) -> dict | None:
     }
 
 
+def _external_link_keys(row: dict) -> list[str]:
+    """Stable keys for lookup — include bare URL when primary uses a TOC fragment."""
+    keys = [lesson_stable_key(row)]
+    url = (row.get("url") or "").strip()
+    if "#" not in url:
+        return keys
+    base = url.split("#", 1)[0].rstrip("/")
+    for variant in (base, f"{base}/"):
+        alt = {**row, "url": variant}
+        k = lesson_stable_key(alt)
+        if k not in keys:
+            keys.append(k)
+    return keys
+
+
 def append_external_resources(row: dict) -> None:
     """Merge mapped extras into row['resources'] without duplicating URLs."""
     by_key = load_external_curriculum_links().get("by_lesson_key") or {}
-    key = lesson_stable_key(row)
-    extras = by_key.get(key)
+    extras: list[dict] = []
+    for key in _external_link_keys(row):
+        chunk = by_key.get(key)
+        if chunk:
+            extras.extend(chunk)
     if not extras:
         return
 

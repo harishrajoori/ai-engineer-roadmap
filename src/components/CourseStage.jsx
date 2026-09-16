@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 
 import MarkdownProse from "./MarkdownProse";
-import { BookOpen, ExternalLink, ListChecks } from "lucide-react";
+import { BookOpen, ChevronRight, ListChecks } from "lucide-react";
 import { buildCourseTopicOutline, formatTopicTitle } from "../utils/syllabusDisplay";
 import { capstoneTrackBadge } from "../utils/capstoneTrack";
 import CourseEnrichmentPanels from "./CourseEnrichmentPanels";
@@ -109,16 +109,18 @@ export default function CourseStage({
                 return (
                 <li key={lesson.order}>
                   <button type="button" className="course-overview-topic-btn" onClick={() => onSelectLesson(lesson.order)}>
-                    {lesson.is_start_here && <span className="topic-start-badge">START HERE</span>}
-                    {trackMeta && (
-                      <span className={`capstone-track-pill capstone-track-pill-compact ${trackMeta.className}`} title={trackMeta.title}>
-                        {trackMeta.label}
+                    <span className="course-overview-topic-inner">
+                      {lesson.is_start_here && <span className="topic-start-badge">START HERE</span>}
+                      {trackMeta && (
+                        <span className={`capstone-track-pill capstone-track-pill-compact ${trackMeta.className}`} title={trackMeta.title}>
+                          {trackMeta.label}
+                        </span>
+                      )}
+                      <span className="course-overview-topic-title">
+                        {lesson.display_title || formatTopicTitle(lesson)}
                       </span>
-                    )}
-                    <span className="course-overview-topic-title">{formatTopicTitle(lesson)}</span>
-                    {lesson.url?.startsWith("http") && (
-                      <ExternalLink size={12} className="course-overview-topic-ext" aria-hidden />
-                    )}
+                    </span>
+                    <ChevronRight size={14} className="course-overview-topic-chevron" aria-hidden />
                   </button>
                   {lesson.merge_note && <span className="course-overview-merge-note">{lesson.merge_note}</span>}
                 </li>

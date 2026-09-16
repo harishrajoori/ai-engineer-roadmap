@@ -2187,8 +2187,23 @@ header.site-header {
   border-radius: 6px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 0.5rem;
+}
+.course-overview-topic-inner {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+.course-overview-topic-title {
+  flex: 1 1 12rem;
+  line-height: 1.35;
+}
+.course-overview-topic-chevron {
+  flex-shrink: 0;
+  color: var(--muted);
 }
 .course-overview-topic-btn:hover {
   background: var(--surface-hover);

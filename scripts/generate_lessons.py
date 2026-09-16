@@ -29,7 +29,9 @@ from link_quality import (
     READ_COMPANION_REPO,
     URL_FIXES,
     access_note_for_url,
+    applied_llms_section_url,
     canonical_read_url,
+    is_applied_llms_url,
     is_github_url,
     is_paid_host,
 )
@@ -176,8 +178,15 @@ def merge_enrichment(
             new_url = (row.get("url") or "").strip()
             syllabus_changed = old_url != new_url or (old.get("lesson") or "") != (row.get("lesson") or "")
             for enrich_key in ENRICH_FIELDS:
-                if enrich_key == "resources" and syllabus_changed:
-                    continue
+                if enrich_key == "resources":
+                    if syllabus_changed:
+                        continue
+                    old_resources = old.get("resources") or []
+                    if any(
+                        (r.get("description") or "").startswith("Same source — syllabus angle:")
+                        for r in old_resources
+                    ):
+                        continue
                 if enrich_key in old and old[enrich_key]:
                     row[enrich_key] = old[enrich_key]
         sanitize_lesson_enrichment(row, youtube_id_only)
@@ -367,15 +376,27 @@ def parse_course_outcomes(text: str) -> dict[str, list[str]]:
     return outcomes
 
 
+def _url_group_key(row: dict) -> tuple[int, str]:
+    """Group shared URLs within a course only (not across the whole program)."""
+    course = int(row.get("course") or 0)
+    url = (row.get("url") or "").strip()
+    base = url.split("#", 1)[0].rstrip("/").lower()
+    return course, base
+
+
 def attach_related_topics(lessons: list[dict]) -> None:
-    by_url: dict[str, list[dict]] = defaultdict(list)
+    by_url: dict[tuple[int, str], list[dict]] = defaultdict(list)
     for row in lessons:
         url = (row.get("url") or "").strip()
         if url.startswith("http"):
-            by_url[url].append(row)
+            by_url[_url_group_key(row)].append(row)
     for row in lessons:
         url = (row.get("url") or "").strip()
-        siblings = [s for s in by_url.get(url, []) if int(s["order"]) != int(row["order"])]
+        siblings = [
+            s
+            for s in by_url.get(_url_group_key(row), [])
+            if int(s["order"]) != int(row["order"])
+        ]
         if not siblings:
             continue
         row["related_topics"] = [
@@ -390,40 +411,19 @@ def attach_related_topics(lessons: list[dict]) -> None:
 
 
 def merge_related_into_resources(row: dict) -> None:
-    """Add sibling syllabus angles (same URL) as alternate resource cards."""
-    resources = list(row.get("resources") or [])
-    primary = (row.get("url") or "").strip()
-    if not primary.startswith("http"):
-        return
-    for rel in row.get("related_topics") or []:
-        title = rel.get("lesson") or "Related syllabus item"
-        desc = (
-            f"Same source — syllabus angle: {rel.get('section_label', 'syllabus')} "
-            f"(topic #{rel.get('order')})."
-        )
-        if any(r.get("title") == title and (r.get("url") or "").strip() == primary for r in resources):
-            continue
-        resources.append(
-            {
-                "title": title,
-                "url": primary,
-                "type": resource_type_for(row.get("type", ""), primary),
-                "level": "intermediate",
-                "description": desc,
-            }
-        )
-    row["resources"] = resources
+    """Sibling angles stay on `related_topics` / theory — not duplicate resource cards."""
+    return
 
 
 def annotate_shared_urls(lessons: list[dict]) -> None:
-    by_url: dict[str, list[int]] = defaultdict(list)
+    by_url: dict[tuple[int, str], list[int]] = defaultdict(list)
     for row in lessons:
         url = (row.get("url") or "").strip()
         if url.startswith("http"):
-            by_url[url].append(int(row["order"]))
+            by_url[_url_group_key(row)].append(int(row["order"]))
     for row in lessons:
         url = (row.get("url") or "").strip()
-        orders = by_url.get(url, [])
+        orders = by_url.get(_url_group_key(row), [])
         if len(orders) > 1:
             others = [o for o in orders if o != row["order"]]
             titles_hint = f"topics #{', #'.join(str(o) for o in sorted(others)[:4])}"
@@ -450,6 +450,10 @@ def annotate_access_and_read_urls(row: dict) -> None:
     ltype = row.get("type") or ""
     title = row.get("lesson") or ""
     optional = "(optional)" in title.lower() or row.get("required") == "No"
+
+    if is_applied_llms_url(url):
+        row["url"] = applied_llms_section_url(title)
+        url = row["url"]
 
     if ltype == "Read" and url:
         canonical = canonical_read_url(url)
@@ -518,6 +522,38 @@ def annotate_access_and_read_urls(row: dict) -> None:
 _PRIMARY_RESOURCE_DESC = "Main link for this topic from the learning track."
 
 
+def _url_base_and_fragment(url: str) -> tuple[str, str]:
+    raw = (url or "").strip()
+    if "#" in raw:
+        base, frag = raw.split("#", 1)
+        return base.rstrip("/").lower(), frag
+    return raw.rstrip("/").lower(), ""
+
+
+def prune_stale_resource_cards(row: dict) -> None:
+    """Drop sibling-angle cards and bare Applied LLMs duplicates left from older generators."""
+    primary = (row.get("url") or "").strip()
+    p_base, p_frag = _url_base_and_fragment(primary)
+    lesson_title = (row.get("lesson") or "").strip()
+    kept: list[dict] = []
+    for r in row.get("resources") or []:
+        desc = r.get("description") or ""
+        if desc.startswith("Same source — syllabus angle:"):
+            continue
+        u = (r.get("url") or "").strip()
+        u_base, u_frag = _url_base_and_fragment(u)
+        if (
+            p_frag
+            and u_base == p_base
+            and not u_frag
+            and (r.get("title") or "").strip() != lesson_title
+            and desc != _PRIMARY_RESOURCE_DESC
+        ):
+            continue
+        kept.append(r)
+    row["resources"] = kept
+
+
 def ensure_primary_resource(row: dict) -> None:
     """Guarantee at least one resource card (primary syllabus URL) for the studio UI."""
     url = (row.get("url") or "").strip()
@@ -574,6 +610,7 @@ def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]])
     _mark_start_here(lessons)
     for row in lessons:
         annotate_access_and_read_urls(row)
+        prune_stale_resource_cards(row)
         ensure_primary_resource(row)
         merge_related_into_resources(row)
         append_external_resources(row)

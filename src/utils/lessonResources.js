@@ -29,5 +29,17 @@ export function getLessonResources(lesson) {
     }
     return !implUrls.has((r.url || "").trim());
   });
-  return [...impl, ...rest];
+  const merged = [...impl, ...rest];
+  const seen = new Set();
+  return merged.filter((r) => {
+    const u = (r.url || "").trim().toLowerCase();
+    if (!u.startsWith("http")) {
+      return true;
+    }
+    if (seen.has(u)) {
+      return false;
+    }
+    seen.add(u);
+    return true;
+  });
 }

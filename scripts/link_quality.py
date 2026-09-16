@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from urllib.parse import urlparse
 
 # Host fragments that usually require purchase (must be syllabus-optional).
@@ -96,6 +97,37 @@ READ_COMPANION_REPO: dict[str, str] = {
 
 def normalize_url(url: str) -> str:
     return (url or "").strip().rstrip("/")
+
+
+_APPLIED_LLMS_BASE = "https://applied-llms.org/"
+
+
+def applied_llms_section_url(lesson_title: str) -> str:
+    """Map syllabus checkbox titles to Applied LLMs handbook TOC anchors."""
+    t = re.sub(r"\*\(optional\)\*\s*", "", lesson_title or "", flags=re.I).lower()
+    if "retrieval" in t:
+        return f"{_APPLIED_LLMS_BASE}#toc-information-retrieval-rag"
+    if "agent" in t or "orchestr" in t:
+        return f"{_APPLIED_LLMS_BASE}#toc-step-by-step-multi-turn-flows-can-give-large-boosts"
+    if "evaluation" in t and "deepeval" not in t:
+        return f"{_APPLIED_LLMS_BASE}#toc-evaluation-monitoring"
+    if "testing" in t or "monitoring" in t:
+        return (
+            f"{_APPLIED_LLMS_BASE}"
+            "#toc-create-a-few-assertion-based-unit-tests-from-real-inputoutput-samples"
+        )
+    if "pitfall" in t:
+        return f"{_APPLIED_LLMS_BASE}#toc-hallucinations-are-a-stubborn-problem"
+    if "3+" in t or "skim" in t or "in production" in t:
+        return f"{_APPLIED_LLMS_BASE}#toc-tactical-nuts-bolts-of-working-with-llms"
+    if "gateway" in t or "structured" in t:
+        return f"{_APPLIED_LLMS_BASE}#toc-structure-your-inputs-and-outputs"
+    return _APPLIED_LLMS_BASE
+
+
+def is_applied_llms_url(url: str) -> bool:
+    u = (url or "").strip().lower()
+    return u.startswith("https://applied-llms.org") or u.startswith("http://applied-llms.org")
 
 
 def is_paid_host(url: str) -> bool:

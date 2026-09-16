@@ -37,10 +37,10 @@ function pickKeeper(a, b) {
 export function formatTopicTitle(lesson) {
   const raw = (lesson?.lesson || "Topic").replace(/^\*\(optional\)\*\s*/i, "").trim();
   const type = lesson?.type || "Topic";
-  const duration = (lesson?.duration || "").trim();
+  const duration = (lesson?.duration || "").trim().replace(/^·\s*/, "");
   const parts = [`${type}`, raw];
   if (duration && duration !== "Time-box as needed") {
-    parts.push(`· ${duration}`);
+    parts.push(duration);
   }
   return parts.join(" · ");
 }
