@@ -2164,12 +2164,88 @@ header.site-header {
   color: var(--muted);
   margin-bottom: 0.75rem;
 }
-.course-overview-section h3 {
+.course-overview-section h3,
+.course-overview-section-label {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--muted);
   margin: 1rem 0 0.35rem;
+}
+.course-overview-type-pill {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: var(--surface-active);
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.course-overview-type-pill.type-video {
+  color: var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 12%, var(--surface));
+}
+.course-overview-type-pill.type-read {
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, var(--surface));
+}
+.course-overview-type-pill.type-build,
+.course-overview-type-pill.type-prove {
+  color: var(--green);
+  background: color-mix(in srgb, var(--green) 12%, var(--surface));
+}
+.course-overview-topic-duration {
+  font-size: 0.72rem;
+  color: var(--muted-dark);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.course-walkthrough-details {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.course-walkthrough-details-summary {
+  cursor: pointer;
+  padding: 0.85rem 1.1rem;
+  font-weight: 700;
+  font-size: 0.92rem;
+  list-style: none;
+}
+.course-walkthrough-details-summary::-webkit-details-marker {
+  display: none;
+}
+.course-walkthrough-panel-embedded {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+.inspector-empty-state {
+  padding: 1rem;
+}
+.inspector-empty-lead {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0 0 0.75rem;
+}
+.inspector-empty-cta {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  color: var(--accent);
+  cursor: pointer;
+}
+.inspector-empty-cta:hover {
+  background: color-mix(in srgb, var(--accent) 18%, var(--surface));
 }
 .course-overview-topic-list {
   list-style: none;

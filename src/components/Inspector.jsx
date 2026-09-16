@@ -327,7 +327,8 @@ export default function Inspector({
   apiKeys = {},
   userProfile = null,
   learningLayout = null,
-  onLearningLayoutChange = null
+  onLearningLayoutChange = null,
+  onOpenEntryTopic = null,
 }) {
   const [activeTab, setActiveTab] = useState("mentor");
   const [revealedPrompts, setRevealedPrompts] = useState({});
@@ -350,13 +351,28 @@ export default function Inspector({
   );
 
   if (!lesson) {
+    const entryOrder = courseRef?.entry_lesson_order;
+    const onCourseOverview = Boolean(courseRef?.walkthrough?.plain_title);
     return (
       <aside className="inspector-panel">
-        <div className="inspector-content" style={{ padding: "1rem" }}>
-          <p style={{ fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.5 }}>
-            Select a topic from the syllabus, or use <strong>Course overview</strong> in the middle column. The Mentor,
-            Notes, and Resources tabs apply to the active topic.
-          </p>
+        <div className="inspector-content inspector-empty-state">
+          {onCourseOverview ? (
+            <>
+              <p className="inspector-empty-lead">
+                You are on the <strong>course overview</strong>. Pick a topic from the list in the center column to load
+                Resources, Notes, and Mentor for that row.
+              </p>
+              {entryOrder != null && onOpenEntryTopic && (
+                <button type="button" className="inspector-empty-cta" onClick={() => onOpenEntryTopic(entryOrder)}>
+                  Open first topic
+                </button>
+              )}
+            </>
+          ) : (
+            <p className="inspector-empty-lead">
+              Select a topic from the syllabus. Mentor, Notes, and Resources apply to the active topic.
+            </p>
+          )}
         </div>
       </aside>
     );

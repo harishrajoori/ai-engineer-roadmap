@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 
 import MarkdownProse from "./MarkdownProse";
 import { BookOpen, ChevronRight, ListChecks } from "lucide-react";
-import { buildCourseTopicOutline, formatTopicTitle } from "../utils/syllabusDisplay";
+import { buildCourseTopicOutline, topicRowParts } from "../utils/syllabusDisplay";
 import { capstoneTrackBadge } from "../utils/capstoneTrack";
 import CourseEnrichmentPanels from "./CourseEnrichmentPanels";
 import CourseWalkthroughPanel from "./CourseWalkthroughPanel";
@@ -78,12 +78,6 @@ export default function CourseStage({
         </div>
       </div>
 
-      <CourseWalkthroughPanel
-        walkthrough={ref.walkthrough}
-        entryLessonOrder={entryOrder}
-        onStartHere={handleStartHere}
-      />
-
       {ref.capstone_product_brief_markdown && (
         <details className="course-overview-block course-capstone-brief" open={course.course === 10}>
           <summary>Capstone product brief (Course 10 scope contract)</summary>
@@ -96,29 +90,32 @@ export default function CourseStage({
       <section className="course-overview-block course-overview-topics-first">
         <h2>Topics — do these in order</h2>
         <p className="course-overview-hint">
-          The topic marked START HERE is your entry point. On each topic: read <strong>Theory → Foundations</strong> until
-          the ready checklist is true, then open <strong>Lecture</strong> or <strong>Reading</strong>, then Lab when
-          needed.
+          Click a row to open the topic in the studio. <strong>START HERE</strong> is your entry point. On each topic:
+          Theory → Foundations, then Lecture/Reading, then Lab &amp; Prove when needed.
         </p>
         {outline.map((group) => (
           <div key={group.label} className="course-overview-section">
-            <h3>{group.label}</h3>
+            <h3 className="course-overview-section-label">{group.label}</h3>
             <ul className="course-overview-topic-list">
               {group.items.map((lesson) => {
                 const trackMeta = capstoneTrackBadge(lesson.capstone_track);
+                const row = topicRowParts(lesson);
+                const typeKey = row.type.toLowerCase();
                 return (
                 <li key={lesson.order}>
                   <button type="button" className="course-overview-topic-btn" onClick={() => onSelectLesson(lesson.order)}>
                     <span className="course-overview-topic-inner">
+                      <span className={`course-overview-type-pill type-${typeKey}`}>{row.type}</span>
                       {lesson.is_start_here && <span className="topic-start-badge">START HERE</span>}
                       {trackMeta && (
                         <span className={`capstone-track-pill capstone-track-pill-compact ${trackMeta.className}`} title={trackMeta.title}>
                           {trackMeta.label}
                         </span>
                       )}
-                      <span className="course-overview-topic-title">
-                        {lesson.display_title || formatTopicTitle(lesson)}
-                      </span>
+                      <span className="course-overview-topic-title">{row.title}</span>
+                      {row.duration && (
+                        <span className="course-overview-topic-duration">{row.duration}</span>
+                      )}
                     </span>
                     <ChevronRight size={14} className="course-overview-topic-chevron" aria-hidden />
                   </button>
@@ -130,6 +127,18 @@ export default function CourseStage({
           </div>
         ))}
       </section>
+
+      {ref.walkthrough?.plain_title && (
+        <details className="course-walkthrough-details" open={course.course <= 1}>
+          <summary className="course-walkthrough-details-summary">How to take this course</summary>
+          <CourseWalkthroughPanel
+            walkthrough={ref.walkthrough}
+            entryLessonOrder={entryOrder}
+            onStartHere={handleStartHere}
+            embedded
+          />
+        </details>
+      )}
 
       {outcomes.length > 0 && (
         <section className="course-overview-block">

@@ -334,6 +334,7 @@ export default function App() {
           <Inspector
             lesson={nav.isHomeView || nav.courseOverviewMode ? null : nav.activeLesson}
             courseRef={nav.activeCourseRef}
+            onOpenEntryTopic={(order) => nav.handleSelectLesson(order)}
             notes={notesMap}
             onSaveNotes={handleSaveNotes}
             proveUrl={proveMap[nav.activeLesson?.order] || ""}

@@ -4,17 +4,27 @@ import { ArrowRight, Compass, ListOrdered } from "lucide-react";
 /**
  * Plain-language guide for one course — where to start and how to finish.
  */
-export default function CourseWalkthroughPanel({ walkthrough, entryLessonOrder, onStartHere }) {
+export default function CourseWalkthroughPanel({
+  walkthrough,
+  entryLessonOrder,
+  onStartHere,
+  embedded = false,
+}) {
   if (!walkthrough?.plain_title) {
     return null;
   }
 
   return (
-    <section className="course-walkthrough-panel" aria-labelledby="course-walkthrough-heading">
-      <h2 id="course-walkthrough-heading">
-        <Compass size={20} aria-hidden />
-        How to take this course
-      </h2>
+    <section
+      className={`course-walkthrough-panel ${embedded ? "course-walkthrough-panel-embedded" : ""}`}
+      aria-labelledby={embedded ? undefined : "course-walkthrough-heading"}
+    >
+      {!embedded && (
+        <h2 id="course-walkthrough-heading">
+          <Compass size={20} aria-hidden />
+          How to take this course
+        </h2>
+      )}
       <p className="course-walkthrough-lead">{walkthrough.in_plain_english}</p>
 
       {walkthrough.theory_first_steps?.length > 0 && (

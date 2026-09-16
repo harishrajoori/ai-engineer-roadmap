@@ -34,15 +34,36 @@ function pickKeeper(a, b) {
   return la >= lb ? a : b;
 }
 
-export function formatTopicTitle(lesson) {
-  const raw = (lesson?.lesson || "Topic").replace(/^\*\(optional\)\*\s*/i, "").trim();
-  const type = lesson?.type || "Topic";
+function topicTitleRaw(lesson) {
+  return (lesson?.lesson || "Topic").replace(/^\*\(optional\)\*\s*/i, "").trim();
+}
+
+function topicDuration(lesson) {
   const duration = (lesson?.duration || "").trim().replace(/^·\s*/, "");
-  const parts = [`${type}`, raw];
-  if (duration && duration !== "Time-box as needed") {
+  if (!duration || duration === "Time-box as needed") {
+    return "";
+  }
+  return duration;
+}
+
+/** Single-line label (search, legacy rows). */
+export function formatTopicTitle(lesson) {
+  const type = lesson?.type || "Topic";
+  const parts = [type, topicTitleRaw(lesson)];
+  const duration = topicDuration(lesson);
+  if (duration) {
     parts.push(duration);
   }
   return parts.join(" · ");
+}
+
+/** Structured row for course overview (type pill + title + optional duration). */
+export function topicRowParts(lesson) {
+  return {
+    type: lesson?.type || "Topic",
+    title: topicTitleRaw(lesson),
+    duration: topicDuration(lesson),
+  };
 }
 
 export function topicProgressKey(lesson) {
