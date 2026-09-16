@@ -193,6 +193,22 @@ export default function HomeStage({
           onOpenCourse={onOpenCourse}
         />
 
+        {briefForHome && (
+          <section id="program-brief" className="home-program-brief" aria-labelledby="program-brief-heading">
+            <details className="home-brief-details">
+              <summary className="home-brief-summary">
+                <h2 id="program-brief-heading">Program brief</h2>
+                <span className="home-brief-summary-hint">
+                  Architecture, phases, success criteria — per-course tables in the sidebar
+                </span>
+              </summary>
+              <div className="home-program-brief-body">
+                <MarkdownProse variant="home-brief">{briefForHome}</MarkdownProse>
+              </div>
+            </details>
+          </section>
+        )}
+
         {!hasProgress && (
           <Course0FirstHourChecklist
             progressMap={progressMap}
@@ -316,22 +332,6 @@ export default function HomeStage({
           googleAuthError={googleAuthError}
           onOpenSettings={onOpenSettings}
         />
-
-        {briefForHome && (
-          <section id="program-brief" className="home-program-brief" aria-labelledby="program-brief-heading">
-            <details className="home-brief-details">
-              <summary className="home-brief-summary">
-                <h2 id="program-brief-heading">Program brief</h2>
-                <span className="home-brief-summary-hint">
-                  Architecture, phases, success criteria — per-course detail in the sidebar
-                </span>
-              </summary>
-              <div className="home-program-brief-body">
-                <MarkdownProse variant="home-brief">{briefForHome}</MarkdownProse>
-              </div>
-            </details>
-          </section>
-        )}
 
         <p className="home-footer-note">
           {totalCount} topics · theory-first on every row · public or synthetic data in your portfolio repo

@@ -63,7 +63,7 @@ export default function MarkdownProse({ children, variant = "theory", math = fal
       ? {
           p: ({ children: c }) => <span className="markdown-inline-root">{c}</span>,
         }
-      : variant === "theory" || variant === "primer"
+      : variant === "theory" || variant === "primer" || variant === "home-brief"
         ? theoryComponents
         : tableWrap;
 

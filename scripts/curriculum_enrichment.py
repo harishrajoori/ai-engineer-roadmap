@@ -68,6 +68,7 @@ def prepare_program_brief_for_studio(md: str) -> str:
     text = re.sub(r"\[([^\]]+)\]\([^)]*\.md[^)]*\)", r"\1", text)
     # `file.md` path literals
     text = re.sub(r"`[^`\n]*\.md`", "", text)
+    text = re.sub(r"OPTIONAL_MODEL_DEPTH\.md", "optional model depth supplement", text, flags=re.I)
     return text.strip()
 
 
@@ -78,22 +79,29 @@ def load_program_brief_markdown() -> str:
     return prepare_program_brief_for_studio(raw)
 
 
+def _strip_brief_contents_toc(md: str) -> str:
+    """Drop the long Contents block — home UI already navigates courses in the sidebar."""
+    return re.sub(r"\n## Contents\b.*?\n---\n", "\n", md, count=1, flags=re.DOTALL).strip()
+
+
 def load_program_brief_home_markdown() -> str:
-    """Shorter brief for the home page — no per-course encyclopedia (sidebar overviews)."""
+    """Home brief: §1–9 and §11–14; omit §10 course encyclopedia (use course overviews)."""
     full = load_program_brief_markdown()
     if not full:
         return ""
-    stop = re.search(r"\n## 10\. Course-by-course", full)
-    if not stop:
-        stop = re.search(r"\n## 10\. ", full)
-    if stop:
-        footer = (
-            "\n\n---\n\n"
-            "_**Course-by-course detail** — use each course overview in the sidebar "
-            "(map, glossary, prove pack). The full encyclopedia is not repeated on the home page._\n"
-        )
-        return full[: stop.start()].strip() + footer
-    return full
+    start_10 = re.search(r"\n## 10\. Course-by-course coverage", full)
+    start_11 = re.search(r"\n## 11\. Suggested reading order", full)
+    if start_10 and start_11 and start_11.start() > start_10.start():
+        body = (full[: start_10.start()] + full[start_11.start() :]).strip()
+    else:
+        body = full
+    body = _strip_brief_contents_toc(body)
+    footer = (
+        "\n\n---\n\n"
+        "_**§10 course encyclopedia** (per-course hour tables) is in each **course overview** "
+        "in the sidebar—not duplicated here._\n"
+    )
+    return body + footer
 
 
 CAPSTONE_BRIEF_PATH = REPO_ROOT / "docs" / "capstone_product_brief.md"
