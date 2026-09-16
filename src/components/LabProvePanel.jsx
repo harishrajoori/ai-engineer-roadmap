@@ -6,7 +6,6 @@ import {
   Download,
   ExternalLink,
   Factory,
-  ListOrdered,
   ShieldCheck,
   Square,
 } from "lucide-react";
@@ -19,6 +18,7 @@ import {
   toggleChecklistItem,
 } from "../utils/proveWorkflow";
 import { getTopicImplementationResources } from "../utils/implementationResources";
+import LabProveDisclosure from "./LabProveDisclosure";
 
 /**
  * End-to-end Lab & Prove helper: scenario, rubric checklist, portfolio + artifact URLs.
@@ -100,23 +100,21 @@ export default function LabProvePanel({
       </div>
 
       {labPlan?.lab_practice?.markdown && (
-        <section className="lab-prove-section lab-prove-lab-practice" aria-labelledby="lab-practice-heading">
-          <h4 id="lab-practice-heading" className="lab-prove-section-title">
-            <Code2 size={16} aria-hidden />
-            {labPlan.lab_practice.title || "Lab & Practice"}
-          </h4>
+        <LabProveDisclosure
+          className="lab-prove-section lab-prove-lab-practice"
+          summary={`${labPlan.lab_practice.title || "Lab & Practice"} (study guide)`}
+        >
           <div className="lab-prove-scenario-prose">
             <MarkdownProse math>{labPlan.lab_practice.markdown}</MarkdownProse>
           </div>
-        </section>
+        </LabProveDisclosure>
       )}
 
       {deLab?.scenario_markdown && (
-        <section className="lab-prove-section lab-prove-de-scenario" aria-labelledby="lab-de-scenario-heading">
-          <h4 id="lab-de-scenario-heading" className="lab-prove-section-title">
-            <Factory size={16} aria-hidden />
-            {deLab.scenario_title || "Practical scenario (data engineering)"}
-          </h4>
+        <LabProveDisclosure
+          className="lab-prove-section lab-prove-de-scenario"
+          summary={deLab.scenario_title || "Practical scenario (data engineering)"}
+        >
           <div className="lab-prove-scenario-prose">
             <MarkdownProse math>{deLab.scenario_markdown}</MarkdownProse>
           </div>
@@ -152,14 +150,11 @@ export default function LabProvePanel({
               <strong>Course prove gate:</strong> {realWorld.maps_to_prove}
             </p>
           )}
-        </section>
+        </LabProveDisclosure>
       )}
 
       {topicImplRepos.length > 0 && (
-        <section className="lab-prove-section lab-prove-topic-repos" aria-labelledby="lab-topic-repos-heading">
-          <h4 id="lab-topic-repos-heading" className="lab-prove-section-title">
-            Code for this topic
-          </h4>
+        <LabProveDisclosure className="lab-prove-section lab-prove-topic-repos" summary="Code for this topic">
           <p className="lab-prove-muted">
             Validated implementation repos matched to this lesson (not your portfolio hub).
           </p>
@@ -179,15 +174,14 @@ export default function LabProvePanel({
               </li>
             ))}
           </ul>
-        </section>
+        </LabProveDisclosure>
       )}
 
       {labPlan?.steps?.length > 0 && (
-        <section className="lab-prove-section" aria-labelledby="lab-impl-plan-heading">
-          <h4 id="lab-impl-plan-heading" className="lab-prove-section-title">
-            <ListOrdered size={16} aria-hidden />
-            {labPlan.title || "Implementation plan"}
-          </h4>
+        <LabProveDisclosure
+          className="lab-prove-section"
+          summary={`${labPlan.title || "Implementation plan"} (steps & local setup)`}
+        >
           {labPlan.done_when && (
             <p className="lab-prove-muted">
               <strong>Done when:</strong> {labPlan.done_when}
@@ -299,15 +293,11 @@ export default function LabProvePanel({
             <ClipboardCopy size={12} />
             Copy implementation plan
           </button>
-        </section>
+        </LabProveDisclosure>
       )}
 
       {realWorld.summary && !deLab?.scenario_markdown && (
-        <section className="lab-prove-section" aria-labelledby="lab-real-world-heading">
-          <h4 id="lab-real-world-heading" className="lab-prove-section-title">
-            <Factory size={16} aria-hidden />
-            Real-world use case
-          </h4>
+        <LabProveDisclosure className="lab-prove-section" summary="Real-world use case">
           <p className="lab-prove-body">{realWorld.summary}</p>
           {realWorld.maps_to_prove && (
             <p className="lab-prove-muted">
@@ -327,14 +317,11 @@ export default function LabProvePanel({
               ))}
             </ol>
           )}
-        </section>
+        </LabProveDisclosure>
       )}
 
       {realWorld.where_it_applies?.length > 0 && (
-        <section className="lab-prove-section" aria-labelledby="lab-de-areas-heading">
-          <h4 id="lab-de-areas-heading" className="lab-prove-section-title">
-            Where this shows up at work
-          </h4>
+        <LabProveDisclosure className="lab-prove-section" summary="Where this shows up at work">
           <ul className="lab-prove-de-areas">
             {realWorld.where_it_applies.map((row) => (
               <li key={row.area} className="lab-prove-de-area-card">
@@ -346,7 +333,7 @@ export default function LabProvePanel({
               </li>
             ))}
           </ul>
-        </section>
+        </LabProveDisclosure>
       )}
 
       {acceptance.length > 0 && (
@@ -388,10 +375,10 @@ export default function LabProvePanel({
       )}
 
       {showPortfolioStarter && (
-        <section className="lab-prove-section lab-prove-starter" aria-labelledby="lab-starter-heading">
-          <h4 id="lab-starter-heading" className="lab-prove-section-title">
-            {portfolioStarter.title || "Portfolio starter"}
-          </h4>
+        <LabProveDisclosure
+          className="lab-prove-section lab-prove-starter"
+          summary={portfolioStarter.title || "Portfolio starter"}
+        >
           {portfolioStarter.description && (
             <p className="lab-prove-body">{portfolioStarter.description}</p>
           )}
@@ -422,7 +409,7 @@ export default function LabProvePanel({
               Suggested repo name: <strong>{portfolioStarter.suggested_name}</strong> (public, synthetic data only)
             </p>
           )}
-        </section>
+        </LabProveDisclosure>
       )}
 
       <section className="lab-prove-section" aria-labelledby="lab-links-heading">
@@ -477,8 +464,7 @@ export default function LabProvePanel({
       </section>
 
       {(provePack.commands?.length > 0 || provePack.readme_example) && (
-        <section className="lab-prove-section" aria-labelledby="lab-artifacts-heading">
-          <h4 id="lab-artifacts-heading" className="lab-prove-section-title">README & commands</h4>
+        <LabProveDisclosure className="lab-prove-section" summary="README & commands">
           {provePack.commands?.map((cmd) => (
             <div key={cmd} className="lab-prove-copy-row">
               <code className="lab-prove-cmd">{cmd}</code>
@@ -506,7 +492,7 @@ export default function LabProvePanel({
               </button>
             </details>
           )}
-        </section>
+        </LabProveDisclosure>
       )}
 
       <div className="lab-prove-actions">

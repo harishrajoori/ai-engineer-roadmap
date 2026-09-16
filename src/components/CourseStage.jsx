@@ -3,8 +3,10 @@ import React, { useMemo } from "react";
 import MarkdownProse from "./MarkdownProse";
 import { BookOpen, ExternalLink, ListChecks } from "lucide-react";
 import { buildCourseTopicOutline, formatTopicTitle } from "../utils/syllabusDisplay";
+import { capstoneTrackBadge } from "../utils/capstoneTrack";
 import CourseEnrichmentPanels from "./CourseEnrichmentPanels";
 import CourseWalkthroughPanel from "./CourseWalkthroughPanel";
+import CapstoneScopeLegend from "./CapstoneScopeLegend";
 import LearningFocusBar from "./LearningFocusBar";
 
 export default function CourseStage({
@@ -18,8 +20,13 @@ export default function CourseStage({
   isWideDesktop = false,
   mobilePanel = null,
   onMobilePanelChange = null,
+  requiredOnlyFilter = false,
 }) {
-  const outline = useMemo(() => buildCourseTopicOutline(course?.lessons || []), [course]);
+  const outline = useMemo(() => {
+    const raw = course?.lessons || [];
+    const visible = requiredOnlyFilter ? raw.filter((l) => l.required === "Yes") : raw;
+    return buildCourseTopicOutline(visible);
+  }, [course, requiredOnlyFilter]);
 
   if (!course) {
     return null;
@@ -84,6 +91,8 @@ export default function CourseStage({
         </details>
       )}
 
+      {ref.capstone_scope && <CapstoneScopeLegend capstoneScope={ref.capstone_scope} />}
+
       <section className="course-overview-block course-overview-topics-first">
         <h2>Topics — do these in order</h2>
         <p className="course-overview-hint">
@@ -95,10 +104,17 @@ export default function CourseStage({
           <div key={group.label} className="course-overview-section">
             <h3>{group.label}</h3>
             <ul className="course-overview-topic-list">
-              {group.items.map((lesson) => (
+              {group.items.map((lesson) => {
+                const trackMeta = capstoneTrackBadge(lesson.capstone_track);
+                return (
                 <li key={lesson.order}>
                   <button type="button" className="course-overview-topic-btn" onClick={() => onSelectLesson(lesson.order)}>
                     {lesson.is_start_here && <span className="topic-start-badge">START HERE</span>}
+                    {trackMeta && (
+                      <span className={`capstone-track-pill capstone-track-pill-compact ${trackMeta.className}`} title={trackMeta.title}>
+                        {trackMeta.label}
+                      </span>
+                    )}
                     <span className="course-overview-topic-title">{formatTopicTitle(lesson)}</span>
                     {lesson.url?.startsWith("http") && (
                       <ExternalLink size={12} className="course-overview-topic-ext" aria-hidden />
@@ -106,7 +122,8 @@ export default function CourseStage({
                   </button>
                   {lesson.merge_note && <span className="course-overview-merge-note">{lesson.merge_note}</span>}
                 </li>
-              ))}
+              );
+              })}
             </ul>
           </div>
         ))}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flame, Settings, Download, Sun, Moon, LogOut } from "lucide-react";
+import { Flame, Settings, Download, Sun, Moon, LogOut, Search } from "lucide-react";
 import GoogleSignInButton from "./GoogleSignInButton";
 
 export default function Header({
@@ -17,6 +17,7 @@ export default function Header({
   onOpenSettings,
   onExportBackup,
   onGoHome,
+  onOpenTopicSearch,
 }) {
   const handleBrandClick = (e) => {
     e.preventDefault();
@@ -40,7 +41,10 @@ export default function Header({
           <span className="value">{streakDays}d</span>
         </div>
 
-        <div className="stat-pill">
+        <div
+          className="stat-pill"
+          title="Blends topic checkmarks with required Prove checklist items per course"
+        >
           <span>Progress:</span>
           <span className="value">{progressPct}%</span>
           <div className="progress-bar-container">
@@ -117,6 +121,16 @@ export default function Header({
             />
           </div>
         )}
+
+        <button
+          type="button"
+          className="filter-btn"
+          onClick={onOpenTopicSearch}
+          title="Search topics and prove criteria"
+        >
+          <Search size={13} />
+          <span>Search</span>
+        </button>
 
         <button type="button" className="filter-btn" onClick={onExportBackup} title="Export / Import Backup">
           <Download size={13} />

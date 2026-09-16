@@ -3,7 +3,8 @@ const LAYOUT_KEY = "ai_hub_learning_layout";
 const DEFAULTS = {
   curriculumOpen: true,
   stageOpen: true,
-  mentorOpen: true,
+  /** New learners: focus on syllabus + Prove; mentor is BYOK and easy to open from the layout bar. */
+  mentorOpen: false,
   mentorExpanded: false,
   navWidth: 228,
   syllabusWidth: 300,
@@ -12,6 +13,10 @@ const DEFAULTS = {
 
 export function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));
+}
+
+function isNarrowViewport() {
+  return typeof window !== "undefined" && window.matchMedia("(max-width: 1180px)").matches;
 }
 
 export function readLearningLayout() {
@@ -32,7 +37,11 @@ export function readLearningLayout() {
   } catch {
     /* ignore */
   }
-  return { ...DEFAULTS };
+  const layout = { ...DEFAULTS };
+  if (isNarrowViewport()) {
+    layout.mentorOpen = false;
+  }
+  return layout;
 }
 
 export function defaultLearningLayout() {

@@ -292,7 +292,12 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
         )
 
     missing_de_lab: list[str] = []
-    for course_id in ("0", "1", "2", "3", "4"):
+    build_prove_courses = {
+        str(les.get("course"))
+        for les in lessons
+        if les.get("type") in ("Build", "Prove", "Capstone")
+    }
+    for course_id in [str(c) for c in range(16)]:
         sample = next((les for les in lessons if str(les.get("course")) == course_id), None)
         if not sample:
             missing_de_lab.append(f"course {course_id}: no lessons")
@@ -300,8 +305,8 @@ def validate_enrichment_quality(lessons: list[dict]) -> list[str]:
         de = (sample.get("lab_plan") or {}).get("de_lab") or {}
         if not (de.get("scenario_markdown") or "").strip():
             missing_de_lab.append(f"course {course_id}: lab_plan.de_lab missing")
-        elif course_id in ("0", "1") and not (de.get("code_snippets") or []):
-            missing_de_lab.append(f"course {course_id}: de_lab has no code_snippets")
+        elif course_id in build_prove_courses and not (de.get("code_snippets") or []):
+            missing_de_lab.append(f"course {course_id}: de_lab has no code_snippets (Build/Prove path)")
     if missing_de_lab:
         for msg in missing_de_lab:
             warnings.append(f"lab_scenarios: {msg}")

@@ -63,9 +63,9 @@ export default function HomeAuthPanel({
         Sign in to save progress everywhere
       </h2>
       <p className="home-auth-lead">
-        Sign in with Google to save progress in the browser (and optionally sync across devices). This is{" "}
-        <strong>not</strong> the Gemini API key — you do not need an AI Studio key to log in. Add a Gemini key in
-        Settings only if you want the AI mentor.
+        <strong>Local-only is fine.</strong> Progress, notes, and Prove checklists stay in this browser until you sign
+        in. Sign in with Google only if you want the same state on another device (when cloud sync is configured). This
+        is <strong>not</strong> the Gemini API key — add a Gemini key in Settings only if you want the AI mentor.
       </p>
       {googleOAuthEnabled ? (
         <div className="home-auth-google-wrap">

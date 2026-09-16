@@ -297,10 +297,11 @@
     "4": {
       "title": "Hybrid retrieval prove",
       "acceptance": [
-        { "criterion": "Benchmark table: dense vs hybrid vs baseline", "required": true },
-        { "criterion": "Labeled Q/A set cited in README", "required": true }
+        { "criterion": "Committed labeled Q/A set (e.g. `benchmarks/queries.jsonl`, n≥10) with gold doc ids", "required": true },
+        { "criterion": "Benchmark table: dense vs hybrid (and baseline if used)", "required": true },
+        { "criterion": "README reports recall@k (e.g. recall@5) for each method on the labeled set", "required": true }
       ],
-      "readme_example": "| Method | recall@5 |\n| --- | --- |",
+      "readme_example": "| Method | recall@5 | n |\n| --- | --- | --- |\n| dense | 0.42 | 20 |\n| hybrid+RRF | 0.58 | 20 |",
       "commands": ["python scripts/benchmark_retrieval.py"]
     },
     "5": {

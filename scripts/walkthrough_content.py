@@ -266,16 +266,16 @@ COURSE_WALKTHROUGH: dict[str, dict[str, Any]] = {
     },
     "10": {
         "plain_title": "Month 10 — Wire everything together",
-        "in_plain_english": "Capstone checklist: ingestion, extract, graph, search, eval, policy in one runnable alpha.",
+        "in_plain_english": "Twenty syllabus rows look heavy—most are **Wire** (plug in what you already built). Only the **Caching** block and final **Demo** prove are new evidence.",
         "learning_objectives": [
             "Run ingest → gateway (caching) → extract → validate → graph/policy → respond in one command.",
-            "Complete capstone checklist rows with trace + eval evidence.",
-            "Tag alpha with 5-minute demo script and caching metrics table.",
+            "Complete **Wire** checklist rows without adding new frameworks.",
+            "Ship **Caching** TTFT table + tag **alpha** with a one-command demo.",
         ],
-        "start_here_label": "First Capstone checklist row",
-        "topic_order": "Work the checklist top to bottom, then Prove.",
+        "start_here_label": "First Capstone checklist row (Wire)",
+        "topic_order": "Wire checklist → Caching gate → skim Reference → Build wire → Demo prove.",
         "end_of_course": "Git tag alpha + caching evidence.",
-        "do_not_worry_about": "Finishing every optional row—required capstone lines first.",
+        "do_not_worry_about": "Optional **Defer** row and Reference skims—alpha beats breadth.",
     },
     "11": {
         "plain_title": "Month 11 — Deploy for others",

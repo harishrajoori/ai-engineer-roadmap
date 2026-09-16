@@ -1,10 +1,6 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import { GoogleOAuthProvider, googleLogout } from "@react-oauth/google";
+import React, { useRef } from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { resolveGoogleClientId } from "./utils/googleAuth";
-import { loadStudioRuntimeConfig } from "./utils/studioRuntimeConfig";
-import { readJsonStorage } from "./utils/localStorage";
-import confetti from "canvas-confetti";
-import { invalidateCurriculumCache, loadCurriculum } from "./services/curriculumLoader";
 import { CurriculumError, CurriculumLoading } from "./components/CurriculumShell";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
@@ -13,571 +9,120 @@ import SmartStage from "./components/SmartStage";
 import CourseStage from "./components/CourseStage";
 import HomeStage from "./components/HomeStage";
 import Inspector from "./components/Inspector";
-import { lessonsForSyllabusDisplay, ordersForTopicToggle } from "./utils/syllabusDisplay";
 import SettingsModal from "./components/SettingsModal";
 import RegenerateModal from "./components/RegenerateModal";
 import MobileLearningBar from "./components/MobileLearningBar";
-import { computeStreakDays, loadStudyDays, recordStudyDay, saveStudyDays } from "./utils/studyStreak";
+import TopicSearchModal from "./components/TopicSearchModal";
+import { computeStreakDays } from "./utils/studyStreak";
 import {
-  flattenRegenerationsForBackup,
-  importRegenerationsFromBackup,
-  loadTheoryRegenerations,
   regenerationMarkdown,
   saveTheoryRegeneration,
 } from "./utils/theoryRegenerationStore";
-import { normalizePreferredModel } from "./services/aiService";
 import {
   clamp,
   gridTemplateColumnsForLayout,
   layoutContainerClass,
-  persistLearningLayout,
-  readLearningLayout,
 } from "./utils/learningLayout";
 import ColumnResizeHandle from "./components/ColumnResizeHandle";
-import {
-  applyStudioCloudPayload,
-  buildStudioCloudPayload,
-  fetchStudioCloudPayload,
-  isStudioCloudSyncConfigured,
-  mergeStudioCloudPayload,
-  pushStudioCloudPayload,
-} from "./utils/studioCloudSync";
-import {
-  readPortfolioRepoUrl,
-  readProveChecklistMap,
-  savePortfolioRepoUrl,
-  writeProveChecklistMap,
-} from "./utils/proveWorkflow";
-import { computeNextAction } from "./utils/nextAction";
-
-const PROGRESS_KEY = "ai_hub_react_progress";
-const NOTES_KEY = "ai_hub_react_notes";
-const PROVE_KEY = "ai_hub_react_prove";
-const OVERRIDES_KEY = "ai_hub_react_video_overrides";
-const KEYS_KEY = "ai_hub_react_api_keys";
-const MODEL_KEY = "ai_hub_react_preferred_model";
-const THEME_KEY = "ai_hub_react_theme";
-const USER_KEY = "ai_hub_react_user";
+import { isStudioCloudSyncConfigured } from "./utils/studioCloudSync";
+import { useLearnerPersistence } from "./hooks/useLearnerPersistence";
+import { useStudioSettings } from "./hooks/useStudioSettings";
+import { useCurriculum } from "./hooks/useCurriculum";
+import { useStudioCloudSync } from "./hooks/useStudioCloudSync";
+import { useStudioNavigation } from "./hooks/useStudioNavigation";
+import { useStudioBackup } from "./hooks/useStudioBackup";
 
 export default function App() {
-  const [progressMap, setProgressMap] = useState(() => readJsonStorage(PROGRESS_KEY, {}));
-  const [notesMap, setNotesMap] = useState(() => readJsonStorage(NOTES_KEY, {}));
-  const [proveMap, setProveMap] = useState(() => readJsonStorage(PROVE_KEY, {}));
-  const [portfolioRepoUrl, setPortfolioRepoUrl] = useState(() => readPortfolioRepoUrl());
-  const [proveChecklistMap, setProveChecklistMap] = useState(() => readProveChecklistMap());
-  const [videoOverrides, setVideoOverrides] = useState(() => readJsonStorage(OVERRIDES_KEY, {}));
-  const [regenerations, setRegenerations] = useState(() =>
-    loadTheoryRegenerations(readJsonStorage(USER_KEY, null))
-  );
-  const [apiKeys, setApiKeys] = useState(() => readJsonStorage(KEYS_KEY, {}));
-  const [preferredModel, setPreferredModel] = useState(() =>
-    normalizePreferredModel(localStorage.getItem(MODEL_KEY))
-  );
-  const [theme, setTheme] = useState(() => localStorage.getItem(THEME_KEY) || "dark");
-  const [userProfile, setUserProfile] = useState(() => readJsonStorage(USER_KEY, null));
-  const [studyDays, setStudyDays] = useState(() => loadStudyDays());
-
-  const [lessonsData, setLessonsData] = useState([]);
-  const [coursesRefData, setCoursesRefData] = useState({});
-  const [programPrimerMarkdown, setProgramPrimerMarkdown] = useState("");
-  const [programBriefMarkdown, setProgramBriefMarkdown] = useState("");
-  const [programWalkthrough, setProgramWalkthrough] = useState({});
-  const [glossary, setGlossary] = useState([]);
-  const [portfolioStarter, setPortfolioStarter] = useState(null);
-  const [curriculumReady, setCurriculumReady] = useState(false);
-  const [curriculumError, setCurriculumError] = useState(null);
-
-  const [activeCourseNum, setActiveCourseNum] = useState(0);
-  const [activeLessonOrder, setActiveLessonOrder] = useState(0);
-  const [currentTier, setCurrentTier] = useState("all");
-  const [typeFilter, setTypeFilter] = useState("all");
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isRegenOpen, setIsRegenOpen] = useState(false);
-  const [mobilePanel, setMobilePanel] = useState(null);
-  const [courseOverviewMode, setCourseOverviewMode] = useState(false);
-  const [isHomeView, setIsHomeView] = useState(() => {
-    const progress = readJsonStorage(PROGRESS_KEY, {});
-    return Object.keys(progress).length === 0;
-  });
-  const [cloudSyncStatus, setCloudSyncStatus] = useState("idle");
-  const [runtimeStudioConfig, setRuntimeStudioConfig] = useState({});
-  const [googleAuthError, setGoogleAuthError] = useState("");
-  const [learningLayout, setLearningLayout] = useState(() => readLearningLayout());
-  const [resizableDesktopGrid, setResizableDesktopGrid] = useState(
-    () => typeof window !== "undefined" && window.matchMedia("(min-width: 1181px)").matches
-  );
+  const learner = useLearnerPersistence();
+  const settings = useStudioSettings();
+  const curriculum = useCurriculum();
   const stageRef = useRef(null);
-  const idTokenRef = useRef(null);
-  const cloudSyncPauseRef = useRef(false);
-  const hasHydratedCloudRef = useRef(false);
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem(THEME_KEY, theme);
-  }, [theme]);
+  const {
+    progressMap,
+    setProgressMap,
+    notesMap,
+    setNotesMap,
+    proveMap,
+    setProveMap,
+    portfolioRepoUrl,
+    setPortfolioRepoUrl,
+    proveChecklistMap,
+    setProveChecklistMap,
+    videoOverrides,
+    setVideoOverrides,
+    studyDays,
+    setStudyDays,
+    saveStudyDays,
+  } = learner;
 
-  useEffect(() => {
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(progressMap));
-  }, [progressMap]);
-  useEffect(() => {
-    localStorage.setItem(NOTES_KEY, JSON.stringify(notesMap));
-  }, [notesMap]);
-  useEffect(() => {
-    localStorage.setItem(PROVE_KEY, JSON.stringify(proveMap));
-  }, [proveMap]);
-  useEffect(() => {
-    savePortfolioRepoUrl(portfolioRepoUrl);
-  }, [portfolioRepoUrl]);
-  useEffect(() => {
-    writeProveChecklistMap(proveChecklistMap);
-  }, [proveChecklistMap]);
-  useEffect(() => {
-    localStorage.setItem(OVERRIDES_KEY, JSON.stringify(videoOverrides));
-  }, [videoOverrides]);
-  useEffect(() => {
-    localStorage.setItem(KEYS_KEY, JSON.stringify(apiKeys));
-  }, [apiKeys]);
-  useEffect(() => {
-    localStorage.setItem(MODEL_KEY, preferredModel);
-  }, [preferredModel]);
-  useEffect(() => {
-    if (userProfile) {
-      localStorage.setItem(USER_KEY, JSON.stringify(userProfile));
-    } else {
-      localStorage.removeItem(USER_KEY);
-    }
-  }, [userProfile]);
+  const {
+    apiKeys,
+    setApiKeys,
+    preferredModel,
+    setPreferredModel,
+    theme,
+    toggleTheme,
+    userProfile,
+    regenerations,
+    setRegenerations,
+    learningLayout,
+    setLearningLayout,
+    resizableDesktopGrid,
+    runtimeStudioConfig,
+    isSettingsOpen,
+    setIsSettingsOpen,
+    isRegenOpen,
+    setIsRegenOpen,
+    googleAuthError,
+    isTopicSearchOpen,
+    setIsTopicSearchOpen,
+  } = settings;
 
-  const applyCurriculum = useCallback(({ lessons, coursesRef, programPrimerMarkdown: primer, programBriefMarkdown: brief, programWalkthrough: walkthrough, glossary: terms, portfolioStarter: starter }) => {
-    setLessonsData(lessons);
-    setCoursesRefData(coursesRef);
-    setProgramPrimerMarkdown(primer || "");
-    setProgramBriefMarkdown(brief || "");
-    setProgramWalkthrough(walkthrough || {});
-    setGlossary(terms || []);
-    setPortfolioStarter(starter || null);
-    setActiveLessonOrder((prev) => {
-      if (lessons.some((l) => l.order === prev)) {
-        return prev;
-      }
-      return lessons[0]?.order ?? 0;
+  const {
+    lessonsData,
+    coursesRefData,
+    programPrimerMarkdown,
+    programBriefMarkdown,
+    programWalkthrough,
+    glossary,
+    portfolioStarter,
+    curriculumReady,
+    curriculumError,
+    reloadCurriculum,
+    courses,
+    activeLessonOrder,
+    setActiveLessonOrder,
+  } = curriculum;
+
+  const { cloudSyncStatus, handleGoogleLogin, handleGoogleAuthError, handleGoogleLogout } =
+    useStudioCloudSync({
+      curriculumReady,
+      learner,
+      settings,
     });
-    setCurriculumReady(true);
-  }, []);
 
-  const reloadCurriculum = useCallback(() => {
-    invalidateCurriculumCache();
-    setCurriculumError(null);
-    setCurriculumReady(false);
-    loadCurriculum()
-      .then(applyCurriculum)
-      .catch((err) => {
-        setCurriculumError(err.message || "Failed to load curriculum");
-      });
-  }, [applyCurriculum]);
+  const nav = useStudioNavigation({
+    lessonsData,
+    courses,
+    coursesRefData,
+    progressMap,
+    proveChecklistMap,
+    setProgressMap,
+    setStudyDays,
+    saveStudyDays,
+    activeLessonOrder,
+    setActiveLessonOrder,
+    stageRef,
+  });
 
-  useEffect(() => {
-    setCurriculumError(null);
-    loadCurriculum()
-      .then(applyCurriculum)
-      .catch((err) => {
-        setCurriculumError(err.message || "Failed to load curriculum");
-      });
-  }, [applyCurriculum]);
+  const { handleExportBackup, handleImportBackup } = useStudioBackup({ learner, settings });
 
-  useEffect(() => {
-    void loadStudioRuntimeConfig().then(setRuntimeStudioConfig);
-  }, []);
-
-  useEffect(() => {
-    persistLearningLayout(learningLayout);
-  }, [learningLayout]);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1181px)");
-    const onChange = () => setResizableDesktopGrid(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-
-  const courses = useMemo(() => {
-    const coursesMap = new Map();
-    lessonsData.forEach((l) => {
-      if (!coursesMap.has(l.course)) {
-        let tier = "P1";
-        if (l.course === 0) {
-          tier = "P0";
-        } else if (l.course > 12) {
-          tier = "P2";
-        }
-        coursesMap.set(l.course, {
-          course: l.course,
-          title: l.course_title,
-          month: l.month,
-          tier,
-          lessons: []
-        });
-      }
-      coursesMap.get(l.course).lessons.push(l);
-    });
-    return Array.from(coursesMap.values());
-  }, [lessonsData]);
-
-  const activeCourse = useMemo(
-    () => courses.find((c) => c.course === activeCourseNum) || courses[0],
-    [courses, activeCourseNum]
-  );
-
-  const courseLessons = useMemo(
-    () => activeCourse?.lessons ?? [],
-    [activeCourse]
-  );
-
-  const displayCourseLessons = useMemo(
-    () => lessonsForSyllabusDisplay(courseLessons),
-    [courseLessons]
-  );
-
-  const activeLesson = useMemo(
-    () =>
-      lessonsData.find((l) => l.order === activeLessonOrder) || courseLessons[0] || lessonsData[0],
-    [activeLessonOrder, courseLessons, lessonsData]
-  );
-
-  const activeCourseRef = coursesRefData[activeCourseNum] || coursesRefData[String(activeCourseNum)] || {
-    concepts: [],
-    prompts: []
-  };
-
-  const courseProgressPct = useMemo(() => {
-    if (!displayCourseLessons.length) {
-      return 0;
-    }
-    const done = displayCourseLessons.filter((l) => {
-      const keys = ordersForTopicToggle(l);
-      return keys.some((order) => progressMap[order]);
-    }).length;
-    return Math.round((done / displayCourseLessons.length) * 100);
-  }, [displayCourseLessons, progressMap]);
-
-  const lessonNav = useMemo(() => {
-    const idx = displayCourseLessons.findIndex((l) => l.order === activeLesson?.order);
-    return {
-      idx,
-      hasPrev: idx > 0,
-      hasNext: idx >= 0 && idx < displayCourseLessons.length - 1,
-      prev: idx > 0 ? displayCourseLessons[idx - 1] : null,
-      next: idx >= 0 && idx < displayCourseLessons.length - 1 ? displayCourseLessons[idx + 1] : null
-    };
-  }, [displayCourseLessons, activeLesson]);
-
-  const totalCount = lessonsData.length;
-  const completedCount = lessonsData.filter((l) => progressMap[l.order]).length;
-  const progressPct = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
   const streakDays = computeStreakDays(studyDays);
   const googleClientId = resolveGoogleClientId(apiKeys, runtimeStudioConfig);
   const googleOAuthEnabled = Boolean(googleClientId);
 
-  const scrollStageTop = useCallback(() => {
-    if (stageRef.current) {
-      stageRef.current.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, []);
-
-  const handleToggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  };
-
-  const runCloudSyncAfterLogin = useCallback(
-    async (decodedProfile, idToken = null) => {
-      if (!decodedProfile?.sub) {
-        return;
-      }
-      hasHydratedCloudRef.current = true;
-      idTokenRef.current = idToken;
-      cloudSyncPauseRef.current = true;
-      setCloudSyncStatus(isStudioCloudSyncConfigured() ? "syncing" : "idle");
-
-      const localPayload = buildStudioCloudPayload({
-        progressMap,
-        notesMap,
-        proveMap,
-        portfolioRepoUrl,
-        proveChecklistMap,
-        videoOverrides,
-        studyDays,
-        preferredModel,
-        regenerations: loadTheoryRegenerations(decodedProfile),
-        apiKeys,
-      });
-
-      let cloudPayload = null;
-      if (isStudioCloudSyncConfigured()) {
-        cloudPayload = await fetchStudioCloudPayload(decodedProfile, idToken);
-      }
-
-      const merged = mergeStudioCloudPayload(localPayload, cloudPayload);
-      const apply = {
-        setProgressMap,
-        setNotesMap,
-        setProveMap,
-        setVideoOverrides,
-        setStudyDays,
-        setPreferredModel,
-        setRegenerations,
-        setApiKeys,
-        saveStudyDays,
-        importRegenerationsFromBackup,
-        userProfile: decodedProfile,
-        setPortfolioRepoUrl,
-        setProveChecklistMap,
-      };
-      const { regenerations: mergedRegen } = applyStudioCloudPayload(merged, apply);
-      setRegenerations(mergedRegen);
-
-      const localT = Date.parse(localPayload.updatedAt || 0);
-      const cloudT = Date.parse(cloudPayload?.updatedAt || 0);
-      if (isStudioCloudSyncConfigured() && (!cloudPayload || localT > cloudT)) {
-        const pushed = await pushStudioCloudPayload(decodedProfile, merged, idToken);
-        setCloudSyncStatus(pushed ? "synced" : "error");
-      } else if (isStudioCloudSyncConfigured()) {
-        setCloudSyncStatus("synced");
-      }
-
-      cloudSyncPauseRef.current = false;
-    },
-    [
-      progressMap,
-      notesMap,
-      proveMap,
-      portfolioRepoUrl,
-      proveChecklistMap,
-      videoOverrides,
-      studyDays,
-      preferredModel,
-      apiKeys,
-    ]
-  );
-
-  const handleGoogleLogin = (decodedProfile, idToken = null) => {
-    if (!decodedProfile?.sub) {
-      return;
-    }
-    setGoogleAuthError("");
-    const profile = {
-      ...decodedProfile,
-      name: decodedProfile.name || decodedProfile.email || "Google user",
-    };
-    setUserProfile(profile);
-    void runCloudSyncAfterLogin(profile, idToken);
-    confetti({ particleCount: 50, spread: 60 });
-  };
-
-  const handleGoogleAuthError = useCallback((message) => {
-    setGoogleAuthError(message || "Google sign-in failed.");
-  }, []);
-
-  const handleGoogleLogout = () => {
-    if (googleOAuthEnabled) {
-      try {
-        googleLogout();
-      } catch {
-        /* provider not mounted */
-      }
-    }
-    idTokenRef.current = null;
-    setCloudSyncStatus("idle");
-    setUserProfile(null);
-    setRegenerations(loadTheoryRegenerations(null));
-  };
-
-  useEffect(() => {
-    if (!curriculumReady || hasHydratedCloudRef.current || !userProfile?.sub) {
-      return;
-    }
-    if (!isStudioCloudSyncConfigured()) {
-      hasHydratedCloudRef.current = true;
-      return;
-    }
-    hasHydratedCloudRef.current = true;
-    void runCloudSyncAfterLogin(userProfile, idTokenRef.current);
-  }, [curriculumReady, userProfile, runCloudSyncAfterLogin]);
-
-  useEffect(() => {
-    if (!userProfile?.sub || cloudSyncPauseRef.current || !isStudioCloudSyncConfigured()) {
-      return undefined;
-    }
-    const timer = setTimeout(() => {
-      setCloudSyncStatus("syncing");
-      const payload = buildStudioCloudPayload({
-        progressMap,
-        notesMap,
-        proveMap,
-        portfolioRepoUrl,
-        proveChecklistMap,
-        videoOverrides,
-        studyDays,
-        preferredModel,
-        regenerations,
-        apiKeys,
-      });
-      void pushStudioCloudPayload(userProfile, payload, idTokenRef.current).then((ok) => {
-        setCloudSyncStatus(ok ? "synced" : "error");
-      });
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, [
-    userProfile,
-    progressMap,
-    notesMap,
-    proveMap,
-    portfolioRepoUrl,
-    proveChecklistMap,
-    videoOverrides,
-    studyDays,
-    preferredModel,
-    regenerations,
-    apiKeys,
-  ]);
-
-  const leaveHomeView = useCallback(() => {
-    setIsHomeView(false);
-  }, []);
-
-  const handleGoHome = useCallback(() => {
-    setIsHomeView(true);
-    setMobilePanel(null);
-    scrollStageTop();
-  }, [scrollStageTop]);
-
-  const handleStartFoundation = useCallback(() => {
-    leaveHomeView();
-    setActiveCourseNum(0);
-    setCourseOverviewMode(true);
-    setMobilePanel(null);
-    scrollStageTop();
-  }, [leaveHomeView, scrollStageTop]);
-
-  const handleOpenCourseFromHome = useCallback(
-    (cNum) => {
-      leaveHomeView();
-      setActiveCourseNum(cNum);
-      setCourseOverviewMode(true);
-      setMobilePanel(null);
-      scrollStageTop();
-    },
-    [leaveHomeView, scrollStageTop]
-  );
-
-  const firstStepLesson = useMemo(() => {
-    const course0 = lessonsData.filter((l) => l.course === 0);
-    return (
-      course0.find((l) => l.is_start_here) ||
-      course0.slice().sort((a, b) => a.order - b.order)[0] ||
-      null
-    );
-  }, [lessonsData]);
-
-  const resumeLesson = useMemo(() => {
-    if (!lessonsData.length) {
-      return null;
-    }
-    const next = lessonsData.find((l) => !progressMap[l.order]);
-    return next || lessonsData[lessonsData.length - 1];
-  }, [lessonsData, progressMap]);
-
-  const nextAction = useMemo(
-    () => computeNextAction(lessonsData, coursesRefData, progressMap, proveChecklistMap),
-    [lessonsData, coursesRefData, progressMap, proveChecklistMap]
-  );
-
-  const handleOpenLessonFromHome = useCallback(
-    (lesson) => {
-      if (!lesson) {
-        return;
-      }
-      leaveHomeView();
-      setActiveCourseNum(lesson.course);
-      setActiveLessonOrder(lesson.order);
-      setCourseOverviewMode(false);
-      setMobilePanel(null);
-      scrollStageTop();
-    },
-    [leaveHomeView, scrollStageTop]
-  );
-
-  const handleBeginStepOne = useCallback(() => {
-    if (!firstStepLesson) {
-      return;
-    }
-    leaveHomeView();
-    setActiveCourseNum(0);
-    setActiveLessonOrder(firstStepLesson.order);
-    setCourseOverviewMode(false);
-    setMobilePanel(null);
-    scrollStageTop();
-  }, [firstStepLesson, leaveHomeView, scrollStageTop]);
-
-  const handleContinueFromHome = useCallback(() => {
-    if (!resumeLesson) {
-      return;
-    }
-    leaveHomeView();
-    setActiveCourseNum(resumeLesson.course);
-    setActiveLessonOrder(resumeLesson.order);
-    setCourseOverviewMode(false);
-    setMobilePanel(null);
-    scrollStageTop();
-  }, [leaveHomeView, resumeLesson, scrollStageTop]);
-
-  const handleSelectCourse = (cNum) => {
-    leaveHomeView();
-    setActiveCourseNum(cNum);
-    setCourseOverviewMode(true);
-    setMobilePanel(null);
-    scrollStageTop();
-  };
-
-  const handleOpenCourseOverview = () => {
-    setCourseOverviewMode(true);
-    scrollStageTop();
-  };
-
-  const handleSelectLesson = (order) => {
-    leaveHomeView();
-    setActiveLessonOrder(order);
-    setCourseOverviewMode(false);
-    setMobilePanel(null);
-    scrollStageTop();
-  };
-
-  const handleToggleComplete = (lessonOrOrder) => {
-    const orders =
-      typeof lessonOrOrder === "object" && lessonOrOrder !== null
-        ? ordersForTopicToggle(lessonOrOrder)
-        : [lessonOrOrder];
-    const primary = orders[0];
-    setProgressMap((prev) => {
-      const next = !prev[primary];
-      const patch = { ...prev };
-      for (const order of orders) {
-        if (next) {
-          patch[order] = true;
-        } else {
-          delete patch[order];
-        }
-      }
-      if (next) {
-        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
-        setStudyDays((days) => {
-          const updated = recordStudyDay(days);
-          saveStudyDays(updated);
-          return updated;
-        });
-      }
-      return patch;
-    });
-  };
+  const onGoogleLogout = () => handleGoogleLogout(googleOAuthEnabled);
 
   const handleSaveNotes = (order, text) => {
     setNotesMap((prev) => ({ ...prev, [order]: text }));
@@ -585,10 +130,6 @@ export default function App() {
 
   const handleSaveProveUrl = (order, url) => {
     setProveMap((prev) => ({ ...prev, [order]: url }));
-  };
-
-  const handleSavePortfolioRepoUrl = (url) => {
-    setPortfolioRepoUrl(url);
   };
 
   const handleProveChecklistChange = (nextMap) => {
@@ -604,89 +145,30 @@ export default function App() {
     setRegenerations(next);
   };
 
-  const handleExportBackup = () => {
-    const backup = {
-      exported_at: new Date().toISOString(),
-      user: userProfile,
-      progress: progressMap,
-      notes: notesMap,
-      proveUrls: proveMap,
-      portfolioRepoUrl,
-      proveChecklistMap,
-      videoOverrides,
-      regenerations: flattenRegenerationsForBackup(regenerations),
-      theory_regenerations: regenerations,
-      studyDays,
-      preferredModel
-    };
-    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `ai-engineer-studio-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-  };
-
-  const handleImportBackup = (data) => {
-    const profileForImport = data.user || userProfile;
-    if (data.user) {
-      setUserProfile(data.user);
-    }
-    if (data.progress) {
-      setProgressMap(data.progress);
-    }
-    if (data.notes) {
-      setNotesMap(data.notes);
-    }
-    if (data.proveUrls) {
-      setProveMap(data.proveUrls);
-    }
-    if (typeof data.portfolioRepoUrl === "string") {
-      setPortfolioRepoUrl(data.portfolioRepoUrl);
-    }
-    if (data.proveChecklistMap && typeof data.proveChecklistMap === "object") {
-      setProveChecklistMap(data.proveChecklistMap);
-    }
-    if (data.videoOverrides) {
-      setVideoOverrides(data.videoOverrides);
-    }
-    if (data.theory_regenerations) {
-      setRegenerations(importRegenerationsFromBackup(profileForImport, data.theory_regenerations));
-    } else if (data.regenerations) {
-      setRegenerations(importRegenerationsFromBackup(profileForImport, data.regenerations));
-    }
-    if (data.studyDays) {
-      setStudyDays(data.studyDays);
-      saveStudyDays(data.studyDays);
-    }
-    if (data.preferredModel) {
-      setPreferredModel(data.preferredModel);
-    }
-  };
-
   const layout = (
     <>
       <Header
-        progressPct={progressPct}
-        completedCount={completedCount}
-        totalCount={totalCount}
+        progressPct={nav.progressPct}
+        completedCount={nav.completedCount}
+        totalCount={nav.totalCount}
         streakDays={streakDays}
         theme={theme}
-        onToggleTheme={handleToggleTheme}
+        onToggleTheme={toggleTheme}
         userProfile={userProfile}
         onGoogleLogin={handleGoogleLogin}
-        onGoogleLogout={handleGoogleLogout}
+        onGoogleLogout={onGoogleLogout}
         onGoogleAuthError={handleGoogleAuthError}
         googleOAuthEnabled={googleOAuthEnabled}
         onOpenSettings={() => setIsSettingsOpen(true)}
         onExportBackup={handleExportBackup}
-        onGoHome={handleGoHome}
+        onGoHome={nav.handleGoHome}
+        onOpenTopicSearch={() => setIsTopicSearchOpen(true)}
       />
 
       <div
-        className={`app-container ${isHomeView ? "home-view" : ""} ${mobilePanel ? `mobile-panel-${mobilePanel}` : ""} ${!isHomeView ? layoutContainerClass(learningLayout) : ""} ${!isHomeView && resizableDesktopGrid ? "layout-custom-columns" : ""}`}
+        className={`app-container ${nav.isHomeView ? "home-view" : ""} ${nav.mobilePanel ? `mobile-panel-${nav.mobilePanel}` : ""} ${!nav.isHomeView ? layoutContainerClass(learningLayout) : ""} ${!nav.isHomeView && resizableDesktopGrid ? "layout-custom-columns" : ""}`}
         style={
-          !isHomeView && resizableDesktopGrid
+          !nav.isHomeView && resizableDesktopGrid
             ? { gridTemplateColumns: gridTemplateColumnsForLayout(learningLayout) }
             : undefined
         }
@@ -706,10 +188,10 @@ export default function App() {
           )}
           <Sidebar
             courses={courses}
-            activeCourseNum={activeCourseNum}
-            onSelectCourse={handleSelectCourse}
-            currentTier={currentTier}
-            onSetTier={setCurrentTier}
+            activeCourseNum={nav.activeCourseNum}
+            onSelectCourse={nav.handleSelectCourse}
+            currentTier={nav.currentTier}
+            onSetTier={nav.setCurrentTier}
             progressMap={progressMap}
           />
         </div>
@@ -728,102 +210,111 @@ export default function App() {
             />
           )}
           <aside className="course-accordion-pane">
-          <LessonFeed
-            courseTitle={activeCourse?.title || `Course ${activeCourseNum}`}
-            courseMonth={activeCourse?.month}
-            courseProgressPct={courseProgressPct}
-            lessons={courseLessons}
-            activeLessonOrder={activeLessonOrder}
-            courseOverviewMode={courseOverviewMode}
-            onOpenCourseOverview={handleOpenCourseOverview}
-            entryLessonOrder={activeCourseRef.entry_lesson_order}
-            onSelectLesson={handleSelectLesson}
-            onToggleComplete={handleToggleComplete}
-            progressMap={progressMap}
-            typeFilter={typeFilter}
-            onSetTypeFilter={setTypeFilter}
-          />
+            <LessonFeed
+              courseTitle={nav.activeCourse?.title || `Course ${nav.activeCourseNum}`}
+              courseMonth={nav.activeCourse?.month}
+              courseProgressPct={nav.courseProgressPct}
+              lessons={nav.courseLessons}
+              activeLessonOrder={activeLessonOrder}
+              courseOverviewMode={nav.courseOverviewMode}
+              onOpenCourseOverview={nav.handleOpenCourseOverview}
+              entryLessonOrder={nav.activeCourseRef.entry_lesson_order}
+              onSelectLesson={nav.handleSelectLesson}
+              onToggleComplete={nav.handleToggleComplete}
+              progressMap={progressMap}
+              typeFilter={nav.typeFilter}
+              onSetTypeFilter={nav.setTypeFilter}
+              requiredOnlyFilter={nav.requiredOnlyFilter}
+              onSetRequiredOnlyFilter={nav.setRequiredOnlyFilter}
+              nextAction={nav.nextAction}
+              onOpenLessonFromNextAction={(lesson) => nav.handleSelectLesson(lesson.order)}
+            />
           </aside>
         </div>
 
         <main className="stage" ref={stageRef}>
-          {isHomeView ? (
+          {nav.isHomeView ? (
             <HomeStage
               courses={courses}
               coursesRef={coursesRefData}
-              totalCount={totalCount}
-              completedCount={completedCount}
-              progressPct={progressPct}
+              totalCount={nav.totalCount}
+              completedCount={nav.completedCount}
+              progressPct={nav.progressPct}
               programWalkthrough={programWalkthrough}
               programBriefMarkdown={programBriefMarkdown}
-              onBeginStepOne={handleBeginStepOne}
-              onOpenCourseOverview={handleStartFoundation}
-              onOpenCourse={handleOpenCourseFromHome}
-              onContinueLesson={resumeLesson ? handleContinueFromHome : undefined}
-              resumeLabel={resumeLesson ? resumeLesson.lesson : ""}
+              onBeginStepOne={nav.handleBeginStepOne}
+              onOpenCourseOverview={nav.handleStartFoundation}
+              onOpenCourse={nav.handleOpenCourseFromHome}
+              onContinueLesson={nav.resumeLesson ? nav.handleContinueFromHome : undefined}
+              resumeLabel={nav.resumeLesson ? nav.resumeLesson.lesson : ""}
               userProfile={userProfile}
               googleOAuthEnabled={googleOAuthEnabled}
               cloudSyncConfigured={isStudioCloudSyncConfigured()}
               cloudSyncStatus={cloudSyncStatus}
               onGoogleLogin={handleGoogleLogin}
-              onGoogleLogout={handleGoogleLogout}
+              onGoogleLogout={onGoogleLogout}
               onGoogleAuthError={handleGoogleAuthError}
               googleAuthError={googleAuthError}
               onOpenSettings={() => setIsSettingsOpen(true)}
-              nextAction={nextAction}
+              nextAction={nav.nextAction}
               proveChecklistMap={proveChecklistMap}
               portfolioRepoUrl={portfolioRepoUrl}
               onPortfolioRepoChange={setPortfolioRepoUrl}
-              onOpenLessonFromHome={handleOpenLessonFromHome}
+              onOpenLessonFromHome={nav.handleOpenLessonFromHome}
+              progressMap={progressMap}
+              lessons={lessonsData}
             />
-          ) : courseOverviewMode ? (
+          ) : nav.courseOverviewMode ? (
             <CourseStage
-              course={activeCourse}
-              courseRef={activeCourseRef}
-              onSelectLesson={handleSelectLesson}
+              course={nav.activeCourse}
+              courseRef={nav.activeCourseRef}
+              onSelectLesson={nav.handleSelectLesson}
               programPrimerMarkdown={programPrimerMarkdown}
               glossary={glossary}
               learningLayout={learningLayout}
               onLearningLayoutChange={setLearningLayout}
               isWideDesktop={resizableDesktopGrid}
-              mobilePanel={mobilePanel}
-              onMobilePanelChange={setMobilePanel}
+              mobilePanel={nav.mobilePanel}
+              onMobilePanelChange={nav.setMobilePanel}
+              requiredOnlyFilter={nav.requiredOnlyFilter}
             />
           ) : (
-          <SmartStage
-            key={activeLesson?.order}
-            lesson={activeLesson}
-            courseRef={activeCourseRef}
-            courseProgressPct={courseProgressPct}
-            hasPrevLesson={lessonNav.hasPrev}
-            hasNextLesson={lessonNav.hasNext}
-            onPrevLesson={() => lessonNav.prev && handleSelectLesson(lessonNav.prev.order)}
-            onNextLesson={() => lessonNav.next && handleSelectLesson(lessonNav.next.order)}
-            isCompleted={!!progressMap[activeLesson?.order]}
-            onToggleComplete={handleToggleComplete}
-            videoOverrides={videoOverrides}
-            onSaveVideoOverride={handleSaveVideoOverride}
-            onOpenRegenerateModal={() => setIsRegenOpen(true)}
-            regeneratedContent={regenerationMarkdown(regenerations, activeLesson?.order)}
-            regenerationMeta={regenerations[String(activeLesson?.order)] || regenerations[activeLesson?.order]}
-            proveUrl={proveMap[activeLesson?.order] || ""}
-            onSaveProveUrl={handleSaveProveUrl}
-            portfolioRepoUrl={portfolioRepoUrl}
-            onSavePortfolioRepoUrl={handleSavePortfolioRepoUrl}
-            proveChecklistMap={proveChecklistMap}
-            onProveChecklistChange={handleProveChecklistChange}
-            portfolioStarter={portfolioStarter}
-            learningLayout={learningLayout}
-            onLearningLayoutChange={setLearningLayout}
-            isWideDesktop={resizableDesktopGrid}
-            mobilePanel={mobilePanel}
-            onMobilePanelChange={setMobilePanel}
-          />
+            <SmartStage
+              key={nav.activeLesson?.order}
+              lesson={nav.activeLesson}
+              courseRef={nav.activeCourseRef}
+              courseProgressPct={nav.courseProgressPct}
+              hasPrevLesson={nav.lessonNav.hasPrev}
+              hasNextLesson={nav.lessonNav.hasNext}
+              onPrevLesson={() => nav.lessonNav.prev && nav.handleSelectLesson(nav.lessonNav.prev.order)}
+              onNextLesson={() => nav.lessonNav.next && nav.handleSelectLesson(nav.lessonNav.next.order)}
+              isCompleted={!!progressMap[nav.activeLesson?.order]}
+              onToggleComplete={nav.handleToggleComplete}
+              videoOverrides={videoOverrides}
+              onSaveVideoOverride={handleSaveVideoOverride}
+              onOpenRegenerateModal={() => setIsRegenOpen(true)}
+              regeneratedContent={regenerationMarkdown(regenerations, nav.activeLesson?.order)}
+              regenerationMeta={
+                regenerations[String(nav.activeLesson?.order)] || regenerations[nav.activeLesson?.order]
+              }
+              proveUrl={proveMap[nav.activeLesson?.order] || ""}
+              onSaveProveUrl={handleSaveProveUrl}
+              portfolioRepoUrl={portfolioRepoUrl}
+              onSavePortfolioRepoUrl={setPortfolioRepoUrl}
+              proveChecklistMap={proveChecklistMap}
+              onProveChecklistChange={handleProveChecklistChange}
+              portfolioStarter={portfolioStarter}
+              learningLayout={learningLayout}
+              onLearningLayoutChange={setLearningLayout}
+              isWideDesktop={resizableDesktopGrid}
+              mobilePanel={nav.mobilePanel}
+              onMobilePanelChange={nav.setMobilePanel}
+            />
           )}
         </main>
 
         <div className="layout-cell layout-cell-mentor">
-          {resizableDesktopGrid && !isHomeView && learningLayout.mentorOpen !== false && (
+          {resizableDesktopGrid && !nav.isHomeView && learningLayout.mentorOpen !== false && (
             <ColumnResizeHandle
               side="left"
               label="Drag to resize chat panel"
@@ -836,14 +327,14 @@ export default function App() {
             />
           )}
           <Inspector
-            lesson={isHomeView || courseOverviewMode ? null : activeLesson}
-            courseRef={activeCourseRef}
+            lesson={nav.isHomeView || nav.courseOverviewMode ? null : nav.activeLesson}
+            courseRef={nav.activeCourseRef}
             notes={notesMap}
             onSaveNotes={handleSaveNotes}
-            proveUrl={proveMap[activeLesson?.order] || ""}
+            proveUrl={proveMap[nav.activeLesson?.order] || ""}
             onSaveProveUrl={handleSaveProveUrl}
-            isCompleted={!!progressMap[activeLesson?.order]}
-            onToggleComplete={handleToggleComplete}
+            isCompleted={!!progressMap[nav.activeLesson?.order]}
+            onToggleComplete={nav.handleToggleComplete}
             preferredModel={preferredModel}
             onSelectModel={setPreferredModel}
             onOpenSettings={() => setIsSettingsOpen(true)}
@@ -852,22 +343,21 @@ export default function App() {
             learningLayout={learningLayout}
             onLearningLayoutChange={setLearningLayout}
             portfolioRepoUrl={portfolioRepoUrl}
-            proveUrl={proveMap[activeLesson?.order] || ""}
             proveChecklistMap={proveChecklistMap}
           />
         </div>
       </div>
 
-      {!isHomeView && mobilePanel && (
+      {!nav.isHomeView && nav.mobilePanel && (
         <button
           type="button"
           className="mobile-panel-backdrop"
           aria-label="Close panel and focus on content"
-          onClick={() => setMobilePanel(null)}
+          onClick={() => nav.setMobilePanel(null)}
         />
       )}
 
-      <MobileLearningBar activePanel={mobilePanel} onSelectPanel={setMobilePanel} />
+      <MobileLearningBar activePanel={nav.mobilePanel} onSelectPanel={nav.setMobilePanel} />
 
       <SettingsModal
         isOpen={isSettingsOpen}
@@ -878,7 +368,7 @@ export default function App() {
         onSaveModel={setPreferredModel}
         userProfile={userProfile}
         onGoogleLogin={handleGoogleLogin}
-        onGoogleLogout={handleGoogleLogout}
+        onGoogleLogout={onGoogleLogout}
         onGoogleAuthError={handleGoogleAuthError}
         googleAuthError={googleAuthError}
         runtimeStudioConfig={runtimeStudioConfig}
@@ -889,10 +379,18 @@ export default function App() {
       <RegenerateModal
         isOpen={isRegenOpen}
         onClose={() => setIsRegenOpen(false)}
-        lesson={activeLesson}
+        lesson={nav.activeLesson}
         onSaveRegeneration={handleSaveRegeneration}
         preferredModel={preferredModel}
         apiKeys={apiKeys}
+      />
+
+      <TopicSearchModal
+        isOpen={isTopicSearchOpen}
+        onClose={() => setIsTopicSearchOpen(false)}
+        lessons={lessonsData}
+        coursesRef={coursesRefData}
+        onSelectLesson={nav.handleOpenLessonFromHome}
       />
     </>
   );

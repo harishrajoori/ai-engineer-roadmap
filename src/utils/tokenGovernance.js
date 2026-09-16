@@ -37,7 +37,7 @@ export function readReplyDepth() {
   if (raw && REPLY_DEPTHS[raw]) {
     return raw;
   }
-  return "standard";
+  return "brief";
 }
 
 export function saveReplyDepth(depthId) {

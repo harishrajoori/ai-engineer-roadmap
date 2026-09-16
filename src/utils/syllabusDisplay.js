@@ -1,4 +1,7 @@
 import { sectionGroupLabel } from "./sectionGroups";
+import { filterSyllabusLessons, isRequiredLesson } from "./syllabusFilters.js";
+
+export { filterSyllabusLessons, isRequiredLesson };
 
 /** Lower rank = preferred when deduping the same URL within a course. */
 const SECTION_RANK = {

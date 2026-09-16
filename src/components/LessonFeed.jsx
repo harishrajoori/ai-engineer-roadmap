@@ -1,7 +1,14 @@
 import React, { useMemo } from "react";
 import { CheckCircle2, Circle, PlayCircle, BookOpen, PenTool, ShieldCheck, Filter } from "lucide-react";
 import { groupLessonsBySection } from "../utils/sectionGroups";
-import { formatTopicTitle, isTopicComplete, lessonsForSyllabusDisplay } from "../utils/syllabusDisplay";
+import {
+  filterSyllabusLessons,
+  formatTopicTitle,
+  isTopicComplete,
+  lessonsForSyllabusDisplay,
+} from "../utils/syllabusDisplay";
+import { capstoneTrackBadge } from "../utils/capstoneTrack";
+import NextActionCard from "./NextActionCard";
 
 export default function LessonFeed({
   courseTitle,
@@ -14,9 +21,13 @@ export default function LessonFeed({
   progressMap = {},
   typeFilter = "all",
   onSetTypeFilter,
+  requiredOnlyFilter = false,
+  onSetRequiredOnlyFilter,
   courseOverviewMode = false,
   onOpenCourseOverview,
   entryLessonOrder = null,
+  nextAction = null,
+  onOpenLessonFromNextAction = null,
 }) {
   const displayLessons = useMemo(() => lessonsForSyllabusDisplay(lessons), [lessons]);
 
@@ -25,12 +36,17 @@ export default function LessonFeed({
     return ["all", ...Array.from(types).sort()];
   }, [displayLessons]);
 
-  const filteredLessons = useMemo(() => {
-    if (typeFilter === "all") {
-      return displayLessons;
+  const filteredLessons = useMemo(
+    () => filterSyllabusLessons(displayLessons, { requiredOnly: requiredOnlyFilter, typeFilter }),
+    [displayLessons, requiredOnlyFilter, typeFilter]
+  );
+
+  const optionalHiddenCount = useMemo(() => {
+    if (!requiredOnlyFilter) {
+      return 0;
     }
-    return displayLessons.filter((l) => l.type === typeFilter);
-  }, [displayLessons, typeFilter]);
+    return displayLessons.filter((l) => l.required !== "Yes").length;
+  }, [displayLessons, requiredOnlyFilter]);
 
   const sectionGroups = useMemo(() => groupLessonsBySection(filteredLessons), [filteredLessons]);
 
@@ -73,7 +89,10 @@ export default function LessonFeed({
             How to take this course (walkthrough)
           </button>
         )}
-        <div className="syllabus-progress-block">
+        <div
+          className="syllabus-progress-block"
+          title="Includes required Prove checklist items when this course has a prove gate"
+        >
           <div className="syllabus-progress-track">
             <div className="syllabus-progress-fill" style={{ width: `${courseProgressPct}%` }} />
           </div>
@@ -84,19 +103,43 @@ export default function LessonFeed({
         </div>
       </div>
 
-      {typeOptions.length > 2 && onSetTypeFilter && (
+      {nextAction && onOpenLessonFromNextAction && (
+        <NextActionCard
+          compact
+          action={nextAction}
+          onOpenLesson={onOpenLessonFromNextAction}
+        />
+      )}
+
+      {(onSetRequiredOnlyFilter || (typeOptions.length > 2 && onSetTypeFilter)) && (
         <div className="syllabus-filters">
-          <Filter size={12} className="syllabus-filter-icon" />
-          {typeOptions.map((t) => (
+          <Filter size={12} className="syllabus-filter-icon" aria-hidden />
+          {onSetRequiredOnlyFilter && (
             <button
-              key={t}
               type="button"
-              className={`filter-btn syllabus-filter-btn ${typeFilter === t ? "active" : ""}`}
-              onClick={() => onSetTypeFilter(t)}
+              className={`filter-btn syllabus-filter-btn syllabus-filter-required ${requiredOnlyFilter ? "active" : ""}`}
+              onClick={() => onSetRequiredOnlyFilter(!requiredOnlyFilter)}
+              title="Hide optional Watch/Read rows—recommended when time-boxed"
+              aria-pressed={requiredOnlyFilter}
             >
-              {t === "all" ? "All" : t}
+              Required only
             </button>
-          ))}
+          )}
+          {typeOptions.length > 2 &&
+            onSetTypeFilter &&
+            typeOptions.map((t) => (
+              <button
+                key={t}
+                type="button"
+                className={`filter-btn syllabus-filter-btn ${typeFilter === t ? "active" : ""}`}
+                onClick={() => onSetTypeFilter(t)}
+              >
+                {t === "all" ? "All" : t}
+              </button>
+            ))}
+          {optionalHiddenCount > 0 && (
+            <span className="syllabus-filter-hint">{optionalHiddenCount} optional hidden</span>
+          )}
         </div>
       )}
 
@@ -112,6 +155,7 @@ export default function LessonFeed({
                 const isActive = !courseOverviewMode && activeLessonOrder === lesson.order;
                 const isStartHere =
                   lesson.is_start_here || (entryLessonOrder != null && lesson.order === entryLessonOrder);
+                const trackMeta = capstoneTrackBadge(lesson.capstone_track);
 
                 return (
                   <div
@@ -142,6 +186,14 @@ export default function LessonFeed({
                     <div className="syllabus-topic-body">
                       <div className="syllabus-topic-name">
                         {isStartHere && <span className="topic-start-badge syllabus-start-badge">START</span>}
+                        {trackMeta && (
+                          <span
+                            className={`capstone-track-pill capstone-track-pill-compact ${trackMeta.className}`}
+                            title={trackMeta.title}
+                          >
+                            {trackMeta.label}
+                          </span>
+                        )}
                         {lesson.display_title || formatTopicTitle(lesson)}
                       </div>
                     <div className="syllabus-topic-meta">
@@ -152,7 +204,11 @@ export default function LessonFeed({
                       {(lesson.coverage_note || lesson.merge_note) && (
                         <span className="syllabus-shared" title="Shared or merged URL">↗ shared</span>
                       )}
-                      {lesson.required === "Yes" && <span className="syllabus-required">Required</span>}
+                      {lesson.required === "Yes" ? (
+                        <span className="syllabus-required">Required</span>
+                      ) : (
+                        <span className="syllabus-optional">Optional</span>
+                      )}
                     </div>
                   </div>
                   </div>

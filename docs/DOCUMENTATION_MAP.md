@@ -17,6 +17,7 @@ How narrative, syllabus, and studio JSON fit together. **Audience lens:** experi
 | [`data/curriculum_enrichment.json`](../data/curriculum_enrichment.json) | Glossary, concept maps, prove packs, real-world ladders | Merged into `courses_ref` and `glossary` in JSON |
 | `data/lessons.json` + `public/data/lessons.json` | **Runtime bundle** for the studio | `curriculumLoader.js` |
 | [`data/lab_scenarios.json`](../data/lab_scenarios.json) | **DE lab narratives + code blocks** for Lab & Prove | `scripts/lab_scenarios.py` → `lab_plan.de_lab` |
+| [`implementation_catalog_hygiene.md`](./implementation_catalog_hygiene.md) | Monthly catalog / impl-link audit ritual | Maintainers |
 
 ## Regenerate after edits
 
@@ -25,6 +26,8 @@ How narrative, syllabus, and studio JSON fit together. **Audience lens:** experi
 npm run curriculum
 npm run validate:ci
 ```
+
+Do **not** hand-edit `data/lessons.json` — see [`lesson_json_schema.md`](./lesson_json_schema.md) § Curriculum diff hygiene.
 
 ## Content order for learners (5+ YOE data engineer)
 

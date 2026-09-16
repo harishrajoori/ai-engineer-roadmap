@@ -307,6 +307,79 @@ export function buildProveWorksheetMarkdown({
   return lines.join("\n");
 }
 
+/**
+ * Markdown summary of all prove gates for portfolio / staff review.
+ *
+ * @param {{
+ *   coursesRef: Record<string, object>,
+ *   proveChecklistMap: Record<string, boolean>,
+ *   portfolioRepoUrl?: string,
+ *   progressMap?: Record<number, boolean>,
+ *   lessons?: object[],
+ * }} params
+ */
+export function buildProgramPortfolioSummaryMarkdown({
+  coursesRef,
+  proveChecklistMap,
+  portfolioRepoUrl = "",
+  progressMap = {},
+  lessons = [],
+}) {
+  const lines = [
+    "# AI Systems Engineer — program portfolio summary",
+    "",
+    `_Generated ${new Date().toISOString().slice(0, 10)} from studio progress (not auto-graded)._`,
+    "",
+  ];
+  const portfolio = (portfolioRepoUrl || "").trim();
+  if (portfolio) {
+    lines.push(`**Portfolio repo:** ${portfolio}`, "");
+  } else {
+    lines.push("**Portfolio repo:** _(not linked in studio)_", "");
+  }
+
+  const courseIds = Object.keys(coursesRef || {})
+    .map((k) => Number(k))
+    .filter((n) => !Number.isNaN(n))
+    .sort((a, b) => a - b);
+
+  lines.push("## Prove gates by course", "");
+  lines.push("| Course | Prove pack | Checklist | Topics done |");
+  lines.push("| --- | --- | --- | --- |");
+
+  for (const courseId of courseIds) {
+    const ref = coursesRef[String(courseId)] || {};
+    const acceptance = ref.prove_pack?.acceptance || [];
+    const checklist = requiredChecklistProgress(acceptance, proveChecklistMap, courseId);
+    const courseLessons = lessons.filter((l) => l.course === courseId);
+    const doneTopics = courseLessons.filter((l) => progressMap[l.order]).length;
+    const totalTopics = courseLessons.length;
+    const proveTitle = ref.prove_pack?.title || "Prove";
+    const checkLabel =
+      checklist.total > 0 ? `${checklist.done}/${checklist.total}${checklist.complete ? " ✓" : ""}` : "—";
+    const topicsLabel = totalTopics > 0 ? `${doneTopics}/${totalTopics}` : "—";
+    lines.push(`| ${courseId} | ${proveTitle} | ${checkLabel} | ${topicsLabel} |`);
+  }
+
+  lines.push("", "## Required acceptance (copy into README audits)", "");
+  for (const courseId of courseIds) {
+    const ref = coursesRef[String(courseId)] || {};
+    const acceptance = (ref.prove_pack?.acceptance || []).filter((r) => r.required);
+    if (!acceptance.length) {
+      continue;
+    }
+    lines.push(`### Course ${courseId} — ${ref.prove_pack?.title || "Prove"}`, "");
+    acceptance.forEach((row, index) => {
+      const checked = isChecklistItemChecked(proveChecklistMap, courseId, index) ? "x" : " ";
+      lines.push(`- [${checked}] ${row.criterion}`);
+    });
+    lines.push("");
+  }
+
+  lines.push("---", "Re-run evals and CI in your repo; link artifacts in each course **Lab & Prove** tab.");
+  return lines.join("\n");
+}
+
 export function downloadTextFile(filename, content) {
   const blob = new Blob([content], { type: "text/markdown;charset=utf-8" });
   const url = URL.createObjectURL(blob);

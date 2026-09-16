@@ -424,6 +424,46 @@ header.site-header {
   max-width: 40rem;
   margin: 0 0 1.25rem;
 }
+.syllabus-next-action {
+  margin: 0 0.75rem 0.65rem;
+  padding: 0;
+}
+.syllabus-next-action .home-next-action-inner {
+  padding: 0.65rem 0.75rem;
+  gap: 0.5rem;
+  border-radius: var(--radius-inner, 8px);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--surface-elevated, rgba(255, 255, 255, 0.03));
+}
+.syllabus-next-action-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem;
+}
+.syllabus-next-action-body p,
+.syllabus-next-action .home-next-action-body p {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  margin: 0;
+}
+.syllabus-next-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid var(--blue, #3b82f6);
+  background: transparent;
+  color: var(--blue, #3b82f6);
+  cursor: pointer;
+}
+.syllabus-next-action-btn:hover {
+  background: rgba(59, 130, 246, 0.12);
+}
+
 .home-next-action {
   margin-bottom: 1.75rem;
 }
@@ -463,6 +503,12 @@ header.site-header {
   flex-wrap: wrap;
   gap: 0.65rem;
 }
+.home-prove-export-summary {
+  margin: 0 0 1rem;
+  width: 100%;
+  max-width: 22rem;
+}
+
 .home-prove-dashboard {
   margin-bottom: 2.75rem;
   padding: 1.25rem 1.35rem;
@@ -2024,6 +2070,16 @@ header.site-header {
   color: var(--muted);
   margin-top: 0.35rem;
 }
+.syllabus-filter-required.active {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+.syllabus-filter-hint {
+  font-size: 0.65rem;
+  color: var(--muted);
+  align-self: center;
+  margin-left: 0.15rem;
+}
 .syllabus-filters {
   display: flex;
   flex-wrap: wrap;
@@ -2103,6 +2159,98 @@ header.site-header {
   color: var(--warning);
   font-weight: 700;
   margin-left: 0.15rem;
+}
+.syllabus-optional {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.65rem;
+  margin-left: 0.15rem;
+}
+
+.capstone-track-pill {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.05rem;
+  padding: 0.2rem 0.45rem;
+  margin-right: 0.35rem;
+  border-radius: 6px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  border: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+.capstone-track-pill-compact {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.58rem;
+  margin-right: 0.25rem;
+}
+.capstone-track-pill-sub {
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.85;
+}
+.capstone-track-wire {
+  background: color-mix(in srgb, var(--blue) 18%, transparent);
+  color: var(--blue);
+}
+.capstone-track-caching {
+  background: color-mix(in srgb, var(--warning) 22%, transparent);
+  color: var(--warning);
+}
+.capstone-track-reference {
+  background: color-mix(in srgb, var(--muted) 15%, transparent);
+  color: var(--muted);
+}
+.capstone-track-demo {
+  background: color-mix(in srgb, var(--green) 18%, transparent);
+  color: var(--green);
+}
+.capstone-track-defer {
+  background: color-mix(in srgb, var(--gray-76) 12%, transparent);
+  color: var(--muted);
+  opacity: 0.9;
+}
+.capstone-scope-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.capstone-scope-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.5rem 0.75rem;
+  align-items: baseline;
+}
+.capstone-scope-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.capstone-scope-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  grid-column: 1 / -1;
+  padding-left: 0.1rem;
+}
+@media (min-width: 720px) {
+  .capstone-scope-item {
+    grid-template-columns: auto auto 1fr;
+  }
+  .capstone-scope-hint {
+    grid-column: 3;
+  }
 }
 .syllabus-shared {
   color: var(--cyan);
@@ -2673,6 +2821,112 @@ header.site-header {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--bg-alt);
+}
+.lab-prove-disclosure {
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-alt);
+}
+.lab-prove-disclosure-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  list-style: none;
+}
+.lab-prove-disclosure-summary::-webkit-details-marker {
+  display: none;
+}
+.lab-prove-disclosure-chevron {
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+.lab-prove-disclosure[open] .lab-prove-disclosure-chevron {
+  transform: rotate(180deg);
+}
+.lab-prove-disclosure-body {
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--border-subtle);
+}
+.topic-search-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10vh 1rem 1rem;
+}
+.topic-search-modal {
+  width: min(560px, 100%);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+.topic-search-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.topic-search-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 1rem;
+  outline: none;
+}
+.topic-search-close {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+.topic-search-results {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+.topic-search-hint {
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.topic-search-result-btn {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  padding: 0.65rem 1rem;
+  cursor: pointer;
+  color: var(--text);
+}
+.topic-search-result-btn:hover {
+  background: var(--bg-alt);
+}
+.topic-search-result-title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.topic-search-result-meta {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 0.15rem;
 }
 .lab-prove-section-title {
   display: flex;

@@ -153,27 +153,68 @@
     "11": {
       "scenario_title": "Deploy the platform for another engineer to run",
       "scenario_markdown": "Hand off **docker-compose or Helm** so a teammate runs `docker compose up` and hits health checks—same bar as internal data platform onboarding docs.",
-      "code_snippets": []
+      "code_snippets": [
+        {
+          "title": "Health check in compose",
+          "language": "yaml",
+          "filename": "docker-compose.yml (excerpt)",
+          "code": "services:\n  api:\n    build: .\n    ports:\n      - \"8000:8000\"\n    healthcheck:\n      test: [\"CMD\", \"curl\", \"-f\", \"http://localhost:8000/health\"]\n      interval: 10s\n      timeout: 3s\n      retries: 5"
+        },
+        {
+          "title": "README health command",
+          "language": "bash",
+          "filename": "README.md",
+          "code": "docker compose up -d\ncurl -sS http://localhost:8000/health"
+        }
+      ]
     },
     "12": {
       "scenario_title": "Lineage for model outputs",
       "scenario_markdown": "Emit **OpenLineage** (or compatible JSON) linking chunk ids, model version, and output artifact—answer *which document and which model version produced this field?*",
-      "code_snippets": []
+      "code_snippets": [
+        {
+          "title": "Sample lineage event",
+          "language": "json",
+          "filename": "docs/lineage_sample.json",
+          "code": "{\n  \"eventType\": \"COMPLETE\",\n  \"run\": {\"runId\": \"alpha-demo-001\"},\n  \"inputs\": [{\"name\": \"chunk_id\", \"facets\": {\"chunk\": {\"id\": \"chunk-00042\"}}}],\n  \"outputs\": [{\"name\": \"extracted_row\", \"facets\": {\"model\": {\"name\": \"gpt-4o-mini\"}}}]\n}"
+        }
+      ]
     },
     "13": {
       "scenario_title": "Measured frontier experiment",
       "scenario_markdown": "Pick one bottleneck (cache, vLLM, DSPy). Show before/after metrics in README—no slide-deck adoption.",
-      "code_snippets": []
+      "code_snippets": [
+        {
+          "title": "README frontier section",
+          "language": "markdown",
+          "filename": "README.md",
+          "code": "## Frontier: semantic cache\n**Bottleneck:** repeated system prompt on every extract call.\n**Metric:** median TTFT −35% at same golden pass rate (n=30)."
+        }
+      ]
     },
     "14": {
       "scenario_title": "Public narrative of the platform",
       "scenario_markdown": "Write a technical post walking through architecture with redacted diagrams—tie back to prove artifacts.",
-      "code_snippets": []
+      "code_snippets": [
+        {
+          "title": "Post outline",
+          "language": "markdown",
+          "filename": "docs/post_outline.md",
+          "code": "1. Problem: semi-structured ops logs → typed records\n2. Architecture diagram (gateway, graph, retrieval, eval CI)\n3. Golden set + recall@k table (redacted)\n4. Link public repo + `alpha` tag"
+        }
+      ]
     },
     "15": {
       "scenario_title": "Interview story from the repo",
       "scenario_markdown": "Demo live: ingest → extract → policy → trace. Narrate tradeoffs using your golden set and CI gate.",
-      "code_snippets": []
+      "code_snippets": [
+        {
+          "title": "10-minute demo script",
+          "language": "markdown",
+          "filename": "docs/interview_demo.md",
+          "code": "1. `make demo` — happy path extract\n2. Force validation fail → HITL resume\n3. Show eval CI green on main\n4. Open trace: single run_id across spans"
+        }
+      ]
     }
   },
   "by_order": {
@@ -244,6 +285,30 @@
           "language": "json",
           "filename": "benchmarks/retrieval_results.json",
           "code": "{\n  \"labeled_qa_count\": 25,\n  \"methods\": [\n    {\"name\": \"dense\", \"recall_at_5\": 0.52},\n    {\"name\": \"hybrid_rrf\", \"recall_at_5\": 0.68}\n  ]\n}"
+        }
+      ]
+    },
+    "119": {
+      "scenario_title": "Build — deploy chart or compose",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Adding-a-tool doc stub",
+          "language": "markdown",
+          "filename": "docs/adding-a-tool.md",
+          "code": "## New MCP tool\n1. JSON Schema for args\n2. Auth: service account vs user token\n3. Add one golden eval case for the tool path"
+        }
+      ]
+    },
+    "124": {
+      "scenario_title": "Build — lineage artifact in repo",
+      "replace_snippets": true,
+      "code_snippets": [
+        {
+          "title": "Threat model delta",
+          "language": "markdown",
+          "filename": "README.md",
+          "code": "## Threat model (v1.0)\n- Retrieval injection via poisoned chunks\n- Tool escalation if policy bypassed"
         }
       ]
     },

@@ -300,7 +300,8 @@
 
 **Prove**
 
-- [ ] Committed benchmark table
+- [ ] Committed labeled Q/A set (e.g. `benchmarks/queries.jsonl`, n≥10) with gold document ids
+- [ ] Benchmark table in README: dense vs hybrid with **recall@k** (e.g. recall@5) on that set
 
 *Hub repos:* Master Plan §17 → **Course 4**
 

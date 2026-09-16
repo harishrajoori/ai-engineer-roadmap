@@ -18,6 +18,7 @@ from curriculum_enrichment import (
     prove_pack_for_course,
     real_world_for_course,
 )
+from capstone_track import attach_capstone_tracks, capstone_scope_summary
 from walkthrough_content import PROGRAM_WALKTHROUGH, walkthrough_for_course
 from enrichment_utils import index_lessons_by_key, lesson_stable_key, sanitize_lesson_enrichment
 from append_implementation_repos import append_implementation_repos
@@ -292,6 +293,7 @@ def build_courses_ref(
             brief = load_capstone_product_brief_markdown()
             if brief:
                 course_ref["capstone_product_brief_markdown"] = brief
+            course_ref["capstone_scope"] = capstone_scope_summary(course_lessons)
         ref[key] = course_ref
     return ref
 
@@ -586,6 +588,7 @@ def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]])
             intermediate = build_theory_summary(row, outcomes, note)
             attach_theory_levels(row, outcomes, note, intermediate)
         row.pop("_course_outcomes", None)
+    attach_capstone_tracks(lessons)
     return lessons
 
 

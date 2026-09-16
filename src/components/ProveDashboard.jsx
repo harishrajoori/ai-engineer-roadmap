@@ -1,7 +1,11 @@
 import React, { useMemo } from "react";
 import { CheckCircle2, Circle, ExternalLink, Link2 } from "lucide-react";
 import { buildProveDashboardRows } from "../utils/nextAction";
-import { savePortfolioRepoUrl } from "../utils/proveWorkflow";
+import {
+  buildProgramPortfolioSummaryMarkdown,
+  downloadTextFile,
+  savePortfolioRepoUrl,
+} from "../utils/proveWorkflow";
 
 /**
  * Sixteen-course prove status board (artifact + checklist progress).
@@ -12,6 +16,8 @@ export default function ProveDashboard({
   portfolioRepoUrl = "",
   onPortfolioRepoChange,
   onOpenCourse,
+  progressMap = {},
+  lessons = [],
 }) {
   const rows = useMemo(
     () => buildProveDashboardRows(coursesRef, proveChecklistMap, portfolioRepoUrl),
@@ -50,6 +56,23 @@ export default function ProveDashboard({
           }}
         />
       </label>
+
+      <button
+        type="button"
+        className="home-cta home-cta-secondary home-prove-export-summary"
+        onClick={() => {
+          const md = buildProgramPortfolioSummaryMarkdown({
+            coursesRef,
+            proveChecklistMap,
+            portfolioRepoUrl,
+            progressMap,
+            lessons,
+          });
+          downloadTextFile(`ai-systems-engineer-portfolio-summary-${new Date().toISOString().slice(0, 10)}.md`, md);
+        }}
+      >
+        Download portfolio summary (Markdown)
+      </button>
 
       <ul className="home-prove-dashboard-list">
         {rows.map((row) => {

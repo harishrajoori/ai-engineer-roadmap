@@ -77,6 +77,8 @@ export default function HomeStage({
   portfolioRepoUrl = "",
   onPortfolioRepoChange,
   onOpenLessonFromHome,
+  progressMap = {},
+  lessons = [],
 }) {
   const hasProgress = completedCount > 0;
   const phases = programWalkthrough.phases || [];
@@ -182,6 +184,8 @@ export default function HomeStage({
           portfolioRepoUrl={portfolioRepoUrl}
           onPortfolioRepoChange={onPortfolioRepoChange}
           onOpenCourse={onOpenCourse}
+          progressMap={progressMap}
+          lessons={lessons}
         />
 
         <section className="home-value-section" aria-labelledby="home-value-heading">

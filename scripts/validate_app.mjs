@@ -35,10 +35,35 @@ if (orders.size !== LESSONS_DATA.length) {
   checks.push("Duplicate lesson order in lessons.json");
 }
 
-for (const key of ["order", "course", "lesson", "type"]) {
+const REQUIRED_LESSON_FIELDS = ["order", "course", "lesson", "type", "required", "section"];
+for (const key of REQUIRED_LESSON_FIELDS) {
   const bad = LESSONS_DATA.filter((l) => l[key] === undefined || l[key] === null);
   if (bad.length) {
     checks.push(`${bad.length} lessons missing field: ${key}`);
+  }
+}
+
+const missingTheory = LESSONS_DATA.filter(
+  (l) =>
+    !l.theory_levels?.beginner?.length ||
+    !l.theory_levels?.intermediate?.length ||
+    !l.theory_levels?.advanced?.length
+);
+if (missingTheory.length) {
+  checks.push(`${missingTheory.length} lessons missing theory_levels beginner/intermediate/advanced`);
+}
+
+const TOP_LEVEL_REQUIRED = [
+  "generated_from",
+  "program_primer_markdown",
+  "program_brief_markdown",
+  "program_walkthrough",
+  "glossary",
+  "portfolio_starter",
+];
+for (const key of TOP_LEVEL_REQUIRED) {
+  if (data[key] == null) {
+    checks.push(`lessons.json missing top-level field: ${key}`);
   }
 }
 
@@ -62,6 +87,16 @@ if (!COURSES_REF_DATA || typeof COURSES_REF_DATA !== "object") {
         checks.push(`courses_ref[${c}] missing walkthrough or entry_lesson_order`);
       }
     }
+  }
+  const c10 = LESSONS_DATA.filter((l) => l.course === 10);
+  const c10MissingTrack = c10.filter((l) => !l.capstone_track);
+  if (c10.length && c10MissingTrack.length) {
+    checks.push(
+      `${c10MissingTrack.length} course-10 lessons missing capstone_track — run npm run curriculum`
+    );
+  }
+  if (!COURSES_REF_DATA["10"]?.capstone_scope?.counts?.wire) {
+    checks.push("courses_ref[10] missing capstone_scope — run npm run curriculum");
   }
 }
 

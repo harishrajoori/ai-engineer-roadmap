@@ -787,30 +787,32 @@ npm run validate:ci
 
 ## 17. Prioritized Change Backlog
 
+**Status (studio repo, Sep 2026):** P0 and most P1/P2 studio items below are implemented in code/docs; deferred items are noted inline.
+
 ### P0 — Next 2–4 weeks
 
-1. Split `App.jsx` state into focused hooks; freeze progress/prove schema.  
-2. Add a **Prove Dashboard** (all courses, status, links, checklist %).  
-3. Tighten Prove acceptance for Courses **6, 10, 11, 12**.  
-4. Write a short **capstone product brief** (name, persona, synthetic dataset, SLOs).  
-5. Rebalance or explicitly label Course 10 lessons (integration vs new skill).
+1. ~~Split `App.jsx` state into focused hooks; freeze progress/prove schema.~~ → `src/hooks/*`, `learnerStateSchema.js`, backup `schema_version`.  
+2. ~~Add a **Prove Dashboard**~~ → `ProveDashboard.jsx` on home.  
+3. ~~Tighten Prove acceptance for Courses **6, 10, 11, 12**.~~ → `curriculum_enrichment.json` prove_packs.  
+4. ~~Write a short **capstone product brief**~~ → `docs/capstone_product_brief.md` on Course 10 overview.  
+5. ~~Rebalance or explicitly label Course 10 lessons~~ → `capstone_track` + `CapstoneScopeLegend`.
 
 ### P1 — Following
 
-6. Expand hand-authored `.studio.md` guides for critical-path topics.  
-7. Ensure DE lab scenario + code on every Build/Prove course.  
-8. Improve Next Action guidance + Required-only filter.  
-9. Document lesson JSON schema; reduce noisy curriculum diffs.  
-10. Require labeled Q/A set for Course 4 recall@k.
+6. **Expand `.studio.md` guides** — 13 authored guides (was 10); add more on demand for shallow theory warnings.  
+7. ~~DE lab scenario + code on Build/Prove path~~ → `lab_scenarios.json` + CI warning for courses 0–15.  
+8. ~~Next Action + Required-only filter~~ → `NextActionCard`, syllabus toggle, prove-weighted progress.  
+9. ~~Lesson JSON schema + diff hygiene~~ → `lesson_json_schema.md`, `DOCUMENTATION_MAP.md`.  
+10. ~~Course 4 labeled Q/A + recall@k~~ → prove_pack + learning track.
 
 ### P2 — Later
 
-11. Search, portfolio export, mentor budget limits.  
-12. Mobile polish + progressive disclosure in Lab & Prove.  
-13. Monthly implementation-catalog hygiene process.  
-14. Consider splitting generated lessons by course.  
-15. Earlier lightweight prompt-injection / cost-control modules.  
-16. Optional system-design practice topics before Course 15.
+11. ~~Search~~ → `TopicSearchModal`; ~~portfolio export~~ → backup JSON + **portfolio summary Markdown** on Prove dashboard; mentor **default brief depth** + daily budget UI existing.  
+12. ~~Progressive disclosure in Lab & Prove~~ → `LabProveDisclosure`; mobile layout defaults mentor collapsed on narrow viewports.  
+13. ~~Monthly implementation-catalog hygiene~~ → `docs/implementation_catalog_hygiene.md`.  
+14. **Split lessons by course** — documented as deferred in `lesson_json_schema.md`.  
+15. **Earlier prompt-injection / cost-control modules** — content track change (Course 0 threat model in prove pack; no new course).  
+16. **Optional system-design topics before Course 15** — content/backlog only.
 
 ---
 
