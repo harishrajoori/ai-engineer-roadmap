@@ -39,7 +39,7 @@
 |--------|------:|----------------|
 | Avg intermediate length (all courses) | ~4.6–5.8k chars/course | Enough for scan-level study guide |
 | `theory_levels` with embedded lab | **0** | Dedup fix holding |
-| `.studio.md` visual guides | **13** | High quality; under-covered vs 142 topics |
+| `.studio.md` visual guides | **17** | High quality; priority topics in Courses 4, 8, 9, 11 |
 | Beginner with mermaid | **1** | Diagrams on intermediate for most topics |
 | Advanced shorter than beginner | **88** | Expected when no `advanced_extra`; advanced is ops add-on, not deeper tutorial |
 | Handbook rows &lt;720 chars (validator warn) | **136** | Padding/debt in handbook batches—not learner-facing theory body |
@@ -75,7 +75,7 @@ Ratings: **Strong** = theory + lab enough to orient before external material; **
 
 ## What reads well (keep investing here)
 
-1. **`.studio.md` guides** (orders 1, 3, 8, 11, 22, 24, 39, 45, 48, 55, 77, 91, 94) — Platform tables, mermaid, failure modes; these are the quality bar.  
+1. **`.studio.md` guides** (17 topics including orders 53, 80, 90, 119 for grounding, eval CI, traces, deploy) — Platform tables, mermaid, failure modes; these are the quality bar.  
 2. **Prove rows after `theory_builder` change** — “What you must ship” and acceptance tables before generic five-layer text.  
 3. **DE lens in Lab & Prove** — Concrete files (`gateway/router.py`, `evals/golden.jsonl`, `policy/analyst.rego`).  
 4. **Course overviews** — Brief + map + prove packs set context theory cannot repeat every row.  
@@ -108,10 +108,10 @@ Ratings: **Strong** = theory + lab enough to orient before external material; **
 
 ## Recommendations (priority)
 
-1. **Add `.studio.md` for high-traffic thin rows** — Course 1 gateway, Course 4 grounding, Course 8 CI, Course 11 deploy (4–6 guides/quarter).  
-2. **Handbook batch deepen** — Replace auto-padded &lt;720 char rows with topic-specific `intermediate_deep_dive` (or drop padding).  
-3. **Prove / Build theory** — Continue biasing generated theory toward rubric + architecture diagram (already started).  
-4. **Platform extension** — Optional “extension callout” paragraph in Courses 9–11 theory for gateway tenancy / pipeline deploy (Astra matrix).  
+1. ~~**Add `.studio.md` for high-traffic thin rows**~~ — **Done (partial):** grounding (53), eval CI (80), Langfuse integration (90), deploy (119); gateway (22) already existed.
+2. ~~**Handbook batch deepen**~~ — **Done (partial):** auto-pad only when handbook row &lt;320 chars (`handbook_auto_enrich.py`).
+3. **Prove / Build theory** — Continue biasing generated theory toward rubric + architecture diagram (already started).
+4. ~~**Platform extension**~~ — **Done:** optional callout block in **Platform depth** for courses 9–11 (`platform_extension.py`).
 5. **Keep HTTP validation in release ritual** — `python3 scripts/validate_curriculum.py` (no `--skip-http`) after link changes.
 
 ---

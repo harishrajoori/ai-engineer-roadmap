@@ -6,8 +6,10 @@ from typing import Any
 
 from topic_plain_english import expand_thin_handbook_advanced, expand_thin_handbook_intermediate
 
+# Only pad handbook rows that are nearly empty—avoid generic 720-char boilerplate on thin batches.
 MIN_INTERMEDIATE_CHARS = 720
 MIN_ADVANCED_CHARS = 720
+MIN_CONTENT_BEFORE_PAD = 320
 
 _ENRICH_MARKERS: tuple[str, ...] = (
     "### Implementation depth — order",
@@ -30,6 +32,8 @@ def _strip_enrich_boilerplate(text: str) -> str:
 def _ensure_length(existing: str, minimum: int, supplement: str) -> str:
     base = (existing or "").strip()
     if len(base) >= minimum:
+        return base
+    if len(base) >= MIN_CONTENT_BEFORE_PAD:
         return base
     if base and supplement.strip() not in base:
         return f"{base}\n\n{supplement}".strip()

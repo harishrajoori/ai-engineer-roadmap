@@ -137,6 +137,15 @@ def build_advanced_markdown(lesson: dict, course_outcomes: list[str]) -> str:
     lines.append(advanced_narrative(lesson, hint))
     lines.append("")
 
+    from platform_extension import platform_extension_callout
+
+    ext = platform_extension_callout(lesson)
+    if ext:
+        lines.append("## Platform extension path (optional)")
+        lines.append("")
+        lines.append(ext)
+        lines.append("")
+
     if hint.get("intermediate_deep_dive"):
         lines.append("## Rollout and implementation depth")
         lines.append("")
