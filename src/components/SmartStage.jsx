@@ -24,6 +24,7 @@ import { stripDuplicateTheoryTitle } from "../utils/markdownDisplay";
 import { proveCompletionWarnings } from "../utils/proveWorkflow";
 import LabProvePanel from "./LabProvePanel";
 import LearningFocusBar from "./LearningFocusBar";
+import NextActionCard from "./NextActionCard";
 
 /** Fallback only when a topic has no curated resources in lessons.json */
 const DEFAULT_RESOURCES = [];
@@ -96,6 +97,8 @@ export default function SmartStage({
   isWideDesktop = false,
   mobilePanel = null,
   onMobilePanelChange = null,
+  nextAction = null,
+  onOpenLessonFromNextAction = null,
 }) {
   const primaryVideoId = useMemo(() => {
     if (!lesson) {
@@ -453,6 +456,12 @@ export default function SmartStage({
             onProveChecklistChange={onProveChecklistChange}
             portfolioStarter={portfolioStarter}
           />
+        </div>
+      )}
+
+      {nextAction && onOpenLessonFromNextAction && (
+        <div className="learning-stage-next-action">
+          <NextActionCard compact action={nextAction} onOpenLesson={onOpenLessonFromNextAction} />
         </div>
       )}
 

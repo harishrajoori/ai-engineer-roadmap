@@ -10,7 +10,7 @@ import {
   requiredChecklistProgress,
   toggleChecklistItem,
 } from "../src/utils/proveWorkflow.js";
-import { computeNextAction } from "../src/utils/nextAction.js";
+import { computeNextAction, latestProveArtifactForCourse } from "../src/utils/nextAction.js";
 import {
   courseWeightedProgressPct,
   programWeightedProgressPct,
@@ -104,5 +104,12 @@ const summaryMd = buildProgramPortfolioSummaryMarkdown({
 });
 assert.ok(summaryMd.includes("Course 0"));
 assert.ok(summaryMd.includes("github.com/example/lab"));
+
+const artifact = latestProveArtifactForCourse(
+  [{ order: 9, course: 0, type: "Prove", lesson: "Prove gate" }],
+  { 9: "https://github.com/x/y" },
+  0
+);
+assert.equal(artifact?.url, "https://github.com/x/y");
 
 console.log("proveWorkflow tests OK");

@@ -923,4 +923,16 @@ def entries() -> dict[int, dict[str, Any]]:
             "capstone_action": "Prove notes in studio (private).",
             "done_when": "Course 15 acceptance met.",
         },
+        142: {
+            "one_liner": "Prove: offer letter or structured interview feedback (Course 15 closure).",
+            "why_now": "Final prove row—capture outcome or learning from the search loop.",
+            "mental_model": "Private notes in studio backup are OK; public repo stays synthetic.",
+            "beginner_extra": "Link offer PDF or write 5 bullets of feedback themes in prove notes.",
+            "intermediate_deep_dive": "Retro: which prove artifacts interviewers asked about most.",
+            "advanced_extra": "Update positioning statement from real feedback (private doc).",
+            "failure_modes": ["Skipping written debrief when no offer yet"],
+            "interview_prompts": ["What would you change in the capstone story for the next loop?"],
+            "capstone_action": "Studio prove URL or backup JSON notes.",
+            "done_when": "Course 15 prove acceptance checklist complete.",
+        },
     }

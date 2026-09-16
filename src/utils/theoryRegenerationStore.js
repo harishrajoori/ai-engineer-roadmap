@@ -1,4 +1,4 @@
-import { readJsonStorage } from "./localStorage";
+import { readJsonStorage } from "./localStorage.js";
 
 const LEGACY_REGEN_KEY = "ai_hub_react_regenerations";
 const REGEN_PREFIX = "ai_hub_theory_regen";

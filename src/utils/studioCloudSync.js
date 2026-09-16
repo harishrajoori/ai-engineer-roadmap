@@ -1,4 +1,4 @@
-import { flattenRegenerationsForBackup } from "./theoryRegenerationStore";
+import { flattenRegenerationsForBackup } from "./theoryRegenerationStore.js";
 
 const STORAGE_META_KEY = "ai_hub_studio_cloud_meta";
 

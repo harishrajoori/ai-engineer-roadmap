@@ -70,11 +70,45 @@ export function computeNextAction(lessons, coursesRef, progressMap, proveCheckli
 }
 
 /**
+ * Latest non-empty prove artifact URL for a course (Prove/Capstone topics).
+ *
+ * @param {object[]} lessons
+ * @param {Record<string, string>} proveMap
+ * @param {number} courseId
+ */
+export function latestProveArtifactForCourse(lessons, proveMap, courseId) {
+  if (!lessons?.length || !proveMap) {
+    return null;
+  }
+  const proveLessons = lessons
+    .filter(
+      (l) =>
+        l.course === courseId && (l.type === "Prove" || l.type === "Capstone" || l.type === "Frontier")
+    )
+    .sort((a, b) => b.order - a.order);
+  for (const lesson of proveLessons) {
+    const url = (proveMap[lesson.order] || proveMap[String(lesson.order)] || "").trim();
+    if (url) {
+      return { url, order: lesson.order, title: lesson.lesson || "Prove" };
+    }
+  }
+  return null;
+}
+
+/**
  * @param {Record<string, object>} coursesRef
  * @param {Record<string, boolean>} proveChecklistMap
  * @param {string} portfolioRepoUrl
+ * @param {object[]} [lessons]
+ * @param {Record<string, string>} [proveMap]
  */
-export function buildProveDashboardRows(coursesRef, proveChecklistMap, portfolioRepoUrl) {
+export function buildProveDashboardRows(
+  coursesRef,
+  proveChecklistMap,
+  portfolioRepoUrl,
+  lessons = [],
+  proveMap = {}
+) {
   const portfolio = (portfolioRepoUrl || "").trim();
   return Object.keys(coursesRef || {})
     .map((key) => Number(key))
@@ -91,6 +125,7 @@ export function buildProveDashboardRows(coursesRef, proveChecklistMap, portfolio
         assignment: ref.assignment || "",
         checklist,
         hasPortfolio: Boolean(portfolio),
+        proveArtifact: latestProveArtifactForCourse(lessons, proveMap, courseId),
       };
     });
 }

@@ -59,7 +59,7 @@ This document consolidates a complete review of the project: architecture, stren
 | App stack | React 19 + Vite 8, Mermaid, KaTeX, Google OAuth, optional Cloudflare Worker sync |
 | Syllabus source | Markdown in `docs/` |
 | Runtime data | `data/lessons.json` → copied to `public/data/lessons.json` |
-| Lesson count | **141** topics across Courses 0–15 |
+| Lesson count | **142** topics across Courses 0–15 |
 | Generation | `npm run curriculum` (Python scripts) |
 | Validation | `npm run validate:ci` (app, models, prove workflow, repos, curriculum, public audit, implementation audit) |
 | Deploy | Static build → GitHub Pages (or any static host) |
@@ -168,9 +168,11 @@ Course Prove gates map to artifacts along this spine (gateway release, agent dem
 
 ## 7. Application Review (React Studio)
 
+> **Update (Sep 2026, commit `99314d2+`):** Most items below were addressed. See [§17](#17-prioritized-change-backlog) for status. Remaining gaps: unified progress store, cloud-sync unit tests (added in follow-up), interactive Course 0 wizard (checklist added), prove URLs on dashboard, §7 narrative kept for historical context.
+
 ### Stack & structure
 
-- **Entry:** `src/App.jsx` (large orchestrator), `main.jsx`, `index.css`
+- **Entry:** `src/App.jsx` (~400 lines, composes hooks), `main.jsx`, `index.css`
 - **Components (sample):** Header, Sidebar, LessonFeed, SmartStage, CourseStage, HomeStage, Inspector, LabProvePanel, SettingsModal, RegenerateModal, MobileLearningBar, MarkdownProse, MermaidBlock, GoogleSignInButton, CourseEnrichmentPanels, CurriculumShell, etc.
 - **Services/utils:** curriculumLoader, aiService, proveWorkflow, studioCloudSync, learningLayout, studyStreak, theoryRegenerationStore, implementationResources, googleAuth, localStorage helpers
 - **Config:** aiModels.js, studio runtime config
@@ -181,49 +183,27 @@ Progress, notes, prove map, portfolio repo URL, prove checklist map, video overr
 
 Many independent `localStorage` keys (`ai_hub_react_*`) with separate `useEffect` writers.
 
-### Architecture & code health — problems
+### Architecture & code health — status
 
-1. **`App.jsx` is a god-component** (900+ lines) holding curriculum, progress, prove, settings, cloud sync, layout, and navigation.
-2. **Fragmented localStorage** — easy to desync; hard to migrate or test as a unit.
-3. **Cloud sync intertwined with local state** — merge/push logic is complex; conflict rules need explicit documentation and tests.
-4. **Weak separation** between curriculum data, user progress, and settings.
+| Original issue | Status |
+|----------------|--------|
+| God-component `App.jsx` | **Mitigated** — `useCurriculum`, `useLearnerPersistence`, `useStudioNavigation`, `useStudioSettings`, `useStudioBackup`, `useStudioCloudSync` |
+| Fragmented localStorage | **Partial** — `storageKeys.js` + backup `schema_version`; still multiple writers |
+| Cloud sync complexity | **Partial** — `studioCloudSync.js`; merge = latest `updatedAt`; tests in `test_prove_workflow.mjs` / `test_studio_cloud_sync.mjs` |
+| Curriculum vs progress separation | **Improved** via hooks |
 
-### Recommended application changes
+### UX / product gaps — status
 
-1. Split into focused hooks/stores:
-   - `useCurriculum()`
-   - `useProgress()` (progress + notes + streak)
-   - `useProveWorkflow()` (prove URLs + checklist + portfolio repo)
-   - `useSettings()` (keys, model, theme, layout)
-   - `useCloudSync()`
-2. Single typed progress/prove schema (even if still in localStorage) for migration and cloud merge.
-3. Extract cloud sync with explicit conflict-resolution rules and tests (extend `test_prove_workflow.mjs` pattern).
-4. Freeze the lesson object schema the UI depends on; fail CI if required fields disappear.
-
-### UX / product gaps
-
-**High priority**
-
-| Issue | Why it matters | Suggested fix |
-|-------|----------------|---------------|
-| Weak global “what should I do next?” | Learners get lost across 141 topics | Persistent Next Action card (course + topic + Prove status) |
-| Prove status scattered | Hard to see portfolio readiness | Single Prove Dashboard (16 courses, status, links, checklist %) |
-| Progress per-lesson, not per-Prove | Videos done ≠ portfolio | Weight progress by Prove completion |
-| Onboarding text-heavy | First hour relies on long markdown | Interactive “Course 0 in 60 minutes” path |
-| Mobile density | Too many panels | Focus mode; hide secondary panels by default on small screens |
-
-**Medium priority**
-
-- Search across topics, resources, Prove criteria
-- Clearer Required vs Optional visual distinction
-- Export progress + Prove worksheet as one Markdown/JSON portfolio summary
-- Progressive disclosure in Lab & Prove (scenario → code → plan → checklist → repos)
-
-### Feature debt notes
-
-- Optional AI mentor (BYOK) can distract from Prove work → consider default-off or hard token budget for new users.
-- Theory regeneration is useful for power users; keep secondary to curated theory.
-- Google sign-in + cloud sync is optional and correctly designed, but client-ID/origins/worker setup will block many users. Emphasize “local-only is fine.”
+| Issue | Status |
+|-------|--------|
+| Next action | **Done** — home + syllabus strip; optional compact strip while learning |
+| Prove dashboard | **Done** — checklist % + portfolio URL + summary export + per-course prove links |
+| Prove-weighted progress | **Done** — `learningProgress.js` |
+| Course 0 first hour | **Partial** — `Course0FirstHourChecklist` on home (not full wizard) |
+| Mobile density | **Partial** — mentor collapsed by default; narrow viewport hides mentor |
+| Search / Required-Optional / export / Lab disclosure | **Done** (see §17) |
+| Mentor distraction | **Partial** — panel off by default; brief reply depth; daily budget off until configured |
+| Local-only messaging | **Done** — `HomeAuthPanel` |
 
 ---
 
@@ -753,15 +733,17 @@ Leave remaining topics on generated theory until pain is felt.
 
 ## 15. UX & Learning Experience Gaps
 
-1. **Next action** is not obvious across 141 topics.  
-2. **Prove Dashboard** missing as a first-class view.  
-3. Progress does not weight Prove completion.  
-4. First-hour path is still document-heavy.  
-5. Lab & Prove panel is information-dense (needs progressive disclosure).  
-6. Required vs Optional can be clearer.  
-7. Search across curriculum would help navigation.  
-8. Mentor can become a distraction without budgets.  
-9. Mobile needs aggressive Focus defaults.
+**Update (Sep 2026):** Items 1–3, 5–7 addressed in studio (`99314d2+`). Item 4 partially addressed via Course 0 first-hour checklist on home. Items 8–9 partially addressed (mentor defaults, layout).
+
+1. ~~Next action~~ → `NextActionCard` + syllabus strip.  
+2. ~~Prove Dashboard~~ → home section + export.  
+3. ~~Prove-weighted progress~~ → header / syllabus %.  
+4. **First-hour path** — checklist on home; full interactive wizard still optional.  
+5. ~~Lab & Prove density~~ → `LabProveDisclosure`.  
+6. ~~Required vs Optional~~ → badges + required-only filter (default on).  
+7. ~~Search~~ → `TopicSearchModal`.  
+8. **Mentor budgets** — token bar + settings; new users: budget off until set.  
+9. **Mobile focus** — mentor collapsed; dedicated focus mode still optional.
 
 ---
 
@@ -833,11 +815,13 @@ These are the project’s core strengths.
 
 ## 19. Suggested Immediate Experiments
 
-1. **Prove Dashboard prototype** — component reading `proveMap` + `proveChecklistMap` + enrichment `prove_packs` → 16-row status board.  
-2. **Course 10 product brief** — 1-page markdown in `docs/` surfaced on Course 10 overview.  
-3. **Course 6 decision** — thicken graph validator story **or** demote to short elective.  
-4. **Schema freeze** — document lesson fields the React app depends on; CI fails if required fields vanish.  
-5. **Course 0 metric contract** — explicit n and threshold in prove_pack and README example.
+| # | Experiment | Status |
+|---|------------|--------|
+| 1 | Prove Dashboard (`proveMap` + checklist + packs) | **Done** — `ProveDashboard.jsx`; prove URLs per course in follow-up |
+| 2 | Course 10 product brief in `docs/` | **Done** — `capstone_product_brief.md` on Course 10 overview |
+| 3 | Course 6 decision (graph depth vs elective) | **Documented** — `docs/decisions/course_6_graph_scope.md` (keep slim validator slice) |
+| 4 | Schema freeze + CI | **Done** — `lesson_json_schema.md`, `validate_app.mjs` |
+| 5 | Course 0 metric contract (n, threshold) | **Done** — prove_pack course `0` |
 
 ---
 

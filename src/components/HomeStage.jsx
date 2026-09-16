@@ -3,6 +3,7 @@ import HomeAuthPanel from "./HomeAuthPanel";
 import MarkdownProse from "./MarkdownProse";
 import NextActionCard from "./NextActionCard";
 import ProveDashboard from "./ProveDashboard";
+import Course0FirstHourChecklist from "./Course0FirstHourChecklist";
 import {
   ArrowRight,
   BookOpen,
@@ -79,6 +80,8 @@ export default function HomeStage({
   onOpenLessonFromHome,
   progressMap = {},
   lessons = [],
+  proveMap = {},
+  onOpenCourseOverviewFirstHour,
 }) {
   const hasProgress = completedCount > 0;
   const phases = programWalkthrough.phases || [];
@@ -178,6 +181,15 @@ export default function HomeStage({
           onOpenCourse={onOpenCourse}
         />
 
+        {!hasProgress && (
+          <Course0FirstHourChecklist
+            progressMap={progressMap}
+            portfolioRepoUrl={portfolioRepoUrl}
+            onStartCourse0={onBeginStepOne}
+            onOpenCourse0Overview={onOpenCourseOverviewFirstHour || onOpenCourseOverview}
+          />
+        )}
+
         <ProveDashboard
           coursesRef={coursesRef}
           proveChecklistMap={proveChecklistMap}
@@ -186,6 +198,7 @@ export default function HomeStage({
           onOpenCourse={onOpenCourse}
           progressMap={progressMap}
           lessons={lessons}
+          proveMap={proveMap}
         />
 
         <section className="home-value-section" aria-labelledby="home-value-heading">

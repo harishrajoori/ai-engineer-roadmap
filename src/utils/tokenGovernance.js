@@ -6,6 +6,7 @@
 const GOVERNANCE_KEY = "studio_token_governance";
 const DEPTH_KEY = "mentor_reply_depth";
 
+/** Applied only when user explicitly sets a budget in Settings (not for first-time learners). */
 const DEFAULT_DAILY_BUDGET = 120_000;
 const DEFAULT_WARN_PERCENT = 80;
 
@@ -79,7 +80,7 @@ export function readGovernanceSettings() {
     /* ignore */
   }
   return {
-    dailyBudgetTokens: DEFAULT_DAILY_BUDGET,
+    dailyBudgetTokens: null,
     warnAtPercent: DEFAULT_WARN_PERCENT,
     byDay: {},
     session: emptyBucket(),

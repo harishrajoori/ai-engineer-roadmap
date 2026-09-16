@@ -18,10 +18,11 @@ export default function ProveDashboard({
   onOpenCourse,
   progressMap = {},
   lessons = [],
+  proveMap = {},
 }) {
   const rows = useMemo(
-    () => buildProveDashboardRows(coursesRef, proveChecklistMap, portfolioRepoUrl),
-    [coursesRef, proveChecklistMap, portfolioRepoUrl]
+    () => buildProveDashboardRows(coursesRef, proveChecklistMap, portfolioRepoUrl, lessons, proveMap),
+    [coursesRef, proveChecklistMap, portfolioRepoUrl, lessons, proveMap]
   );
 
   const portfolioDone = rows.filter((r) => r.checklist.complete && r.checklist.total > 0).length;
@@ -89,6 +90,20 @@ export default function ProveDashboard({
                 <span className="home-prove-dashboard-course">Course {row.courseId}</span>
                 <span className="home-prove-dashboard-title">{row.title}</span>
                 <span className="home-prove-dashboard-prove">{row.proveTitle}</span>
+                {row.proveArtifact?.url ? (
+                  <a
+                    href={row.proveArtifact.url}
+                    className="home-prove-dashboard-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    title={row.proveArtifact.title}
+                  >
+                    Artifact
+                  </a>
+                ) : (
+                  <span className="home-prove-dashboard-link home-prove-dashboard-link-muted">No link</span>
+                )}
                 <span className="home-prove-dashboard-check" aria-label={done ? "Checklist complete" : "In progress"}>
                   {done ? <CheckCircle2 size={18} /> : <Circle size={18} />}
                   {row.checklist.total > 0 ? `${row.checklist.done}/${row.checklist.total}` : "—"}

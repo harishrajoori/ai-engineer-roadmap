@@ -31,7 +31,7 @@ def main() -> None:
         lessons = parse_track(TRACK.read_text(encoding="utf-8"))
         by_order = {int(row["order"]): row for row in lessons if row.get("order") is not None}
         merged = enrich_all(merged, by_order)
-    missing = [i for i in range(1, 142) if i not in merged]
+    missing = [i for i in range(1, 143) if i not in merged]
     if missing:
         raise SystemExit(f"Handbook missing orders: {missing[:20]}{'…' if len(missing) > 20 else ''}")
     OUT.write_text(json.dumps({str(k): v for k, v in sorted(merged.items())}, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

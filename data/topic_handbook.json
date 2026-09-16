@@ -2728,5 +2728,21 @@
     ],
     "capstone_action": "Prove notes in studio (private).",
     "done_when": "Course 15 acceptance met."
+  },
+  "142": {
+    "one_liner": "Prove: offer letter or structured interview feedback (Course 15 closure).",
+    "why_now": "Final prove row—capture outcome or learning from the search loop.",
+    "mental_model": "Private notes in studio backup are OK; public repo stays synthetic.",
+    "beginner_extra": "Link offer PDF or write 5 bullets of feedback themes in prove notes.",
+    "intermediate_deep_dive": "Retro: which prove artifacts interviewers asked about most.\n\n## Plain English implementation path\n\nRetro: which prove artifacts interviewers asked about most.\n\nWork in this order: (1) reproduce the doc or video example in a scratch file, (2) move the working snippet into your capstone package with a test, (3) document the command a reviewer runs (`pytest`, `make eval`, or a single CLI), (4) only then mark the topic complete.\n\n**Concrete deliverable:** Studio prove URL or backup JSON notes.\n\n**You are done when:** Course 15 prove acceptance checklist complete.\n\n## Explain it to a staff engineer\n\n- What would you change in the capstone story for the next loop?\n\n\n## Why this link exists\n\nProve: offer letter or structured interview feedback (Course 15 closure). The syllabus title **Prove: Offer or feedback notes** is your scope boundary—do not boil the ocean.",
+    "advanced_extra": "Update positioning statement from real feedback (private doc).\n\n## Production notes (still plain English)\n\nUpdate positioning statement from real feedback (private doc).\n\n**Cost:** log tokens and wall time per record on your golden set; compare P50 vs P95 after any prompt change. **Safety:** treat user content and log lines as untrusted input—never let them rewrite system instructions. **Ops:** every external call needs a timeout, a retry budget, and a dashboard or JSONL you can grep during an incident.\n\n\n**Architecture anchor:** Private notes in studio backup are OK; public repo stays synthetic.",
+    "failure_modes": [
+      "Skipping written debrief when no offer yet"
+    ],
+    "interview_prompts": [
+      "What would you change in the capstone story for the next loop?"
+    ],
+    "capstone_action": "Studio prove URL or backup JSON notes.",
+    "done_when": "Course 15 prove acceptance checklist complete."
   }
 }

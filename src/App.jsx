@@ -263,6 +263,7 @@ export default function App() {
               onOpenLessonFromHome={nav.handleOpenLessonFromHome}
               progressMap={progressMap}
               lessons={lessonsData}
+              proveMap={proveMap}
             />
           ) : nav.courseOverviewMode ? (
             <CourseStage
@@ -309,6 +310,8 @@ export default function App() {
               isWideDesktop={resizableDesktopGrid}
               mobilePanel={nav.mobilePanel}
               onMobilePanelChange={nav.setMobilePanel}
+              nextAction={nav.nextAction}
+              onOpenLessonFromNextAction={(lesson) => nav.handleSelectLesson(lesson.order)}
             />
           )}
         </main>

@@ -18,6 +18,7 @@ How narrative, syllabus, and studio JSON fit together. **Audience lens:** experi
 | `data/lessons.json` + `public/data/lessons.json` | **Runtime bundle** for the studio | `curriculumLoader.js` |
 | [`data/lab_scenarios.json`](../data/lab_scenarios.json) | **DE lab narratives + code blocks** for Lab & Prove | `scripts/lab_scenarios.py` → `lab_plan.de_lab` |
 | [`implementation_catalog_hygiene.md`](./implementation_catalog_hygiene.md) | Monthly catalog / impl-link audit ritual | Maintainers |
+| [`decisions/course_6_graph_scope.md`](./decisions/course_6_graph_scope.md) | Course 6 graph validator scope (audit ADR) | Maintainers |
 
 ## Regenerate after edits
 
@@ -28,6 +29,15 @@ npm run validate:ci
 ```
 
 Do **not** hand-edit `data/lessons.json` — see [`lesson_json_schema.md`](./lesson_json_schema.md) § Curriculum diff hygiene.
+
+### Curriculum pipeline order (maintainers)
+
+1. Edit human sources: learning track, enrichment, `walkthrough_content.py`, `lab_scenarios.json`, `docs/topic_theory/*.studio.md`, handbook batches.  
+2. `python3 scripts/merge_topic_handbook.py` → `data/topic_handbook.json`  
+3. `python3 scripts/generate_lessons.py` → `data/lessons.json` + `public/data/lessons.json`  
+4. `npm run validate:ci`
+
+Or **`npm run curriculum`** (steps 2–3). Decision records: [`docs/decisions/`](./decisions/).
 
 ## Content order for learners (5+ YOE data engineer)
 

@@ -509,6 +509,80 @@ header.site-header {
   max-width: 22rem;
 }
 
+.course0-first-hour {
+  margin-bottom: 1.75rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  background: color-mix(in srgb, var(--accent) 5%, var(--surface));
+}
+.course0-first-hour-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  color: var(--accent);
+}
+.course0-first-hour-head h2 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+  color: var(--text);
+}
+.course0-first-hour-lead {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.course0-first-hour-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.course0-first-hour-list li {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+.course0-first-hour-list li.is-done .course0-first-hour-label {
+  color: var(--muted);
+}
+.course0-first-hour-check {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  color: var(--muted);
+}
+.course0-first-hour-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.course0-first-hour-step {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.course0-first-hour-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.course0-first-hour-hint {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.course0-first-hour-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
 .home-prove-dashboard {
   margin-bottom: 2.75rem;
   padding: 1.25rem 1.35rem;
@@ -562,7 +636,7 @@ header.site-header {
 .home-prove-dashboard-row {
   width: 100%;
   display: grid;
-  grid-template-columns: auto 1fr auto auto auto;
+  grid-template-columns: auto 1fr auto auto auto auto;
   gap: 0.5rem 0.75rem;
   align-items: center;
   text-align: left;
@@ -589,6 +663,19 @@ header.site-header {
 .home-prove-dashboard-title {
   font-size: 0.85rem;
   font-weight: 600;
+}
+.home-prove-dashboard-link {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+.home-prove-dashboard-link:hover {
+  text-decoration: underline;
+}
+.home-prove-dashboard-link-muted {
+  color: var(--muted);
+  font-weight: 500;
 }
 .home-prove-dashboard-prove {
   font-size: 0.72rem;
@@ -3158,6 +3245,11 @@ header.site-header {
   gap: 0.75rem 1.25rem;
   margin-top: 0.5rem;
 }
+.learning-stage-next-action {
+  margin: 0 0 1rem;
+  padding: 0 0.25rem;
+}
+
 .learning-stage-footer {
   display: flex;
   flex-wrap: wrap;
