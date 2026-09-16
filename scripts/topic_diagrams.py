@@ -115,6 +115,34 @@ def _blob(lesson: dict) -> str:
     return f"{lesson.get('lesson') or ''} {(lesson.get('url') or '')}".lower()
 
 
+def _polish_flowchart(chart: str) -> str:
+    """Append semantic node colors for common failure/success/store ids."""
+    c = chart.strip()
+    if not c.startswith(("flowchart", "graph ")):
+        return c
+    tail = """
+classDef pathOk fill:#059669,stroke:#34d399,color:#f0fdf4
+classDef pathBad fill:#dc2626,stroke:#f87171,color:#fef2f2
+classDef dataStore fill:#7c3aed,stroke:#a78bfa,color:#faf5ff
+"""
+    assigns: list[str] = []
+    bad_ids = ("DLQ", "FAIL", "REJ", "QUAR")
+    ok_ids = ("PASS", "OUT", "MET", "GS", "COMMIT", "TOPK")
+    store_ids = ("DB", "LOG", "STORE", "JSL", "IDX", "ART", "GOLD")
+    for nid in bad_ids:
+        if re.search(rf"\b{nid}\s*[\[\(]", c):
+            assigns.append(f"class {nid} pathBad")
+    for nid in ok_ids:
+        if re.search(rf"\b{nid}\s*[\[\(]", c):
+            assigns.append(f"class {nid} pathOk")
+    for nid in store_ids:
+        if re.search(rf"\b{nid}\s*[\[\({{]", c):
+            assigns.append(f"class {nid} dataStore")
+    if assigns:
+        return c + tail + "\n" + "\n".join(assigns)
+    return c + tail
+
+
 def architecture_mermaid(lesson: dict) -> str:
     """Primary architecture diagram for a topic (order-specific before course-wide template)."""
     from topic_diagram_order import order_architecture
@@ -123,14 +151,15 @@ def architecture_mermaid(lesson: dict) -> str:
     if order is not None:
         custom = order_architecture(int(order), lesson)
         if custom:
-            return custom
+            return _polish_flowchart(custom)
 
     course = str(lesson.get("course", "0"))
     ltype = lesson.get("type") or "Read"
     b = _blob(lesson)
 
     if "instructor" in b or "pydantic" in b:
-        return """flowchart TB
+        return _polish_flowchart(
+            """flowchart TB
   RAW[Raw text] --> HASH[prompt_hash logged]
   HASH --> LLM[Chat completion]
   LLM --> PARSE[JSON parse]
@@ -139,31 +168,32 @@ def architecture_mermaid(lesson: dict) -> str:
   PARSE -->|valid| PYD[Pydantic validate]
   PYD -->|fail| DLQ[Quarantine + metric]
   PYD -->|ok| OUT[Typed bronze record]"""
+        )
     if "litellm" in b:
-        return _COURSE_ARCHITECTURE["1"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["1"])
     if "langgraph" in b or "langchain" in b:
         return _COURSE_ARCHITECTURE["2"]
     if "mcp" in b:
-        return _COURSE_ARCHITECTURE["3"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["3"])
     if "hybrid" in b or "retriev" in b or "qdrant" in b or "rag" in b:
-        return _COURSE_ARCHITECTURE["4"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["4"])
     if "chunk" in b or "docling" in b or "llamaparse" in b:
-        return _COURSE_ARCHITECTURE["5"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["5"])
     if "graph" in b or "cypher" in b or "neo4j" in b:
-        return _COURSE_ARCHITECTURE["6"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["6"])
     if "eval" in b or "golden" in b or "hamel" in b or "deepeval" in b:
-        return _COURSE_ARCHITECTURE["7"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["7"])
     if "github.com" in b and "workflow" in b:
-        return _COURSE_ARCHITECTURE["8"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["8"])
     if "opa" in b or "langfuse" in b or "trace" in b:
-        return _COURSE_ARCHITECTURE["9"]
+        return _polish_flowchart(_COURSE_ARCHITECTURE["9"])
     if ltype == "Prove":
-        return _TYPE_OVERLAY["Prove"]
+        return _polish_flowchart(_TYPE_OVERLAY["Prove"])
     if ltype == "Build":
-        return _TYPE_OVERLAY["Build"]
+        return _polish_flowchart(_TYPE_OVERLAY["Build"])
     if ltype == "Video":
-        return _TYPE_OVERLAY["Video"]
-    return _COURSE_ARCHITECTURE.get(course, _COURSE_ARCHITECTURE["0"])
+        return _polish_flowchart(_TYPE_OVERLAY["Video"])
+    return _polish_flowchart(_COURSE_ARCHITECTURE.get(course, _COURSE_ARCHITECTURE["0"]))
 
 
 def sequence_mermaid(lesson: dict) -> str | None:

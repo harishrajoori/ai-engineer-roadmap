@@ -101,17 +101,26 @@ Think of an LLM as an **untrusted compute kernel**: fast and flexible, but nonde
 ```mermaid
 flowchart LR
   subgraph thin [Thin integration]
-    A[Single-app wrapper\none API key · no tests]
+    A["Single-app wrapper<br/>one API key · no tests"]
   end
   subgraph research [Model building]
-    B[Training / research stack\nnot this course]
+    B["Training / research stack<br/>not this course"]
   end
   subgraph here [This program]
-    C[AI platform engineering\ncontracts · gateway · evals · ops]
+    C["AI platform engineering<br/>contracts · gateway · evals · ops"]
   end
-  A -.->|fragile in prod| X[Breaks on schema and cost]
-  B -.->|different path| Y[Frontier electives 13–14]
-  C --> Z[Reliable platform you can extend]
+  A -.->|fragile in prod| X["Breaks on schema and cost"]
+  B -.->|different path| Y["Frontier electives 13–14"]
+  C --> Z["Reliable platform you can extend"]
+  style thin fill:#450a0a,stroke:#f87171,color:#fecaca
+  style research fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+  style here fill:#064e3b,stroke:#34d399,color:#ecfdf5
+  style A fill:#7f1d1d,stroke:#fca5a5,color:#fef2f2
+  style B fill:#334155,stroke:#cbd5e1,color:#f8fafc
+  style C fill:#047857,stroke:#6ee7b7,color:#ecfdf5
+  style X fill:#7c2d12,stroke:#fdba74,color:#fff7ed
+  style Y fill:#4c1d95,stroke:#c4b5fd,color:#ede9fe
+  style Z fill:#312e81,stroke:#a5b4fc,color:#eef2ff
 ```
 
 ---
@@ -194,7 +203,7 @@ High-level **concept map**—not the lesson order. You climb from **contracts** 
 
 ```mermaid
 mindmap
-  root((AI Platform\nEngineering))
+  root((AI Platform Engineering))
     Foundations
       Platform mindset
       Agentic SDLC
@@ -290,35 +299,35 @@ This is the **spine** every course extends:
 ```mermaid
 flowchart TB
   subgraph sources [Sources]
-    LOGS[Logs / tickets / docs\npublic or synthetic]
+    LOGS["Logs / tickets / docs<br/>public or synthetic"]
   end
 
   subgraph ingress [Ingress]
-    GW[LiteLLM gateway\nmodels · fallbacks · cost]
+    GW["LiteLLM gateway<br/>models · fallbacks · cost"]
   end
 
   subgraph core [Core platform]
-    EXT[Instructor + Pydantic\nstructured extraction]
-    ORCH[LangGraph orchestration\nHITL · state]
-    MCP[MCP tool surface\nschema · audit]
+    EXT["Instructor + Pydantic<br/>structured extraction"]
+    ORCH["LangGraph orchestration<br/>HITL · state"]
+    MCP["MCP tool surface<br/>schema · audit"]
   end
 
   subgraph knowledge [Knowledge]
-    RAG[Hybrid retrieval\nvector + keyword]
-    CHUNK[Chunk pipeline\njsonl schema]
-    GRAPH[Graph slice\nvalidator queries]
+    RAG["Hybrid retrieval<br/>vector + keyword"]
+    CHUNK["Chunk pipeline<br/>jsonl schema"]
+    GRAPH["Graph slice<br/>validator queries"]
   end
 
   subgraph trust [Trust layer]
-    EVAL[Eval harness\ngolden set]
-    CI[CI gate\nblock regression]
-    OPA[OPA policy\nbefore tools]
-    TRACE[Tracing\nLangfuse / OTel]
+    EVAL["Eval harness<br/>golden set"]
+    CI["CI gate<br/>block regression"]
+    OPA["OPA policy<br/>before tools"]
+    TRACE["Tracing<br/>Langfuse / OTel"]
   end
 
   subgraph store [Persistence]
-    DB[(Warehouse / OLTP\ntyped tables)]
-    LINEAGE[Lineage sample\nchunk → call → row]
+    DB[("Warehouse / OLTP<br/>typed tables")]
+    LINEAGE["Lineage sample<br/>chunk → call → row"]
   end
 
   LOGS --> GW
@@ -334,6 +343,27 @@ flowchart TB
   ORCH --> TRACE
   EXT --> DB
   TRACE --> LINEAGE
+
+  style sources fill:#1e293b,stroke:#64748b,color:#e2e8f0
+  style ingress fill:#164e63,stroke:#22d3ee,color:#ecfeff
+  style core fill:#312e81,stroke:#818cf8,color:#eef2ff
+  style knowledge fill:#064e3b,stroke:#34d399,color:#ecfdf5
+  style trust fill:#78350f,stroke:#fbbf24,color:#fffbeb
+  style store fill:#4c1d95,stroke:#a78bfa,color:#f5f3ff
+  style LOGS fill:#334155,stroke:#94a3b8,color:#f8fafc
+  style GW fill:#0e7490,stroke:#67e8f9,color:#ecfeff
+  style EXT fill:#4338ca,stroke:#a5b4fc,color:#eef2ff
+  style ORCH fill:#5b21b6,stroke:#c4b5fd,color:#f5f3ff
+  style MCP fill:#3730a3,stroke:#818cf8,color:#e0e7ff
+  style RAG fill:#047857,stroke:#6ee7b7,color:#ecfdf5
+  style CHUNK fill:#065f46,stroke:#34d399,color:#d1fae5
+  style GRAPH fill:#134e4a,stroke:#2dd4bf,color:#ccfbf1
+  style EVAL fill:#92400e,stroke:#fcd34d,color:#fffbeb
+  style CI fill:#b45309,stroke:#fbbf24,color:#fff7ed
+  style OPA fill:#9a3412,stroke:#fb923c,color:#ffedd5
+  style TRACE fill:#713f12,stroke:#f59e0b,color:#fef3c7
+  style DB fill:#5b21b6,stroke:#d8b4fe,color:#faf5ff
+  style LINEAGE fill:#6d28d9,stroke:#c4b5fd,color:#ede9fe
 ```
 
 ASCII equivalent (for plain-text readers):

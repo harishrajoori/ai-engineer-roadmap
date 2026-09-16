@@ -1990,11 +1990,16 @@ header.site-header {
 
 .theory-diagram-card {
   margin: 1.25rem 0;
-  padding: 1rem;
+  padding: 1rem 1.1rem 1.15rem;
   border-radius: 12px;
   border: 1px solid var(--border-subtle);
-  background: var(--bg-alt);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--bg-alt) 92%, var(--accent, #6366f1) 8%),
+    var(--bg-alt)
+  );
   overflow-x: auto;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--border-subtle) 70%, transparent);
 }
 
 .theory-diagram-label {
@@ -2011,6 +2016,25 @@ header.site-header {
   height: auto;
   display: block;
   margin: 0 auto;
+}
+
+.prose-home-brief .theory-mermaid-output svg,
+.prose-primer .theory-mermaid-output svg {
+  min-height: 280px;
+}
+
+.theory-mermaid-output svg .cluster-label,
+.theory-mermaid-output svg .subgraphTitle {
+  font-weight: 600;
+}
+
+.theory-mermaid-output svg .edgeLabel {
+  font-size: 0.9em;
+}
+
+.theory-mermaid-output svg .flowchart-link,
+.theory-mermaid-output svg .edge-pattern-solid {
+  stroke-width: 2px;
 }
 
 .theory-mermaid-fallback,

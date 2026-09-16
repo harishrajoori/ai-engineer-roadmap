@@ -1,18 +1,6 @@
 import React, { useEffect, useId, useRef, useState } from "react";
 import mermaid from "mermaid";
-
-let mermaidReady = false;
-
-function syncMermaidTheme() {
-  const isLight = document.documentElement.getAttribute("data-theme") === "light";
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: isLight ? "neutral" : "dark",
-    securityLevel: "loose",
-    fontFamily: "inherit",
-  });
-  mermaidReady = true;
-}
+import { applyMermaidTheme, getMermaidThemeKey } from "../utils/mermaidTheme";
 
 /**
  * Renders a Mermaid diagram from fenced ```mermaid blocks in theory markdown.
@@ -21,22 +9,30 @@ export default function MermaidBlock({ chart }) {
   const containerRef = useRef(null);
   const reactId = useId();
   const [error, setError] = useState("");
+  const [themeKey, setThemeKey] = useState(() => getMermaidThemeKey());
 
   useEffect(() => {
-    syncMermaidTheme();
+    const root = document.documentElement;
+    const obs = new MutationObserver(() => {
+      setThemeKey(getMermaidThemeKey());
+    });
+    obs.observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    mermaid.initialize(applyMermaidTheme());
     const el = containerRef.current;
     if (!el || !chart?.trim()) {
       return;
     }
 
-    const renderId = `mermaid-${reactId.replace(/:/g, "")}`;
+    const renderId = `mermaid-${reactId.replace(/:/g, "")}-${themeKey}`;
 
     let cancelled = false;
     (async () => {
       try {
-        if (!mermaidReady) {
-          syncMermaidTheme();
-        }
+        mermaid.initialize(applyMermaidTheme());
         const { svg } = await mermaid.render(renderId, chart.trim());
         if (!cancelled && el) {
           el.innerHTML = svg;
@@ -52,7 +48,7 @@ export default function MermaidBlock({ chart }) {
     return () => {
       cancelled = true;
     };
-  }, [chart, reactId]);
+  }, [chart, reactId, themeKey]);
 
   if (error) {
     return (
