@@ -48,6 +48,7 @@ import {
   savePortfolioRepoUrl,
   writeProveChecklistMap,
 } from "./utils/proveWorkflow";
+import { computeNextAction } from "./utils/nextAction";
 
 const PROGRESS_KEY = "ai_hub_react_progress";
 const NOTES_KEY = "ai_hub_react_notes";
@@ -485,6 +486,26 @@ export default function App() {
     return next || lessonsData[lessonsData.length - 1];
   }, [lessonsData, progressMap]);
 
+  const nextAction = useMemo(
+    () => computeNextAction(lessonsData, coursesRefData, progressMap, proveChecklistMap),
+    [lessonsData, coursesRefData, progressMap, proveChecklistMap]
+  );
+
+  const handleOpenLessonFromHome = useCallback(
+    (lesson) => {
+      if (!lesson) {
+        return;
+      }
+      leaveHomeView();
+      setActiveCourseNum(lesson.course);
+      setActiveLessonOrder(lesson.order);
+      setCourseOverviewMode(false);
+      setMobilePanel(null);
+      scrollStageTop();
+    },
+    [leaveHomeView, scrollStageTop]
+  );
+
   const handleBeginStepOne = useCallback(() => {
     if (!firstStepLesson) {
       return;
@@ -749,6 +770,11 @@ export default function App() {
               onGoogleAuthError={handleGoogleAuthError}
               googleAuthError={googleAuthError}
               onOpenSettings={() => setIsSettingsOpen(true)}
+              nextAction={nextAction}
+              proveChecklistMap={proveChecklistMap}
+              portfolioRepoUrl={portfolioRepoUrl}
+              onPortfolioRepoChange={setPortfolioRepoUrl}
+              onOpenLessonFromHome={handleOpenLessonFromHome}
             />
           ) : courseOverviewMode ? (
             <CourseStage

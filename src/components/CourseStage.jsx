@@ -77,6 +77,13 @@ export default function CourseStage({
         onStartHere={handleStartHere}
       />
 
+      {ref.capstone_product_brief_markdown && (
+        <details className="course-overview-block course-capstone-brief" open={course.course === 10}>
+          <summary>Capstone product brief (Course 10 scope contract)</summary>
+          <MarkdownProse variant="primer">{ref.capstone_product_brief_markdown}</MarkdownProse>
+        </details>
+      )}
+
       <section className="course-overview-block course-overview-topics-first">
         <h2>Topics — do these in order</h2>
         <p className="course-overview-hint">

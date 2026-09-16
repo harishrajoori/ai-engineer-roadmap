@@ -1,6 +1,8 @@
 import React, { useMemo } from "react";
 import HomeAuthPanel from "./HomeAuthPanel";
 import MarkdownProse from "./MarkdownProse";
+import NextActionCard from "./NextActionCard";
+import ProveDashboard from "./ProveDashboard";
 import {
   ArrowRight,
   BookOpen,
@@ -70,6 +72,11 @@ export default function HomeStage({
   onGoogleAuthError,
   googleAuthError = "",
   onOpenSettings,
+  nextAction = null,
+  proveChecklistMap = {},
+  portfolioRepoUrl = "",
+  onPortfolioRepoChange,
+  onOpenLessonFromHome,
 }) {
   const hasProgress = completedCount > 0;
   const phases = programWalkthrough.phases || [];
@@ -162,6 +169,20 @@ export default function HomeStage({
             </button>
           )}
         </section>
+
+        <NextActionCard
+          action={nextAction}
+          onOpenLesson={onOpenLessonFromHome}
+          onOpenCourse={onOpenCourse}
+        />
+
+        <ProveDashboard
+          coursesRef={coursesRef}
+          proveChecklistMap={proveChecklistMap}
+          portfolioRepoUrl={portfolioRepoUrl}
+          onPortfolioRepoChange={onPortfolioRepoChange}
+          onOpenCourse={onOpenCourse}
+        />
 
         <section className="home-value-section" aria-labelledby="home-value-heading">
           <h2 id="home-value-heading" className="home-section-title">Why this studio</h2>

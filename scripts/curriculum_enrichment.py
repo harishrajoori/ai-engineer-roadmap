@@ -78,5 +78,14 @@ def load_program_brief_markdown() -> str:
     return prepare_program_brief_for_studio(raw)
 
 
+CAPSTONE_BRIEF_PATH = REPO_ROOT / "docs" / "capstone_product_brief.md"
+
+
+def load_capstone_product_brief_markdown() -> str:
+    if not CAPSTONE_BRIEF_PATH.exists():
+        return ""
+    return CAPSTONE_BRIEF_PATH.read_text(encoding="utf-8").strip()
+
+
 def portfolio_starter() -> dict:
     return dict(load_curriculum_enrichment().get("portfolio_starter") or {})

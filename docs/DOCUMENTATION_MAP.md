@@ -8,6 +8,9 @@ How narrative, syllabus, and studio JSON fit together. **Audience lens:** experi
 | [`AI_for_Data_Engineers_Primer.md`](./AI_for_Data_Engineers_Primer.md) | **Short in-app companion** — studio panels, rules, first hour; points to the brief | `program_primer_markdown` → Course 0 overview panel |
 | [`AI_System_Engineer_Learning_Track_2027.md`](./AI_System_Engineer_Learning_Track_2027.md) | **Syllabus source** — every checkbox, link, prove line | `scripts/generate_lessons.py` → `lessons[]` |
 | [`AI_System_Engineer_Master_Plan.md`](./AI_System_Engineer_Master_Plan.md) | Strategy, module depth (§17+), appendices | Humans; not auto-bundled to JSON |
+| [`audit/AI_Systems_Engineer_Studio_Full_Audit_Review.md`](./audit/AI_Systems_Engineer_Studio_Full_Audit_Review.md) | External full-product audit (Grok, Sep 2026) + prioritized backlog | Humans; tracks UX/prove gaps |
+| [`capstone_product_brief.md`](./capstone_product_brief.md) | Course 10 scope contract (OpsLedger AI) | `courses_ref["10"].capstone_product_brief_markdown` |
+| [`lesson_json_schema.md`](./lesson_json_schema.md) | React studio lesson JSON contract | Humans + `validate_app.mjs` subset |
 | [`OPTIONAL_MODEL_DEPTH.md`](./OPTIONAL_MODEL_DEPTH.md) | Optional transformer / training depth index | Humans; linked from Course 1 overview & primer |
 | `docs/topic_theory/*.studio.md` | Authored **pre-lecture** theory (Foundations / Visual guide) | `npm run curriculum` → `theory_levels` on matching `lesson.order` |
 | [`scripts/walkthrough_content.py`](../scripts/walkthrough_content.py) | Home hero copy, phases, per-course walkthrough objects | `program_walkthrough`, `courses_ref[].walkthrough` |

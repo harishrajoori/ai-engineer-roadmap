@@ -424,6 +424,165 @@ header.site-header {
   max-width: 40rem;
   margin: 0 0 1.25rem;
 }
+.home-next-action {
+  margin-bottom: 1.75rem;
+}
+.home-next-action-inner {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.15rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--cyan) 35%, var(--border));
+  background: color-mix(in srgb, var(--cyan) 6%, var(--surface));
+}
+.home-next-action-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  background: color-mix(in srgb, var(--cyan) 14%, transparent);
+}
+.home-next-action-body h2 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 0.35rem;
+}
+.home-next-action-body p {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.home-next-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.home-prove-dashboard {
+  margin-bottom: 2.75rem;
+  padding: 1.25rem 1.35rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.home-prove-dashboard-head h2 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.35rem;
+}
+.home-prove-dashboard-summary {
+  font-size: 0.88rem;
+  margin: 0.5rem 0 1rem;
+  color: var(--text);
+}
+.home-prove-portfolio-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+.home-prove-portfolio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.home-prove-portfolio-input {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.88rem;
+}
+.home-prove-dashboard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.home-prove-dashboard-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  gap: 0.5rem 0.75rem;
+  align-items: center;
+  text-align: left;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+.home-prove-dashboard-row:hover {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+.home-prove-dashboard-row.is-done {
+  border-color: color-mix(in srgb, var(--cyan) 45%, var(--border));
+}
+.home-prove-dashboard-course {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.home-prove-dashboard-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.home-prove-dashboard-prove {
+  font-size: 0.72rem;
+  color: var(--muted);
+  grid-column: 2;
+}
+.home-prove-dashboard-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.home-prove-dashboard-chevron {
+  opacity: 0.45;
+}
+@media (max-width: 720px) {
+  .home-prove-dashboard-row {
+    grid-template-columns: 1fr auto;
+  }
+  .home-prove-dashboard-course {
+    grid-column: 1;
+  }
+  .home-prove-dashboard-check {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .home-prove-dashboard-prove {
+    grid-column: 1;
+  }
+  .home-prove-dashboard-chevron {
+    display: none;
+  }
+}
+.course-capstone-brief summary {
+  cursor: pointer;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
 .home-value-section {
   margin-bottom: 2.75rem;
 }

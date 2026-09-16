@@ -11,6 +11,7 @@ from pathlib import Path
 from curriculum_enrichment import (
     concept_map_for_course,
     glossary_entries,
+    load_capstone_product_brief_markdown,
     load_program_brief_markdown,
     load_program_primer_markdown,
     portfolio_starter,
@@ -271,7 +272,7 @@ def build_courses_ref(
             (int(les["order"]) for les in course_lessons if les.get("is_start_here")),
             int(course_lessons[0]["order"]) if course_lessons else 0,
         )
-        ref[key] = {
+        course_ref = {
             "name": meta.get("name") or sample.get("course_title", f"Course {key}"),
             "duration": meta.get("duration", ""),
             "assignment": meta.get("assignment", ""),
@@ -287,6 +288,11 @@ def build_courses_ref(
                 key, course_lessons, outcomes, meta
             ),
         }
+        if key == "10":
+            brief = load_capstone_product_brief_markdown()
+            if brief:
+                course_ref["capstone_product_brief_markdown"] = brief
+        ref[key] = course_ref
     return ref
 
 

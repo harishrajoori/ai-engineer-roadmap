@@ -259,11 +259,11 @@
       "acceptance": [
         { "criterion": "Public GitHub repository (synthetic or public data only)", "required": true },
         { "criterion": "README states data source and limitations", "required": true },
-        { "criterion": "Golden-set metric (e.g. valid JSON % ≥ target you set)", "required": true },
+        { "criterion": "Golden set n≥30 rows; valid JSON ≥90% on `scripts/score.py` or pytest metric", "required": true },
         { "criterion": "`pytest` passes on golden tests", "required": true },
         { "criterion": "Threat model section (prompt injection on log fields)", "required": false }
       ],
-      "readme_example": "| Metric | Value |\n| --- | --- |\n| Golden valid JSON % | 92% (n=50) |\n| Primary model | gemini-… |\n| Fallback | gpt-4o-mini |",
+      "readme_example": "| Metric | Value |\n| --- | --- |\n| Golden valid JSON % | ≥90% (n=30) |\n| Primary model | gemini-… |\n| Fallback | gpt-4o-mini |",
       "commands": ["pytest tests/test_golden.py -q", "python scripts/score.py"]
     },
     "1": {
@@ -315,11 +315,12 @@
     "6": {
       "title": "Graph validator prove",
       "acceptance": [
-        { "criterion": "One Cypher validator test in CI", "required": true },
-        { "criterion": "Example failing + passing graph in docs", "required": true }
+        { "criterion": "One failing + one passing Cypher validator test in CI (`pytest`)", "required": true },
+        { "criterion": "README documents the invalid pattern caught (e.g. orphan node, bad relationship)", "required": true },
+        { "criterion": "Sample query output or log snippet tied to your capstone graph slice", "required": true }
       ],
-      "readme_example": "",
-      "commands": ["pytest tests/test_graph_validator.py"]
+      "readme_example": "## Graph validator\n- Failing case: …\n- Passing case: …\n- CI: `pytest tests/test_graph_validator.py -q`",
+      "commands": ["pytest tests/test_graph_validator.py -q"]
     },
     "7": {
       "title": "Eval harness prove",
@@ -351,29 +352,33 @@
     "10": {
       "title": "Capstone alpha prove",
       "acceptance": [
-        { "criterion": "Git tag `alpha`", "required": true },
-        { "criterion": "Prompt caching before/after table", "required": true }
+        { "criterion": "Git tag `alpha` on integrated platform", "required": true },
+        { "criterion": "One-command demo documented (`make demo` or `docker compose up`) — happy path + one HITL fail path", "required": true },
+        { "criterion": "Prompt caching table: ≥10 requests, median TTFT + cached vs uncached tokens", "required": true },
+        { "criterion": "Product brief satisfied (OpsLedger AI personas + synthetic dataset in README)", "required": true }
       ],
-      "readme_example": "| Run | TTFT ms | Cached tokens |",
-      "commands": []
+      "readme_example": "| Run | TTFT ms | Cached tokens | Uncached tokens |\n| --- | --- | --- | --- |",
+      "commands": ["make demo", "python scripts/caching_benchmark.py"]
     },
     "11": {
       "title": "Deploy prove",
       "acceptance": [
-        { "criterion": "Deploy screenshot or URL", "required": true },
-        { "criterion": "`docs/adding-a-tool.md` exists", "required": true }
+        { "criterion": "Running deploy URL or screenshot with health check path visible (`/health` or `/livez`)", "required": true },
+        { "criterion": "`docs/adding-a-tool.md` covers JSON schema, auth, and one new eval case", "required": true },
+        { "criterion": "Reviewer can hit health endpoint from README commands", "required": true }
       ],
-      "readme_example": "",
-      "commands": []
+      "readme_example": "## Deploy\n- URL: …\n- Health: `curl -s $BASE/health`",
+      "commands": ["docker compose up -d", "curl -s localhost:8000/health"]
     },
     "12": {
       "title": "Lineage v1.0 prove",
       "acceptance": [
-        { "criterion": "Tag `v1.0`", "required": true },
-        { "criterion": "Sample OpenLineage JSON in repo", "required": true }
+        { "criterion": "Git tag `v1.0`", "required": true },
+        { "criterion": "OpenLineage (or equivalent) event JSON with real `chunk_id`, `model`, and `run_id` from your alpha demo", "required": true },
+        { "criterion": "Threat model updated (retrieval injection + tool escalation)", "required": true }
       ],
-      "readme_example": "",
-      "commands": []
+      "readme_example": "Link sample event under `docs/lineage_sample.json` from a recorded demo run.",
+      "commands": ["cat docs/lineage_sample.json"]
     },
     "13": {
       "title": "Frontier prove",

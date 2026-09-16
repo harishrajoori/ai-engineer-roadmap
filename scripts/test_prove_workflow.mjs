@@ -9,6 +9,7 @@ import {
   requiredChecklistProgress,
   toggleChecklistItem,
 } from "../src/utils/proveWorkflow.js";
+import { computeNextAction } from "../src/utils/nextAction.js";
 
 const acceptance = [
   { criterion: "Repo public", required: true },
@@ -39,5 +40,13 @@ assert.equal(warningsRead.length, 0, "Read topics should not nag on course check
 map = toggleChecklistItem(map, courseId, 1);
 const progressDone = requiredChecklistProgress(acceptance, map, courseId);
 assert.equal(progressDone.complete, true);
+
+const lessons = [{ order: 1, course: 0, lesson: "Start", type: "Video" }];
+const coursesRef = {
+  "0": { prove_pack: { acceptance, title: "Boot" }, walkthrough: { plain_title: "Boot" } },
+};
+const action = computeNextAction(lessons, coursesRef, {}, {});
+assert.equal(action?.kind, "prove_course");
+assert.equal(action?.courseId, 0);
 
 console.log("proveWorkflow tests OK");
