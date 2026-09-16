@@ -862,20 +862,20 @@ These are the project’s core strengths.
 
 ## Appendix C — Lesson Type Counts
 
-Approximate distribution across 142 lessons:
+Distribution across **142** lessons (from `data/lessons.json`):
 
 | Type | Count |
 |------|------:|
 | Read | 59 |
 | Video | 30 |
 | Build | 16 |
-| Prove | 16 |
+| Prove | 17 |
 | Capstone | 14 |
 | Frontier | 4 |
 | Do | 2 |
 
-Per-course lesson counts (approx):  
-0:9 · 1:14 · 2:11 · 3:13 · 4:9 · 5:6 · 6:6 · 7:9 · 8:5 · 9:10 · **10:20** · 11:7 · 12:5 · 13:5 · 14:5 · 15:7
+Per-course lesson counts:  
+0:9 · 1:14 · 2:11 · 3:13 · 4:10 · 5:6 · 6:6 · 7:9 · 8:5 · 9:10 · **10:20** · 11:7 · 12:5 · 13:5 · 14:5 · 15:7
 
 ---
 
