@@ -939,7 +939,7 @@ python3 scripts/validate_curriculum.py   # includes live HTTP link checks (not i
 
 **Platform depth:** [Astra review](./AI_System_Engineer_Astra_Curriculum_Review.md) + [gap matrix](./Astra_Curriculum_Gap_Matrix.md) + brief § platform extension path — tracked as curriculum backlog, not studio P0.
 
-**Next maintainer actions:** Fix or replace the 17 HTTP 404 syllabus links; optionally add HTTP link job to CI or a scheduled `validate:links` workflow; deepen handbook or expand `.studio.md` for shallow-theory warnings.
+**Next maintainer actions:** ~~Fix or replace the 17 HTTP 404 syllabus links~~ (done — `topic_implementation_overrides.json` + `link_quality.URL_FIXES`); optionally add HTTP link job to CI; deepen handbook or expand `.studio.md` (see [Course content theory quality review](./Course_Content_Theory_Quality_Review.md)).
 
 ---
 

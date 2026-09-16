@@ -42,7 +42,7 @@ Do **not** hand-edit `data/lessons.json` — see [`lesson_json_schema.md`](./les
 
 Or **`npm run curriculum`** (steps 2–3; also writes `data/topic_handbook_by_key.json`). Decision records: [`docs/decisions/`](./decisions/).
 
-Coverage summary: **`npm run coverage:curriculum`**.
+Coverage summary: **`npm run coverage:curriculum`**. Theory quality review: [`docs/audit/Course_Content_Theory_Quality_Review.md`](./audit/Course_Content_Theory_Quality_Review.md).
 
 ## Content order for learners (5+ YOE data engineer)
 

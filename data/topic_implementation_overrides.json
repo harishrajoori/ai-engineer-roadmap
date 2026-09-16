@@ -5,7 +5,7 @@
     "9": [
       {
         "title": "Instructor — structured extraction example",
-        "url": "https://github.com/instructor-ai/instructor/blob/main/examples/extract/extract.py",
+        "url": "https://python.useinstructor.com/examples/",
         "repo_id": "order-9-instructor-extract",
         "description": "Minimal extract→Pydantic pattern to mirror your Course 0 golden-set prove."
       },
@@ -35,13 +35,13 @@
     "23": [
       {
         "title": "LiteLLM — custom logging callbacks",
-        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/observability/custom_callbacks.md",
+        "url": "https://docs.litellm.ai/docs/observability/custom_callback",
         "repo_id": "order-23-litellm-logging",
         "description": "Wire per-request token/latency logs for v0.2 README metrics."
       },
       {
         "title": "LiteLLM — reliable completions / fallbacks",
-        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/completion/reliable_completions.md",
+        "url": "https://docs.litellm.ai/docs/completion/reliable_completions",
         "repo_id": "order-23-litellm-fallbacks",
         "description": "Fallback chain pattern for gateway prove evidence."
       }
@@ -49,7 +49,7 @@
     "34": [
       {
         "title": "LangGraph — human-in-the-loop how-to",
-        "url": "https://github.com/langchain-ai/langgraph/blob/main/docs/docs/how-tos/human_in_the_loop/add-human-in-the-loop.md",
+        "url": "https://langchain-ai.github.io/langgraph/how-tos/human_in_the_loop/add-human-in-the-loop/",
         "repo_id": "order-34-langgraph-hitl",
         "description": "interrupt() / resume patterns for validation-fail prove demo."
       }
@@ -97,7 +97,7 @@
     "46": [
       {
         "title": "FastMCP — middleware / logging hooks",
-        "url": "https://github.com/jlowin/fastmcp/blob/main/src/fastmcp/server/middleware.py",
+        "url": "https://gofastmcp.com/servers/middleware",
         "repo_id": "order-46-fastmcp-audit",
         "description": "Hook point for user_id, tool, args_hash audit fields."
       }
@@ -137,7 +137,7 @@
     "68": [
       {
         "title": "Microsoft GraphRAG — indexing pipeline",
-        "url": "https://github.com/microsoft/graphrag/tree/main/graphrag/index",
+        "url": "https://microsoft.github.io/graphrag/index/overview/",
         "repo_id": "order-68-graphrag-index",
         "description": "Validator/query patterns for graph-assisted retrieval prove."
       }
@@ -153,7 +153,7 @@
     "82": [
       {
         "title": "DeepEval — GitHub Actions workflow sample",
-        "url": "https://github.com/confident-ai/deepeval/blob/main/docs/docs/evaluation-end-to-end-ci-cd.mdx",
+        "url": "https://docs.confident-ai.com/docs/evaluation-end-to-end-ci-cd",
         "repo_id": "order-82-deepeval-ci",
         "description": "CI regression screenshot / failing PR pattern for Course 8 prove."
       }
@@ -177,7 +177,7 @@
     "90": [
       {
         "title": "OPA — Rego examples (deny rules)",
-        "url": "https://github.com/open-policy-agent/opa/tree/main/examples",
+        "url": "https://www.openpolicyagent.org/docs/latest/policy-language/",
         "repo_id": "order-90-opa-examples",
         "description": "block write_* for analyst role—start from official examples."
       }
@@ -185,7 +185,7 @@
     "103": [
       {
         "title": "LiteLLM — prompt caching integration",
-        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/completion/prompt_caching.md",
+        "url": "https://docs.litellm.ai/docs/completion/prompt_caching",
         "repo_id": "order-103-litellm-cache",
         "description": "Capstone: configure caching on stable system prefix."
       }
@@ -193,7 +193,7 @@
     "105": [
       {
         "title": "LiteLLM — proxy caching (self-hosted)",
-        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/proxy/caching.md",
+        "url": "https://docs.litellm.ai/docs/proxy/caching",
         "repo_id": "order-105-litellm-proxy-cache",
         "description": "README TTFT table: cached vs uncached token fields."
       }
@@ -233,7 +233,7 @@
     "113": [
       {
         "title": "LiteLLM — Kubernetes deployment manifests",
-        "url": "https://github.com/BerriAI/litellm/tree/main/deploy/kubernetes",
+        "url": "https://docs.litellm.ai/docs/proxy/deploy",
         "repo_id": "order-113-litellm-k8s",
         "description": "Gateway deployment reference while watching K8s community content."
       }
@@ -249,7 +249,7 @@
     "115": [
       {
         "title": "LiteLLM — Helm chart (proxy)",
-        "url": "https://github.com/BerriAI/litellm/tree/main/deploy/charts/litellm",
+        "url": "https://docs.litellm.ai/docs/proxy/deploy#helm",
         "repo_id": "order-115-litellm-helm",
         "description": "Helm values for model routes, secrets, and resource limits."
       }
@@ -289,7 +289,7 @@
     "127": [
       {
         "title": "vLLM — automatic prefix caching design",
-        "url": "https://github.com/vllm-project/vllm/blob/main/docs/design/automatic_prefix_caching.md",
+        "url": "https://docs.vllm.ai/en/latest/design/automatic_prefix_caching/",
         "repo_id": "order-127-vllm-prefix-cache",
         "description": "Frontier prefix caching spike with before/after TTFT metric."
       }
@@ -297,7 +297,7 @@
     "129": [
       {
         "title": "DSPy — introductory programs",
-        "url": "https://github.com/stanfordnlp/dspy/tree/main/examples",
+        "url": "https://dspy.ai/tutorials/",
         "repo_id": "order-129-dspy-examples",
         "description": "README bottleneck section with compiled program metric."
       }
@@ -345,7 +345,7 @@
     "139": [
       {
         "title": "LangGraph — platform architecture docs",
-        "url": "https://github.com/langchain-ai/langgraph/blob/main/docs/docs/concepts/langgraph.md",
+        "url": "https://langchain-ai.github.io/langgraph/concepts/why-langgraph/",
         "repo_id": "order-139-langgraph-platform",
         "description": "Weekly application practice: explain your graph as a control plane."
       }
@@ -353,7 +353,7 @@
     "140": [
       {
         "title": "LiteLLM — multi-tenant proxy routing",
-        "url": "https://github.com/BerriAI/litellm/blob/main/docs/my-website/docs/proxy/load_balancing.md",
+        "url": "https://docs.litellm.ai/docs/proxy/load_balancing",
         "repo_id": "order-140-litellm-routing",
         "description": "Mock system design: orchestration + gateway + policy boundaries."
       }
@@ -361,7 +361,7 @@
     "141": [
       {
         "title": "DeepEval — evaluation report artifacts",
-        "url": "https://github.com/confident-ai/deepeval/blob/main/docs/docs/evaluation-introduction.mdx",
+        "url": "https://docs.confident-ai.com/docs/evaluation-introduction",
         "repo_id": "order-141-deepeval-report",
         "description": "Offer/feedback notes tied to measurable eval summaries in repo."
       }
