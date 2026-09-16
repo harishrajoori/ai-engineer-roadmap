@@ -91,10 +91,10 @@ def build_beginner_markdown(lesson: dict, course_outcomes: list[str]) -> str:
             lines.append(f"- {s}")
         lines.append("")
 
-    if course_outcomes:
+    if course_outcomes and lesson.get("is_start_here"):
         lines.append("## This month you are working toward")
         lines.append("")
-        for o in course_outcomes[:2]:
+        for o in course_outcomes[:4]:
             lines.append(f"- {o}")
         lines.append("")
 

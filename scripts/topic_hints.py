@@ -116,36 +116,21 @@ _HINTS: dict[str, dict[str, Any]] = {
     },
 }
 
+# Type defaults: concepts + checklists only — one_liner/why_now come from complete_hint(title, url).
 _TYPE_FALLBACK: dict[str, dict[str, Any]] = {
     "Video": {
-        "one_liner": "Video lesson—capture diagrams and production constraints, not full transcript notes.",
-        "why_now": "Builds interview-ready intuition before you automate the pattern in code.",
         "concepts": ["inference"],
         "watch_for": ["Definitions", "Failure modes", "What would you monitor in prod"],
-        "capstone_action": "Add 3 bullets to your repo README or course notes file.",
-        "done_when": "You can explain the main idea in under two minutes aloud.",
     },
     "Read": {
-        "one_liner": "Documentation reading—extract APIs and decisions, not every paragraph.",
-        "why_now": "Maps directly to adopt / experiment / defer choices on the capstone.",
         "concepts": ["structured_output"],
         "read_sections": ["Table of contents → syllabus-named sections only"],
-        "capstone_action": "One sentence in README: what you standardized from this doc.",
-        "done_when": "You listed one pattern to adopt and one to ban in code review.",
     },
     "Build": {
-        "one_liner": "Implementation milestone on the reconciliation capstone repo.",
-        "why_now": "Prove gates are judged on repo evidence, not checkbox clicks.",
         "concepts": ["golden_set", "eval_harness"],
-        "capstone_action": "Smallest PR that satisfies the course build line in the syllabus.",
-        "done_when": "Reviewer could run README commands and see the artifact.",
     },
     "Prove": {
-        "one_liner": "Observable proof artifact—URL, metrics, or CI badge.",
-        "why_now": "Courses complete only when evidence is reproducible.",
         "concepts": ["golden_set", "regression"],
-        "capstone_action": "Paste the artifact URL under Lab & Prove in this studio.",
-        "done_when": "Course overview acceptance table is satisfied.",
     },
 }
 

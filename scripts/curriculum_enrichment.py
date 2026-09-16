@@ -78,6 +78,24 @@ def load_program_brief_markdown() -> str:
     return prepare_program_brief_for_studio(raw)
 
 
+def load_program_brief_home_markdown() -> str:
+    """Shorter brief for the home page — no per-course encyclopedia (sidebar overviews)."""
+    full = load_program_brief_markdown()
+    if not full:
+        return ""
+    stop = re.search(r"\n## 10\. Course-by-course", full)
+    if not stop:
+        stop = re.search(r"\n## 10\. ", full)
+    if stop:
+        footer = (
+            "\n\n---\n\n"
+            "_**Course-by-course detail** — use each course overview in the sidebar "
+            "(map, glossary, prove pack). The full encyclopedia is not repeated on the home page._\n"
+        )
+        return full[: stop.start()].strip() + footer
+    return full
+
+
 CAPSTONE_BRIEF_PATH = REPO_ROOT / "docs" / "capstone_product_brief.md"
 
 

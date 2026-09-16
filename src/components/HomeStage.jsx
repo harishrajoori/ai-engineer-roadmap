@@ -4,6 +4,7 @@ import MarkdownProse from "./MarkdownProse";
 import NextActionCard from "./NextActionCard";
 import ProveDashboard from "./ProveDashboard";
 import Course0FirstHourChecklist from "./Course0FirstHourChecklist";
+import { buildProveDashboardRows } from "../utils/nextAction";
 import {
   ArrowRight,
   BookOpen,
@@ -59,6 +60,7 @@ export default function HomeStage({
   progressPct = 0,
   programWalkthrough = {},
   programBriefMarkdown = "",
+  programBriefHomeMarkdown = "",
   onBeginStepOne,
   onOpenCourseOverview,
   onOpenCourse,
@@ -84,8 +86,6 @@ export default function HomeStage({
   onOpenCourseOverviewFirstHour,
 }) {
   const hasProgress = completedCount > 0;
-  const phases = programWalkthrough.phases || [];
-
   const headline = programWalkthrough.home_headline || "Master AI platform engineering.";
   const subhead =
     programWalkthrough.home_subhead ||
@@ -103,19 +103,31 @@ export default function HomeStage({
         detail: line.replace(/\*\*/g, ""),
       }));
 
+  const proveRows = useMemo(
+    () => buildProveDashboardRows(coursesRef, proveChecklistMap, portfolioRepoUrl, lessons, proveMap),
+    [coursesRef, proveChecklistMap, portfolioRepoUrl, lessons, proveMap]
+  );
+
+  const briefForHome = programBriefHomeMarkdown || programBriefMarkdown;
+
   const courseMap = useMemo(() => {
+    const byId = new Map(proveRows.map((r) => [r.courseId, r]));
     return courses
       .slice()
       .sort((a, b) => a.course - b.course)
       .map((c) => {
         const ref = coursesRef[String(c.course)] || coursesRef[c.course] || {};
+        const prove = byId.get(c.course);
         return {
           num: c.course,
           title: ref.walkthrough?.plain_title || c.title,
           tier: c.tier,
+          proveTitle: prove?.proveTitle,
+          checklist: prove?.checklist,
+          proveArtifact: prove?.proveArtifact,
         };
       });
-  }, [courses, coursesRef]);
+  }, [courses, coursesRef, proveRows]);
 
   return (
     <div className="home-stage">
@@ -154,7 +166,7 @@ export default function HomeStage({
               <PlayCircle size={22} aria-hidden />
               Start Course 0
             </button>
-            {programBriefMarkdown && (
+            {briefForHome && (
               <a className="home-cta home-cta-hero home-cta-secondary" href="#program-brief">
                 <BookOpen size={20} aria-hidden />
                 Read program brief
@@ -190,6 +202,41 @@ export default function HomeStage({
           />
         )}
 
+        <section className="home-program-map" aria-labelledby="home-map-heading">
+          <h2 id="home-map-heading" className="home-section-title">
+            <LayoutGrid size={22} aria-hidden />
+            Courses &amp; prove progress
+          </h2>
+          <p className="home-section-lead">
+            One row per course—open overview, finish topics, then complete the prove checklist in Lab &amp; Prove.
+          </p>
+          <ul className="home-course-map-list">
+            {courseMap.map((row) => {
+              const chk = row.checklist;
+              const chkLabel =
+                chk && chk.total > 0 ? `${chk.done}/${chk.total} prove items` : null;
+              const done = chk?.complete && chk?.total > 0;
+              return (
+                <li key={row.num}>
+                  <button type="button" className="home-course-map-btn" onClick={() => onOpenCourse?.(row.num)}>
+                    <span className="home-course-map-num">Course {row.num}</span>
+                    <span className="home-course-map-title">{row.title}</span>
+                    {row.proveTitle && (
+                      <span className="home-course-map-prove" title={row.proveTitle}>
+                        {row.proveTitle}
+                      </span>
+                    )}
+                    {chkLabel && (
+                      <span className={`home-course-map-checklist ${done ? "is-done" : ""}`}>{chkLabel}</span>
+                    )}
+                    <span className={`home-path-tag tag-${row.tier.toLowerCase()}`}>{row.tier}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
         <ProveDashboard
           coursesRef={coursesRef}
           proveChecklistMap={proveChecklistMap}
@@ -199,6 +246,7 @@ export default function HomeStage({
           progressMap={progressMap}
           lessons={lessons}
           proveMap={proveMap}
+          showCourseList={false}
         />
 
         <section className="home-value-section" aria-labelledby="home-value-heading">
@@ -253,24 +301,6 @@ export default function HomeStage({
           </ol>
         </section>
 
-        {phases.length > 0 && (
-          <section className="home-paths" aria-labelledby="home-phases">
-            <h2 id="home-phases" className="home-section-title">Four phases</h2>
-            <div className="home-phase-list home-phase-list-grid">
-              {phases.map((phase) => (
-                <article key={phase.id} className="home-phase-card">
-                  <h3>{phase.label}</h3>
-                  <p>{phase.plain}</p>
-                  <p className="home-phase-courses">
-                    Courses {phase.courses[0]}
-                    {phase.courses.length > 1 ? `–${phase.courses[phase.courses.length - 1]}` : ""}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </section>
-        )}
-
         <HomeAuthPanel
           userProfile={userProfile}
           googleOAuthEnabled={googleOAuthEnabled}
@@ -283,34 +313,17 @@ export default function HomeStage({
           onOpenSettings={onOpenSettings}
         />
 
-        <section className="home-program-map" aria-labelledby="home-map-heading">
-          <h2 id="home-map-heading" className="home-section-title">
-            <LayoutGrid size={22} aria-hidden />
-            Course index
-          </h2>
-          <p className="home-section-lead">Open a course overview, then start at the topic marked START HERE.</p>
-          <ul className="home-course-map-list">
-            {courseMap.map((row) => (
-              <li key={row.num}>
-                <button type="button" className="home-course-map-btn" onClick={() => onOpenCourse?.(row.num)}>
-                  <span className="home-course-map-num">Course {row.num}</span>
-                  <span className="home-course-map-title">{row.title}</span>
-                  <span className={`home-path-tag tag-${row.tier.toLowerCase()}`}>{row.tier}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {programBriefMarkdown && (
+        {briefForHome && (
           <section id="program-brief" className="home-program-brief" aria-labelledby="program-brief-heading">
             <details className="home-brief-details">
               <summary className="home-brief-summary">
-                <h2 id="program-brief-heading">Full program brief</h2>
-                <span className="home-brief-summary-hint">Architecture, pacing, glossary, success criteria</span>
+                <h2 id="program-brief-heading">Program brief</h2>
+                <span className="home-brief-summary-hint">
+                  Architecture, phases, success criteria — per-course detail in the sidebar
+                </span>
               </summary>
-              <div className="home-program-brief-body prose-learning">
-                <MarkdownProse>{programBriefMarkdown}</MarkdownProse>
+              <div className="home-program-brief-body">
+                <MarkdownProse variant="home-brief">{briefForHome}</MarkdownProse>
               </div>
             </details>
           </section>

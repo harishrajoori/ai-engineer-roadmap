@@ -133,7 +133,7 @@ def build_theory_summary(
             lines.append(f"- {t}")
         lines.append("")
 
-    if course_outcomes:
+    if course_outcomes and lesson.get("is_start_here"):
         lines.append("## How this fits the course")
         lines.append("")
         lines.append("These **course outcomes** are what you are building toward this month:")

@@ -10,7 +10,7 @@ import MermaidBlock from "./MermaidBlock";
  *
  * @param {object} props
  * @param {string} props.children Markdown source
- * @param {"theory" | "primer" | "inline" | "chat"} [props.variant]
+ * @param {"theory" | "primer" | "inline" | "chat" | "home-brief"} [props.variant]
  * @param {boolean} [props.math] Enable KaTeX (topic theory only)
  */
 export default function MarkdownProse({ children, variant = "theory", math = false }) {
@@ -21,7 +21,9 @@ export default function MarkdownProse({ children, variant = "theory", math = fal
         ? "markdown-theory prose-learning prose-chat"
         : variant === "primer"
           ? "markdown-theory prose-learning prose-primer"
-          : "markdown-theory prose-learning prose-theory";
+          : variant === "home-brief"
+            ? "markdown-theory prose-learning prose-home-brief"
+            : "markdown-theory prose-learning prose-theory";
 
   const plugins = math
     ? { remark: [remarkGfm, remarkMath], rehype: [rehypeKatex] }

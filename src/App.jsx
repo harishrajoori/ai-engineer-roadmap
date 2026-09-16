@@ -84,6 +84,7 @@ export default function App() {
     coursesRefData,
     programPrimerMarkdown,
     programBriefMarkdown,
+    programBriefHomeMarkdown,
     programWalkthrough,
     glossary,
     portfolioStarter,
@@ -242,6 +243,7 @@ export default function App() {
               progressPct={nav.progressPct}
               programWalkthrough={programWalkthrough}
               programBriefMarkdown={programBriefMarkdown}
+              programBriefHomeMarkdown={programBriefHomeMarkdown}
               onBeginStepOne={nav.handleBeginStepOne}
               onOpenCourseOverview={nav.handleStartFoundation}
               onOpenCourse={nav.handleOpenCourseFromHome}

@@ -58,6 +58,8 @@ export async function loadCurriculum() {
     coursesRef,
     programPrimerMarkdown: data.program_primer_markdown || "",
     programBriefMarkdown: data.program_brief_markdown || "",
+    programBriefHomeMarkdown:
+      data.program_brief_home_markdown || data.program_brief_markdown || "",
     programWalkthrough: data.program_walkthrough || {},
     portfolioStarter: data.portfolio_starter && typeof data.portfolio_starter === "object"
       ? data.portfolio_starter

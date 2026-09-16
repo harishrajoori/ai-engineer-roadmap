@@ -116,7 +116,7 @@ def _blob(lesson: dict) -> str:
 
 
 def architecture_mermaid(lesson: dict) -> str:
-    """Primary architecture diagram for a topic."""
+    """Primary architecture diagram for a topic (order-specific before course-wide template)."""
     from topic_diagram_order import order_architecture
 
     order = lesson.get("order")
@@ -283,4 +283,29 @@ def diagram_markdown_block(lesson: dict) -> str:
         )
     elif seq:
         lines.extend(["## Secondary view", "", "```mermaid", seq.strip(), "```", ""])
+    return "\n".join(lines)
+
+
+def beginner_diagram_block(lesson: dict) -> str:
+    """Single beginner-friendly architecture diagram with a plain-English caption.
+
+    Uses a distinct heading from ``diagram_markdown_block`` so the intermediate
+    tier's ``## Architecture (visual)`` marker stays unique, and emits exactly one
+    fence to keep the beginner tier light.
+    """
+    arch = architecture_mermaid(lesson)
+    lines = [
+        "## Picture the system (visual)",
+        "",
+        "Follow the arrows once before you read on—each box is a thing you build or call, "
+        "and each arrow is where data (or a failure) moves next.",
+        "",
+        "```mermaid",
+        arch.strip(),
+        "```",
+        "",
+        "If a box or arrow does not make sense yet, that is fine: come back to this diagram "
+        "after the lecture and trace one real request through it end to end.",
+        "",
+    ]
     return "\n".join(lines)

@@ -9,6 +9,7 @@ export function useCurriculum() {
   const [coursesRefData, setCoursesRefData] = useState({});
   const [programPrimerMarkdown, setProgramPrimerMarkdown] = useState("");
   const [programBriefMarkdown, setProgramBriefMarkdown] = useState("");
+  const [programBriefHomeMarkdown, setProgramBriefHomeMarkdown] = useState("");
   const [programWalkthrough, setProgramWalkthrough] = useState({});
   const [glossary, setGlossary] = useState([]);
   const [portfolioStarter, setPortfolioStarter] = useState(null);
@@ -22,6 +23,7 @@ export function useCurriculum() {
       coursesRef,
       programPrimerMarkdown: primer,
       programBriefMarkdown: brief,
+      programBriefHomeMarkdown: briefHome,
       programWalkthrough: walkthrough,
       glossary: terms,
       portfolioStarter: starter,
@@ -30,6 +32,7 @@ export function useCurriculum() {
       setCoursesRefData(coursesRef);
       setProgramPrimerMarkdown(primer || "");
       setProgramBriefMarkdown(brief || "");
+      setProgramBriefHomeMarkdown(briefHome || brief || "");
       setProgramWalkthrough(walkthrough || {});
       setGlossary(terms || []);
       setPortfolioStarter(starter || null);
@@ -92,6 +95,7 @@ export function useCurriculum() {
     coursesRefData,
     programPrimerMarkdown,
     programBriefMarkdown,
+    programBriefHomeMarkdown,
     programWalkthrough,
     glossary,
     portfolioStarter,

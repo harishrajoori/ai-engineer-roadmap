@@ -95,4 +95,17 @@ def order_architecture(order: int, lesson: dict) -> str | None:
   O{order}[Operational task] --> RUNBOOK[RUNBOOK.md]
   RUNBOOK --> VERIFY[Peer replay]"""
 
+    if ltype in ("Read", "Video"):
+        return _read_video_flow(order, lesson)
+
     return None
+
+
+def _read_video_flow(order: int, lesson: dict) -> str:
+    label = _sanitize_label(lesson.get("lesson") or f"Topic {order}", 48)
+    kind = "Watch" if (lesson.get("type") or "") == "Video" else "Read"
+    return f"""flowchart LR
+  T{order}["{label}"]
+  T{order} --> SRC[{kind}: primary link]
+  SRC --> NOTES[3 bullets in repo]
+  NOTES --> REPO[Capstone change + test]"""

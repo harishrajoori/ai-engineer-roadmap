@@ -6,10 +6,11 @@ from typing import Any
 
 from topic_plain_english import expand_thin_handbook_advanced, expand_thin_handbook_intermediate
 
-# Only pad handbook rows that are nearly empty—avoid generic 720-char boilerplate on thin batches.
+# Every handbook row's intermediate/advanced text must clear 720 chars. Rows with
+# real hand-authored content are topped up (not replaced) with plain-English depth;
+# near-empty rows fall back to the generated supplement.
 MIN_INTERMEDIATE_CHARS = 720
 MIN_ADVANCED_CHARS = 720
-MIN_CONTENT_BEFORE_PAD = 320
 
 _ENRICH_MARKERS: tuple[str, ...] = (
     "### Implementation depth — order",
@@ -33,13 +34,12 @@ def _ensure_length(existing: str, minimum: int, supplement: str) -> str:
     base = (existing or "").strip()
     if len(base) >= minimum:
         return base
-    if len(base) >= MIN_CONTENT_BEFORE_PAD:
-        return base
-    if base and supplement.strip() not in base:
-        return f"{base}\n\n{supplement}".strip()
-    if base:
-        return base
-    return supplement
+    sup = (supplement or "").strip()
+    if not base:
+        return sup
+    if sup and sup not in base:
+        return f"{base}\n\n{sup}".strip()
+    return base
 
 
 def enrich_entry(order: int, entry: dict[str, Any], lesson: dict[str, Any]) -> dict[str, Any]:

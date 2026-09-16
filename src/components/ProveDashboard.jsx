@@ -19,6 +19,8 @@ export default function ProveDashboard({
   progressMap = {},
   lessons = [],
   proveMap = {},
+  /** When false, only portfolio URL + export (course rows live on home course index). */
+  showCourseList = false,
 }) {
   const rows = useMemo(
     () => buildProveDashboardRows(coursesRef, proveChecklistMap, portfolioRepoUrl, lessons, proveMap),
@@ -75,6 +77,7 @@ export default function ProveDashboard({
         Download portfolio summary (Markdown)
       </button>
 
+      {showCourseList ? (
       <ul className="home-prove-dashboard-list">
         {rows.map((row) => {
           const pct =
@@ -115,6 +118,11 @@ export default function ProveDashboard({
           );
         })}
       </ul>
+      ) : (
+        <p className="home-prove-dashboard-hint">
+          Open a course below to complete prove checklists in <strong>Lab &amp; Prove</strong>.
+        </p>
+      )}
     </section>
   );
 }
