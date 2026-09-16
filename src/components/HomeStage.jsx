@@ -208,28 +208,32 @@ export default function HomeStage({
             Courses &amp; prove progress
           </h2>
           <p className="home-section-lead">
-            One row per course—open overview, finish topics, then complete the prove checklist in Lab &amp; Prove.
+            Open a course, work topics top to bottom, then finish its prove checklist in Lab &amp; Prove.
           </p>
           <ul className="home-course-map-list">
             {courseMap.map((row) => {
               const chk = row.checklist;
               const chkLabel =
-                chk && chk.total > 0 ? `${chk.done}/${chk.total} prove items` : null;
+                chk && chk.total > 0 ? `${chk.done}/${chk.total} checklist` : null;
               const done = chk?.complete && chk?.total > 0;
               return (
                 <li key={row.num}>
                   <button type="button" className="home-course-map-btn" onClick={() => onOpenCourse?.(row.num)}>
                     <span className="home-course-map-num">Course {row.num}</span>
-                    <span className="home-course-map-title">{row.title}</span>
-                    {row.proveTitle && (
-                      <span className="home-course-map-prove" title={row.proveTitle}>
-                        {row.proveTitle}
-                      </span>
-                    )}
-                    {chkLabel && (
-                      <span className={`home-course-map-checklist ${done ? "is-done" : ""}`}>{chkLabel}</span>
-                    )}
-                    <span className={`home-path-tag tag-${row.tier.toLowerCase()}`}>{row.tier}</span>
+                    <div className="home-course-map-main">
+                      <span className="home-course-map-title">{row.title}</span>
+                      {row.proveTitle && (
+                        <span className="home-course-map-prove" title={row.proveTitle}>
+                          Prove: {row.proveTitle}
+                        </span>
+                      )}
+                    </div>
+                    <div className="home-course-map-meta">
+                      {chkLabel && (
+                        <span className={`home-course-map-checklist ${done ? "is-done" : ""}`}>{chkLabel}</span>
+                      )}
+                      <span className={`home-path-tag tag-${row.tier.toLowerCase()}`}>{row.tier}</span>
+                    </div>
                   </button>
                 </li>
               );
