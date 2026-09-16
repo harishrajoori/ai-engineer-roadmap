@@ -135,7 +135,7 @@ Course Prove gates map to artifacts along this spine (gateway release, agent dem
 | Prove discipline | **A−** | Excellent idea; acceptance criteria still uneven |
 | Data model & generation pipeline | **B+** | Powerful but complex; high maintenance cost |
 | React application | **B** | Feature-rich; App.jsx overloaded; UX friction |
-| Topic theory coverage | **B−** | 141 topics; minority have hand-authored studio guides |
+| Topic theory coverage | **B−** | 142 topics; minority have hand-authored studio guides |
 | Capstone realism | **B** | Good spine; product story and dataset still thin |
 | Long-term maintainability | **C+** | Too many generation scripts; risk of drift |
 
@@ -168,7 +168,7 @@ Course Prove gates map to artifacts along this spine (gateway release, agent dem
 
 ## 7. Application Review (React Studio)
 
-> **Update (Sep 2026, commit `99314d2+`):** Most items below were addressed. See [§17](#17-prioritized-change-backlog) for status. Remaining gaps: unified progress store, cloud-sync unit tests (added in follow-up), interactive Course 0 wizard (checklist added), prove URLs on dashboard, §7 narrative kept for historical context.
+> **Update (Sep 2026, commit `f022af2+`):** Most items below were addressed (including prove artifact links on the dashboard and `test_studio_cloud_sync.mjs`). See [§17](#17-prioritized-change-backlog) for status. Remaining gaps: unified progress store, full interactive Course 0 wizard (first-hour checklist shipped), mobile focus mode. §7 narrative kept for historical context.
 
 ### Stack & structure
 
@@ -219,7 +219,7 @@ Top-level keys include:
 - `program_walkthrough`
 - `glossary`
 - `portfolio_starter`
-- `lessons` (array of 141)
+- `lessons` (array of 142)
 - `courses_ref`
 
 **Sample lesson fields:** `order`, `course`, `course_title`, `month`, `type`, `lesson`, `section`, `section_label`, `url`, `youtube_id`, `embed_url`, `duration`, `required`, `status`, `is_start_here`, `access_tier`, `open_how`, `study_order`, `resources`, `lab_plan`, `theory_levels`, `theory_studio_guide`, `theory_summary`, `prove_criteria`, etc.
@@ -709,7 +709,7 @@ Every course Prove should aim for:
 
 ### QA log highlights
 
-- Plain-English + visuals pass claimed over all 141 topics via generators.  
+- Plain-English + visuals pass claimed over all 142 topics via generators.  
 - Handbook batches in `scripts/handbook_batches/`.  
 - Validation includes handbook length checks post-merge.
 
@@ -733,7 +733,7 @@ Leave remaining topics on generated theory until pain is felt.
 
 ## 15. UX & Learning Experience Gaps
 
-**Update (Sep 2026):** Items 1–3, 5–7 addressed in studio (`99314d2+`). Item 4 partially addressed via Course 0 first-hour checklist on home. Items 8–9 partially addressed (mentor defaults, layout).
+**Update (Sep 2026):** Items 1–3, 5–7 addressed in studio (`f022af2+`, including prove artifact links). Item 4 partially addressed via Course 0 first-hour checklist on home. Items 8–9 partially addressed (mentor defaults, layout).
 
 1. ~~Next action~~ → `NextActionCard` + syllabus strip.  
 2. ~~Prove Dashboard~~ → home section + export.  
@@ -752,7 +752,7 @@ Leave remaining topics on generated theory until pain is felt.
 | Debt | Impact | Mitigation |
 |------|--------|------------|
 | Monolithic `lessons.json` | Noisy PRs | Schema freeze; squash curriculum commits; consider split |
-| 30+ generation scripts | Onboarding cost for future maintainers | Document pipeline order; reduce one-off scripts |
+| 30+ generation scripts | Onboarding cost for future maintainers | Pipeline order documented in [`DOCUMENTATION_MAP.md`](../DOCUMENTATION_MAP.md) § Curriculum pipeline order; reduce one-off scripts over time |
 | God-component App.jsx | Bugs and fear of change | Hook split + schema |
 | Dual content sources | Drift | DOCUMENTATION_MAP + single regenerate+validate ritual |
 | Implementation catalog growth | Stale links | Monthly validate + cull |
@@ -862,7 +862,7 @@ These are the project’s core strengths.
 
 ## Appendix C — Lesson Type Counts
 
-Approximate distribution across 141 lessons:
+Approximate distribution across 142 lessons:
 
 | Type | Count |
 |------|------:|
