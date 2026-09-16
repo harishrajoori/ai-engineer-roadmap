@@ -15,7 +15,7 @@
     "validate": "npm run validate:app && npm run validate:links",
     "test:prove": "node scripts/test_prove_workflow.mjs && node scripts/test_studio_cloud_sync.mjs",
     "validate:repos": "python3 scripts/github_repo_validate.py --check",
-    "validate:ci": "npm run validate:app && npm run validate:models && npm run test:prove && npm run validate:repos && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/curriculum_qa.py && python3 scripts/audit_public_content.py && python3 scripts/audit_implementation_resources.py",
+    "validate:ci": "npm run validate:app && npm run validate:models && npm run test:prove && npm run validate:repos && python3 scripts/validate_curriculum.py --skip-http && python3 scripts/curriculum_qa.py && python3 scripts/audit_topic_resources.py && python3 scripts/audit_public_content.py && python3 scripts/audit_implementation_resources.py",
     "audit:implementation": "python3 scripts/audit_implementation_resources.py",
     "audit:public": "python3 scripts/audit_public_content.py",
     "coverage:curriculum": "python3 scripts/coverage_report.py"

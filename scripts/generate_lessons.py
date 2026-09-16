@@ -530,6 +530,21 @@ def _url_base_and_fragment(url: str) -> tuple[str, str]:
     return raw.rstrip("/").lower(), ""
 
 
+def dedupe_resources_by_url(row: dict) -> None:
+    """Keep first resource card per HTTP URL (case-insensitive, trailing slash normalized)."""
+    seen: set[str] = set()
+    kept: list[dict] = []
+    for r in row.get("resources") or []:
+        u = (r.get("url") or "").strip()
+        if u.lower().startswith("http"):
+            key = u.lower().rstrip("/")
+            if key in seen:
+                continue
+            seen.add(key)
+        kept.append(r)
+    row["resources"] = kept
+
+
 def prune_stale_resource_cards(row: dict) -> None:
     """Drop sibling-angle cards and bare Applied LLMs duplicates left from older generators."""
     primary = (row.get("url") or "").strip()
@@ -615,6 +630,7 @@ def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]])
         merge_related_into_resources(row)
         append_external_resources(row)
         append_implementation_repos(row)
+        dedupe_resources_by_url(row)
         attach_lab_plan(row)
         row["section_label"] = section_label(row.get("section") or "")
         ckey = str(row.get("course", ""))
