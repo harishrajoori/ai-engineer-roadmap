@@ -23,6 +23,11 @@ SHALLOW_PRIMARY_URLS: dict[str, str] = {
     "https://python.useinstructor.com/": "https://python.useinstructor.com/getting-started/",
     "https://langchain-ai.github.io/langgraph/": "https://langchain-ai.github.io/langgraph/concepts/why-langgraph/",
     "https://www.3blue1brown.com/topics/neural-networks": "https://www.3blue1brown.com/topics/neural-networks#chapter1",
+    "https://chiphuyen.com/": "https://huyenchip.com/2024/03/03/build-ai-applications.html",
+    "http://chiphuyen.com/": "https://huyenchip.com/2024/03/03/build-ai-applications.html",
+    "https://chiphuyen.com": "https://huyenchip.com/2024/03/03/build-ai-applications.html",
+    "https://hamel.dev/": "https://hamel.dev/blog/posts/evals/",
+    "https://hamel.dev": "https://hamel.dev/blog/posts/evals/",
 }
 
 _ALLOWED_GITHUB_FRAGMENTS: tuple[str, ...] = (
@@ -128,6 +133,72 @@ def applied_llms_section_url(lesson_title: str) -> str:
 def is_applied_llms_url(url: str) -> bool:
     u = (url or "").strip().lower()
     return u.startswith("https://applied-llms.org") or u.startswith("http://applied-llms.org")
+
+
+def _norm_title(title: str) -> str:
+    return re.sub(r"\*\(optional\)\*\s*", "", title or "", flags=re.I).lower()
+
+
+def instructor_section_url(lesson_title: str, url: str) -> str:
+    t = _norm_title(lesson_title)
+    base = (url or "").strip()
+    if "useinstructor.com" not in base.lower():
+        return base
+    if "retries" in t or "patterns" in t:
+        return "https://python.useinstructor.com/concepts/retries"
+    if "examples" in t:
+        return "https://python.useinstructor.com/examples/"
+    if not base or base.rstrip("/").endswith("useinstructor.com"):
+        return "https://python.useinstructor.com/getting-started/"
+    return base
+
+
+def litellm_section_url(lesson_title: str, url: str) -> str:
+    t = _norm_title(lesson_title)
+    u = (url or "").strip().lower()
+    if "litellm.ai" not in u and "litellm" not in t:
+        return (url or "").strip()
+    if "reliable" in t or "fallback" in t:
+        return "https://docs.litellm.ai/docs/completion/reliable_completions"
+    if "caching" in t or "cache" in t:
+        return "https://docs.litellm.ai/docs/completion/prompt_caching"
+    if "observability" in t or "callback" in t or "langfuse" in t:
+        return "https://docs.litellm.ai/docs/observability/custom_callback"
+    if "load balanc" in t or "proxy" in t and "deploy" not in t:
+        return "https://docs.litellm.ai/docs/proxy/load_balancing"
+    if "helm" in t or "deploy" in t:
+        return "https://docs.litellm.ai/docs/proxy/deploy"
+    if "docs hub" in t or u.rstrip("/") in ("https://docs.litellm.ai", "https://docs.litellm.ai/docs"):
+        return "https://docs.litellm.ai/docs/"
+    return (url or "").strip()
+
+
+def chiphuyen_section_url(lesson_title: str, url: str) -> str:
+    t = _norm_title(lesson_title)
+    u = (url or "").strip().lower()
+    if "chiphuyen.com" not in u and "huyenchip.com" not in u and "chip huyen" not in t:
+        return (url or "").strip()
+    if "data for" in t or "data system" in t:
+        return "https://huyenchip.com/2022/12/27/a-friendly-intro-to-data-systems-for-ml/"
+    if u in ("https://chiphuyen.com", "https://chiphuyen.com/", "http://chiphuyen.com/"):
+        return "https://huyenchip.com/2024/03/03/build-ai-applications.html"
+    return (url or "").strip()
+
+
+def deep_link_primary_url(url: str, lesson_title: str) -> str:
+    """Title-aware deep links for multi-use handbooks and doc hubs."""
+    raw = (url or "").strip()
+    if not raw.startswith("http"):
+        return raw
+    fixed = SHALLOW_PRIMARY_URLS.get(raw) or SHALLOW_PRIMARY_URLS.get(raw + "/") or raw
+    if is_applied_llms_url(fixed):
+        return applied_llms_section_url(lesson_title)
+    fixed = instructor_section_url(lesson_title, fixed)
+    fixed = litellm_section_url(lesson_title, fixed)
+    fixed = chiphuyen_section_url(lesson_title, fixed)
+    if fixed.rstrip("/").lower() in ("https://hamel.dev", "https://hamel.dev/"):
+        return "https://hamel.dev/blog/posts/evals/"
+    return fixed
 
 
 def is_paid_host(url: str) -> bool:

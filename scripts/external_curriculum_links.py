@@ -14,6 +14,50 @@ LINKS_PATH = REPO_ROOT / "data" / "external_curriculum_links.json"
 _cache: dict[str, Any] | None = None
 
 
+_APPLIED_LLMS_TOC_FRAGMENTS: tuple[str, ...] = (
+    "#toc-tactical-nuts-bolts-of-working-with-llms",
+    "#toc-structure-your-inputs-and-outputs",
+    "#toc-step-by-step-multi-turn-flows-can-give-large-boosts",
+    "#toc-information-retrieval-rag",
+    "#toc-evaluation-monitoring",
+    "#toc-create-a-few-assertion-based-unit-tests-from-real-inputoutput-samples",
+    "#toc-hallucinations-are-a-stubborn-problem",
+)
+
+_INSTRUCTOR_KEY_ALIASES: tuple[tuple[str, str], ...] = (
+    (
+        "c0|u|https://python.useinstructor.com/",
+        "c0|u|https://python.useinstructor.com/getting-started/",
+    ),
+    (
+        "c1|u|https://python.useinstructor.com/getting-started/",
+        "c0|u|https://python.useinstructor.com/getting-started/",
+    ),
+)
+
+
+def _expand_by_lesson_key(by_key: dict[str, list]) -> dict[str, list]:
+    """Mirror base handbook keys onto TOC fragment URLs (explicit lookup, not only fallback)."""
+    out = dict(by_key)
+    for key, extras in by_key.items():
+        lower = key.lower()
+        if "|u|https://applied-llms.org/" in lower and "#" not in lower:
+            for frag in _APPLIED_LLMS_TOC_FRAGMENTS:
+                frag_key = key.replace(
+                    "https://applied-llms.org/",
+                    f"https://applied-llms.org/{frag}",
+                ).replace(
+                    "http://applied-llms.org/",
+                    f"http://applied-llms.org/{frag}",
+                )
+                if frag_key not in out:
+                    out[frag_key] = list(extras)
+    for alias, source in _INSTRUCTOR_KEY_ALIASES:
+        if source in by_key and alias not in out:
+            out[alias] = list(by_key[source])
+    return out
+
+
 def load_external_curriculum_links() -> dict[str, Any]:
     global _cache
     if _cache is not None:
@@ -21,7 +65,10 @@ def load_external_curriculum_links() -> dict[str, Any]:
     if not LINKS_PATH.exists():
         _cache = {"by_lesson_key": {}}
         return _cache
-    _cache = json.loads(LINKS_PATH.read_text(encoding="utf-8"))
+    raw = json.loads(LINKS_PATH.read_text(encoding="utf-8"))
+    by_key = raw.get("by_lesson_key") or {}
+    raw["by_lesson_key"] = _expand_by_lesson_key(by_key)
+    _cache = raw
     return _cache
 
 

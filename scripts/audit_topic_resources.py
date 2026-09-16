@@ -15,7 +15,7 @@ SCRIPTS = REPO / "scripts"
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-from link_quality import validate_lesson_links  # noqa: E402
+from link_quality import SHALLOW_PRIMARY_URLS, validate_lesson_links  # noqa: E402
 
 LESSONS_JSON = REPO / "data" / "lessons.json"
 
@@ -62,6 +62,9 @@ def audit_lessons(lessons: list[dict]) -> dict[str, list[tuple]]:
         if _url_key(primary) in (_url_key("https://applied-llms.org"),):
             issues["bare_applied_llms_primary"].append((order, title))
 
+        if primary in SHALLOW_PRIMARY_URLS or primary.rstrip("/") + "/" in SHALLOW_PRIMARY_URLS:
+            issues["shallow_primary_after_canonicalize"].append((order, title, primary))
+
         for rel in les.get("related_topics") or []:
             if int(rel.get("course", -1)) != int(les.get("course", -2)):
                 issues["cross_course_related_topic"].append((order, rel))
@@ -91,6 +94,7 @@ def main() -> int:
         "duplicate_resource_url",
         "stale_same_source_card",
         "bare_applied_llms_primary",
+        "shallow_primary_after_canonicalize",
         "cross_course_related_topic",
         "double_middot_title",
     )

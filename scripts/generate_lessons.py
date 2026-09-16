@@ -29,9 +29,8 @@ from link_quality import (
     READ_COMPANION_REPO,
     URL_FIXES,
     access_note_for_url,
-    applied_llms_section_url,
     canonical_read_url,
-    is_applied_llms_url,
+    deep_link_primary_url,
     is_github_url,
     is_paid_host,
 )
@@ -410,11 +409,6 @@ def attach_related_topics(lessons: list[dict]) -> None:
         ]
 
 
-def merge_related_into_resources(row: dict) -> None:
-    """Sibling angles stay on `related_topics` / theory — not duplicate resource cards."""
-    return
-
-
 def annotate_shared_urls(lessons: list[dict]) -> None:
     by_url: dict[tuple[int, str], list[int]] = defaultdict(list)
     for row in lessons:
@@ -451,8 +445,9 @@ def annotate_access_and_read_urls(row: dict) -> None:
     title = row.get("lesson") or ""
     optional = "(optional)" in title.lower() or row.get("required") == "No"
 
-    if is_applied_llms_url(url):
-        row["url"] = applied_llms_section_url(title)
+    deep = deep_link_primary_url(url, title)
+    if deep != url:
+        row["url"] = fix_url(deep)
         url = row["url"]
 
     if ltype == "Read" and url:
@@ -627,7 +622,6 @@ def finalize_lessons(lessons: list[dict], course_outcomes: dict[str, list[str]])
         annotate_access_and_read_urls(row)
         prune_stale_resource_cards(row)
         ensure_primary_resource(row)
-        merge_related_into_resources(row)
         append_external_resources(row)
         append_implementation_repos(row)
         dedupe_resources_by_url(row)

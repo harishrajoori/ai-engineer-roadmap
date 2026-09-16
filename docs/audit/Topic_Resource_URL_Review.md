@@ -4,6 +4,8 @@
 **Scope:** Every syllabus topic’s primary URL, generated `resources[]` stack, course-overview titles, and Resources panel behavior (after dedupe).  
 **Gate:** `python3 scripts/audit_topic_resources.py` (also in `npm run validate:ci`).
 
+**2026-09-16 follow-up:** `deep_link_primary_url()` (Instructor, LiteLLM, Applied LLMs, Chip Huyen, Hamel index), explicit `external_curriculum_links` key expansion for Applied LLMs TOC fragments, six new `.studio.md` guides (orders 5, 16–18, 31–32), removed no-op `merge_related_into_resources`.
+
 ## Executive summary
 
 | Check | Result |
