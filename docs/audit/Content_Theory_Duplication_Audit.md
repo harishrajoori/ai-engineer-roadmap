@@ -102,11 +102,11 @@ npm run validate:ci   # includes curriculum_qa.py
 
 ## Recommended follow-ups (priority)
 
-1. **Handbook v2** — Build `topic_handbook.json` from `lesson_stable_key` after each `npm run curriculum`; deprecate order-only batches or auto-remap on regenerate.
-2. **Prove rows** — Generate theory from `prove_packs[course]` instead of generic five-layer template for `type: Prove`.
-3. **Coverage report** — Script: per lesson, flags theory/lab/handbook/studio guide/impl links (Astra repo hygiene item).
+1. ~~**Handbook v2**~~ — **Done (partial):** `data/topic_handbook_by_key.json` on `npm run curriculum`; lookup prefers stable key then order with `handbook_matches_lesson()`. Authoring still uses order batches for legacy rows.
+2. ~~**Prove rows**~~ — **Done (partial):** `theory_builder.py` surfaces prove acceptance before five-layer study guide on Prove lessons.
+3. ~~**Coverage report**~~ — **Done:** `scripts/coverage_report.py` / `npm run coverage:curriculum`.
 4. **Thin handbook** — Deepen or drop `handbook_auto_enrich` padding; prefer `.studio.md` for high-traffic topics.
-5. **UI** — Collapse “Study guide” when `theory_studio_guide` exists; default pill to Visual guide for those 13 orders.
+5. ~~**UI**~~ — **Done (partial):** SmartStage defaults theory pill to **intermediate** when `theory_studio_guide` exists.
 
 ---
 

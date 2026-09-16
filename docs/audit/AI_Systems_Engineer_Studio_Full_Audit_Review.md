@@ -33,6 +33,7 @@ This document consolidates a complete review of the project: architecture, stren
 21. [Appendix B — npm Scripts Reference](#appendix-b--npm-scripts-reference)
 22. [Appendix C — Lesson Type Counts](#appendix-c--lesson-type-counts)
 23. [Appendix D — Glossary Snapshot (from enrichment)](#appendix-d--glossary-snapshot-from-enrichment)
+24. [Re-audit snapshot (post c3d7467)](#24-re-audit-snapshot-post-c3d7467)
 
 ---
 
@@ -857,6 +858,7 @@ These are the project’s core strengths.
 | `npm run validate:repos` | Check implementation catalog against GitHub |
 | `npm run audit:implementation` | Drift checks for topic-scoped implementation links |
 | `npm run audit:public` | Scan for sensitive patterns in public bundle inputs |
+| `npm run coverage:curriculum` | Theory/lab/handbook/studio/impl coverage summary |
 
 ---
 
@@ -907,6 +909,37 @@ This audit treats the studio as both a **learning vehicle** and a **portfolio-gr
 
 **End of full audit dump.**  
 Regenerate curriculum and run `npm run validate:ci` after any structural edits.
+
+---
+
+## 24. Re-audit snapshot (post c3d7467)
+
+**When:** 16 September 2026, after push `main` @ `c3d7467` (theory dedup, handbook stable keys, Astra/platform docs).
+
+**Ritual run:**
+
+```bash
+npm run curriculum && npm run validate:ci && npm run coverage:curriculum && npm run lint
+python3 scripts/validate_curriculum.py   # includes live HTTP link checks (not in validate:ci)
+```
+
+| Gate | Result |
+|------|--------|
+| `npm run curriculum` | 142 lessons; 71 `topic_handbook_by_key.json` entries |
+| `npm run validate:ci` | **PASS** (app, models, prove workflow, repos, curriculum skip-http, curriculum_qa, public audit, implementation audit) |
+| `curriculum_qa` | 0× `## Lab & Practice` inside `theory_levels` (lab only on Lab & Prove tab) |
+| `audit:implementation` | 0 errors; 15 catalog `url_match` length warnings (unchanged) |
+| `npm run coverage:curriculum` | 142 lessons; 13 studio guides; 142 de_lab; 142 with impl resources |
+| `npm run lint` | Pass with oxlint warnings (setState-in-effect, SmartStage effect deps) |
+| `validate_curriculum.py` (HTTP) | **17 broken URLs** (mostly upstream doc path moves — LiteLLM, LangGraph, DeepEval, etc.) |
+
+**Content / duplication (see [Content_Theory_Duplication_Audit.md](./Content_Theory_Duplication_Audit.md)):** Handbook merge guard + stable-key file shipped; Prove theory ordering improved; advanced boilerplate shortened. **Remaining:** 136 handbook rows &lt;720 chars; 141 lessons without beginner mermaid; 88 lessons with advanced shorter than beginner (intentional after dedup for topics without `advanced_extra`).
+
+**Prove:** 17 Prove lessons; `prove_packs` keys `0`–`15` (Course 11 includes executable deploy acceptance).
+
+**Platform depth:** [Astra review](./AI_System_Engineer_Astra_Curriculum_Review.md) + [gap matrix](./Astra_Curriculum_Gap_Matrix.md) + brief § platform extension path — tracked as curriculum backlog, not studio P0.
+
+**Next maintainer actions:** Fix or replace the 17 HTTP 404 syllabus links; optionally add HTTP link job to CI or a scheduled `validate:links` workflow; deepen handbook or expand `.studio.md` for shallow-theory warnings.
 
 ---
 
